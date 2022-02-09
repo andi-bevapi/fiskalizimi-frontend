@@ -1,4 +1,4 @@
-import { getCurrentUser } from '../services/user';
+import { getCurrentUser } from './services/user';
 
 export async function getInitialState() {
   const fetchUserInfo = async () => {
