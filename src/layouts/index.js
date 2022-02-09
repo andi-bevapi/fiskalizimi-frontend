@@ -3,6 +3,7 @@ import Navbar from './Navbar/index';
 import Body from './Body/Body';
 
 const BasicLayout = (props) => {
+
   return (
     <div className={styles.normal}>
       <Navbar/>
