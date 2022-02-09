@@ -6,13 +6,17 @@ import { history } from 'umi';
 
 const Body = (props) => {
   //   const { open } = useSettingsContext();
-  const changeroute = () => {
+  const changerouteProduct = () => {
     history.push('/produktet');
+  };
+  const changerouteHome = () => {
+    history.push('/');
   };
   return (
     <div className={styles.mainHolder}>
       <div className={styles.itemsOnStock}>
-        <button onClick={changeroute}>change routes</button>
+        <button onClick={changerouteProduct}>products</button>
+        <button onClick={changerouteHome}>home</button>
         {props.children}
       </div>
       <div className={styles.itemsOnBuy}>
