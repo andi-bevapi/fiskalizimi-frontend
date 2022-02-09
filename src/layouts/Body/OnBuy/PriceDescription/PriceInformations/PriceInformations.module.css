@@ -1,0 +1,48 @@
+.mainHolder {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.itemsHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: max-content;
+}
+
+.itemsHolder > div {
+  margin-left: 5px;
+}
+
+.vatPriceHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.vatPriceHolder > div {
+  margin-left: 5px;
+}
+
+.noVatPriceHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.noVatPriceHolder > div {
+  margin-left: 5px;
+}
+
+@media (max-width: 1200px) {
+  .noVatPriceHolder {
+    display: block;
+  }
+
+  .vatPriceHolder {
+    display: block;
+  }
+}

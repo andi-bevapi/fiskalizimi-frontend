@@ -1,0 +1,12 @@
+.container {
+    width: 170px;
+    display: flex;
+}
+
+.inputArea {
+    width: 90px;
+}
+
+.buttonArea {
+    margin-right: -20;
+}

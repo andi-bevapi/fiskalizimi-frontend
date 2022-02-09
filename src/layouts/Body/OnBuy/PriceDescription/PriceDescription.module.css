@@ -1,0 +1,12 @@
+.mainHolder {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.buttonHolder {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
