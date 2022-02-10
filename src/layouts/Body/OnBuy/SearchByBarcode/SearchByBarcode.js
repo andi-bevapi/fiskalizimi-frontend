@@ -1,21 +1,21 @@
-import TextField from "@mui/material/TextField";
-import { makeStyles } from "@mui/styles";
+import TextField from '@mui/material/TextField';
+import { makeStyles } from '@mui/styles';
 // import { useTranslation } from "react-i18next";
-import IconButtonComponent from "../../../../shared/Button/IconButton";
+import IconButtonComponent from '../../../../shared/Button/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { useState } from "react";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { useState } from 'react';
 // import { useProducts } from "../../../Context/productsContext";
 // import {useBuying} from "../../../Context/BuyingContext";
 
 const useStyles = makeStyles(() => ({
-  searchContainer: { marginTop: 5, marginBottom: 15, overflow: "hidden" },
-  searchInput: { display: "block" },
-  textField: { height: 40, width: "100%" },
+  searchContainer: { marginTop: 5, marginBottom: 15, overflow: 'hidden' },
+  searchInput: { display: 'block' },
+  textField: { height: 40, width: '100%' },
 }));
 
-const SearchByBarcode = (props) => {
+const SearchByBarcode = () => {
   // const { t } = useTranslation();
   const styles = useStyles();
   const [barcode,setBarcode] = useState("");
@@ -26,13 +26,12 @@ const SearchByBarcode = (props) => {
     setBarcode(event.target.value);
   };
   const handleClearSearchField = () => {
-
     const barcodeParsed = parseInt(barcode);
-      // const productsByBarcode = products.filter((el)=>el.barcode === barcodeParsed);
-      // if(productsByBarcode.length > 0 ){
-      //   addToBuyingList(productsByBarcode[0]);
-      // }
-      setBarcode("")
+    // const productsByBarcode = products.filter((el)=>el.barcode === barcodeParsed);
+    // if(productsByBarcode.length > 0 ){
+    //   addToBuyingList(productsByBarcode[0]);
+    // }
+    setBarcode('');
   };
   return (
     <div className={styles.searchContainer}>
@@ -51,10 +50,10 @@ const SearchByBarcode = (props) => {
           </Grid>
           <Grid item xs={2}>
             <IconButtonComponent
-                style={{ backgroundColor: "#eeeeee" , height: 40 }}
-                icon={<CheckIcon />}
-                iconColor={{ color: "#555555" }}
-                onClick={(e) => handleClearSearchField(e)}
+              style={{ backgroundColor: '#eeeeee', height: 40 }}
+              icon={<CheckIcon />}
+              iconColor={{ color: '#555555' }}
+              onClick={(e) => handleClearSearchField(e)}
             />
           </Grid>
         </Grid>
