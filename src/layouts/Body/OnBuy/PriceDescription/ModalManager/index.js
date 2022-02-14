@@ -1,6 +1,6 @@
-import ModalComponent from "../../../../../shared/Modal/Modal";
-import BuyingComponent from "../BuyingComponents/BuyingComponent";
-import CouponPrinting from "../CouponPrinting/CouponPrinting";
+import ModalComponent from "../../../../../components/Modal/Modal";
+import BuyingComponent from "../BuyingComponents";
+import CouponPrinting from "../CouponPrinting";
 // import { useTranslation } from "react-i18next";
 // import FreezeOrder from "../../../FreezeOrder/FreezeOrder";
 

@@ -1,10 +1,11 @@
 .mainHolder {
-  width: 99%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-right: auto;
   margin-left: auto;
+  padding: 0% 20px;
 }
 
 .itemsOnBuy {

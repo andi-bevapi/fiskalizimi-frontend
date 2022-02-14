@@ -10,6 +10,9 @@ const useStyles = makeStyles({
     width: 200,
     paddingTop: '40px',
   },
+  fab: {
+    backgroundColor: 'rgba(0, 0, 0, 0.08)', boxShadow: 'none', borderRadius: '3px'
+  }
 });
 
 const SideDrawer = () => {
@@ -38,7 +41,7 @@ const SideDrawer = () => {
   return (
     <React.Fragment>
       <Fab
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.08)', boxShadow: 'none', borderRadius: '3px' }}
+        className={classes.fab}
         edge="start"
         aria-label="menu"
         onClick={toggleDrawer('right', true)}

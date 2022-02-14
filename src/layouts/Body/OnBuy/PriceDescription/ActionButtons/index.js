@@ -1,48 +1,52 @@
-import { Divider } from "@mui/material";
-import ButtonComponent from "../../../../../shared/Button/Button";
+import { Divider } from '@mui/material';
+import ButtonComponent from '../../../../../components/Button/Button';
 // import styles from "../PriceDescription.module.css";
-import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
-import IconButtonComponent from "../../../../../shared//Button/IconButton";
-import BlockIcon from "@mui/icons-material/Block";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import IconButtonComponent from '../../../../../components/Button/IconButton';
+import BlockIcon from '@mui/icons-material/Block';
+import PanToolIcon from '@mui/icons-material/PanTool';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import { makeStyles } from '@mui/styles';
 // import { useBuying } from "../../../../../Context/BuyingContext";
 // import { useTranslation } from "react-i18next";
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '20px',
+  },
+  btnContainer: {
+    display: 'flex',
+    marginRight: '0%',
+    marginLeft: 'auto',
+  },
+}));
 
 const ActionButtons = (props) => {
+  const classes = useStyles();
   // const { handleDestroyBuyingList } = useBuying();
   // const { t } = useTranslation();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        marginTop: "20px",
-      }}
-    >
+    <div className={classes.container}>
       <div
-        style={{
-          width: "1050%",
+        sx={{
+          width: '1050%',
         }}
       >
         <Divider />
       </div>
       <div
-        style={{
-          display: "flex",
-          marginRight: "0%",
-          marginLeft: "auto",
-        }}
+        className={classes.btnContainer}
       >
         <IconButtonComponent
           style={{
-            backgroundColor: "rgb(38, 179, 201)",
-            marginRight: "10px",
+            backgroundColor: 'rgb(38, 179, 201)',
+            marginRight: '10px',
           }}
           icon={<LocalPrintshopIcon />}
           // onClick={props.handleSettings}
-          iconColor={{ color: "white" }}
+          iconColor={{ color: 'white' }}
         />
         <ButtonComponent
           title="cancel"

@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { makeStyles } from '@mui/styles';
 // import { useTranslation } from "react-i18next";
-import IconButtonComponent from '../../../../shared/Button/IconButton';
+import IconButtonComponent from '../../../../components/Button/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';

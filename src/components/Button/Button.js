@@ -2,14 +2,25 @@ import Button from '@mui/material/Button';
 import styles from './Button.module.css';
 import AddIcon from '@mui/icons-material/Add';
 import IconButtonComponent from './IconButton';
+import { makeStyles } from '@mui/styles';
 // import { useEffect , useState } from "react";
 // import { useHoldedOrders } from "../../Context/HoldedOrdersContext";
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    margin: '0 3px 3px 0',
+  },
+  iconBtn: {
+    marginLeft: '-3px', backgroundColor: '#ffaa33', width: '30px'
+  },
+}));
 
 const ButtonComponent = (props) => {
+  const classes = useStyles();
   // const {totalOrdersNumber} = useHoldedOrders();
 
   return (
-    <div style={{ display: 'flex', margin: '0 3px 3px 0' }}>
+    <div className={classes.container}>
       <Button
         variant="contained"
         className={styles.button}
@@ -25,7 +36,7 @@ const ButtonComponent = (props) => {
       </Button>
       {props.addIcon === true ? (
         <IconButtonComponent
-          style={{ marginLeft: '-3px', backgroundColor: '#ffaa33', width: '30px' }}
+          className={classes.iconBtn}
           icon={<AddIcon />}
           iconColor={{ color: 'white' }}
           onClick={props.onClickAdd}

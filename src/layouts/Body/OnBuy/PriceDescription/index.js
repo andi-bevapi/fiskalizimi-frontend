@@ -1,8 +1,8 @@
 import { React, useState } from "react";
 
-import ActionButtons from "./ActionButtons/ActionButtons";
-import PriceInformations from "./PriceInformations/PriceInformations";
-import ModalManager from "./ModalManager/ModalManager";
+import ActionButtons from "./ActionButtons";
+import PriceInformations from "./PriceInformations";
+import ModalManager from "./ModalManager";
 
 const PriceDescription = () => {
   const [open, setOpen] = useState("");

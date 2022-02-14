@@ -102,7 +102,7 @@ const ConfirmationDialog = (props) => {
             ) : (
               <Button
                 className={classes.btn}
-                style={{ background: "rgb(221, 51, 51)" }}
+                sx={{ background: "rgb(221, 51, 51)" }}
                 variant="contained"
                 onClick={props.handleButton}
               >

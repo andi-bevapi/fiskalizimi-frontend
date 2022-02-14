@@ -2,9 +2,16 @@ import * as React from "react";
 import { Divider, Typography } from "@mui/material";
 import styles from "./Calculator.module.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import { makeStyles } from "@mui/styles";
 // import { useTranslation } from "react-i18next";
-
+const useStyles = makeStyles(() => ({
+  divider: {
+    width: "100%",
+    margin: "20px 0px",
+  }
+}));
 const Calculator = (props) => {
+  const classes = useStyles();
   // const { t } = useTranslation();
   return (
     <div>
@@ -30,10 +37,7 @@ const Calculator = (props) => {
         />
       </form>
       <Divider
-        style={{
-          width: "100%",
-          margin: "20px 0px",
-        }}
+        className={classes.divider}
       />
       <div className={styles.mainHolder}>
         <div className={styles.calculatorHolder}>

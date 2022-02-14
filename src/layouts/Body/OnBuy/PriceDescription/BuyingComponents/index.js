@@ -1,18 +1,29 @@
-import { Button, Divider, Typography } from "@mui/material";
-import styles from "./BuyingComponent.module.css";
+import { Button, Divider, Typography } from '@mui/material';
+import styles from './BuyingComponent.module.css';
 // import { useBuying } from "../../../../../Context/BuyingContext";
 // import { useSettingsContext } from "../../../../../Context/SettingsContext";
-import Calculator from "./Calculator";
-import { useEffect, useState } from "react";
+import Calculator from './Calculator';
+import { useEffect, useState } from 'react';
+import { makeStyles } from '@mui/styles';
 // import { useTranslation } from "react-i18next";
 
+const useStyles = makeStyles(() => ({
+  printBtn: {
+    width: '40%',
+    backgroundColor: '#81c868',
+  },
+  changeBtn: {
+    width: '45%',
+  },
+}));
 const BuyingComponent = (props) => {
+  const classes = useStyles();
   // const { totalPrice, setPaymentMethod, setChangeAmount, setPaidAmount } =
   //   useBuying();
   // const { settings } = useSettingsContext();
 
   // const { t } = useTranslation();
-  const [payment, setPayment] = useState("");
+  const [payment, setPayment] = useState('');
 
   useEffect(() => {
     // if (payment - (totalPrice + totalPrice * (settings.tvsh / 100)) >= 0)
@@ -29,7 +40,7 @@ const BuyingComponent = (props) => {
 
   const handleACDeleteButton = (event) => {
     event.preventDefault();
-    setPayment("");
+    setPayment('');
   };
 
   const handleManualClick = (event) => {
@@ -52,17 +63,15 @@ const BuyingComponent = (props) => {
 
       <div className={styles.subMainHolder}>
         <div className={styles.cashOrCard}>
-          <Button >{t("cash")}</Button>
-          <Button >
-            {t("creditcard")}
-          </Button>
+          <Button>{t('cash')}</Button>
+          <Button>{t('creditcard')}</Button>
         </div>
         <div className={styles.purchaseInfo}>
           <div className={styles.totalPriceHolder}>
-            <Typography>{t("totalPrice")}</Typography>
+            <Typography>{t('totalPrice')}</Typography>
             <div className={styles.totalPriceSubHolder}>
               <Typography>
-                {" "}
+                {' '}
                 total price me tvsh
                 {/* {totalPrice + totalPrice * (settings.tvsh / 100)}{" "} */}
               </Typography>
@@ -89,12 +98,9 @@ const BuyingComponent = (props) => {
       <div className={styles.buttonHolder}>
         <Button
           variant="contained"
-          style={{
-            width: "45%",
-          }}
+          className={classes.changeBtn}
         >
-          change ALL{" "}
-          total price
+          change ALL total price
           {/* {(
             payment -
             (totalPrice + totalPrice * (settings.tvsh / 100))
@@ -103,16 +109,13 @@ const BuyingComponent = (props) => {
         {/* {payment - (totalPrice + totalPrice * (settings.tvsh / 100)) < 0 ? (
           ""
         ) : ( */}
-          <Button
-            variant="contained"
-            style={{
-              width: "40%",
-              backgroundColor: "#81c868",
-            }}
-            onClick={props.handleCouponPrinting}
-          >
-            {t("generateTicket")}
-          </Button>
+        <Button
+          variant="contained"
+          className={classes.printBtn}
+          onClick={props.handleCouponPrinting}
+        >
+          {t('generateTicket')}
+        </Button>
         {/* )} */}
       </div>
     </div>

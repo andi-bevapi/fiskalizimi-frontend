@@ -5,7 +5,7 @@ import styles from './Navbar.module.css';
 import { Typography } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
-import IconButtonComponent from '../../shared/Button/IconButton';
+import IconButtonComponent from '../../components/Button/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const Navbar = (props) => {

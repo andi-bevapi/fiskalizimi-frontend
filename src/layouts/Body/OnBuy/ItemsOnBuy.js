@@ -1,5 +1,5 @@
 // import { useBuying } from "../../../Context/BuyingContext";
-import IconButtonComponent from "../../../shared/Button/IconButton.js";
+import IconButtonComponent from "../../../components/Button/IconButton.js";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,11 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import PriceDescription from "./PriceDescription/PriceDescription";
+import PriceDescription from "./PriceDescription";
 import { Divider } from "@mui/material";
 import styles from "./ItemsOnBuy.module.css";
 // import { useTranslation } from "react-i18next";
-import SearchByBarcode from "./SearchByBarcode/SearchByBarcode";
+import SearchByBarcode from "./SearchByBarcode";
 
 import { makeStyles } from "@mui/styles";
 
