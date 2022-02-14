@@ -1,18 +1,37 @@
 import { Divider, Grid, IconButton } from '@mui/material';
 import * as React from 'react';
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import ItemCard from './Item/ItemCard';
 import ItemLine from './Item/ItemLine';
 import SearchFilter from '../../components/SearchFilter';
 import NoData from '../../components/NoData';
 import AppsIcon from '@mui/icons-material/Apps';
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import styles from './index.css';
+import BodyDashboard from './Body';
+import { makeStyles } from '@mui/styles';
 // import { useTranslation } from "react-i18next";
 // import { useCategories } from "../../../Context/categoriesContext";
 // import { useProducts } from "../../../Context/productsContext";
 // import Loading from "../../../Shared/Loading/Loading";
-import ListCategories from './ListCategories';
+// import ListCategories from './ListCategories';
+
+const useStyles = makeStyles(() => ({
+  container: { display: 'flex', flexDirection: 'column', width: '100%' },
+  headContainer: {
+    width: '96%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    marginTop: '2px',
+  },
+  iconsContainer: {
+    marginLeft: 'auto',
+    marginRight: '0%',
+    display: 'flex',
+    height: '40px',
+    marginTop: '20px',
+  },
+}));
 
 const Dashboard = () => {
   // const { t } = useTranslation();
@@ -29,11 +48,10 @@ const Dashboard = () => {
   //   setDisplayIcon,
   // } = useProducts();
   // const { categories } = useCategories();
+  const classes = useStyles();
   const [filteredData, setFilteredData] = useState([]);
   const [display, setDisplay] = useState('cards');
-  const observer = useRef();
 
-  const lastElement = useCallback();
   // (node) => {
   //   if (loading) return;
   //   if (observer.current) observer.current.disconnect();
@@ -80,34 +98,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-      }}
-    >
-      <div
-        style={{
-          width: '96%',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          display: 'flex',
-          marginTop: '2px',
-        }}
-      >
+    <div className={classes.container}>
+      <div className={classes.headContainer}>
         <div style={{ marginRight: '3px', marginTop: '-7px' }}>
           <SearchFilter onFilter={filterProducts} placeholder="searchProduct" />
         </div>
-        <div
-          style={{
-            marginLeft: 'auto',
-            marginRight: '0%',
-            display: 'flex',
-            height: '40px',
-            marginTop: '20px',
-          }}
-        >
+        <div className={classes.iconsContainer}>
           <IconButton onClick={() => setDisplay('cards')}>
             <AppsIcon />
           </IconButton>
@@ -124,102 +120,7 @@ const Dashboard = () => {
       {/* {loading ? (
           <Loading />
         ) : ( */}
-      <div
-        style={{
-          height: '70vh',
-          overflowY: 'scroll',
-          width: '98%',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      >
-        {filteredData.length > 0 ? (
-          <div>
-            {display === 'cards' ? (
-              <div>
-                <Divider
-                  style={{
-                    width: '98%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    marginBottom: '20px',
-                  }}
-                />
-                <Grid
-                  container
-                  spacing={{ xs: 1, md: 1, lg: 1 }}
-                  columns={{ xs: 3, sm: 5, md: 6, lg: 7 }}
-                  style={{
-                    width: '99%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                  className={styles.items}
-                >
-                  {filteredData.map((item, index) => {
-                    if (filteredData.length === index + 1) {
-                      return (
-                        <div
-                          key={index}
-                          style={{ flexGrow: 1, cursor: 'pointer' }}
-                          className={styles.item}
-                          ref={lastElement}
-                        >
-                          <Grid item key={index}>
-                            <ItemCard key={index} item={item} />
-                          </Grid>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div
-                          key={index}
-                          style={{ flexGrow: 1, cursor: 'pointer' }}
-                          className={styles.item}
-                        >
-                          <Grid item key={index}>
-                            <ItemCard key={index} item={item} />
-                          </Grid>
-                        </div>
-                      );
-                    }
-                  })}
-                </Grid>
-              </div>
-            ) : (
-              filteredData.map((item, index) => {
-                if (filteredData.length === index + 1) {
-                  return (
-                    <div key={index} ref={lastElement}>
-                      <ItemLine item={item} />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={index}>
-                      <ItemLine item={item} />
-                    </div>
-                  );
-                }
-              })
-            )}
-          </div>
-        ) : (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <NoData title="noProductcreated" />
-          </div>
-        )}
-      </div>
-      {/* )} */}
-      {/* {loadingMore && <p>Loading...</p>} */}
+      <BodyDashboard filteredData={filteredData} display={display} />
     </div>
   );
 };
