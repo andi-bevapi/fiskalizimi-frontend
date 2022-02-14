@@ -18,26 +18,21 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   table: {
     fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
-    fontSize: "40px",
   },
   tableCell: {
-    fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     padding: "10px 1px",
     color: "#505458",
   },
   tableCellStart: {
-    fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     padding: "2px 4px",
     color: "#505458",
   },
   tableHeadStart: {
-    fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     padding: "2px 4px",
     fontWeight: "bold",
     color: "#505458",
   },
   tableHead: {
-    fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     padding: "5px 1px",
     fontWeight: "bold",
     color: "#505458",
@@ -60,7 +55,7 @@ const ItemsOnBuy = () => {
     <div className={styles.mainHolder}>
       <SearchByBarcode />
       <TableContainer classes={{ root: classes.customTableContainer }}>
-        <Table stickyHeader>
+        <Table stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell className={classes.tableHeadStart}>Nr.</TableCell>

@@ -1,7 +1,6 @@
 import React from 'react';
-import { navItems } from './navItems.config';
+import { navItems } from '../navItems.config';
 import Button from '@mui/material/Button';
-import { Grid } from '@mui/material';
 import { history } from 'umi';
 import { makeStyles } from '@mui/styles';
 
@@ -25,16 +24,14 @@ const NavItems = () => {
   return (
     <>
       {navItems.map((item, i) => (
-        <Grid key={i} item xs={12}>
-          <Button
-            fullWidth={true}
-            className={classes.btn}
-            onClick={() => handleClick(item.path)}
-            color="inherit"
-          >
-            {item.title}
-          </Button>
-        </Grid>
+        <Button
+          fullWidth={true}
+          className={classes.btn}
+          onClick={() => handleClick(item.path)}
+          color="inherit"
+        >
+          {item.title}
+        </Button>
       ))}
     </>
   );

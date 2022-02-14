@@ -70,11 +70,9 @@ const Dashboard = () => {
   };
 
   const handleCategory = (id) => {
-    let filteredRowData = [];
+    let filteredRowData = products;
     if (id !== 'All') {
       filteredRowData = products.filter((item) => item.categoryId === id);
-    } else {
-      filteredRowData = products;
     }
     setFilteredData(filteredRowData);
     setCategory(id);

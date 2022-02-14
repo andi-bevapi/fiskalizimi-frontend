@@ -1,6 +1,6 @@
 import React from 'react';
 import { navItems } from './navItems.config';
-import SideDrawer from './SideDrawer';
+import SideDrawer from './components/SideDrawer';
 import styles from './Navbar.module.css';
 import { Typography } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
@@ -12,7 +12,7 @@ const Navbar = (props) => {
 
   return (
     <div className={styles.navContainer}>
-      <div className={styles.leftBtns}>
+      <div >
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
@@ -23,7 +23,6 @@ const Navbar = (props) => {
           }}
           icon={<PersonIcon />}
           iconColor={{ color: 'grey' }}
-          onClick={props.handleProfile}
         />
         <IconButtonComponent
           style={{
@@ -35,13 +34,11 @@ const Navbar = (props) => {
           //   icon={<Typography>{JSON.parse(localStorage.getItem('user')).username}</Typography>}
           icon={<Typography>username here</Typography>}
           iconColor={{ color: 'grey' }}
-          onClick={props.handleProfile}
         />
         <IconButtonComponent
           style={{ backgroundColor: '#ffaa33', marginRight: '5px', borderRadius: '5px' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
-          onClick={props.handleLogout}
         />
       </div>
     </div>

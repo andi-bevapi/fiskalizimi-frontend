@@ -1,5 +1,5 @@
 import styles from './index.css';
-import Navbar from './Navbar/index';
+import Navbar from './Navbar/';
 import Body from './Body/index';
 
 const BasicLayout = (props) => {
