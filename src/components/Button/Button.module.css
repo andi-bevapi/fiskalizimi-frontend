@@ -1,0 +1,17 @@
+.button {
+  font-size: 14px !important;
+  font-weight: 400;
+  font-family: "Helvetica Neue", Helvetica,Arial,sans-serif;
+  text-align: center;
+  line-height: 1rem!important;
+  text-transform: unset!important;
+  box-shadow: unset !important;
+  max-height: 33px;
+}
+
+.icon {
+  height: 22px;
+  color: white;
+  margin-right: 8px;
+  margin-left: 6px;
+}

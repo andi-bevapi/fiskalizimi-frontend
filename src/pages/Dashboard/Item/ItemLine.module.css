@@ -1,0 +1,8 @@
+.container {
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.container:hover {
+  background: #ebeff2;
+}

@@ -1,10 +1,13 @@
 import styles from './index.css';
+import Navbar from './Navbar/';
+import Body from './Body/';
 
 const BasicLayout = (props) => {
+
   return (
     <div className={styles.normal}>
-      <h1 className={styles.title}>Fiskalizimi</h1>
-      {props.children}
+      <Navbar/>
+      <Body children={props.children}/>
     </div>
   );
 }

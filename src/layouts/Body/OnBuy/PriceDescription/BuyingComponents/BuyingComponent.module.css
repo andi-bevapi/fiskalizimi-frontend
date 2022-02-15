@@ -1,0 +1,52 @@
+.mainHolder {
+  width: 45vw;
+}
+
+.subMainHolder {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.cashOrCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  width: 29%;
+  height: max-content;
+}
+
+.purchaseInfo {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.totalPriceHolder {
+  background-color: #EBEFF2;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+}
+
+.totalPriceSubHolder {
+  width: 100%;
+  border: 1px solid #c9c8c8;
+  min-height: fit-content;
+  text-align: left;
+  padding: 5px 15px;
+}
+
+
+.buttonHolder {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 0px;
+}
+
+
+.buttonHolder > Button {
+  padding: 10px 0px;
+}

@@ -1,0 +1,50 @@
+.mainHolder {
+  border-top: 1px dashed black;
+  width: 100%;
+}
+
+.qrCodeHolder {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.qrCodeHolder > div {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.qrCodeHolder > div > img {
+  width: 32mm;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fiscalisationInformation {
+  width: 100%;
+}
+
+.textInformation {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1mm 0px;
+}
+
+.textInformation > p {
+  font-size: 11px;
+}
+
+.endingInformation {
+    padding: 1mm 0px;
+    width: 100%;
+    border-top: 1px dashed black;
+    border-bottom: 1px dashed black;
+}
+
+.endingInformation > div {
+    text-align: left;
+}

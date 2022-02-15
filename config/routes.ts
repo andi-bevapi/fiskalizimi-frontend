@@ -6,6 +6,7 @@ export default [
     routes: [
       { exact: true, path: '/', component: './Dashboard' },
       { exact: true, path: '/produktet', component: './Products' },
+      { exact: true, path: '/kategorite', component: './Categories' },
     ],
   },
 ];

@@ -1,0 +1,42 @@
+.mainHolder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0% 20px;
+}
+
+.itemsOnBuy {
+  width: 30%;
+  background-color: white;
+  height: 90vh ;
+}
+
+.itemsOnStock {
+  width: 69%;
+  background-color: white;
+  padding: 0 11px;
+  height: 90vh !important
+}
+
+@media only screen and (max-width: 1240px) {
+  .mainHolder {
+    display: flex;
+  }
+
+  .itemsOnBuy {
+    width: 44% !important;
+  }
+
+  .itemsOnStock {
+    width: 55% !important;
+  }
+}
+
+@media only screen and (max-width: 1330px) {
+  .mainHolder {
+    display: flex;
+  }
+}
