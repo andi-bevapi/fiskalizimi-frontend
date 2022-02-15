@@ -11,7 +11,9 @@ const useStyles = makeStyles(() => ({
     margin: '0 3px 3px 0',
   },
   iconBtn: {
-    marginLeft: '-3px', backgroundColor: '#ffaa33', width: '30px'
+    marginLeft: '-3px',
+    backgroundColor: '#ffaa33',
+    width: '30px',
   },
 }));
 
@@ -34,15 +36,13 @@ const ButtonComponent = (props) => {
       >
         {props.title}
       </Button>
-      {props.addIcon === true ? (
+      {props.addIcon && (
         <IconButtonComponent
           className={classes.iconBtn}
           icon={<AddIcon />}
           iconColor={{ color: 'white' }}
           onClick={props.onClickAdd}
         />
-      ) : (
-        ''
       )}
       {/* {props.oppenOrder && totalOrdersNumber !== 0 ? (
           <span style={{
