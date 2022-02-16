@@ -1,9 +1,10 @@
 import TableComponent from '../../components/Table';
-import { TableCell, TableRow, TextField } from '@mui/material';
+import { TableCell, TableRow, TextField, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButtonComponent from '../../components/Button/IconButton';
 import { makeStyles } from '@mui/styles';
+import { useState } from 'react';
 
 const useStyles = makeStyles(() => ({
   tableCell: {
@@ -12,71 +13,51 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Products = () => {
-  const tableHeaders = ['Nr.', 'Barcode', 'Name', 'Price', 'Stock', 'Category', 'Actions'];
-  const products = [
-    { id: 1, barcode: '81767', name: 'vodka', price: '100', stock: '10', category: 'pije' },
-  ];
+  const tableHeaders = ['Nr.', 'Image', 'Barcode', 'Name', 'Price', 'Stock', 'Category', 'Actions'];
+  const [dataFromComponent, setDataFromComponent] = useState([
+    { id: 1, image: "foto", barcode: '81767', name: 'vodka', price: '100', stock: '10', category: 'pije' },
+    { id: 2, image: "foto", barcode: '817s367', name: 'uje', price: '100', stock: '10', category: 'pije' },
+    { id: 3, image: "foto", barcode: '817', name: 'birra', price: '100', stock: '10', category: 'pije' },
+  ]);
   const classes = useStyles();
+
+  const [element, setElement] = useState({});
+
+
+  console.log("The element is this *-*-*-*-*-*-*-", element)
 
   return (
     <div>
       <h1>Products Component</h1>
-      <TableComponent tableHeaders={tableHeaders}>
-        {products.map((product, index) => (
+      <TableComponent
+        tableHeaders={tableHeaders}
+        dataFromComponent={dataFromComponent}
+        setData={setDataFromComponent}
+        element={element}
+        setElement={setElement}
+      >
+        {/* {dataFromComponent.map((subDataFromComponent, index) => (
           <TableRow
             key={index.toString()}
             sx={{
               '&:last-child td, &:last-child th': { border: 0 },
             }}
-            id={product.id}
+            id={subDataFromComponent.id}
           >
-            <TableCell className={classes.tableCell}>{index + 1}</TableCell>
-            <TableCell className={classes.tableCell}>{product.barcode}</TableCell>
-            <TableCell component="th" scope="row" className={classes.tableCell}>
-              <TextField
-                id={JSON.stringify(product.id)}
-                value={product.name}
-                // disabled={product.edit}
-                inputProps={{ style: { padding: 12, width: 180 } }}
-                // onChange={(e) => handleEditField(e, index)}
-              />
-            </TableCell>
-            <TableCell className={classes.tableCell}>
-              <TextField
-                type="number"
-                id={JSON.stringify(product.id)}
-                // disabled={product.edit}
-                value={product.price}
-                // onChange={(e) => handlePrice(e, index)}
-                inputProps={{
-                  style: { padding: 12, width: 80 },
-                  inputMode: 'numeric',
-                  pattern: '[0-9]*',
-                }}
-              />
-            </TableCell>
-            <TableCell className={classes.tableCell}>
-              <TextField
-                id={JSON.stringify(product.id)}
-                // disabled={product.edit}
-                value={product.stock}
-                // onChange={(e) => handleStock(e, index)}
-                inputProps={{
-                  style: { padding: 12, width: 80 },
-                  inputMode: 'numeric',
-                  pattern: '[0-9]*',
-                }}
-              />
-            </TableCell>
-            <TableCell key={index} className={classes.tableCell}>
-              <TextField
-                id={JSON.stringify(product.id)}
-                value={product.category}
-                // disabled={product.edit}
-                inputProps={{ style: { padding: 12, width: 180 } }}
-                // onChange={(e) => handleEditField(e, index)}
-              />
-            </TableCell>
+            {Object.keys(subDataFromComponent).map((key, index) => {
+              return (
+                <TableCell key={index}>
+                  <TextField
+                    id={index}
+                    value={subDataFromComponent[key]}
+                    // disabled={product.edit}
+                    inputProps={{ style: { padding: 12, width: 180 } }}
+                    // onChange={(e) => handleEditField(e, index)}
+                  />
+                </TableCell>
+              );
+            })}
+
             <TableCell className={classes.tableCell}>
               <div>
                 <IconButtonComponent
@@ -103,7 +84,7 @@ const Products = () => {
               </div>
             </TableCell>
           </TableRow>
-        ))}
+        ))} */}
       </TableComponent>
     </div>
   );
