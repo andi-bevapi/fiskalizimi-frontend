@@ -25,6 +25,7 @@ const NavItems = () => {
     <>
       {navItems.map((item, i) => (
         <Button
+          key={i}
           fullWidth={true}
           className={classes.btn}
           onClick={() => handleClick(item.path)}

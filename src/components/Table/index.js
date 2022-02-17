@@ -1,7 +1,16 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { TextField, Typography } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { TextField } from '@mui/material';
 import IconButtonComponent from '../Button/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { makeStyles } from '@mui/styles';
 
@@ -9,16 +18,7 @@ const useStyles = makeStyles(() => ({
   tableCell: {
     padding: '5px 4px',
   },
-  chooseBtn: {
-    backgroundColor: ' #5d9cec',
-    color: 'white',
-    borderRadius: '3px',
-    boxShadow: 'none',
-    textTransform: 'none',
-    padding: '1.4px',
-    display: 'none',
-  },
-  filtersContainer: {
+  btnContainer: {
     display: 'flex',
   },
 }));
@@ -26,16 +26,16 @@ const useStyles = makeStyles(() => ({
 const TableComponent = (props) => {
   const classes = useStyles();
 
-  const handleChanges = (e, id, index, key) => {
-    console.log(id);
-    console.log("INDEX", index);
-    const item = props.dataFromComponent.filter((el) => el.id === id);
-    props.setElement(item[0]);
+  const handleChanges = (e, index, key) => {
     props.setData((prevState) => {
-      console.log(prevState[index]);
-      prevState[index] [`${key}`] = e.target.value;
+      prevState[index][`${key}`] = e.target.value;
       return [...prevState];
     });
+  };
+
+  const handleEditButton = (e, id) => {
+    const item = props.data.filter((el) => el.id === id);
+    props.setElement({ ...item[0] });
   };
 
   return (
@@ -51,58 +51,59 @@ const TableComponent = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.dataFromComponent.map((subDataFromComponent, index) => (
+          {props.data.map((subDataFromComponent, index) => (
             <TableRow
-              key={index.toString()}
+              key={index}
               sx={{
                 '&:last-child td, &:last-child th': { border: 0 },
               }}
               id={subDataFromComponent.id}
             >
-              {/* <TableCell key={index}>{index}</TableCell> */}
               {Object.keys(subDataFromComponent).map((key, idx) => (
-                <>
-                  {key === 'image' ? (
-                    <TableCell key={idx}>photo</TableCell>
+                <TableCell key={idx}>
+                  {key === 'id' ? (
+                    <Typography>{index + 1}</Typography>
+                  ) : key === 'image' ? (
+                    <Typography>photo</Typography>
                   ) : (
-                    <TableCell key={idx}>
-                      <TextField
-                        id={idx}
-                        value={subDataFromComponent[key]}
-                        onChange={(e) => {
-                          handleChanges(e, subDataFromComponent.id, index, key);
-                        }}
-                        inputProps={{ style: { padding: 12, width: 180 } }}
-                      />
-                    </TableCell>
+                    <TextField
+                      key={idx}
+                      value={subDataFromComponent[key]}
+                      disabled={subDataFromComponent.id == props.element.id ? false : true}
+                      onChange={(e) => {
+                        handleChanges(e, index, key);
+                      }}
+                      inputProps={{ style: { padding: 12, width: 160, height: 10} }}
+                    />
                   )}
-                </>
-                // return (
-                //   <TableCell key={index}>
-                //     <TextField
-                //       id={index}
-                //       value={subDataFromComponent[key]}
-                //       // disabled={product.edit}
-                //       inputProps={{ style: { padding: 12, width: 180 } }}
-                //       // onChange={(e) => handleEditField(e, index)}
-                //     />
-                //   </TableCell>
-                // );
+                </TableCell>
               ))}
               <TableCell className={classes.tableCell}>
-                <div>
-                  <IconButtonComponent
-                    style={{
-                      backgroundColor: '#ffa500',
-                      marginRight: '10px',
-                    }}
-                    icon={<EditIcon />}
-                    //   disabled={editing}
-                    iconColor={{
-                      color: 'white',
-                    }}
-                    //   onClick={(e) => handleEditButton(e, index)}
-                  />
+                <div className={classes.btnContainer}>
+                  {subDataFromComponent.id != props.element.id || props.element.id == 0 ? (
+                    <IconButtonComponent
+                      style={{
+                        backgroundColor: props.element.id != 0 ? 'rgba(0, 0, 0, 0.08)' : '#ffa500',
+                        marginRight: '10px',
+                      }}
+                      icon={<EditIcon />}
+                      disabled={props.element.id == 0 ? false : true}
+                      iconColor={{
+                        color: props.element.id != 0 ? 'grey' : 'white',
+                      }}
+                      onClick={(e) => handleEditButton(e, subDataFromComponent.id)}
+                    />
+                  ) : (
+                    <IconButtonComponent
+                      style={{
+                        backgroundColor: 'green',
+                        marginRight: '10px',
+                      }}
+                      icon={<CheckIcon />}
+                      iconColor={{ color: 'white' }}
+                      onClick={props.handleEditElement}
+                    />
+                  )}
                   <IconButtonComponent
                     style={{
                       backgroundColor: '#f05050',
@@ -110,7 +111,7 @@ const TableComponent = (props) => {
                     }}
                     icon={<DeleteForeverIcon />}
                     iconColor={{ color: 'white' }}
-                    //   onClick={(e) => handleAsk(product.id)}
+                    onClick={(e) => props.handleAsk(subDataFromComponent.id)}
                   />
                 </div>
               </TableCell>
