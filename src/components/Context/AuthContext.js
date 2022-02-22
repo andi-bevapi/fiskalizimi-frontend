@@ -8,7 +8,7 @@ const AuthProvider = (props) =>{
     const [isLoggedIn , setIsLoggedIn] = useState(null);
    
     const login = (username,password) =>{
-        console.log("context------");
+        
         loginService(username,password);
     }
     

@@ -8,7 +8,7 @@ const BasicLayout = (props) => {
 
   return (
     <AuthProvider>
-        <Login />
+      <Login />
     </AuthProvider>
      
     // <div className={styles.normal}>

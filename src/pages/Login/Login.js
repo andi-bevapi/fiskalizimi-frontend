@@ -27,7 +27,6 @@ const Login = () => {
 
   const handleSubmit = (e , values) => {
     e.preventDefault()
-    console.log("handleSubmit-----");
      console.log("values-----",values);
   }
 

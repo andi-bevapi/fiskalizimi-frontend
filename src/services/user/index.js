@@ -9,9 +9,9 @@ export async function getCurrentUser() {
 }
 
 const loginService = async (username,password) => {
-    console.log("service------",username); 
+    
     const data = await ((username,password) => {
-        console.log("await------",username); 
+        
         return null
     })
     return data;
