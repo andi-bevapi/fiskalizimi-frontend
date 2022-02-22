@@ -1,0 +1,47 @@
+.mainHolder {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.subMainHolder {
+  min-width: 550px;
+  background-color: #ffffff;
+  padding: 5rem;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.lockerHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.inputHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 13rem;
+  margin-top: 6rem;
+}
+
+.passwordButtonHolder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.passwordField {
+  width: 90%;
+}
+
+@media only screen and (max-width: 994px) {
+  .inputHolder {
+    width: auto;
+  }
+}

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { createBrowserHistory, History } from 'C:/Users/Mateo/Desktop/repos/fiskalizimi/fiskalizimi-front-end-v2/node_modules/@umijs/runtime';
+import { createBrowserHistory, History } from '/home/user/Desktop/fiskalizimi_new/fiskalizimi-front-end-v2/node_modules/@umijs/runtime';
 
 let options = {
   "basename": "/"
