@@ -4,7 +4,7 @@ import { IconButton, Button, Typography ,Alert} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
-import { useMainAuth } from "../../components/Context/AuthContext";
+import { useMainAuth } from "../../Context/AuthContext";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -25,78 +25,81 @@ const Login = () => {
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (e , values) => {
-    e.preventDefault()
-     console.log("values-----",values);
+  const customHandleSubmit = async (fields ) => {
+      const response = await login(fields);
+      //console.log("response-----",response);
+      return response;
   }
 
   return (
     <>
-        <Formik initialValues={{username:"",password:""}} validationSchema={loginSchema} >
+        <Formik initialValues={{username:"",password:""}} validationSchema={loginSchema} onSubmit={ (fields) => {
+            console.log("fields--",fields);
+            customHandleSubmit(fields)
+          }}>
           {
             formik => (
-              <div className={styles.mainHolder}>
-                {/* {console.log("touched------",formik)} */}
-                
-                <div className={styles.subMainHolder}>
-                  <div className={styles.lockerHolder}>
-                    <LockIcon
-                      style={{
-                        transform: "scale(1.8)",
-                        color: "rgba(0, 0, 0, 0.6)",
-                      }}
-                    />
-                    <Typography> Hyni në platformë</Typography>
-                  </div>
-        
-                  <form className={styles.inputHolder} onSubmit={(e)=>{handleSubmit(e,formik.values)}}>
-                    <TextField
-                      label="username"
-                      name="username"
-                      type="username"
-                      id="username"
-                      value={formik.values.username}
-                      label="Përdoruesi"
-                     
-                      onChange={formik.handleChange}
-                      onBlur = {formik.handleBlur}
-                    />
-                    {formik.errors.username && formik.touched.username &&  <Alert severity="error">{formik.errors.username}!</Alert> }
-        
-                    <FormControl>
-                      <InputLabel htmlFor="Fjalëkalimi">Fjalëkalimi</InputLabel>
-                      <OutlinedInput
-                        label="password"
-                        id="Fjalëkalimi"
-                        name="password"
-                        
-                        onChange={formik.handleChange}
-                        onBlur = {formik.handleBlur}
-                        value={formik.values.password}
-                        type={showPassword ? "text" : "password"}
-                        label="Fjalëkalimi"
-                        onChange={formik.handleChange}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              edge="end"
-                            >
-                              {!showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
+              <Form>
+                <div className={styles.mainHolder}>
+                  <div className={styles.subMainHolder}>
+                    <div className={styles.lockerHolder}>
+                      <LockIcon
+                        style={{
+                          transform: "scale(1.8)",
+                          color: "rgba(0, 0, 0, 0.6)",
+                        }}
                       />
-                      {formik.errors.password && formik.touched.password &&  <Alert severity="error">{formik.errors.password}!</Alert> }
-                    </FormControl>
-        
-                    <Button variant="contained" type="submit">
-                      Hyr
-                    </Button>
-                  </form>
+                      <Typography> Hyni në platformë</Typography>
+                    </div>
+                    <div className={styles.inputHolder}>
+                        <TextField
+                          label="username"
+                          id="username"
+                          name="username"
+                          type="username"
+                          value={formik.values.username}
+                          label="Përdoruesi"
+                          onChange={formik.handleChange}
+                          onBlur = {formik.handleBlur}
+                          error={formik.touched.username && Boolean(formik.errors.username)}
+                        />
+                          <ErrorMessage component="div" name="username" />
+                          <FormControl>
+                              <InputLabel htmlFor="Fjalëkalimi">Fjalëkalimi</InputLabel>
+                              <OutlinedInput
+                                label="password"
+                                id="Fjalëkalimi"
+                                name="password"
+                                type="password"
+                                onChange={formik.handleChange}
+                                onBlur = {formik.handleBlur}
+                                value={formik.values.password}
+                                type={showPassword ? "text" : "password"}
+                                label="Fjalëkalimi"
+                                onChange={formik.handleChange}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                endAdornment={
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      edge="end"
+                                    >
+                                      {!showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                              />
+                          
+                            <ErrorMessage component="div" name="password" />
+                          </FormControl>
+                          <Button variant="contained" type="submit">
+                            Hyr
+                          </Button>
+                      </div>
+                  </div>
                 </div>
-              </div>
+              </Form>
             )
           }
         </Formik>

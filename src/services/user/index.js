@@ -8,12 +8,12 @@ export async function getCurrentUser() {
     });
 }
 
-const loginService = async (username,password) => {
-    
-    const data = await ((username,password) => {
-        
-        return null
-    })
+const loginService = async (user) => {
+    const data = await request.get("/client/",{
+        headers:{
+            'Content-Type': 'application/json',
+        }
+    });
     return data;
 }
 

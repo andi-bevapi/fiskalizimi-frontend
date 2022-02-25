@@ -2,7 +2,7 @@ import styles from './index.css';
 import Navbar from './Navbar/';
 import Body from './Body/';
 import Login from '../pages/Login/Login';
-import {AuthProvider} from "../components/Context/AuthContext";
+import {AuthProvider} from "../Context/AuthContext";
 
 const BasicLayout = (props) => {
 
