@@ -7,3 +7,14 @@ export async function getCurrentUser() {
         },
     });
 }
+
+const loginService = async (user) => {
+    const data = await request.get("/client/",{
+        headers:{
+            'Content-Type': 'application/json',
+        }
+    });
+    return data;
+}
+
+export {loginService}

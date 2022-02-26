@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import initialState from 'C:/Users/Mateo/Desktop/repos/fiskalizimi/fiskalizimi-front-end-v2/src/.umi/plugin-initial-state/models/initialState';
+import initialState from '/home/user/Desktop/fiskalizimi_new/fiskalizimi-front-end-v2/src/.umi/plugin-initial-state/models/initialState';
 
 // @ts-ignore
 import Dispatcher from './helpers/dispatcher';

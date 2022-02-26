@@ -4,8 +4,8 @@ import '@@/core/devScripts';
 import { plugin } from './core/plugin';
 import './core/pluginRegister';
 import { createHistory } from './core/history';
-import { ApplyPluginsType } from 'C:/Users/Mateo/Desktop/repos/fiskalizimi/fiskalizimi-front-end-v2/node_modules/@umijs/runtime';
-import { renderClient } from 'C:/Users/Mateo/Desktop/repos/fiskalizimi/fiskalizimi-front-end-v2/node_modules/@umijs/renderer-react';
+import { ApplyPluginsType } from '/home/user/Desktop/fiskalizimi_new/fiskalizimi-front-end-v2/node_modules/@umijs/runtime';
+import { renderClient } from '/home/user/Desktop/fiskalizimi_new/fiskalizimi-front-end-v2/node_modules/@umijs/renderer-react';
 import { getRoutes } from './core/routes';
 
 
