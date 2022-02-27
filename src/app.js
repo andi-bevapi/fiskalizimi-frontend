@@ -1,4 +1,6 @@
+import { history } from 'umi';
 import { getCurrentUser } from './services/user';
+import User from './models/User';
 
 export async function getInitialState() {
   const fetchUserInfo = async () => {
@@ -8,11 +10,13 @@ export async function getInitialState() {
         return getCurrentUser();
       }
     } catch (error) {
-      console.log(error);
+      history.push('/login');
     }
+    return new User();
   };
 
-  const currentUser = await fetchUserInfo();
+  const currentUserInfo = await fetchUserInfo();
+  const currentUser = new User(currentUserInfo.data);
 
   return {
     fetchUserInfo,

@@ -1,8 +1,9 @@
-import TableComponent from '../../components/Table';
 import { useState } from 'react';
+import TableComponent from '../../components/Table';
+
+const tableHeaders = ['Nr.', 'Name', 'Actions'];
 
 const Categories = () => {
-  const tableHeaders = ['Nr.', 'Name', 'Actions'];
   const [data, setData] = useState([
     {
       id: 1,
@@ -17,7 +18,6 @@ const Categories = () => {
       name: 'fruta',
     },
   ]);
-
   const [element, setElement] = useState({ id: 0 });
 
   const handleEditCategory = () => {
@@ -31,7 +31,7 @@ const Categories = () => {
   };
 
   return (
-    <div>
+    <>
       <h1>Categories Component</h1>
       <TableComponent
         tableHeaders={tableHeaders}
@@ -41,8 +41,8 @@ const Categories = () => {
         setElement={setElement}
         handleEditElement={handleEditCategory}
         handleAsk={handleAsk}
-      ></TableComponent>
-    </div>
+      />
+    </>
   );
 };
 

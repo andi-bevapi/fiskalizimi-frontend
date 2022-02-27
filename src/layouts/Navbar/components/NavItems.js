@@ -1,7 +1,7 @@
 import React from 'react';
 import { navItems } from '../navItems.config';
 import Button from '@mui/material/Button';
-import { history } from 'umi';
+import { history, Access, useAccess } from 'umi';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -16,7 +16,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const NavItems = () => {
+  const access = useAccess();
   const classes = useStyles();
+
   const handleClick = (path) => {
     history.push(path);
   };
@@ -24,15 +26,16 @@ const NavItems = () => {
   return (
     <>
       {navItems.map((item, i) => (
-        <Button
-          key={i}
-          fullWidth={true}
-          className={classes.btn}
-          onClick={() => handleClick(item.path)}
-          color="inherit"
-        >
-          {item.title}
-        </Button>
+        <Access key={i} accessible={item.access ? access[item.access] : true}>
+          <Button
+            fullWidth={true}
+            className={classes.btn}
+            onClick={() => handleClick(item.path)}
+            color="inherit"
+          >
+            {item.title}
+          </Button>
+        </Access>
       ))}
     </>
   );

@@ -1,20 +1,19 @@
 import request from '../../utils/request';
 
 export async function getCurrentUser() {
-    return request('/user/current', {
+    return request('/user/current/info', {
         headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + localStorage.getItem('token')
         },
     });
 }
 
-const loginService = async (user) => {
-    const data = await request.get("/client/",{
-        headers:{
+export const login = async (data) => {
+    return request("/user/login", {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
-        }
+        },
+        data
     });
-    return data;
 }
-
-export {loginService}

@@ -1,15 +1,17 @@
 export const navItems = [
   {
     title: "Faqja kryesore",
-    path: "/",
+    path: "/"
   },
   {
     title: "Produktet",
     path: "/produktet",
+    access: 'canViewProducts'
   },
   {
     title: "Kategorite",
     path: "/kategorite",
+    access: 'canViewCategories'
   },
   {
     title: "Njesite e shitjes",

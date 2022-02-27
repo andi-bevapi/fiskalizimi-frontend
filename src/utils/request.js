@@ -31,6 +31,4 @@ const request = extend({
     errorHandler
 });
 
-
-
 export default request;
