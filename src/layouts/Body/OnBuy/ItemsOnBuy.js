@@ -38,10 +38,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#505458",
   },
   customTableContainer: {
-    height: "71vh",
-    ["@media (max-width:1000px)"]: {
-      height: "66vh",
-    },
+    height: "100%",
   },
 }));
 

@@ -21,11 +21,11 @@ const PriceInformations = () => {
   return (
     <div className={styles.mainHolder}>
       <div className={styles.itemsHolder}>
-        <Typography variant={"body2"} className={classes.text}>
+        <Typography variant="body2" className={classes.text}>
          products:
         </Typography>
         <div className={classes.text}>
-          {buyingList.length === 0 ? <p>0</p> : <p>{buyingList.length}</p>}
+          {buyingList.length === 0 ? <div>0</div> : <div>{buyingList.length}</div>}
         </div>
       </div>
       <div className={styles.noVatPriceHolder}>

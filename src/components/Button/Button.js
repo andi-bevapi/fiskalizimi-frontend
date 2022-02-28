@@ -8,7 +8,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
-    margin: '0 3px 3px 0',
+    marginLeft: '3px',
   },
   iconBtn: {
     marginLeft: '-3px',

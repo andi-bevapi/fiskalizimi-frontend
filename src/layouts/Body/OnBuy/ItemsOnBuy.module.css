@@ -4,8 +4,10 @@ table {
 }
 
 .mainHolder {
-  padding: 10px 10px;
-  /* height: 78vh; */
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 #quantity {

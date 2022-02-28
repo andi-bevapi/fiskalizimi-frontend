@@ -2,7 +2,6 @@ import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
-  searchContainer: { marginTop: 20, marginBottom: 20, overflow: "hidden" },
   searchInput: { display: "block" },
   textField: { height: 40,width:"100%" }
 }));

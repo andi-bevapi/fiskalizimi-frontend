@@ -5,16 +5,12 @@ import NoData from '../../components/NoData';
 
 const useStyles = makeStyles(() => ({
   body: {
-    height: '70vh',
+    height: '100%',
+    width: '100%',
     overflowY: 'scroll',
-    width: '98%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
   },
   divider: {
-    width: '98%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    width: '100%',
     marginBottom: '20px',
   },
   noDataCont: {

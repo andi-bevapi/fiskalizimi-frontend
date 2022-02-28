@@ -36,7 +36,7 @@ const Navbar = (props) => {
           iconColor={{ color: 'grey' }}
         />
         <IconButtonComponent
-          style={{ backgroundColor: '#ffaa33', marginRight: '5px', borderRadius: '5px' }}
+          style={{ backgroundColor: '#ffaa33', borderRadius: '5px' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
         />
