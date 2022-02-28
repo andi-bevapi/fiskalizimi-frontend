@@ -10,7 +10,6 @@ import { useState } from 'react';
 // import {useBuying} from "../../../Context/BuyingContext";
 
 const useStyles = makeStyles(() => ({
-  searchContainer: { marginTop: 5, marginBottom: 15, overflow: 'hidden' },
   searchInput: { display: 'block' },
   textField: { height: 40, width: '100%' },
 }));
@@ -35,9 +34,8 @@ const SearchByBarcode = () => {
   };
   return (
     <div className={styles.searchContainer}>
-      <Box>
-        <Grid container item columns={12}>
-          <Grid item xs={10}>
+        <Grid container columns={12}>
+          <Grid xs={10}>
             <TextField
               placeholder="addByBarcode"
               className={styles.textField}
@@ -48,7 +46,7 @@ const SearchByBarcode = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid xs={2} style={{textAlign: 'right'}}>
             <IconButtonComponent
               style={{ backgroundColor: '#eeeeee', height: 40 }}
               icon={<CheckIcon />}
@@ -57,7 +55,6 @@ const SearchByBarcode = () => {
             />
           </Grid>
         </Grid>
-      </Box>
     </div>
   );
 };

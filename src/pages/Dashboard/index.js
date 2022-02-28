@@ -16,20 +16,16 @@ import { makeStyles } from '@mui/styles';
 // import ListCategories from './ListCategories';
 
 const useStyles = makeStyles(() => ({
-  container: { display: 'flex', flexDirection: 'column', width: '100%' },
+  container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%', padding: '24px 16px' },
   headContainer: {
-    width: '96%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    width: '100%',
     display: 'flex',
-    marginTop: '2px',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   iconsContainer: {
-    marginLeft: 'auto',
-    marginRight: '0%',
     display: 'flex',
     height: '40px',
-    marginTop: '20px',
   },
 }));
 
@@ -100,14 +96,12 @@ const Dashboard = () => {
   return (
     <div className={classes.container}>
       <div className={classes.headContainer}>
-        <div style={{ marginRight: '3px', marginTop: '-7px' }}>
-          <SearchFilter onFilter={filterProducts} placeholder="searchProduct" />
-        </div>
+        <SearchFilter onFilter={filterProducts} placeholder="searchProduct" />
         <div className={classes.iconsContainer}>
           <IconButton onClick={() => setDisplay('cards')}>
             <AppsIcon />
           </IconButton>
-          <IconButton onClick={() => setDisplay('lines')}>
+          <IconButton style={{paddingRight: 0}} onClick={() => setDisplay('lines')}>
             <DehazeIcon />
           </IconButton>
         </div>
