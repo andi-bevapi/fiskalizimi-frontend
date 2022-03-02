@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { makeStyles } from '@mui/styles';
+import BootstrapInputField from '../../components/InputFields/BootstrapTextField';
 
 const useStyles = makeStyles(() => ({
   tableCell: {
@@ -67,14 +68,12 @@ const TableComponent = (props) => {
                   ) : key === 'image' ? (
                     <Typography>photo</Typography>
                   ) : (
-                    <TextField
-                      key={idx}
-                      value={subDataFromComponent[key]}
+                    <BootstrapInputField
+                      defaultValue={subDataFromComponent[key]}
                       disabled={true}
-                      onChange={(e) => {
-                        handleChanges(e, index, key);
-                      }}
-                      inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
+                      placeholder="Name"
+                      id="name"
+                      style={{margin: 0}}
                     />
                   )}
                 </TableCell>

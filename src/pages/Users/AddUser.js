@@ -4,8 +4,6 @@ import { makeStyles } from '@mui/styles';
 import styles from './AddUser.module.css';
 import BootstrapInputField from '../../components/InputFields/BootstrapTextField';
 import BootstrapCheckbox from '../../components/InputFields/BootsrapCheckbox';
-import BootstrapSelecter from '../../components/InputFields/BootstrapSelectField';
-
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -37,14 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const UserForm = (props) => {
   const classes = useStyles();
   const [error, setError] = useState('');
-  const [branches, setBranches] = useState([
-    { id: 1, label: 'Branch 1' },
-    { id: 2, label: 'Branch 2' },
-  ]);
-//   const branches= [    { id: 1, label: 'Branch 1' },
-//   { id: 2, label: 'Branch 2' },
-// ];
-  const [branch, setBranch] = useState('Branch 1');
+
   const [labelList, setLabelList] = useState([
     { id: 1, label: 'manageProducts', checked: false },
     { id: 2, label: 'manageCategories', checked: false },
@@ -64,12 +55,10 @@ const UserForm = (props) => {
       setError(t('passwordMismatch'));
       return;
     } else setError('');
-
   };
 
   const handleEdit = (event) => {
     event.preventDefault();
-
   };
 
   const handleCheck = (id) => {
@@ -78,10 +67,6 @@ const UserForm = (props) => {
       prev[index].checked = !prev[index].checked;
       return [...prev];
     });
-  };
-
-  const handleBranch= (event) => {
-    setBranch(event.target.value);
   };
 
   // const handleClose = () => {
@@ -96,21 +81,13 @@ const UserForm = (props) => {
           className={styles.form}
           onSubmit={props.action === 'edit' ? handleEdit : handleSubmit}
         >
-          {/* <Typography className={classes.label}>Branch</Typography> */}
-          <BootstrapSelecter
-            default='Select'
-            category={branch}
-            handleChange={handleBranch}
-            categories={branches}
-            width={256}
-          />
-
           <BootstrapInputField
             required
             label="Branch"
             defaultValue={props.action === 'edit' ? props.user.username : ''}
             placeholder="Branch"
             id="branch"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             required
@@ -118,6 +95,7 @@ const UserForm = (props) => {
             defaultValue={props.action === 'edit' ? props.user.username : ''}
             placeholder="Username"
             id="username"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             required
@@ -125,6 +103,7 @@ const UserForm = (props) => {
             defaultValue={props.action === 'edit' ? props.user.firstName : ''}
             placeholder="Name"
             id="name"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             required
@@ -132,6 +111,7 @@ const UserForm = (props) => {
             defaultValue={props.action === 'edit' ? props.user.lastName : ''}
             placeholder="Lastname"
             id="lastname"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             required
@@ -139,35 +119,46 @@ const UserForm = (props) => {
             defaultValue={props.action === 'edit' ? props.user.operatorCode : ''}
             placeholder="Operator Code"
             id="operatorCode"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             label="Position"
             defaultValue={props.action === 'edit' ? props.user.position : ''}
             placeholder="Position"
             id="position"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             label="Phone"
             defaultValue={props.action === 'edit' ? props.user.phone : ''}
             placeholder="Phone"
             id="phone"
+            style={{ marginBottom: 10 }}
           />
           <BootstrapInputField
             label="Email"
             defaultValue={props.action === 'edit' ? props.user.email : ''}
             placeholder="Email"
             id="email"
+            style={{ marginBottom: 10 }}
           />
           {props.action === 'edit' ? (
             ''
           ) : (
             <>
-              <BootstrapInputField required label="Password" placeholder="Password" id="password" />
+              <BootstrapInputField
+                required
+                label="Password"
+                placeholder="Password"
+                id="password"
+                style={{ marginBottom: 10 }}
+              />
               <BootstrapInputField
                 required
                 label="Repeat Password"
                 placeholder="Repeat Password"
                 id="repeatPass"
+                style={{ marginBottom: 10 }}
               />
             </>
           )}

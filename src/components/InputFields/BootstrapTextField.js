@@ -40,7 +40,7 @@ const BootstrapInputField = (props) => {
   const classes = useStyles();
 
   return (
-    <FormControl variant="standard" sx={{ marginBottom: '10px' }}>
+    <FormControl variant="standard" style={props.styles}>
       <InputLabel shrink className={classes.label} focused={false} htmlFor="bootstrap-input">
         {props.label}
       </InputLabel>
