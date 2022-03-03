@@ -43,6 +43,7 @@ const TableComponent = (props) => {
       <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell className={classes.tableCell}>Nr</TableCell>
             {props.tableHeaders.map((header, index) => (
               <TableCell key={index} className={classes.tableCell}>
                 {header}
@@ -59,12 +60,14 @@ const TableComponent = (props) => {
               }}
               id={subDataFromComponent.id}
             >
+              <TableCell className={classes.tableCell}>{index + 1}</TableCell>
               {Object.keys(subDataFromComponent).map((key, idx) => (
                 <TableCell key={idx}>
+                  <Typography>{key}</Typography>
                   {key === 'id' ? (
                     <Typography>{index + 1}</Typography>
-                  ) : key === 'image' ? (
-                    <Typography>photo</Typography>
+                  ) : key === 'imageVirtualPath' ? (
+                    <img src={subDataFromComponent[key]}/>
                   ) : (
                     <TextField
                       key={idx}
@@ -73,7 +76,7 @@ const TableComponent = (props) => {
                       onChange={(e) => {
                         handleChanges(e, index, key);
                       }}
-                      inputProps={{ style: { padding: 12, width: 160, height: 10} }}
+                      inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
                     />
                   )}
                 </TableCell>
