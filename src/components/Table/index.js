@@ -65,6 +65,13 @@ const TableComponent = (props) => {
                     <Typography>{index + 1}</Typography>
                   ) : key === 'image' ? (
                     <Typography>photo</Typography>
+                  ) : key.includes('date') || key.includes('Date') ? (
+                    <TextField
+                      key={idx}
+                      value={new Date(subDataFromComponent[key]).toLocaleString()}
+                      disabled={subDataFromComponent.id == props.element.id ? false : true}
+                      inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
+                    />
                   ) : (
                     <TextField
                       key={idx}
@@ -73,7 +80,7 @@ const TableComponent = (props) => {
                       onChange={(e) => {
                         handleChanges(e, index, key);
                       }}
-                      inputProps={{ style: { padding: 12, width: 160, height: 10} }}
+                      inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
                     />
                   )}
                 </TableCell>

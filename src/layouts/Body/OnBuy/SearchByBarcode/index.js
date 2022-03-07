@@ -35,7 +35,7 @@ const SearchByBarcode = () => {
   return (
     <div className={styles.searchContainer}>
         <Grid container columns={12}>
-          <Grid xs={10}>
+          <Grid item={true} xs={10}>
             <TextField
               placeholder="addByBarcode"
               className={styles.textField}
@@ -46,7 +46,7 @@ const SearchByBarcode = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid xs={2} style={{textAlign: 'right'}}>
+          <Grid item={true} xs={2} style={{textAlign: 'right'}}>
             <IconButtonComponent
               style={{ backgroundColor: '#eeeeee', height: 40 }}
               icon={<CheckIcon />}

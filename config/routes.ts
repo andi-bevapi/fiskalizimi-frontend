@@ -25,6 +25,7 @@ export default [
       { exact: true, path: '/njesite-shitjes', component: './Categories' },
       { exact: true, path: '/perdoruesit', component: './Categories' },
       { exact: true, path: '/konfigurime', component: './Categories' },
+      { exact: true, path: '/furnizuesit', component: './Suppliers' },
     ],
   },
 ];
