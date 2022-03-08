@@ -26,7 +26,7 @@ const NavItems = () => {
   return (
     <>
       {navItems.map((item, i) => (
-        <Access key={i} accessible={item.access ? access[item.access] : true}>
+        
           <Button
             fullWidth={true}
             className={classes.btn}
@@ -35,7 +35,7 @@ const NavItems = () => {
           >
             {item.title}
           </Button>
-        </Access>
+       
       ))}
     </>
   );
