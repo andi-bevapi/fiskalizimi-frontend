@@ -2,35 +2,29 @@ import { useState } from 'react';
 import TableComponent from '../../components/Table';
 import {useCategoryContext} from "../../Context/CategoryContext";
 import {listFormat} from "../../helpers/listFormater";
-const tableHeaders = ['Nr.', 'Name', 'Actions'];
+const tableHeaders = ['ID', 'Name', 'Actions'];
 
 const Categories = () => {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      name: 'pije',
-    },
-    {
-      id: 2,
-      name: 'perime',
-    },
-    {
-      id: 3,
-      name: 'fruta',
-    },
-  ]);
+
   const [element, setElement] = useState({ id: 0 });
-  const {categoryList ,setCategoryList} = useCategoryContext();
+  const {categoryList ,setCategoryList,categoryToUpdate ,categoryToDelete} = useCategoryContext();
   const formatedProducts = listFormat(categoryList,tableHeaders);
-  console.log("formatedProducts------",formatedProducts);
+//   console.log("formatedProducts------",categoryList);
 
   const handleEditCategory = () => {
-    category.filter((el) => el.id == element.id);
+    
+    const toUpdate = categoryList.filter((el) => el.id == element.id);
+    // console.log("toUpdate-----",toUpdate[0]);
+    categoryToUpdate(toUpdate[0]).then((result)=>{
+        console.log("result----",result);
+    });
     setElement({id: 0});
   };
 
   const handleAsk = (id) => {
-    console.log(id);
+
+    categoryToDelete(id);
+    
   };
 
   return (

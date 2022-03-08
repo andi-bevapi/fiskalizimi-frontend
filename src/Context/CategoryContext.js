@@ -1,5 +1,5 @@
 import { createContext,useContext , useState , useEffect } from "react";
-import { getAllCategory } from "../services/user/category";
+import { getAllCategory , updateCategory , deleteCategory } from "../services/category";
 
 const CategoryContext = createContext({});
 const CategoryProvider = (props) =>{
@@ -14,7 +14,35 @@ const CategoryProvider = (props) =>{
            console.log("error----",error);
        }
     },[]);
-    const values = {categoryList,setCategoryList};
+
+
+    const categoryToUpdate = async(data) =>{
+       try{
+        const result = await updateCategory(data);
+        return result;
+       }catch(error){
+           console.log("error-----",error);
+       }
+    }
+
+    const categoryToDelete = async(id) =>{
+        try{
+            console.log("---id--",id);
+            setCategoryList((prevState)=>{
+                const newState = prevState.filter((el)=>{
+                    console.log("---el--",el.id);
+                    return el.id === id
+                })
+                return [...newState]
+            });
+            const result = await deleteCategory(id);
+            return result;
+        }catch(error){
+            console.log("error-----",error);
+        }
+     }
+
+    const values = {categoryList,setCategoryList,categoryToUpdate,categoryToDelete};
    
     return(
         <CategoryContext.Provider value={values}>

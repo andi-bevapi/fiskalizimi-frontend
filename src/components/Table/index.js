@@ -38,6 +38,10 @@ const TableComponent = (props) => {
     props.setElement({ ...item[0] });
   };
 
+  props.data.map((body, index) => {
+    //  console.log("header-----",index);
+  })
+
   return (
     <TableContainer sx={{ fontSize: '14px' }}>
       <Table stickyHeader aria-label="simple table">
