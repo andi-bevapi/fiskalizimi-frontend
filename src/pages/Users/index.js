@@ -28,41 +28,37 @@ const Users = () => {
   const [snackBarMsg, setSnackBarMsg] = useState('');
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [openForm, setOpenForm] = useState(false);
-  const [action, setAction] = useState("");
+  const [action, setAction] = useState('');
 
   useEffect(() => {
-    const getAllUsers = async () => {
-      try {
-        //HERE!!! get user's client id
-        const response = await getUsers(1);
-        console.log(response);
-        if (response.statusCode == 200) {
-          var tmp = [];
-          for (var user of response.data) {
-            tmp.push({
-              id: user.id,
-              username: user.username,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              phone: user.phone,
-              email: user.email,
-            });
-          }
-          setUsers(tmp);
-          setSnackBarMsg('Users received succesfully!');
-          setOpenSnackBar(true);
-        } else {
-          setSnackBarMsg('There was a problem while receiving users!');
-          setOpenSnackBar(true);
-        }
-        return;
-      } catch (error) {
-        setSnackBarMsg('There was a problem while receiving users!');
-        setOpenSnackBar(true);
-      }
-    };
     getAllUsers();
   }, []);
+
+  const getAllUsers = async () => {
+    //HERE!!! get user's client id
+    const response = await getUsers(1);
+    // console.log(response);
+    if (response.statusCode == 200) {
+      var tmp = [];
+      for (var user of response.data) {
+        tmp.push({
+          id: user.id,
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          email: user.email,
+        });
+      }
+      setUsers(tmp);
+      setSnackBarMsg('Users received succesfully!');
+      setOpenSnackBar(true);
+    } else {
+      setSnackBarMsg('There was a problem while receiving users!');
+      setOpenSnackBar(true);
+    }
+    return;
+  };
 
   const [element, setElement] = useState({ id: 0 });
 
@@ -74,18 +70,18 @@ const Users = () => {
   };
 
   const handleAsk = (id) => {
-    console.log(id);
+    // console.log(id);
   };
 
   const handleUserAddOpen = () => {
-    setAction("add");
+    setAction('add');
     setOpenForm(true);
-  }
+  };
 
   const handleUserEditOpen = () => {
-    setAction("edit");
+    setAction('edit');
     setOpenForm(true);
-  }
+  };
 
   const handleSnackBarClose = () => {
     setOpenSnackBar(false);
@@ -101,6 +97,7 @@ const Users = () => {
         message={snackBarMsg}
         open={openSnackBar}
         handleSnackBarClose={handleSnackBarClose}
+        severity="success"
       />
       <div className={classes.header}>
         <Typography className={classes.title}>Users</Typography>
@@ -124,7 +121,7 @@ const Users = () => {
         setOpenForm={handleUserEditOpen}
       />
       <ModalComponent open={openForm} handleClose={handleUserFormClose} title="User">
-        <UserForm handleClose={handleUserFormClose} action={ action} user={element}/>
+        <UserForm handleClose={handleUserFormClose} action={action} user={element} />
       </ModalComponent>
     </>
   );

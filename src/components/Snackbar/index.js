@@ -12,7 +12,7 @@ const SnackbarComponent = (props) => {
       autoHideDuration={4000}
       onClose={props.handleSnackBarClose}
     >
-      <Alert onClose={props.handleSnackBarClose} severity={'success'}>
+      <Alert onClose={props.handleSnackBarClose} severity={props.severity}>
         {props.message}
       </Alert>
     </Snackbar>

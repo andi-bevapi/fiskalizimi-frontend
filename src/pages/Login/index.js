@@ -61,7 +61,6 @@ const Login = () => {
                                 </div>
                                 <div className={styles.inputHolder}>
                                     <TextField
-                                        label="username"
                                         id="username"
                                         name="username"
                                         type="username"
@@ -74,7 +73,6 @@ const Login = () => {
                                     />
 
                                     <TextField
-                                        label="password"
                                         id="password"
                                         name="password"
                                         type="password"
