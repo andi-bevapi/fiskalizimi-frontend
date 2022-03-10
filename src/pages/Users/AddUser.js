@@ -243,7 +243,7 @@ const UserForm = (props) => {
                   />
                 ))}
                 <Button className={classes.btn} variant="contained" type="submit">
-                  {props.action === 'edit' ? 'save Changes' : 'add User'}
+                  {props.action === 'edit' ? 'Save Changes' : 'Add User'}
                 </Button>
               </div>
             </div>
