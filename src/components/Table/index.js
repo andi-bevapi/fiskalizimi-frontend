@@ -65,7 +65,7 @@ const TableComponent = (props) => {
                     <Typography>{index + 1}</Typography>
                   ) : key === 'image' ? (
                     <Typography>photo</Typography>
-                  ) : key.includes('date') || key.includes('Date') ? (
+                  ) : key.toLowerCase().includes('date') ? (
                     <TextField
                       key={idx}
                       value={new Date(subDataFromComponent[key]).toLocaleString()}

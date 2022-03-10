@@ -15,21 +15,20 @@ const Suppliers = () => {
       if (response.statusCode == 200) {
         setData(response.data);
       }
-      console.log(response);
     };
 
     getSuppliers();
   }, []);
 
   const handleEditProduct = () => {
-    console.log(element);
+    // console.log(element);
     const changedProduct = data.filter((el) => el.id == element.id);
-    console.log(changedProduct[0]);
+    // console.log(changedProduct[0]);
     setElement({ id: 0 });
   };
 
   const handleAsk = (id) => {
-    console.log(id);
+    // console.log(id);
   };
 
   return (
