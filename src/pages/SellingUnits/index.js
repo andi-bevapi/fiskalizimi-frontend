@@ -5,43 +5,28 @@ import { getSellingUnits } from '../../services/sellingUnit';
 const tableHeaders = ['Nr.', 'Name', 'Actions'];
 
 const SellingUnits = () => {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      name: 'kg',
-    },
-    {
-      id: 2,
-      name: 'cope',
-    },
-    {
-      id: 3,
-      name: 'liter',
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const [element, setElement] = useState({ id: 0 });
 
   useEffect(() => {
-    const getSellingUnitsList = async() => {
+    const getSellingUnitsList = async () => {
       const response = await getSellingUnits();
       if (response.statusCode == 200) {
         setData(response.data);
       }
-      console.log(response);
-    }
+    };
     getSellingUnitsList();
   }, []);
-  
+
   const handleEditProduct = () => {
-    console.log(element);
     const changedProduct = data.filter((el) => el.id == element.id);
-    console.log(changedProduct[0]);
+    // console.log(changedProduct[0]);
     setElement({ id: 0 });
   };
 
   const handleAsk = (id) => {
-    console.log(id);
+    // console.log(id);
   };
 
   return (
