@@ -4,14 +4,19 @@ import { getAllCategory , updateCategory , deleteCategory } from "../services/ca
 const CategoryContext = createContext({});
 const CategoryProvider = (props) =>{
     const [categoryList,setCategoryList] = useState([]);
+    const [snackBarStatus, setSnackBarStatus] = useState({});
     useEffect( async ()=>{
        try{
             const category = await getAllCategory();
             if(category.statusCode === 200){
                 setCategoryList(category.data);
+            } else{
+                throw Error(JSON.stringify({status:category.status,message:category.statusText}))
             }
        }catch(error){
-           console.log("error----",error);
+           const errorMessage = JSON.parse(error.message);
+           setSnackBarStatus(errorMessage);
+           return errorMessage;
        }
     },[]);
 
@@ -42,7 +47,7 @@ const CategoryProvider = (props) =>{
         }
      }
 
-    const values = {categoryList,setCategoryList,categoryToUpdate,categoryToDelete};
+    const values = {categoryList,setCategoryList,categoryToUpdate,categoryToDelete,snackBarStatus};
    
     return(
         <CategoryContext.Provider value={values}>
