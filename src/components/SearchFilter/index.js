@@ -1,9 +1,9 @@
-import TextField from "@mui/material/TextField";
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from '@mui/styles';
+import BootstrapInputField from '../InputFields/BootstrapTextField';
 
 const useStyles = makeStyles(() => ({
-  searchInput: { display: "block" },
-  textField: { height: 40,width:"100%" }
+  searchInput: { display: 'block' },
+  textField: { height: 40, width: '100%' },
 }));
 const SearchFilter = (props) => {
   const styles = useStyles();
@@ -12,13 +12,11 @@ const SearchFilter = (props) => {
   };
   return (
     <div className={styles.searchContainer}>
-      <TextField
-        className={styles.searchInput}
+      <BootstrapInputField
         placeholder={props.placeholder}
-        InputProps={{
-          className: styles.textField,
-        }}
+        id="branch"
         onChange={handleChange}
+        style={{ margin: 0 }}
       />
     </div>
   );

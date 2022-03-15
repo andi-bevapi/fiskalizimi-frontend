@@ -23,7 +23,7 @@ export default [
       { exact: true, path: '/produktet', component: './Products', access: 'canViewProducts' },
       { exact: true, path: '/kategorite', component: './Categories', access: 'canViewCategories' },
       { exact: true, path: '/njesite-shitjes', component: './Categories' },
-      { exact: true, path: '/perdoruesit', component: './Categories' },
+      { exact: true, path: '/perdoruesit', component: './Users' },
       { exact: true, path: '/konfigurime', component: './Categories' },
       { exact: true, path: '/furnizuesit', component: './Suppliers' },
     ],
