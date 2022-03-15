@@ -40,6 +40,10 @@ const TableComponent = (props) => {
     props.setOpenForm();
   };
 
+  props.data.map((body, index) => {
+    //  console.log("header-----",index);
+  })
+
   return (
     <TableContainer sx={{ fontSize: '14px' }}>
       <Table stickyHeader aria-label="simple table">

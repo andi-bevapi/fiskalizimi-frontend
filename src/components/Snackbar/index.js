@@ -1,8 +1,7 @@
 import { Snackbar, Alert } from '@mui/material';
 
 const SnackbarComponent = (props) => {
-
-    return (
+  return (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
