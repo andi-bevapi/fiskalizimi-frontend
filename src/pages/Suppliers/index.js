@@ -6,7 +6,6 @@ const tableHeaders = ['Nr.', 'Name', 'Start date', 'End date', 'Actions'];
 
 const Suppliers = () => {
   const [data, setData] = useState([]);
-
   const [element, setElement] = useState({ id: 0 });
 
   useEffect(() => {
@@ -21,14 +20,11 @@ const Suppliers = () => {
   }, []);
 
   const handleEditProduct = () => {
-    // console.log(element);
     const changedProduct = data.filter((el) => el.id == element.id);
-    // console.log(changedProduct[0]);
     setElement({ id: 0 });
   };
 
   const handleAsk = (id) => {
-    // console.log(id);
   };
 
   return (

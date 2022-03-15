@@ -26,28 +26,6 @@ const SearchByBarcode = () => {
 
   return (
     <div className={styles.searchContainer}>
-<<<<<<< HEAD
-        <Grid container columns={12}>
-          <Grid item xs={10}>
-            <TextField
-              placeholder="addByBarcode"
-              className={styles.textField}
-              InputProps={{
-                className: styles.textField,
-              }}
-              value={barcode}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={2} style={{textAlign: 'right'}}>
-            <IconButtonComponent
-              style={{ backgroundColor: '#eeeeee', height: 40 }}
-              icon={<CheckIcon />}
-              iconColor={{ color: '#555555' }}
-              onClick={(e) => handleClearSearchField(e)}
-            />
-          </Grid>
-=======
       <Grid container columns={12}>
         <Grid item={true} xs={10} style={{ textAlign: 'left' }}>
           <BootstrapInputField
@@ -64,7 +42,6 @@ const SearchByBarcode = () => {
             iconColor={{ color: '#555555' }}
             onClick={(e) => handleClearSearchField(e)}
           />
->>>>>>> 32ff743070d1f2750ffb72be8f29f0ad805ac2c4
         </Grid>
       </Grid>
     </div>

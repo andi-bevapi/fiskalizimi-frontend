@@ -17,7 +17,6 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: '12px',
-    // font,
   },
 });
 
@@ -50,14 +49,11 @@ const Users = () => {
   const [element, setElement] = useState({ id: 0 });
 
   const handleEditCategory = () => {
-    // console.log(element);
     const changedCategory = users.filter((el) => el.id == element.id);
-    // console.log(changedCategory[0]);
     setElement({ id: 0 });
   };
 
   const handleAsk = (id) => {
-    // console.log(id);
   };
 
   const handleUserAddOpen = () => {

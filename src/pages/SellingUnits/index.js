@@ -21,12 +21,10 @@ const SellingUnits = () => {
 
   const handleEditProduct = () => {
     const changedProduct = data.filter((el) => el.id == element.id);
-    // console.log(changedProduct[0]);
     setElement({ id: 0 });
   };
 
   const handleAsk = (id) => {
-    // console.log(id);
   };
 
   return (

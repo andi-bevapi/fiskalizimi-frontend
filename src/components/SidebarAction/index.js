@@ -23,10 +23,9 @@ const useStyles = makeStyles(() => ({
     }
   }));
 
-const SidebarACtion = (props) => {
+const SidebarAction = (props) => {
     const classes = useStyles();
    
-    //console.log("props-----",...props.data);
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
@@ -80,4 +79,4 @@ const SidebarACtion = (props) => {
     )
 }
 
-export {SidebarACtion};
+export default SidebarAction;

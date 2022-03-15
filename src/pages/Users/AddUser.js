@@ -64,11 +64,9 @@ const UserForm = (props) => {
   }, [props.action, props.user]);
 
   const handleSubmit = (fields) => {
-    // console.log(fields);
   };
 
   const handleEdit = (fields) => {
-    // console.log('EDITTT');
   };
 
   const handleCheck = (id) => {
@@ -78,11 +76,7 @@ const UserForm = (props) => {
       return [...prev];
     });
   };
-
-  // const handleClose = () => {
-  //   props.handleClose();
-  // };
-
+  
   return (
     <>
       <Formik

@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { makeStyles } from '@mui/styles';
-import { SidebarACtion } from '../../components/SidebarAction';
+import SidebarAction from '../../components/SidebarAction';
 import BootstrapInputField from '../../components/InputFields/BootstrapTextField';
 
 const useStyles = makeStyles(() => ({
@@ -39,7 +39,7 @@ const TableComponent = (props) => {
 
   return (
     <>
-    <SidebarACtion open={openSideBar} setState={setOpenSideBar} data={dataToEdit} element={setElement}/>
+    <SidebarAction open={openSideBar} setState={setOpenSideBar} data={dataToEdit} element={setElement}/>
     <TableContainer sx={{ fontSize: '14px' }}>
       <Table stickyHeader aria-label="simple table">
         <TableHead>
