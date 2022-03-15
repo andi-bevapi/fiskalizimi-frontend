@@ -1,18 +1,12 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { useState } from 'react';
+import {Table,TableBody,TableCell, TableContainer,TableHead,TableRow,Typography} from '@mui/material';
 import { TextField } from '@mui/material';
 import IconButtonComponent from '../Button/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { makeStyles } from '@mui/styles';
+import { SidebarACtion } from '../../components/SidebarAction';
 import BootstrapInputField from '../../components/InputFields/BootstrapTextField';
 
 const useStyles = makeStyles(() => ({
@@ -26,6 +20,9 @@ const useStyles = makeStyles(() => ({
 
 const TableComponent = (props) => {
   const classes = useStyles();
+  const [element, setElement] = useState({ id: 0 });
+  const [openSideBar , setOpenSideBar] = useState(false);
+  const [dataToEdit,setDataToEdit] = useState([]);
 
   const handleChanges = (e, index, key) => {
     props.setData((prevState) => {
@@ -40,20 +37,19 @@ const TableComponent = (props) => {
     props.setOpenForm();
   };
 
-  props.data.map((body, index) => {
-    //  console.log("header-----",index);
-  })
-
   return (
+    <>
+    <SidebarACtion open={openSideBar} setState={setOpenSideBar} data={dataToEdit} element={setElement}/>
     <TableContainer sx={{ fontSize: '14px' }}>
       <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>
-            {props.tableHeaders.map((header, index) => (
-              <TableCell key={index} className={classes.tableCell}>
-                {header}
-              </TableCell>
-            ))}
+            <TableCell className={classes.tableCell}>Nr</TableCell>
+            {props.tableHeaders.map((header, index) => {
+                if(header !== "Id")
+                return(<TableCell key={index} className={classes.tableCell}>{header} </TableCell>)
+              }
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -87,7 +83,7 @@ const TableComponent = (props) => {
                       style={{margin: 0}}
                     />
                   )}
-                </TableCell>
+                  </TableCell>
               ))}
               <TableCell className={classes.tableCell}>
                 <div className={classes.btnContainer}>
@@ -109,7 +105,7 @@ const TableComponent = (props) => {
                     }}
                     icon={<DeleteForeverIcon />}
                     iconColor={{ color: 'white' }}
-                    onClick={(e) => props.handleAsk(subDataFromComponent.id)}
+                    onClick={(e) => handleAsk(subDataFromComponent.id)}
                   />
                 </div>
               </TableCell>
@@ -118,6 +114,7 @@ const TableComponent = (props) => {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 };
 

@@ -24,7 +24,6 @@ const SideDrawer = () => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ [anchor]: open });
   };
 
