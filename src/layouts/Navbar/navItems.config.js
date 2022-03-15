@@ -25,4 +25,8 @@ export const navItems = [
     title: "Konfigurime",
     path: "/konfigurime",
   },
+  {
+    title: "Furnizuesit",
+    path: "/furnizuesit",
+  },
 ];

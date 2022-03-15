@@ -5,7 +5,6 @@ const SnackbarComponent = (props) => {
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
-
         horizontal: 'center',
       }}
       open={props.open}
