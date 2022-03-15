@@ -25,15 +25,11 @@ const useStyles = makeStyles({
   header: {
     height: '60px',
     display: 'flex',
-    alignItems: 'center',
+    justifyContent: "space-between",
   },
   closeBtn: {
     height: '20px',
     width: '20px',
-  },
-  iconBtn: {
-    marginRight: '0%',
-    marginLeft: 'auto',
   },
 });
 
@@ -61,7 +57,7 @@ const ModalComponent = (props) => {
       >
         <DialogTitle className={classes.header}>
           <Typography className={classes.title}>{props.title}</Typography>
-          <IconButton onClick={props.handleClose} className={classes.iconBtn}>
+          <IconButton onClick={props.handleClose} >
             <CloseIcon className={classes.closeBtn} />
           </IconButton>
         </DialogTitle>
