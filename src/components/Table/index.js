@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { makeStyles } from '@mui/styles';
-import { SidebarACtion } from '../../components/SidebarAction';
+import { SidebarAction } from '../../components/SidebarAction';
 
 const useStyles = makeStyles(() => ({
   tableCell: {
@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
 
 const TableComponent = (props) => {
   const classes = useStyles();
-  const [element, setElement] = useState({ id: 0 });
   const [openSideBar , setOpenSideBar] = useState(false);
   const [dataToEdit,setDataToEdit] = useState([]);
 
@@ -32,25 +31,21 @@ const TableComponent = (props) => {
 
   const handleEditButton = (e, id) => {
     const item = props.data.filter((el) => el.id === id);
-    setElement({ ...item[0] });
-    setOpenSideBar(true);
     setDataToEdit(item);
+    setOpenSideBar(true);
   };
 
   const handleSubmitElement = (e,id) =>{
     const item = props.data.filter((el) => el.id === id);
-    setElement({ ...item[0] });
   }
 
   const handleAsk = (id) => {
     
   };
 
-  console.log("element----",element);
-
   return (
     <>
-    <SidebarACtion open={openSideBar} setState={setOpenSideBar} data={dataToEdit} element={setElement}/>
+    <SidebarAction open={openSideBar} setState={setOpenSideBar} data={dataToEdit} categories={props.categories} set={props.setData}/>
     <TableContainer sx={{ fontSize: '14px' }}>
       <Table stickyHeader aria-label="simple table">
         <TableHead>
@@ -84,7 +79,6 @@ const TableComponent = (props) => {
                           <TextField
                             key={idx}
                             value={subDataFromComponent[key]}
-                            // disabled={subDataFromComponent.id == element.id ? false : true}
                             disabled={true}
                             onChange={(e) => {
                               handleChanges(e, index, key);
@@ -97,30 +91,16 @@ const TableComponent = (props) => {
               })}
               <TableCell className={classes.tableCell}>
                 <div className={classes.btnContainer}>
-                  {subDataFromComponent.id !== element.id ? (
                     <IconButtonComponent
                     style={{
-                      backgroundColor: element.id != 0 ? 'rgba(0, 0, 0, 0.08)' : '#ffa500',
+                      backgroundColor:'#ffa500',
                       marginRight: '10px',
                     }}
                     icon={<EditIcon />}
-                    disabled={element.id == 0 ? false : true}
-                    iconColor={{
-                      color: element.id != 0 ? 'grey' : 'white',
-                    }}
+                    iconColor={{color:'white'}}
                     onClick={(e) => handleEditButton(e, subDataFromComponent.id)}
                   />
-                  ) : (
-                    <IconButtonComponent
-                      style={{
-                        backgroundColor: 'green',
-                        marginRight: '10px',
-                      }}
-                      icon={<CheckIcon />}
-                      iconColor={{ color: 'white' }}
-                      onClick={(e) => handleSubmitElement(e,subDataFromComponent.id)}
-                    />
-                  )}
+                
                   <IconButtonComponent
                     style={{
                       backgroundColor: '#f05050',
