@@ -7,6 +7,8 @@ const Products = () => {
  
   const { productList , setProductList } = useContextProduct();
   const formatedProducts = listFormat(productList,tableHeaders);
+
+  // console.log("formatedProducts-------",formatedProducts)
   return (
     <>
      <h1>Products Component</h1>  {/* /posicionoje majtas */}

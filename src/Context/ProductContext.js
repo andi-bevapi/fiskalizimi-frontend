@@ -9,6 +9,7 @@ const ProductProvider = (props) => {
         try{
             const products = await allProduct();
             if(products.statusCode === 200){
+                console.log("products-------",products.data)
                 setProductList(products.data)
             }
         }catch(error){
