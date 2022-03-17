@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory, useModel } from 'umi';
 import { navItems } from './navItems.config';
 import SideDrawer from './components/SideDrawer';
 import styles from './Navbar.module.css';
@@ -6,9 +7,19 @@ import { Typography } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButtonComponent from '../../components/Button/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
 
-const Navbar = (props) => {
+const Navbar = () => {
+  const { initialState, refresh } = useModel('@@initialState');
+  const history = useHistory();
+
+  useEffect(() => {
+    refresh();
+  }, [])
+
+  const onLogoutHandler = () => {
+    localStorage.removeItem('token');
+    history.replace('/');
+  };
 
   return (
     <div className={styles.navContainer}>
@@ -26,19 +37,16 @@ const Navbar = (props) => {
         />
         <IconButtonComponent
           style={{
-            backgroundColor: 'transparent',
-            marginRight: '5px',
-            padding: '7px 9px 2px 9px',
-            borderRadius: '3px',
+            marginRight: '5px'
           }}
-          //   icon={<Typography>{JSON.parse(localStorage.getItem('user')).username}</Typography>}
-          icon={<Typography>username here</Typography>}
+          icon={<Typography>{initialState.currentUser.username}</Typography>}
           iconColor={{ color: 'grey' }}
         />
         <IconButtonComponent
           style={{ backgroundColor: '#ffaa33', borderRadius: '5px' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
+          onClick={onLogoutHandler}
         />
       </div>
     </div>

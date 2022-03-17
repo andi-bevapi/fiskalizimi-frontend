@@ -9,7 +9,6 @@ export async function getCurrentUser() {
 }
 
 export const getUsers = async (clientId) => {
-
     return request(`/user/${clientId}`, {
         method: 'GET',
         headers: {
