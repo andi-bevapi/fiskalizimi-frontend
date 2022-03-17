@@ -200,8 +200,6 @@ const CouponPrinting = (props) => {
                 fontStretch: "expanded",
                 padding: "0",
                 margin: "0 0 0 0",
-                fontFamily:
-                  "Arial, Arial Rounded MT Bold, sans-serif!important",
               }}
             >
               {totalPrice + totalPrice * (settings.tvsh / 100)} leke

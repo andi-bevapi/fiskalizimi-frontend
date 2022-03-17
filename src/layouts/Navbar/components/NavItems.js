@@ -1,19 +1,12 @@
 import React from 'react';
 import { navItems } from '../navItems.config';
 import Button from '@mui/material/Button';
-import { history, Access, useAccess } from 'umi';
+import { history, Access } from 'umi';
 import { makeStyles } from '@mui/styles';
+import styles from '../components/navigationStyles.css'
 
 const useStyles = makeStyles(() => ({
-  btn: {
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-    justifyContent: 'flex-start',
-    fontSize: '1rem',
-    color: 'black',
-    padding: '5px 10px',
-    fontWeight: '500',
-    textTransform: 'none',
-  },
+
 }));
 
 const NavItems = () => {
@@ -23,18 +16,33 @@ const NavItems = () => {
     history.push(path);
   };
 
-  return navItems.map((item, i) => (
-    <Access key={i} accessible={true /* item.access */}>
-      <Button
-        fullWidth
-        className={classes.btn}
-        onClick={() => handleClick(item.path)}
-        color="inherit"
-      >
-        {item.title}
-      </Button>
-    </Access>
-  ))
+  return (
+    <>
+      {navItems.map((item, i) => (
+        <Access key={i} accessible={true /* item.access */}>
+          <Button
+            fullWidth={true}
+            className={styles.menuLink}
+            onClick={() => handleClick(item.path)}
+            color="inherit"
+          >
+            {item.title == "Konfigurime" ? (
+              <>
+                ❖ {item.title}
+              </>
+            ) : (
+              <>
+                ☳ {item.title}
+              </>
+            )}
+
+          </Button>
+        </Access>
+      ))}
+
+      <span className={styles.companyName}><span className={styles.orange}>Ovla</span> Systems</span>
+    </>
+  );
 };
 
 export default NavItems;

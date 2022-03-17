@@ -7,7 +7,6 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   label: {
-    fontFamily: "'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     fontSize: '18px',
     fontWeight: '700',
     color: '#797979',
@@ -20,15 +19,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     marginTop: theme.spacing(3),
   },
   '& .MuiInputBase-input': {
-    borderRadius: 4,
+    borderRadius: 10,
     // position: "relative",
-    backgroundColor: 'white',
-    border: '1px solid #ced4da',
-    fontSize: 14,
+    backgroundColor: '#F1F1F1',
+    border: '1px solid #C8C8C8',
+    fontSize: 15,
     width: '230px',
+    color: '#666666',
+    fontWeight: 600,
     padding: '10px 12px',
+    fontFamily: 'Poppins',
     transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-    fontFamily: "'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     '&:focus': {
       boxShadow: 'none',
       borderColor: '#ced4da',

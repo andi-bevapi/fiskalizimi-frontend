@@ -27,23 +27,18 @@ const Navbar = () => {
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
-        <IconButtonComponent
+        {/* <IconButtonComponent
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.08)',
             marginRight: '10px',
           }}
           icon={<PersonIcon />}
           iconColor={{ color: 'grey' }}
-        />
+        /> */}
+
+        <span className={styles.userName}>{initialState.currentUser.username}</span>
         <IconButtonComponent
-          style={{
-            marginRight: '5px'
-          }}
-          icon={<Typography>{initialState.currentUser.username}</Typography>}
-          iconColor={{ color: 'grey' }}
-        />
-        <IconButtonComponent
-          style={{ backgroundColor: '#ffaa33', borderRadius: '5px' }}
+          style={{ backgroundColor: '#FF7A00', width: '50px', height: '50px', boxShadow: 'none' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
           onClick={onLogoutHandler}

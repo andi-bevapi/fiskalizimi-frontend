@@ -49,7 +49,7 @@ const ActionButtons = (props) => {
           iconColor={{ color: 'white' }}
         />
         <ButtonComponent
-          title="cancel"
+          title="fshi"
           lightColor="rgb(240, 80, 80)"
           darkColor="rgb(220, 80, 80)"
           addIcon={false}
@@ -58,7 +58,7 @@ const ActionButtons = (props) => {
           icon={<BlockIcon />}
         />
         <ButtonComponent
-          title="hold"
+          title="ruaj"
           lightColor="#5fbeaa"
           darkColor="#51a794"
           addIcon={false}
@@ -67,7 +67,7 @@ const ActionButtons = (props) => {
         />
 
         <ButtonComponent
-          title="pay"
+          title="paguaj"
           lightColor="rgba(129, 200, 104, 0.8)"
           darkColor="rgba(129, 200, 104, 1)"
           addIcon={false}

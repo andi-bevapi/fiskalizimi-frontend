@@ -8,8 +8,6 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   text: {
-    fontFamily:
-      '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: "12px",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -17,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   textName: {
-    fontFamily:
-      '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: "13px",
     overflow: "hidden",
     textOverflow: "ellipsis",

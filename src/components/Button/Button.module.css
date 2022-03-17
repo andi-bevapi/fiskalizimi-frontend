@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 .button {
   font-size: 14px !important;
   font-weight: 400;
-  font-family: "Helvetica Neue", Helvetica,Arial,sans-serif;
+  font-family: "Poppins",sans-serif !important;
   text-align: center;
   line-height: 1rem!important;
   text-transform: unset!important;

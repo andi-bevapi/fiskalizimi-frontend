@@ -10,11 +10,13 @@ const Body = (props) => {
   return (
     <Grid container columnSpacing={2} rowSpacing={2} className={styles.wrapper}>
       <Grid item xs={6} md={8}>
+        <span className={styles.contentTitle}>&nbsp;</span>
         <div className={styles.itemsOnStock}>
           {props.children}
         </div>
       </Grid>
       <Grid item xs={6} md={4}>
+        <span className={styles.contentTitle}>Fatura</span>
         <div className={styles.itemsOnBuy}>
           <ItemsOnBuy />
         </div>
