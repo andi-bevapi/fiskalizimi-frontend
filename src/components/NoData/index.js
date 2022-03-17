@@ -4,8 +4,6 @@ const useStyles = makeStyles(() => ({
   customStyles: { overflow: "auto" },
   messageStyle: {
     textAlign: "center",
-    fontFamily:
-      '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: "15px",
     fontWeight: "bold",
     color: "#505458",

@@ -16,27 +16,18 @@ const Navbar = (props) => {
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
-        <IconButtonComponent
+        {/* <IconButtonComponent
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.08)',
             marginRight: '10px',
           }}
           icon={<PersonIcon />}
           iconColor={{ color: 'grey' }}
-        />
+        /> */}
+
+        <span className={styles.userName}>Username Here</span>
         <IconButtonComponent
-          style={{
-            backgroundColor: 'transparent',
-            marginRight: '5px',
-            padding: '7px 9px 2px 9px',
-            borderRadius: '3px',
-          }}
-          //   icon={<Typography>{JSON.parse(localStorage.getItem('user')).username}</Typography>}
-          icon={<Typography>username here</Typography>}
-          iconColor={{ color: 'grey' }}
-        />
-        <IconButtonComponent
-          style={{ backgroundColor: '#ffaa33', borderRadius: '5px' }}
+          style={{ backgroundColor: '#FF7A00', width: '50px', height: '50px', boxShadow: 'none' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
         />

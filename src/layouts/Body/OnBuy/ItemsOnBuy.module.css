@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -8,20 +11,28 @@ table {
   display: flex;
   flex-direction: column;
   height: 100%;
+  font-family: "Poppins",sans-serif !important;
 }
 
 #quantity {
-  width: 190px;
+  width: 110px;
+  font-family: "Poppins",sans-serif !important;
 }
 
 #name {
-  width: 260px;
+  width: 135px;
   max-width: 260px;
+  font-family: "Poppins",sans-serif !important;
 }
 
 #price {
   width: 90px;
   max-width: 90px;
+  font-family: "Poppins",sans-serif !important;
+}
+
+#delete{
+  width: 90px;
 }
 
 table th {

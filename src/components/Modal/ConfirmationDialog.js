@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     alignText: 'center',
     color: '#595959',
-    fontFamily: '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: '1.875em',
     fontWeight: '600',
     margin: '0 0 .4em',
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   description: {
     alignText: 'center',
     color: '#545454',
-    fontFamily: '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: '1.125em',
     fontWeight: '400',
   },

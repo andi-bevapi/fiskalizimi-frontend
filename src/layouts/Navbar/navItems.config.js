@@ -22,11 +22,11 @@ export const navItems = [
     path: "/perdoruesit",
   },
   {
-    title: "Konfigurime",
-    path: "/konfigurime",
-  },
-  {
     title: "Furnizuesit",
     path: "/furnizuesit",
+  },
+  {
+    title: "Konfigurime",
+    path: "/konfigurime",
   },
 ];

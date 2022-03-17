@@ -17,7 +17,6 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    fontFamily: `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`,
   },
   tableCell: {
     padding: "10px 1px",
@@ -29,17 +28,23 @@ const useStyles = makeStyles((theme) => ({
   },
   tableHeadStart: {
     padding: "2px 4px",
-    fontWeight: "bold",
-    color: "#505458",
+    fontWeight: "bold !important",
+    color: "#fff",
+    backgroundColor: "#74A19E",
   },
   tableHead: {
     padding: "5px 1px",
-    fontWeight: "bold",
-    color: "#505458",
+    fontWeight: "bold !important",
+    fontSize: '1.2em !important',
+    color: "#fff !important",
+    backgroundColor: "#74A19E !important",
   },
   customTableContainer: {
     height: "100%",
   },
+  tableMainHeader:{
+    backgroundColor: "#74A19E",
+  }
 }));
 
 const ItemsOnBuy = () => {
@@ -51,21 +56,24 @@ const ItemsOnBuy = () => {
   return (
     <div className={styles.mainHolder}>
       <SearchByBarcode />
-      <TableContainer classes={{ root: classes.customTableContainer }}>
+      <TableContainer classes={{ root: classes.customTableContainer }} style={{ marginTop: 20}}>
         <Table stickyHeader className={classes.table}>
-          <TableHead>
+          <TableHead className={classes.tableMainHeader}>
             <TableRow>
-              <TableCell className={classes.tableHeadStart}>Nr.</TableCell>
+              <TableCell className={classes.tableHead}>Nr.</TableCell>
               <TableCell className={classes.tableHead} id={styles["name"]}>
-                products
+                Produkti
               </TableCell>
               <TableCell className={classes.tableHead} id={styles["quantity"]}>
-                quantity&nbsp;
+                Sasia
               </TableCell>
               <TableCell className={classes.tableHead} id={styles["price"]}>
-                price&nbsp;
+                Çmimi
               </TableCell>
-              <TableCell className={classes.tableHead}>
+              <TableCell className={classes.tableHead} id={styles["delete"]}>
+                  &nbsp;&nbsp;
+              </TableCell>
+              {/* <TableCell className={classes.tableHead}>
                 {" "}
                 <IconButtonComponent
                   style={{ backgroundColor: "rgb(240, 80, 80)" }}
@@ -73,7 +81,7 @@ const ItemsOnBuy = () => {
                   iconColor={{ color: "white" }}
                   // onClick={() => handleDestroyBuyingList()}
                 />
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>

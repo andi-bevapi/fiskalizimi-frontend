@@ -4,15 +4,13 @@ import { Menu } from '@mui/icons-material';
 import * as React from 'react';
 import { useState } from 'react';
 import NavItems from './NavItems';
+import styles from '../components/navigationStyles.css'
 
 const useStyles = makeStyles({
-  list: {
-    width: 200,
-    paddingTop: '40px',
-  },
+
   fab: {
     backgroundColor: 'rgba(0, 0, 0, 0.08)', boxShadow: 'none', borderRadius: '3px'
-  }
+  },
 });
 
 const SideDrawer = () => {
@@ -29,7 +27,7 @@ const SideDrawer = () => {
 
   const sideDrawerList = (anchor) => (
     <div
-      className={classes.list}
+      className={styles.sideMenu}
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
@@ -48,7 +46,7 @@ const SideDrawer = () => {
       >
         <Menu fontSize="small" />
       </Fab>
-      <Drawer anchor="left" open={state.right} onClose={toggleDrawer('left', false)}>
+      <Drawer anchor="left" className={classes.drawer} open={state.right} onClose={toggleDrawer('left', false)}>
         {sideDrawerList('left')}
       </Drawer>
     </React.Fragment>
