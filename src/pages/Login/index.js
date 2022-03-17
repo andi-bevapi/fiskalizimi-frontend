@@ -5,15 +5,19 @@ import { Button, IconButton, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { ErrorMessage, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { login } from '../../services/user';
 import { loginSchema } from './validationSchema';
 import User from '../../models/User';
+import SnackbarComponent from '../../components/Snackbar';
 import styles from "./index.css";
 
 const Login = () => {
     const { initialState, setInitialState } = useModel('@@initialState');
     const [showPassword, setShowPassword] = useState(false);
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+    const [loginMessage, setLoginMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -29,10 +33,19 @@ const Login = () => {
     const onLoginHandler = async (fields) => {
         try {
             const response = await login(fields);
-            localStorage.setItem('token', response.data);
-            await fetchUserInfo();
-            history.push('/');
-            return;
+
+            if (response.statusCode === 200) {
+                localStorage.setItem('token', response.data);
+                await fetchUserInfo();
+                history.push('/');
+                return;
+            }
+
+            const resJson = await response.json();
+            
+            setLoginMessage(resJson.message);
+            setIsSuccess(response.statusCode === 200 ? true : false);
+            setOpenSnackBar(true);
         } catch (error) {
             console.log(error);
         }
@@ -75,7 +88,7 @@ const Login = () => {
                                     <TextField
                                         id="password"
                                         name="password"
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         value={values.password}
                                         label="Fjalëkalimi"
                                         onChange={handleChange}
@@ -106,6 +119,15 @@ const Login = () => {
                     </Form>
                 )}
             </Formik>
+
+            <SnackbarComponent
+                message={loginMessage}
+                open={openSnackBar}
+                handleSnackBarClose={() => {
+                    setOpenSnackBar(false);
+                }}
+                severity={isSuccess ? "success" : "error"}
+            />
         </>
     );
 };
