@@ -12,6 +12,7 @@ import User from '../../models/User';
 import SnackbarComponent from '../../components/Snackbar';
 import styles from "./index.css";
 
+
 const Login = () => {
     const { initialState, setInitialState } = useModel('@@initialState');
     const [showPassword, setShowPassword] = useState(false);
@@ -67,10 +68,15 @@ const Login = () => {
                                     <LockIcon
                                         style={{
                                             transform: "scale(1.8)",
-                                            color: "rgba(0, 0, 0, 0.6)",
+                                            color: "transparent"
                                         }}
                                     />
-                                    <Typography> Hyni në platformë</Typography>
+                                    <Typography
+                                    style={{
+                                        fontSize: "35px",
+                                        fontFamily: "Poppins"
+                                    }}
+                                    > Hyni në platformë</Typography>
                                 </div>
                                 <div className={styles.inputHolder}>
                                     <TextField
@@ -83,6 +89,17 @@ const Login = () => {
                                         onBlur={handleBlur}
                                         error={touched.username && Boolean(errors.username)}
                                         helperText={errors.username}
+                                        InputProps={{ 
+                                            style: { 
+                                                fontFamily: "Poppins" 
+                                            } 
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
+                                        }}
+                                        
                                     />
 
                                     <TextField
@@ -106,11 +123,19 @@ const Login = () => {
                                                         {!showPassword ? <VisibilityOff /> : <Visibility />}
                                                     </IconButton>
                                                 </InputAdornment>
-                                            )
+                                            ),
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
                                         }}
                                     />
 
-                                    <Button variant="contained" type="submit">
+                                    <Button variant="contained" type="submit" className={styles.buttonStyle}>
                                         Hyr
                                     </Button>
                                 </div>
