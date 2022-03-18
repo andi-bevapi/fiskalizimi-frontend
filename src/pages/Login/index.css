@@ -45,4 +45,8 @@
       width: auto;
     }
 }
-  
+
+.buttonStyle {
+    background-color: #17625D !important;
+    font-family: 'Poppins'!important;
+}  
