@@ -13,6 +13,7 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useState , useEffect } from 'react';
+import { Snackbar } from '@mui/material';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -33,17 +34,9 @@ const useStyles = makeStyles(() => ({
 
 const SidebarAction = (props) => {
 
-//   useEffect(()=>{
-//       const tmp = [];
-//       props.data.map((formElement, index) => {
-//         console.log("formElement------",formElement);
-//           tmp.push(formElement);
-//       });
-
-//   },[])
-
   const classes = useStyles();
   const [fieldValue, setFieldValue] = useState([{ name: '', price: '', barcode: '', stock: '', category: '', imageVirtualPath: '' }]);
+  const [openSnackBar, setOpenSnackBar] = useState({status:false,message:""});
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -52,42 +45,72 @@ const SidebarAction = (props) => {
     props.setState(!open);
   };
   
-  const handleChanges = (e, index, key) => {
-    //console.log('key----', e.target.value);
+  const handleChanges = (e, index,key,id) => {
     setFieldValue((prevState) => {
-        console.log('prevState----', prevState);
       prevState[index][key] = e.target.value;
+      //props.data[index][key] = e.target.value;
       return [...prevState];
     });
-    props.set((prevState)=>{
-        console.log('fieldValue----', fieldValue);
-        return [...prevState]
-    });
+
+    props.set((prevState) =>{
+      const filterData = prevState.filter(el => el.id === id );
+      filterData[index][key] = e.target.value;
+      return [...filterData];
+    })
   };
 
-  const handleSubmitElement = (e) => {
-    console.log('fieldValue-----', fieldValue);
-  };
+  const handleSubmitElement = async(e) => {
+    const updateProduct =  await props.update(props.data);
+      setOpenSnackBar({status:true , message:updateProduct.message});
+      return updateProduct ;
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('data-----', event);
-  };
 
-  console.log("props------",props);
+  const handleSnackBarClose = () =>{
+    props.setState(false);
+    setOpenSnackBar({status:false});
+  }
+
+  // console.log("props--in SidebarAction--",props.headers);
 
   return (
-    <>
+    <> 
+      <Snackbar
+            anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+            }}
+            message={openSnackBar.message}
+            open={openSnackBar.status}
+            autoHideDuration={8000}
+            onClose={handleSnackBarClose}
+        ></Snackbar>
       <TableHead>
         <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
-        {props.data.map((formElement, index) => (
+
+          {
+            props.onCreate === "onCreate" ?
+            props.headers.map((formElement, index) => (
+              <div key={index} id={formElement.id} className={classes.mainContainer}>
+                    <TextField
+                      key={index}
+                      id="standard-basic"
+                      label="Standard"
+                      variant="standard"
+                      onChange={(e) => {handleChanges()}}
+                      type="text"
+                  />
+              </div>
+            )
+            )
+            
+            :
+            props.data.map((formElement, index) => (
             <div key={index} id={formElement.id} className={classes.mainContainer}>
               {Object.keys(formElement).map((key, idx) => {
-                  
-                  console.log("formElement-------",formElement)
-                if (key !== 'id') {
+                if (key !== 'id' && key !== "branchId") {
                     return (
-                        <form onSubmit={handleSubmit}>
+                        <form>
                             <div key={idx} className={classes.fieldContainer}>
                                 {key !== 'id' && <Typography>{key}</Typography>}
                                 {key === 'imageVirtualPath' ? (
@@ -96,7 +119,7 @@ const SidebarAction = (props) => {
                                     id="standard-basic"
                                     label="Standard"
                                     variant="standard"
-                                    onChange={(e) => {handleChanges(e, index, key)}}
+                                    onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
                                     type="file"
                                 />
                                 ) : key === 'category' ? (
@@ -105,11 +128,11 @@ const SidebarAction = (props) => {
                                         id="standard-basic"
                                         value={formElement[key]}
                                         label={formElement[key]}
-                                        onChange={(e) => {handleChanges(e, index, key)}}
+                                        onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
                                     >
                                         {props.categories.map((el,ind) => {
                                             return(
-                                                <MenuItem key={ind} value={el.name}>{el.name}</MenuItem>
+                                                <MenuItem key={ind} value={el.id}>{el.name}</MenuItem>
                                             )
                                         } )}
                                     </Select>
@@ -118,7 +141,7 @@ const SidebarAction = (props) => {
                                 <TextField
                                     key={idx}
                                     value={formElement[key]}
-                                    onChange={(e) => {handleChanges(e, index, key)}}
+                                    onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
                                     inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
                                 />
                                 )}
@@ -132,10 +155,11 @@ const SidebarAction = (props) => {
                     className={classes.submitButton}
                     onClick={(e) => handleSubmitElement(e)}
                 >
-                    <FileUploadIcon />
+                  Ruaj 
                 </Button>
             </div>
-        ))}
+            ))
+          }
         </Drawer>
       </TableHead>
     </>

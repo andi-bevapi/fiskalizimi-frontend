@@ -1,5 +1,5 @@
 import { createContext , useContext ,useEffect , useState } from "react";
-import {allProduct} from "../services/product/index";
+import {allProduct , createProduct ,updateProduct , deleteProduct} from "../services/product/index";
 
 const ProductContext = createContext({});
 const ProductProvider = (props) => {
@@ -9,7 +9,6 @@ const ProductProvider = (props) => {
         try{
             const products = await allProduct();
             if(products.statusCode === 200){
-                //console.log("products-------",products.data)
                 setProductList(products.data);
             }
         }catch(error){
@@ -17,7 +16,29 @@ const ProductProvider = (props) => {
         }
     },[])
 
-    const values = {productList,setProductList}
+    const productToCreate = async () =>{
+        console.log("productToCreate");
+    }
+
+    const productToUpdate = async(data) => {
+       try{
+         const result = await updateProduct(data);
+         return result;
+       }catch(error){
+        console.log("error-----",error);
+       }
+    }
+
+    const productToDelete = async(id) =>{
+        try{
+            const result = await deleteProduct(id);
+            return result;
+           }catch(error){
+                console.log("error---",error);
+           }
+    }
+
+    const values = {productList,setProductList,productToCreate,productToUpdate,productToDelete}
     return(
        <ProductContext.Provider value={values}>
             {props.children}

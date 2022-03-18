@@ -37,6 +37,7 @@ const Categories = () => {
       <h1>Categories Component</h1>
       <SnackbarComponent open={openStatus} message={snackBarStatus.message} severity={"warning"}/>
         <TableComponent
+        from={"category"}
         tableHeaders={tableHeaders}
         data={categoryData}
         setData={setCategoryData}
