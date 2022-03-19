@@ -24,7 +24,6 @@ const SearchByBarcode = () => {
   const closeDrawer = useCallback(() => setIsVisible(false), []);
 
   const handleChange = (event) => {
-    console.log("Eventi", event.target.value);
     setBarcode(event.target.value);
   };
   // const handleClearSearchField = () => {
@@ -38,7 +37,7 @@ const SearchByBarcode = () => {
           <Grid item={true} xs={10} md={4} style={{ textAlign: 'left' }}>
             <BootstrapInputField
               placeholder="Kërko sipas barcode-it"
-              style={{ margin: 0 }}
+              style={{ margin: 0}}
               value={barcode}
               onChange={handleChange}
             />

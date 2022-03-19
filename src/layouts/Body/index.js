@@ -16,7 +16,7 @@ const Body = (props) => {
         </div>
       </Grid>
       <Grid item xs={6} md={4}>
-        <span className={styles.contentTitle}>Fatura</span>
+        <span className={styles.contentTitle}>&nbsp;</span>
         <div className={styles.itemsOnBuy}>
           <ItemsOnBuy />
         </div>
