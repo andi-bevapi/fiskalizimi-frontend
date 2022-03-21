@@ -21,8 +21,10 @@
     "postcss": "^7.0.39",
     "postcss-import": "12.x",
     "react": "17.x",
+    "react-bottom-drawer": "^0.1.1",
     "react-dom": "17.x",
     "sweetalert2": "^11.4.5",
+    "styled-components": "^5.3.3",
     "umi": "^3.5.20",
     "yup": "^0.32.11"
   },

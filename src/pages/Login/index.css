@@ -10,17 +10,13 @@
 .subMainHolder {
     min-width: 550px;
     background-color: #ffffff;
-    padding: 5rem;
+    padding: 2rem 5rem 5rem;
     border-radius: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
   
 .lockerHolder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 4rem;
+    text-align: center;
 }
   
 .inputHolder {
@@ -28,7 +24,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 13rem;
-    margin-top: 6rem;
+    margin-top: 3rem;
 }
   
 .passwordButtonHolder {
@@ -45,4 +41,8 @@
       width: auto;
     }
 }
-  
+
+.buttonStyle {
+    background-color: #17625D !important;
+    font-family: 'Poppins'!important;
+}  

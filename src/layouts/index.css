@@ -1,6 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
 .layout {
-  font-family: Georgia, sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   text-align: center;
   background-color: #EBEFF2;
   min-height: 100vh;

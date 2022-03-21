@@ -6,6 +6,7 @@ const CategoryContext = createContext({});
 const CategoryProvider = (props) => {
     const [categoryList, setCategoryList] = useState([]);
     const [snackBarStatus, setSnackBarStatus] = useState({});
+
     useEffect(async () => {
         try {
             const category = await getAllCategory();
@@ -27,7 +28,7 @@ const CategoryProvider = (props) => {
             const result = await updateCategory(data);
             return result;
         } catch (error) {
-            console.log("error-----", error);
+            console.log(error);
         }
     }
 
@@ -40,7 +41,7 @@ const CategoryProvider = (props) => {
             const result = await deleteCategory(id);
             return result;
         } catch (error) {
-            console.log("error-----", error);
+            console.log(error);
         }
     }
 

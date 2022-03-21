@@ -1,12 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 .wrapper {
   height: 100%; 
   padding: 16px;
   flex-grow: 1;
+  padding-top: 10px;
 }
 
 .itemsOnStock,
 .itemsOnBuy {
   background-color: #fff;
   height: 100%;
-  padding: 10px 10px;
+  padding: 30px;
+  margin-top: 5px;
+  border-radius: 15px;
+  border: 1px solid #DEDEDE;
+  box-shadow: 0 0 14px 0 #e1e1e1;
+ }
+
+ .contentTitle{
+  font: bold 24px 'Poppins';
+  line-height: 2;
  }

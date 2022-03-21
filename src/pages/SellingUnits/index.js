@@ -29,7 +29,7 @@ const SellingUnits = () => {
 
   return (
     <>
-      <h1>SellingUnits Component</h1>
+      {/* <h1>SellingUnits Component</h1>
       <TableComponent
         tableHeaders={tableHeaders}
         data={data}
@@ -38,7 +38,7 @@ const SellingUnits = () => {
         setElement={setElement}
         handleEditElement={handleEditProduct}
         handleAsk={handleAsk}
-      />
+      /> */}
     </>
   );
 };

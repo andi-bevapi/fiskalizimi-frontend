@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     margin: '20px 0 30px 0',
   },
   label: {
-    fontFamily: '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: '18px',
     fontWeight: '500',
     color: '#505458',

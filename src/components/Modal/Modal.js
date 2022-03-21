@@ -19,7 +19,6 @@ const useStyles = makeStyles({
   title: {
     color: '#505458',
     fontSize: '16px',
-    fontFamily: '"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontWeight: '500',
   },
   header: {

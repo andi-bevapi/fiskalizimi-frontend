@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+
 .mainHolder {
   width: 100%;
   display: flex;
@@ -34,6 +37,13 @@
 
 .noVatPriceHolder > div {
   margin-left: 5px;
+}
+
+.text{
+  font-family: 'Poppins' !important;
+  font-size: 15px;
+  color: #686868;
+  text-transform: capitalize;
 }
 
 @media (max-width: 1200px) {

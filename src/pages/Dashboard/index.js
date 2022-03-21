@@ -16,7 +16,7 @@ import { makeStyles } from '@mui/styles';
 // import ListCategories from './ListCategories';
 
 const useStyles = makeStyles(() => ({
-  container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%', padding: '24px 16px' },
+  container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
   headContainer: {
     width: '100%',
     display: 'flex',
@@ -96,7 +96,7 @@ const Dashboard = () => {
   return (
     <div className={classes.container}>
       <div className={classes.headContainer}>
-        <SearchFilter onFilter={filterProducts} placeholder="searchProduct" />
+        <SearchFilter onFilter={filterProducts} placeholder="Kerko Produkt" />
         <div className={classes.iconsContainer}>
           <IconButton onClick={() => setDisplay('cards')}>
             <AppsIcon />

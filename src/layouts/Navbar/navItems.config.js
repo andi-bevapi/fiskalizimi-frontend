@@ -6,12 +6,11 @@ export const navItems = [
   {
     title: "Produktet",
     path: "/produktet",
-    access: 'canViewProducts'
+    access: 'canViewProduct'
   },
   {
     title: "Kategorite",
-    path: "/kategorite",
-    access: 'canViewCategories'
+    path: "/kategorite"
   },
   {
     title: "Njesite e shitjes",
@@ -22,11 +21,11 @@ export const navItems = [
     path: "/perdoruesit",
   },
   {
-    title: "Konfigurime",
-    path: "/konfigurime",
-  },
-  {
     title: "Furnizuesit",
     path: "/furnizuesit",
+  },
+  {
+    title: "Konfigurime",
+    path: "/konfigurime",
   },
 ];

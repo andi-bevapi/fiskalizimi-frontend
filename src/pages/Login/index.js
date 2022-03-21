@@ -5,15 +5,20 @@ import { Button, IconButton, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { ErrorMessage, Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import { login } from '../../services/user';
 import { loginSchema } from './validationSchema';
 import User from '../../models/User';
+import SnackbarComponent from '../../components/Snackbar';
 import styles from "./index.css";
+import LoginIcon from '@mui/icons-material/Login';
 
 const Login = () => {
     const { initialState, setInitialState } = useModel('@@initialState');
     const [showPassword, setShowPassword] = useState(false);
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+    const [loginMessage, setLoginMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -26,62 +31,87 @@ const Login = () => {
         }
     };
 
-    const onLoginHandler = async (fields) => {
+    const onLoginHandler = async (values) => {
         try {
-            const response = await login(fields);
-            localStorage.setItem('token', response.data);
-            await fetchUserInfo();
-            history.push('/');
-            return;
+            const response = await login(values);
+
+            if (response.statusCode === 200) {
+                localStorage.setItem('token', response.data);
+                await fetchUserInfo();
+                history.push('/');
+                return;
+            }
+
+            const resJson = await response.json();
+
+            setLoginMessage(resJson.message);
+            setIsSuccess(response.statusCode === 200);
+            setOpenSnackBar(true);
         } catch (error) {
             console.log(error);
         }
     };
 
     return (
-        <>
+        <div className={styles.mainHolder}>
             <Formik
                 initialValues={{ username: "", password: "" }}
                 validationSchema={loginSchema}
-                onSubmit={(fields) => {
-                    onLoginHandler(fields);
-                }}>
-                {({ handleChange, handleBlur, errors, touched, values }) => (
-                    <Form>
-                        <div className={styles.mainHolder}>
-                            <div className={styles.subMainHolder}>
-                                <div className={styles.lockerHolder}>
-                                    <LockIcon
-                                        style={{
-                                            transform: "scale(1.8)",
-                                            color: "rgba(0, 0, 0, 0.6)",
-                                        }}
-                                    />
-                                    <Typography> Hyni në platformë</Typography>
-                                </div>
-                                <div className={styles.inputHolder}>
+                onSubmit={(values) => {
+                    onLoginHandler(values);
+                }}
+            >
+                <Form>
+                    <div className={styles.subMainHolder}>
+                        <div className={styles.lockerHolder}>
+                            <LockIcon
+                                style={{
+                                    transform: "scale(1.8)",
+                                    color: "transparent"
+                                }}
+                            />
+                            <Typography
+                                style={{
+                                    fontSize: "35px",
+                                    fontFamily: "Poppins"
+                                }}
+                            > Hyni në platformë</Typography>
+                        </div>
+                        <div className={styles.inputHolder}>
+                            <Field name="username">
+                                {({
+                                    field,
+                                    meta
+                                }) => (
                                     <TextField
-                                        id="username"
-                                        name="username"
-                                        type="username"
-                                        value={values.username}
                                         label="Përdoruesi"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={touched.username && Boolean(errors.username)}
-                                        helperText={errors.username}
+                                        error={meta.touched && meta.error}
+                                        helperText={meta.error}
+                                        InputProps={{
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
+                                        }}
+                                        {...field}
                                     />
+                                )}
+                            </Field>
 
+                            <Field name="password">
+                                {({
+                                    field,
+                                    meta
+                                }) => (
                                     <TextField
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        value={values.password}
+                                        type={showPassword ? "text" : "password"}
                                         label="Fjalëkalimi"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={touched.password && Boolean(errors.password)}
-                                        helperText={errors.password}
+                                        error={meta.touched && meta.error}
+                                        helperText={meta.error}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
@@ -93,20 +123,38 @@ const Login = () => {
                                                         {!showPassword ? <VisibilityOff /> : <Visibility />}
                                                     </IconButton>
                                                 </InputAdornment>
-                                            )
+                                            ),
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
                                         }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poppins"
+                                            }
+                                        }}
+                                        {...field}
                                     />
+                                )}
+                            </Field>
 
-                                    <Button variant="contained" type="submit">
-                                        Hyr
-                                    </Button>
-                                </div>
-                            </div>
+                            <Button variant="contained" type="submit" className={styles.buttonStyle}>
+                                <LoginIcon style={{ marginRight: 10 }} /> Hyr
+                            </Button>
                         </div>
-                    </Form>
-                )}
+                    </div>
+                </Form>
             </Formik>
-        </>
+
+            <SnackbarComponent
+                message={loginMessage}
+                open={openSnackBar}
+                handleSnackBarClose={() => {
+                    setOpenSnackBar(false);
+                }}
+                severity={isSuccess ? "success" : "error"}
+            />
+        </div>
     );
 };
 

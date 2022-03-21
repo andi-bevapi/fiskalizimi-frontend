@@ -2,7 +2,9 @@ export default function (initialState) {
     const { permissions } = initialState.currentUser;
 
     return {
-        canViewProducts: true, //permissions.includes('permission.product.view'),
-        canViewCategories: permissions.includes('permission.category.view')
+        canViewProduct: true, // permissions.includes('permission.product.view'),
+        canCreateProduct: true, // permissions.includes('permission.product.create'),
+        canEditProduct: true, // permissions.includes('permission.product.edit'),
+        canDeleteProduct: true, // permissions.includes('permission.product.delete'),
     };
 }

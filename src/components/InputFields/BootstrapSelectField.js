@@ -9,7 +9,6 @@ import { makeStyles, withStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    fontFamily: "'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     fontSize: '14px',
     fontStyle: 'none',
     fontWeight: '700',
@@ -19,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
-    fontFamily: "'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     color: '#797979',
     fontSize: '14px',
   },

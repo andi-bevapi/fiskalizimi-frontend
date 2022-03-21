@@ -29,7 +29,7 @@ const Suppliers = () => {
 
   return (
     <>
-      <h1>Suppliers Component</h1>
+      {/* <h1>Suppliers Component</h1>
       <TableComponent
         tableHeaders={tableHeaders}
         data={data}
@@ -38,7 +38,7 @@ const Suppliers = () => {
         setElement={setElement}
         handleEditElement={handleEditProduct}
         handleAsk={handleAsk}
-      />
+      /> */}
     </>
   );
 };

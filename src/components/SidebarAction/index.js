@@ -1,169 +1,132 @@
 import {
-  Drawer,
-  Fab,
-  TextField,
-  TableHead,
-  TableCell,
-  TableRow,
-  Typography,
-  Select,
-  MenuItem,
+  Drawer
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { useState , useEffect } from 'react';
-import { Snackbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Form, Formik } from "formik";
+import { useState, useEffect } from 'react';
+import FormRender from '../FormRender';
+import SnackbarComponent from '../Snackbar';
+import { useCategoryContext } from "../../Context/CategoryContext";
+import SaveIcon from '@mui/icons-material/Save';
 
 const useStyles = makeStyles(() => ({
-  mainContainer: {
-    width: '350px',
-  },
-  fieldContainer: {
-    width: '50%',
-    display: 'block',
-    margin: '0 auto',
-    padding: '10px',
-  },
-  submitButton: {
-    width: '60%',
-    marginLeft: '85px !important',
-    marginTop: '50px !important',
-  },
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 50,
+    width: 400
+  }
 }));
 
 const SidebarAction = (props) => {
+  const { categoryList } = useCategoryContext();
 
   const classes = useStyles();
-  const [fieldValue, setFieldValue] = useState([{ name: '', price: '', barcode: '', stock: '', category: '', imageVirtualPath: '' }]);
-  const [openSnackBar, setOpenSnackBar] = useState({status:false,message:""});
+
+  const [fields, setFields] = useState(props.formFields);
+  const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "", success: false });
+
+  useEffect(() => {
+    fillSelectOptions();
+  }, [props.formFields, props.open]);
+
+  const fillSelectOptions = () => {
+    const options = categoryList.map(el => {
+      return {
+        value: el.id,
+        label: el.name
+      }
+    })
+
+    let formattedFields = [...fields];
+    
+    formattedFields = formattedFields.map(field => {
+      if(field.options) field.options = options;
+      return field;
+    });
+
+    setFields(formattedFields);
+  };
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    props.setState(!open);
+    props.setOpenSideBar(!open);
+    props.setEditItem(null);
   };
-  
-  const handleChanges = (e, index,key,id) => {
-    setFieldValue((prevState) => {
-      prevState[index][key] = e.target.value;
-      //props.data[index][key] = e.target.value;
-      return [...prevState];
+
+  const handleSnackBarClose = () => {
+    setOpenSnackBar({ status: false });
+  }
+
+  const generateInitialValues = () => {
+    let initialValues = {};
+
+    if(props.editItem) {
+      fields.forEach(field => {
+        initialValues[field.name] = props.editItem[field.name];
+      });
+      initialValues['id'] = props.editItem.id;
+    } else {
+      fields.forEach(field => {
+        initialValues[field.name] = "";
+      });
+    }
+
+    return initialValues;
+  };
+
+  const handleSubmit = async (values) => {
+    const action = props.editItem ? props.update : props.create;
+    const response = await action({
+      ...values,
+      imageVirtualPath: '1234567890',
+      stockCheck: true
     });
 
-    props.set((prevState) =>{
-      const filterData = prevState.filter(el => el.id === id );
-      filterData[index][key] = e.target.value;
-      return [...filterData];
-    })
+    if(response.statusCode === 200) {
+      setOpenSnackBar({ status: true, message: response.message, success: true });
+      props.setOpenSideBar(false);
+      return;
+    }
+    
+    const resJson = await response.json();
+    setOpenSnackBar({ status: true, message: resJson.message, success: false });
   };
 
-  const handleSubmitElement = async(e) => {
-    const updateProduct =  await props.update(props.data);
-      setOpenSnackBar({status:true , message:updateProduct.message});
-      return updateProduct ;
-  }
-
-
-  const handleSnackBarClose = () =>{
-    props.setState(false);
-    setOpenSnackBar({status:false});
-  }
-
-  // console.log("props--in SidebarAction--",props.headers);
-
   return (
-    <> 
-      <Snackbar
-            anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-            }}
-            message={openSnackBar.message}
-            open={openSnackBar.status}
-            autoHideDuration={8000}
-            onClose={handleSnackBarClose}
-        ></Snackbar>
-      <TableHead>
-        <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
+    <>
+      <SnackbarComponent
+        message={openSnackBar.message}
+        open={openSnackBar.status}
+        handleSnackBarClose={handleSnackBarClose}
+        severity={openSnackBar.success ? "success" : "error"}
+      />
 
-          {
-            props.onCreate === "onCreate" ?
-            props.headers.map((formElement, index) => (
-              <div key={index} id={formElement.id} className={classes.mainContainer}>
-                    <TextField
-                      key={index}
-                      id="standard-basic"
-                      label="Standard"
-                      variant="standard"
-                      onChange={(e) => {handleChanges()}}
-                      type="text"
-                  />
-              </div>
-            )
-            )
-            
-            :
-            props.data.map((formElement, index) => (
-            <div key={index} id={formElement.id} className={classes.mainContainer}>
-              {Object.keys(formElement).map((key, idx) => {
-                if (key !== 'id' && key !== "branchId") {
-                    return (
-                        <form>
-                            <div key={idx} className={classes.fieldContainer}>
-                                {key !== 'id' && <Typography>{key}</Typography>}
-                                {key === 'imageVirtualPath' ? (
-                                <TextField
-                                    key={idx}
-                                    id="standard-basic"
-                                    label="Standard"
-                                    variant="standard"
-                                    onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
-                                    type="file"
-                                />
-                                ) : key === 'category' ? (
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="standard-basic"
-                                        value={formElement[key]}
-                                        label={formElement[key]}
-                                        onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
-                                    >
-                                        {props.categories.map((el,ind) => {
-                                            return(
-                                                <MenuItem key={ind} value={el.id}>{el.name}</MenuItem>
-                                            )
-                                        } )}
-                                    </Select>
-                                    ) 
-                                : (
-                                <TextField
-                                    key={idx}
-                                    value={formElement[key]}
-                                    onChange={(e) => {handleChanges(e, index, key , formElement.id)}}
-                                    inputProps={{ style: { padding: 12, width: 160, height: 10 } }}
-                                />
-                                )}
-                            </div>
-                        </form>
-                    );
-                }
-              })}
-                <Button
-                    variant="contained"
-                    className={classes.submitButton}
-                    onClick={(e) => handleSubmitElement(e)}
-                >
-                  Ruaj 
-                </Button>
-            </div>
-            ))
-          }
-        </Drawer>
-      </TableHead>
+      <Drawer
+        anchor="left"
+        open={props.open}
+        onClose={toggleDrawer('left', !props.open)}
+      >
+        <Formik
+          initialValues={generateInitialValues()}
+          onSubmit={(values) => {
+            handleSubmit(values);
+          }}
+        >
+          <Form className={classes.formContainer}>
+            <FormRender formFields={fields} />
+
+            <Button variant="contained" type="submit">
+              <SaveIcon style={{ marginRight: 10 }} /> Ruaj
+            </Button>
+          </Form>
+        </Formik>
+      </Drawer>
     </>
   );
 };
 
-export {SidebarAction};
+export default SidebarAction;

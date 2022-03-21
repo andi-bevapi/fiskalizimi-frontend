@@ -61,7 +61,7 @@ const BodyDashboard = (props) => {
         </div>
       ) : (
         <div className={classes.noDataCont}>
-          <NoData title="noProductcreated" />
+          <NoData title="Asnje produkt i krijuar" />
         </div>
       )}
     </div>
