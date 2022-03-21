@@ -9,6 +9,16 @@ const getAllCategory = async () => {
     });
 }
 
+const createCategory = async(data) =>{
+    return request("/categories/create",{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data
+    })
+}
+
 const updateCategory = async (data) => {
     return request(`/categories/update/${data.id}`,{
         method:"PUT",
@@ -28,4 +38,4 @@ const deleteCategory = async(id) => {
     })
 }
 
-export {getAllCategory,updateCategory,deleteCategory}
+export {createCategory,getAllCategory,updateCategory,deleteCategory}

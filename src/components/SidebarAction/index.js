@@ -81,9 +81,7 @@ const SidebarAction = (props) => {
   const handleSubmit = async (values) => {
     const action = props.editItem ? props.update : props.create;
     const response = await action({
-      ...values,
-      imageVirtualPath: '1234567890',
-      stockCheck: true
+      ...values
     });
 
     if(response.statusCode === 200) {

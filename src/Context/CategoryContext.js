@@ -1,31 +1,44 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getAllCategory, updateCategory, deleteCategory } from "../services/category";
+import { createCategory , getAllCategory, updateCategory, deleteCategory } from "../services/category";
 
 const CategoryContext = createContext({});
 
 const CategoryProvider = (props) => {
     const [categoryList, setCategoryList] = useState([]);
-    const [snackBarStatus, setSnackBarStatus] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(async () => {
+       getCategoryList();
+    }, []);
+
+    const getCategoryList = async() => {
+        setIsLoading(true);
         try {
             const category = await getAllCategory();
             if (category.statusCode === 200) {
                 setCategoryList(category.data);
-            } else {
-                throw Error(JSON.stringify({ status: category.status, message: category.statusText }))
             }
         } catch (error) {
-            const errorMessage = JSON.parse(error.message);
-            setSnackBarStatus(errorMessage);
-            return errorMessage;
+            console.log(error);
         }
-    }, []);
+        setIsLoading(false);
+    }
 
+    const categoryToCreate = async(data) =>{
+        try{
+            const result = await createCategory(data);
+            getCategoryList();
+            return result;
+        }catch(error){
+            console.log(error);
+        }
+    }
 
     const categoryToUpdate = async (data) => {
+        console.log("data--context---",data)
         try {
             const result = await updateCategory(data);
+            getCategoryList()
             return result;
         } catch (error) {
             console.log(error);
@@ -35,7 +48,7 @@ const CategoryProvider = (props) => {
     const categoryToDelete = async (id) => {
         try {
             setCategoryList((prevState) => {
-                const newState = prevState.filter((el) => el.id === id);
+                const newState = prevState.filter((el) => el.id !== id);
                 return [...newState]
             });
             const result = await deleteCategory(id);
@@ -45,7 +58,7 @@ const CategoryProvider = (props) => {
         }
     }
 
-    const values = { categoryList, setCategoryList, categoryToUpdate, categoryToDelete, snackBarStatus };
+    const values = {categoryToCreate,categoryList, setCategoryList, categoryToUpdate, categoryToDelete};
 
     return (
         <CategoryContext.Provider value={values}>
