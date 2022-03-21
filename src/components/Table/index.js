@@ -88,6 +88,9 @@ const TableComponent = (props) => {
         update={props.update}
         editItem={editItem}
         setEditItem={setEditItem}
+        user={props.user}
+        permissions={props.permissions}
+        setPermissions={props.setPermissions}
       />
 
       <div className={classes.headerContainer}>

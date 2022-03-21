@@ -1,22 +1,20 @@
-import {
-  Drawer
-} from '@mui/material';
+import { Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
-import { Form, Formik } from "formik";
+import { Form, Formik } from 'formik';
 import { useState, useEffect } from 'react';
 import FormRender from '../FormRender';
 import SnackbarComponent from '../Snackbar';
-import { useCategoryContext } from "../../Context/CategoryContext";
+import { useCategoryContext } from '../../Context/CategoryContext';
 import SaveIcon from '@mui/icons-material/Save';
-
+import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
     padding: 50,
-    width: 400
-  }
+    width: 400,
+  },
 }));
 
 const SidebarAction = (props) => {
@@ -25,24 +23,24 @@ const SidebarAction = (props) => {
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
-  const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "", success: false });
+  const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
 
   useEffect(() => {
     fillSelectOptions();
   }, [props.formFields, props.open]);
 
   const fillSelectOptions = () => {
-    const options = categoryList.map(el => {
+    const options = categoryList.map((el) => {
       return {
         value: el.id,
-        label: el.name
-      }
-    })
+        label: el.name,
+      };
+    });
 
     let formattedFields = [...fields];
-    
-    formattedFields = formattedFields.map(field => {
-      if(field.options) field.options = options;
+
+    formattedFields = formattedFields.map((field) => {
+      if (field.options) field.options = options;
       return field;
     });
 
@@ -59,19 +57,19 @@ const SidebarAction = (props) => {
 
   const handleSnackBarClose = () => {
     setOpenSnackBar({ status: false });
-  }
+  };
 
   const generateInitialValues = () => {
     let initialValues = {};
 
-    if(props.editItem) {
-      fields.forEach(field => {
+    if (props.editItem) {
+      fields.forEach((field) => {
         initialValues[field.name] = props.editItem[field.name];
       });
       initialValues['id'] = props.editItem.id;
     } else {
-      fields.forEach(field => {
-        initialValues[field.name] = "";
+      fields.forEach((field) => {
+        initialValues[field.name] = '';
       });
     }
 
@@ -79,21 +77,45 @@ const SidebarAction = (props) => {
   };
 
   const handleSubmit = async (values) => {
+    const tmp = props.permissions.filter((el) => el.checked == true);
+    const permissions = []
+    tmp.map((el) => permissions.push(el.id));
+    console.log(permissions);
     const action = props.editItem ? props.update : props.create;
-    const response = await action({
-      ...values,
-      imageVirtualPath: '1234567890',
-      stockCheck: true
-    });
 
-    if(response.statusCode === 200) {
+    let response = {};
+    if (props.user) {
+      response = await action({
+        user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+        permissions: [1],
+      });
+    } else {
+      response = await action({
+        ...values,
+      });
+    }
+
+    if (response.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
+      props.setPermissions(
+        props.permissions.map((el) => {
+          return { ...el, checked: false };
+        }),
+      );
       return;
     }
-    
+
     const resJson = await response.json();
     setOpenSnackBar({ status: true, message: resJson.message, success: false });
+  };
+
+  const handleCheck = (id) => {
+    props.setPermissions((prev) => {
+      let index = prev.findIndex((item) => item.id === id);
+      prev[index].checked = !prev[index].checked;
+      return [...prev];
+    });
   };
 
   return (
@@ -102,14 +124,10 @@ const SidebarAction = (props) => {
         message={openSnackBar.message}
         open={openSnackBar.status}
         handleSnackBarClose={handleSnackBarClose}
-        severity={openSnackBar.success ? "success" : "error"}
+        severity={openSnackBar.success ? 'success' : 'error'}
       />
 
-      <Drawer
-        anchor="left"
-        open={props.open}
-        onClose={toggleDrawer('left', !props.open)}
-      >
+      <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
         <Formik
           initialValues={generateInitialValues()}
           onSubmit={(values) => {
@@ -118,7 +136,20 @@ const SidebarAction = (props) => {
         >
           <Form className={classes.formContainer}>
             <FormRender formFields={fields} />
-
+            {props.user && (
+              <>
+                {props.permissions.map((permission) => {
+                  return (
+                    <BootstrapCheckbox
+                      key={permission.id}
+                      label={permission.name}
+                      checked={permission.checked}
+                      handleCheck={() => handleCheck(permission.id)}
+                    />
+                  );
+                })}
+              </>
+            )}
             <Button variant="contained" type="submit">
               <SaveIcon style={{ marginRight: 10 }} /> Ruaj
             </Button>

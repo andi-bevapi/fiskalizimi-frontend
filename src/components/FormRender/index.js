@@ -7,7 +7,7 @@ const FormRender = ({ formFields }) => {
         switch (formField.component) {
             case 'Text': {
                 return (
-                    <Field name={formField.name}>
+                    <Field name={formField.name} key={formField.label}>
                         {({
                             field,
                             meta
@@ -35,7 +35,7 @@ const FormRender = ({ formFields }) => {
             }
             case 'Number': {
                 return (
-                    <Field name={formField.name}>
+                    <Field name={formField.name} key={formField.label}>
                         {({
                             field,
                             meta
@@ -64,7 +64,7 @@ const FormRender = ({ formFields }) => {
             }
             case 'Select': {
                 return (
-                    <Field name={formField.name}>
+                    <Field name={formField.name} key={formField.label}>
                         {({
                             field,
                             meta
