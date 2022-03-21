@@ -35,9 +35,8 @@ export const  createUser = async (data) => {
     })
 }
 
-export const  updateUser = async (data) => {
-    console.log("User ID------", data.user.id);
-    return request(`/user/update/${data.user.id}`, {
+export const  updateUser = async (id, data) => {
+    return request(`/user/update/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         data

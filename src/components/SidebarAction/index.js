@@ -78,17 +78,25 @@ const SidebarAction = (props) => {
 
   const handleSubmit = async (values) => {
     const tmp = props.permissions.filter((el) => el.checked == true);
-    const permissions = []
+    const permissions = [];
     tmp.map((el) => permissions.push(el.id));
-    console.log(permissions);
     const action = props.editItem ? props.update : props.create;
 
     let response = {};
     if (props.user) {
-      response = await action({
-        user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
-        permissions: [1],
-      });
+      if (props.editItem) {
+        let id = values.id;
+        delete values.id;
+        response = await action(id, {
+          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          permissions: permissions,
+        });
+      } else {
+        response = await action({
+          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          permissions: permissions,
+        });
+      }
     } else {
       response = await action({
         ...values,

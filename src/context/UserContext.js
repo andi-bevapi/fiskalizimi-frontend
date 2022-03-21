@@ -43,7 +43,6 @@ const UserProvider = (props) => {
   const userToCreate = async (data) => {
     try {
       const response = await createUser(data);
-      console.log('Response context--', response);
       getUsersList();
       return response;
     } catch (error) {
@@ -51,11 +50,9 @@ const UserProvider = (props) => {
     }
   };
 
-  const userToUpdate = async (data) => {
-    console.log('User update---', data);
+  const userToUpdate = async (id, data) => {
     try {
-      const response = await updateUser(data);
-      console.log('Response context--', response);
+      const response = await updateUser(id, data);
       getUsersList();
       return response;
     } catch (error) {
@@ -64,7 +61,6 @@ const UserProvider = (props) => {
   };
 
   const userToDelete = async (id) => {
-    console.log('User delete');
     try {
       const response = await deleteUser(id);
       setUsers((prevState) => {
