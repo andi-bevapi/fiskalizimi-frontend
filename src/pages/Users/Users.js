@@ -93,7 +93,7 @@ const Users = () => {
           icon={<AddIcon />}
         />
       </div>
-      <TableComponent
+      {/* <TableComponent
         tableHeaders={tableHeaders}
         data={data}
         setData={setData}
@@ -102,7 +102,7 @@ const Users = () => {
         handleEditElement={handleEditCategory}
         handleAsk={handleAsk}
         setOpenForm={handleUserEditOpen}
-      />
+      /> */}
       <ModalComponent open={openForm} handleClose={handleUserFormClose} title="User">
         <UserForm handleClose={handleUserFormClose} action={action} user={element} />
       </ModalComponent>

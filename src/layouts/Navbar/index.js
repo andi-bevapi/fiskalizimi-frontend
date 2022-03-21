@@ -27,15 +27,6 @@ const Navbar = () => {
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
-        {/* <IconButtonComponent
-          style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
-            marginRight: '10px',
-          }}
-          icon={<PersonIcon />}
-          iconColor={{ color: 'grey' }}
-        /> */}
-
         <span className={styles.userName}>{initialState.currentUser.username}</span>
         <IconButtonComponent
           style={{ backgroundColor: '#FF7A00', width: '50px', height: '50px', boxShadow: 'none' }}

@@ -4,27 +4,27 @@ export const SwalModal = (
   title,
   text,
   icon,
-  cancelBtn,
-  confBtn,
-  cancelBtnFunc,
-  confBtnFunc,
-  index
+  cancelButtonText,
+  confirmButtonText,
+  cancelHandler,
+  confirmHandler,
+  identifier
 ) => {
   Swal.fire({
-    title: title,
-    text: text,
-    icon: icon,
+    title,
+    text,
+    icon,
     showCancelButton: true,
-    showConfirmButton: confBtn === "" ? false : true,
+    showConfirmButton: confirmButtonText === "" ? false : true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    cancelButtonText: cancelBtn,
-    confirmButtonText: confBtn,
+    cancelButtonText,
+    confirmButtonText,
   }).then((result) => {
     if (result.isConfirmed) {
-      confBtnFunc(index);
+      confirmHandler(identifier);
     } else if (result.isDismissed) {
-      cancelBtnFunc();
+      cancelHandler();
     }
   });
 };

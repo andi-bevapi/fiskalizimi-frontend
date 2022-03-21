@@ -36,7 +36,7 @@ const SearchByBarcode = () => {
         <Grid container columns={12}>
           <Grid item={true} xs={10} md={4} style={{ textAlign: 'left' }}>
             <BootstrapInputField
-              placeholder="Kërko sipas barcode-it"
+              placeholder="Kërko sipas barkodit"
               style={{ margin: 0}}
               value={barcode}
               onChange={handleChange}
@@ -44,7 +44,7 @@ const SearchByBarcode = () => {
           </Grid>
           <Grid item={true} xs={2} md={6}>
             <IconButtonComponent
-              style={{ backgroundColor: '#12AC7A', height: 40 }}
+              style={{ backgroundColor: '#12AC7A', height: 40, width: 40 }}
               icon={<ManageSearchIcon />}
               iconColor={{ color: '#fff' }}
               onClick={openDrawer}

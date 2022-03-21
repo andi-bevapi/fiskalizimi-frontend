@@ -62,7 +62,6 @@ const ItemsOnBuy = () => {
   const [loadingInvoice, setLoadingInvoice] = useState(true); //laoding state when updating invoice sale
 
   useEffect(() => {
-   console.log("tempArraywithProducts", tempArraywithProducts);
    setLoadingInvoice(false);
   }, []);
 

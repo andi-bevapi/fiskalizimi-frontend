@@ -18,6 +18,7 @@ const UserProvider = (props) => {
       return error;
     }
   };
+  
   useEffect(() => {
     getUsersList();
   }, []);

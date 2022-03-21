@@ -10,8 +10,9 @@
 .itemsOnStock,
 .itemsOnBuy {
   background-color: #fff;
-  height: 94%;
-  padding: 20px 10px;
+  height: 100%;
+  padding: 30px;
+  margin-top: 5px;
   border-radius: 15px;
   border: 1px solid #DEDEDE;
   box-shadow: 0 0 14px 0 #e1e1e1;

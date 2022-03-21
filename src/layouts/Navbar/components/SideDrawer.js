@@ -7,9 +7,9 @@ import NavItems from './NavItems';
 import styles from '../components/navigationStyles.css'
 
 const useStyles = makeStyles({
-
   fab: {
-    backgroundColor: 'rgba(0, 0, 0, 0.08)', boxShadow: 'none', borderRadius: '3px'
+    boxShadow: 'none !important',
+    borderRadius: '3px !important'
   },
 });
 

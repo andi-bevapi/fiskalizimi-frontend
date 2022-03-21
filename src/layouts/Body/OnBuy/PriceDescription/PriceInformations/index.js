@@ -22,7 +22,7 @@ const PriceInformations = () => {
       </div>
       <div className={styles.noVatPriceHolder}>
         <Typography variant="body2" className={styles.text}>
-           Çmimi paTVSH:
+           Çmimi pa TVSH:
         </Typography>
         <div>
           {buyingList.length === 0 ? (
@@ -41,7 +41,7 @@ const PriceInformations = () => {
           variant="body2"
           className={styles.text}
         >
-          Çmimi meTVSH:
+          Çmimi me TVSH:
         </Typography>
         <div>
           {buyingList.length === 0 ? (
