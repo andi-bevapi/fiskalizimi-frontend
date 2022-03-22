@@ -1,6 +1,4 @@
-import {
-  Drawer
-} from '@mui/material';
+import { Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import { Form, Formik } from "formik";
@@ -9,6 +7,7 @@ import FormRender from '../FormRender';
 import SnackbarComponent from '../Snackbar';
 import { useCategoryContext } from "../../Context/CategoryContext";
 import SaveIcon from '@mui/icons-material/Save';
+import { isFile } from '../../helpers/isFile';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -40,9 +39,9 @@ const SidebarAction = (props) => {
     })
 
     let formattedFields = [...fields];
-    
+
     formattedFields = formattedFields.map(field => {
-      if(field?.options) field.options = options;
+      if (field?.options?.length === 0) field.options = options;
       return field;
     });
 
@@ -64,7 +63,7 @@ const SidebarAction = (props) => {
   const generateInitialValues = () => {
     let initialValues = {};
 
-    if(props.editItem) {
+    if (props.editItem) {
       fields.forEach(field => {
         initialValues[field.name] = props.editItem[field.name];
       });
@@ -72,27 +71,54 @@ const SidebarAction = (props) => {
     } else {
       fields.forEach(field => {
         initialValues[field.name] = "";
+        if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
 
     return initialValues;
   };
 
-  const handleSubmit = async (values) => {
-    const action = props.editItem ? props.update : props.create;
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
 
-    const response = await action({
-      ...values,
-      imageVirtualPath: '1234567890',
-      stockCheck: true
+  const handleSubmit = (values) => {
+    let file, fileKeyName = null;
+
+    Object.entries(values).map(item => {
+      if (isFile(item[1])) {
+        file = item[1];
+        fileKeyName = item[0];
+      }
     });
 
-    if(response?.statusCode === 200) {
+    if (file) {
+      getBase64(file).then(result => {
+        values[fileKeyName] = result;
+        postData(values);
+      });
+      return;
+    }
+
+    postData(values);
+  };
+
+  const postData = async (values) => {
+    const action = props.editItem ? props.update : props.create;
+
+    const response = await action(values);
+
+    if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       return;
     }
-    
+
     const resJson = await response.json();
     setOpenSnackBar({ status: true, message: resJson.message, success: false });
   };
