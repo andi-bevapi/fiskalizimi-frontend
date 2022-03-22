@@ -48,7 +48,7 @@ const ActionButtons = (props) => {
         />
         <ButtonComponent
           title="PAGUAJ"
-          lightColor="#3fa71acc"
+          lightColor="#0d4d47"
           //darkColor="#34a138"
           addIcon={false}
           // onClick={props.handlePay}
@@ -56,7 +56,7 @@ const ActionButtons = (props) => {
         />
         <ButtonComponent
           title="RUAJ"
-          lightColor="#5fbeaa"
+          lightColor="#74a19e"
           //darkColor="#51a794"
           addIcon={false}
           onClick={props.freeze}

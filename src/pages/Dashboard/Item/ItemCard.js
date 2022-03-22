@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
     width: "100%",
+    paddingTop: 10
   },
   textName: {
     fontSize: "13px",
@@ -23,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
     "-webkit-box-orient": "vertical",
   },
   card: {
-    height: "167px",
-    padding: "3px 3px",
-    maxWidth: "230px",
+    height: "250px",
+    padding: "15px 3px",
+    maxWidth: "250px",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
@@ -55,21 +56,20 @@ const ItemCard = (props) => {
         component="img"
         alt={props.item.name}
         image={
-          props.item.image
-            ? props.item.image
-            : "default.jpg"
+          !props.item.imageVirtualPath
+            ? props.item.imageVirtualPath
+            : "https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg"
         }
         style={{
           marginLeft: "auto",
           marginRight: "auto",
           height: "50%",
-          width: "50%",
-          borderRadius: "50%"
+          width: "80%",
         }}
       />
       <CardContent
         style={{
-          padding: "2px 5px",
+          padding: "5px 5px",
           textAlign: "center",
         }}
       >
