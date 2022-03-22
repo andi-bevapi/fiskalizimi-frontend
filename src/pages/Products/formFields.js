@@ -22,7 +22,7 @@ export default [
     {
         name: 'stock',
         component: 'Number',
-        label: 'Stoqet'
+        label: 'Sasia'
     },
     {
         name: 'categoryId',
