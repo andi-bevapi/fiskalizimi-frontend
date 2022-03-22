@@ -7,7 +7,7 @@ class User {
     phone;
     firstName;
     lastName;
-    branches;
+    branchId;
     permissions;
 
     constructor(user = {}) {
@@ -19,7 +19,7 @@ class User {
         this.phone = user.phone || '';
         this.firstName = user.firstName || '';
         this.lastName = user.lastName || '';
-        this.branches = user.branches || [];
+        this.branchId = user.branchId || '';
         this.permissions = user.permissions || [];
     }
 

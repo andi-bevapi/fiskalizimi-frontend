@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProducts, createProduct, updateProduct, deleteProduct } from "../services/product";
+import { useModel } from 'umi';
 
 const ProductContext = createContext({});
 
 const ProductProvider = (props) => {
+    const { initialState } = useModel('@@initialState');
     const [productList, setProductList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +16,7 @@ const ProductProvider = (props) => {
     const getProductsList = async () => {
         setIsLoading(true);
         try {
-            const products = await getProducts();
+            const products = await getProducts(initialState?.currentUser?.branchId);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
