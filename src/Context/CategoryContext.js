@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { createCategory , getAllCategory, updateCategory, deleteCategory } from "../services/category";
+import { createCategory, getAllCategory, updateCategory, deleteCategory } from "../services/category";
 
 const CategoryContext = createContext({});
 
@@ -8,10 +8,10 @@ const CategoryProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(async () => {
-       getCategoryList();
+        getCategoryList();
     }, []);
 
-    const getCategoryList = async() => {
+    const getCategoryList = async () => {
         setIsLoading(true);
         try {
             const category = await getAllCategory();
@@ -24,18 +24,17 @@ const CategoryProvider = (props) => {
         setIsLoading(false);
     }
 
-    const categoryToCreate = async(data) =>{
-        try{
+    const categoryToCreate = async (data) => {
+        try {
             const result = await createCategory(data);
             getCategoryList();
             return result;
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
 
     const categoryToUpdate = async (data) => {
-        console.log("data--context---",data)
         try {
             const result = await updateCategory(data);
             getCategoryList()
@@ -58,7 +57,7 @@ const CategoryProvider = (props) => {
         }
     }
 
-    const values = {categoryToCreate,categoryList, setCategoryList, categoryToUpdate, categoryToDelete};
+    const values = { categoryToCreate, categoryList, setCategoryList, categoryToUpdate, categoryToDelete, isLoading };
 
     return (
         <CategoryContext.Provider value={values}>

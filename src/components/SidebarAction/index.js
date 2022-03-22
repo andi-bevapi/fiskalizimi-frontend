@@ -42,7 +42,7 @@ const SidebarAction = (props) => {
     let formattedFields = [...fields];
     
     formattedFields = formattedFields.map(field => {
-      if(field.options) field.options = options;
+      if(field?.options) field.options = options;
       return field;
     });
 
@@ -80,11 +80,14 @@ const SidebarAction = (props) => {
 
   const handleSubmit = async (values) => {
     const action = props.editItem ? props.update : props.create;
+
     const response = await action({
-      ...values
+      ...values,
+      imageVirtualPath: '1234567890',
+      stockCheck: true
     });
 
-    if(response.statusCode === 200) {
+    if(response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       return;
