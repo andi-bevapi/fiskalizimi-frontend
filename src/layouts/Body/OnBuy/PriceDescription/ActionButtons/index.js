@@ -9,6 +9,8 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import styles from '../../../OnBuy/ItemsOnBuy.module.css';
 // import { useBuying } from "../../../../../Context/BuyingContext";
 // import { useTranslation } from "react-i18next";
+import { Grid } from '@mui/material';
+import { margin } from '@mui/system';
 
 const ActionButtons = (props) => {
   // const { handleDestroyBuyingList } = useBuying();
@@ -27,6 +29,7 @@ const ActionButtons = (props) => {
         className={styles.buttonsList}
       >
         
+
         {/* <IconButtonComponent
           style={{
             backgroundColor: 'rgb(38, 179, 201)',
@@ -36,33 +39,40 @@ const ActionButtons = (props) => {
           // onClick={props.handleSettings}
           iconColor={{ color: 'white' }}
         />  */}
-
-        <ButtonComponent
-          title="FSHI"
-          lightColor="rgb(240, 80, 80)"
-          //darkColor="rgb(220, 80, 80)"
-          addIcon={false}
-          // onClick={handleDestroyBuyingList}
-          // onClickAdd={props.handleAddProduct}
-          icon={<BlockIcon />}
-        />
-        <ButtonComponent
-          title="PAGUAJ"
-          lightColor="#3fa71acc"
-          //darkColor="#34a138"
-          addIcon={false}
-          // onClick={props.handlePay}
-          icon={<LocalAtmIcon />}
-        />
-        <ButtonComponent
-          title="RUAJ"
-          lightColor="#5fbeaa"
-          //darkColor="#51a794"
-          addIcon={false}
-          onClick={props.freeze}
-          icon={<PanToolIcon />}
-        />
-
+        <Grid container marginBottom={1} spacing={1} alignItems="center" direction="row" justifyContent="center">
+          <Grid item xs={12} sm={4} md={4} style={{display:'block', alignItems:"center"}}>
+            <ButtonComponent
+              title="FSHI"
+              lightColor="rgb(240, 80, 80)"
+              //darkColor="rgb(220, 80, 80)"
+              addIcon={false}
+              // onClick={handleDestroyBuyingList}
+              // onClickAdd={props.handleAddProduct}
+              icon={<BlockIcon />}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4} md={4} style={{display:'block', alignItems:"center"}}>
+            <ButtonComponent
+            title="PAGUAJ"
+            lightColor="#3fa71acc"
+            //darkColor="#34a138"
+            addIcon={false}
+            // onClick={props.handlePay}
+            icon={<LocalAtmIcon />}
+          />
+           </Grid>
+         <Grid item xs={12} sm={4} md={4} style={{display:'block', alignItems:"center"}}>
+            <ButtonComponent
+            title="RUAJ"
+            lightColor="#5fbeaa"
+            //darkColor="#51a794"
+            addIcon={false}
+            onClick={props.freeze}
+            icon={<PanToolIcon />}
+          />
+          </Grid>
+        </Grid>
+      
       </div>
     </div>
   );

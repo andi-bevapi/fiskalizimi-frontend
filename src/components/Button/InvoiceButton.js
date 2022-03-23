@@ -29,8 +29,9 @@ const ButtonComponent = (props) => {
         style={{
           background: `${props.lightColor}`,
           padding: '5px 30px 7px 30px',
-          margin: '0 3px',
+          margin: 'auto',
           fontWeight: 600,
+          width: 240
         }}
         startIcon={<div className={styles.icon}>{props.icon}</div>}
         onClick={props.onClick}
