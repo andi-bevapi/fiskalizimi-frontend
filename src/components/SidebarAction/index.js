@@ -67,6 +67,9 @@ const SidebarAction = (props) => {
         initialValues[field.name] = props.editItem[field.name];
       });
       initialValues['id'] = props.editItem.id;
+      if (props.user) {
+        initialValues['password'] = '';
+      }
     } else {
       fields.forEach((field) => {
         initialValues[field.name] = '';
