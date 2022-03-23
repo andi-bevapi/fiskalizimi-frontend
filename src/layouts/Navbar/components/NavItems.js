@@ -4,10 +4,11 @@ import Button from '@mui/material/Button';
 import { history, Access } from 'umi';
 import { makeStyles } from '@mui/styles';
 import styles from '../components/navigationStyles.css'
-import StoreIcon from '@mui/icons-material/Store';//home
+import HomeIcon from '@mui/icons-material/Home';//home
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; // users
 import StorefrontIcon from '@mui/icons-material/Storefront';; //furnizuesit
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //njesite e shitjes
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
 import CategoryIcon from '@mui/icons-material/Category'; //category
 import SettingsIcon from '@mui/icons-material/Settings';//settings
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';//produktet
@@ -28,7 +29,7 @@ const NavItems = () => {
     switch (title) {
       case "Faqja kryesore":
         return <>
-          <> <Box m={1} pt={1}> <StoreIcon /> </Box> </> <span> {title} </span> </>;
+          <> <Box m={1} pt={1}> <HomeIcon /> </Box> </> <span> {title} </span> </>;
       case "Produktet":
         return <>
           <> <Box m={1} pt={1}> <ProductionQuantityLimitsIcon /> </Box> </> <span>{title}</span> </>;
@@ -38,6 +39,9 @@ const NavItems = () => {
       case "Njesite e shitjes":
         return <>
           <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>{title}</span> </>;
+      case "Pikat e shitjes":
+        return <>
+          <> <Box m={1} pt={1}> <StoreMallDirectoryIcon /> </Box> </> <span>{title}</span> </>;
       case "Furnizuesit":
         return <>
           <> <Box m={1} pt={1}> <StorefrontIcon /> </Box> </> <span>{title}</span> </>;
