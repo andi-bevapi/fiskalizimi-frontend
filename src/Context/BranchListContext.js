@@ -1,27 +1,25 @@
-import { useContext,useEffect,createContext , useState} from "react";
-import {getAllBranch,createBranchList,updateBranchList,deleteBranchList} from "../services/branchList/";
+import { useContext, useEffect, createContext, useState } from "react";
+import { getAllBranch, createBranchList, updateBranchList, deleteBranchList } from "../services/branchList/";
 
 const BranchListContext = createContext({});
 
-const BranchListProvider = (props) =>{
-
-    const [branchList,setBranchList] = useState([]);
+const BranchListProvider = (props) => {
+    const [branchList, setBranchList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         getBranchList();
-    },[]);
+    }, []);
 
-
-    const getBranchList = async()=>{
+    const getBranchList = async () => {
         setIsLoading(true);
-        try{
+        try {
             const result = await getAllBranch();
-            if(result.statusCode === 200){
+            if (result.statusCode === 200) {
                 setBranchList(result.data);
             }
-        }catch(error){
-            console.log("error----");
+        } catch (error) {
+            console.log(error);
         }
         setIsLoading(false);
     }
@@ -49,7 +47,7 @@ const BranchListProvider = (props) =>{
         }
     }
 
-    const branchListToCreate = async(data) => {
+    const branchListToCreate = async (data) => {
         try {
             const result = await createBranchList(data);
             getBranchList();
@@ -59,16 +57,15 @@ const BranchListProvider = (props) =>{
         }
     }
 
-    const values = {branchList,setBranchList,isLoading,branchListToCreate,branchListToUpdate,branchListToDelete};
+    const values = { branchList, setBranchList, isLoading, branchListToCreate, branchListToUpdate, branchListToDelete };
 
-
-    return(
+    return (
         <BranchListContext.Provider value={values}>
             {props.children}
         </BranchListContext.Provider>
     )
 }
 
-const useBranchListContext = () =>{return useContext(BranchListContext)};
+const useBranchListContext = () => { return useContext(BranchListContext) };
 
-export{useBranchListContext ,  BranchListProvider}
+export { useBranchListContext, BranchListProvider }

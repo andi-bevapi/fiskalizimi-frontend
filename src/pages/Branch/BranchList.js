@@ -2,6 +2,7 @@ import TableComponent from '../../components/Table';
 import { listFormat } from "../../helpers/listFormater";
 import formFields from './formFields';
 import {useBranchListContext} from "../../Context/BranchListContext";
+
 const tableHeaders = ['Id', 'Name',"Address","City","BusinessUnitCode","MaintainerCode","Code","ClientId",'Actions'];
 
 const BranchList = () =>{
