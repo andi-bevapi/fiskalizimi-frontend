@@ -17,12 +17,12 @@ export const navItems = [
     path: "/njesite-shitjes",
   },
   {
-    title: "Perdoruesit",
-    path: "/perdoruesit",
-  },
-  {
     title: "Furnizuesit",
     path: "/furnizuesit",
+  },
+  {
+    title: "Perdoruesit",
+    path: "/perdoruesit",
   },
   {
     title: "Konfigurime",

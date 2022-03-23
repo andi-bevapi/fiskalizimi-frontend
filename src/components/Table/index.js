@@ -56,7 +56,7 @@ const TableComponent = (props) => {
 
   const handleDelete = async (id) => {
     return SwalModal(
-      "Deshironi ta fshini kete produkt?",
+      "Deshironi ta fshini?",
       "",
       "warning",
       "JO",

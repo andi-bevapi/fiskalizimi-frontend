@@ -8,6 +8,8 @@ import SnackbarComponent from '../Snackbar';
 import { useCategoryContext } from '../../Context/CategoryContext';
 import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
+import { isFile } from '../../helpers/isFile';
+
 const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
@@ -39,8 +41,8 @@ const SidebarAction = (props) => {
 
     let formattedFields = [...fields];
 
-    formattedFields = formattedFields.map((field) => {
-      if (field.options) field.options = options;
+    formattedFields = formattedFields.map(field => {
+      if (field?.options?.length === 0) field.options = options;
       return field;
     });
 
@@ -63,7 +65,7 @@ const SidebarAction = (props) => {
     let initialValues = {};
 
     if (props.editItem) {
-      fields.forEach((field) => {
+      fields.forEach(field => {
         initialValues[field.name] = props.editItem[field.name];
       });
       initialValues['id'] = props.editItem.id;
@@ -71,20 +73,52 @@ const SidebarAction = (props) => {
         initialValues['password'] = '';
       }
     } else {
-      fields.forEach((field) => {
-        initialValues[field.name] = '';
+      fields.forEach(field => {
+        initialValues[field.name] = "";
+        if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
 
     return initialValues;
   };
 
-  const handleSubmit = async (values) => {
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  const handleSubmit = (values) => {
+    let file, fileKeyName = null;
+
+    Object.entries(values).map(item => {
+      if (isFile(item[1])) {
+        file = item[1];
+        fileKeyName = item[0];
+      }
+    });
+
+    if (file) {
+      getBase64(file).then(result => {
+        values[fileKeyName] = result;
+        postData(values);
+      });
+      return;
+    }
+
+    postData(values);
+  };
+
+  const postData = async (values) => {
     const tmp = props.permissions.filter((el) => el.checked == true);
     const permissions = [];
     tmp.map((el) => permissions.push(el.id));
     const action = props.editItem ? props.update : props.create;
 
+    console.log("VALUES=", values);
     let response = {};
     if (props.user) {
       if (props.editItem) {
@@ -106,7 +140,7 @@ const SidebarAction = (props) => {
       });
     }
 
-    if (response.statusCode === 200) {
+    if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       props.setPermissions(
@@ -128,6 +162,7 @@ const SidebarAction = (props) => {
       return [...prev];
     });
   };
+
 
   return (
     <>

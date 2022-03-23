@@ -20,9 +20,32 @@ export default [
         label: 'Barkodi'
     },
     {
+        name: 'vat',
+        component: 'Select',
+        label: 'Klasifikimi i TVSH-se',
+        options: [
+            {
+                value: 0,
+                label: 'Perjashtuar nga TVSH-ja'
+            },
+            {
+                value: 1,
+                label: 'TVSH 6%'
+            },
+            {
+                value: 2,
+                label: 'TVSH 20%'
+            },
+            {
+                value: 3,
+                label: 'Pa TVSH'
+            }
+        ]
+    },
+    {
         name: 'stock',
         component: 'Number',
-        label: 'Stoqet'
+        label: 'Sasia'
     },
     {
         name: 'categoryId',
@@ -48,4 +71,14 @@ export default [
         label: 'Dega',
         options: []
     },
+    {
+        name: 'imageVirtualPath',
+        component: 'Upload',
+        label: 'Ngarko Imazh'
+    },
+    {
+        name: 'stockCheck',
+        component: 'Checkbox',
+        label: 'Kontrollo Sasine'
+    }
 ];

@@ -1,7 +1,7 @@
 import request from '../../utils/request';
 
-const getProducts = async () => {
-    return request("/product", {
+const getProducts = async (branchId) => {
+    return request(`/product/${branchId}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" }
     })
@@ -14,7 +14,6 @@ const createProduct = async (data) => {
         data
     })
 }
-
 
 const updateProduct = async (data) => {
     return request(`/product/update/${data.id}`, {

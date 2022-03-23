@@ -1,13 +1,11 @@
 import Categories from "./Categories";
-import {CategoryProvider} from "../../Context/CategoryContext";
+import { CategoryProvider } from "../../Context/CategoryContext";
 
 
-export default () =>{
+export default () => {
     return (
-        <>
-            <CategoryProvider>
-                <Categories/>
-            </CategoryProvider>
-        </>
+        <CategoryProvider>
+            <Categories />
+        </CategoryProvider>
     )
 }
