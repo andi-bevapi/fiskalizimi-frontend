@@ -1,4 +1,6 @@
-export default [
+import * as yup from 'yup';
+
+export const formFields = [
     {
         name: 'name',
         component: 'Text',
@@ -86,3 +88,18 @@ export default [
         label: 'Kontrollo Sasine'
     }
 ];
+
+export const validationSchema = yup.object({
+    name: yup.string().min(2, "Emri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin"),
+    description:  yup.string().min(2, "Pershkrimin duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni pershkrimin"),
+    price: yup.number().required("Ju lutem vendosni cmimi"),
+    barcode:  yup.number().min(2, "Barkodi duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni barkodin"),
+    vat: yup.number().required("Ju lutem vendosni TVSH"),
+    stock: yup.number().required("Ju lutem vendosni Stokun"),
+    stockCheck: yup.boolean().required("Ju lutem vendosni stock check"),
+    branchId:  yup.number().required("Ju lutem vendosni Id e branch"),
+    categoryId:  yup.number().required("Ju lutem vendosni id e kategorise"),
+    sellingUnitId: yup.number().required("Ju lutem vendosni id e njesise"),
+    supplierId: yup.number().required("Ju lutem vendosni id furnizuesit"),
+    imageVirtualPath: yup.string().required("Ju lutem vendosni Imazhi"),
+});

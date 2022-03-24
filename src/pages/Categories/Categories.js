@@ -1,7 +1,7 @@
 import TableComponent from '../../components/Table';
 import { useCategoryContext } from "../../Context/CategoryContext";
 import { listFormat } from "../../helpers/listFormater";
-import formFields from './formFields';
+import { formFields, validationSchema } from './formFields';
 
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
@@ -20,6 +20,7 @@ const Categories = () => {
       update={categoryToUpdate}
       delete={categoryToDelete}
       formFields={formFields}
+      validationSchema={validationSchema}
       isLoading={isLoading}
     />
   );

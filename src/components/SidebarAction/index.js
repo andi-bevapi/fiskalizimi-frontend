@@ -75,7 +75,6 @@ const SidebarAction = (props) => {
         if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
-
     return initialValues;
   };
 
@@ -140,6 +139,7 @@ const SidebarAction = (props) => {
       >
         <Formik
           initialValues={generateInitialValues()}
+          validationSchema={props.validationSchema}
           onSubmit={(values) => {
             handleSubmit(values);
           }}

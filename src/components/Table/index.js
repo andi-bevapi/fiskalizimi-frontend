@@ -84,6 +84,7 @@ const TableComponent = (props) => {
         open={openSideBar}
         setOpenSideBar={setOpenSideBar}
         formFields={props.formFields}
+        validationSchema={props.validationSchema}
         create={props.create}
         update={props.update}
         editItem={editItem}

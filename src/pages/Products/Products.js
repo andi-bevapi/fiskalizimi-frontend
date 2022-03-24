@@ -5,7 +5,7 @@ import { useCategoryContext } from "../../Context/CategoryContext";
 import { useBranchListContext } from "../../Context/BranchListContext";
 import { useSupplierContext } from "../../Context/SuppliersContext";
 import { useSellingUnitContext } from "../../Context/SellingUnitContext";
-import formFields from './formFields';
+import { formFields, validationSchema } from './formFields';
 
 const tableHeaders = ['Id', 'Name', 'Price', 'Barcode', 'Stock', 'Category', 'Actions'];
 
@@ -29,6 +29,7 @@ const Products = () => {
       update={productToUpdate}
       delete={productToDelete}
       formFields={formFields}
+      validationSchema={validationSchema}
       isLoading={isLoading}
       contexts={{
         categoryList,

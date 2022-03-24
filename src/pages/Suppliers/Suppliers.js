@@ -1,7 +1,7 @@
 import TableComponent from '../../components/Table';
 import { listFormat } from "../../helpers/listFormater";
 import { useSupplierContext } from "../../Context/SuppliersContext";
-import formFields from './formFields';
+import { formFields, validationSchema } from './formFields';
 
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
@@ -26,6 +26,7 @@ const Suppliers = () => {
       update={supplierToUpdate}
       delete={supplierToDelete}
       formFields={formFields}
+      validationSchema={validationSchema}
       isLoading={isLoading}
     />
   );
