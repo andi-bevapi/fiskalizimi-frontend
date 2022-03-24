@@ -1,4 +1,4 @@
-// import { useBuying } from "../../../Context/BuyingContext";
+import { useContextDashboard } from "../../../Context/DashboardContext";
 import React, { useState, useEffect } from 'react';
 import IconButtonComponent from "../../../components/Button/IconButton.js";
 import Table from "@mui/material/Table";
@@ -18,46 +18,10 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-
-  // const tempArraywithProducts = [
-  //   {
-  //     id: 1,
-  //     name: 'Akullore Algida',
-  //     quantity: 1,
-  //     price: 50,
-  //     sellingUnit: 'cope',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Uje Tepelene',
-  //     quantity: 2,
-  //     price: 60,
-  //     sellingUnit: 'cope',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Patate',
-  //     quantity: 2,
-  //     price: 40,
-  //     sellingUnit: 'kg',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Kos',
-  //     quantity: 3,
-  //     price: 40,
-  //     sellingUnit: 'cope',
-  //   },
-  //   {
-  //     id: 5,
-  //     name: 'Marlboro',
-  //     quantity: 1,
-  //     price: 330,
-  //   },
-  // ]
+  const { listedInvoiceProducts } = useContextDashboard(); //all invoice products from context
   const [activeInvoice, setActiveInvoice] = useState(true);
   const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
-  const [invoiceProducts, setInvoiceProducts] = useState([]); //Keeps the products in the invoice list
+  const [invoiceProducts, setInvoiceProducts] = useState([]); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
   const [loadingInvoice, setLoadingInvoice] = useState(true); //loading state when updating invoice sale

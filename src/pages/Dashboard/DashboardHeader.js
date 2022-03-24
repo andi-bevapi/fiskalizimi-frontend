@@ -32,14 +32,13 @@ const useStyles = makeStyles(() => ({
 
 
 const DashboardHeader = () => {
-    const { productList, getProductsList, productToUpdate } = useContextDashboard();
+    const { productList, getProductsList, productToUpdate, addToInvocieList } = useContextDashboard();
     const classes = useStyles();
     const [filteredData, setFilteredData] = useState([...productList]);
     const [display, setDisplay] = useState('cards');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        console.log("ERdhii fhhss");
         //setFilteredData(productList);
     }, []);
 
@@ -65,7 +64,7 @@ const DashboardHeader = () => {
                     <PuffLoader />
                 </div>
             ) : (
-                <BodyDashboard data={productList} display={display} />
+                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvocieList}/>
             )
             }
         </div>

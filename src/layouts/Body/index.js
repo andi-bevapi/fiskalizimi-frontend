@@ -6,15 +6,14 @@ import Grid from '@mui/material/Grid';
 
 const Body = (props) => {
   //   const { open } = useSettingsContext();
-
   return (
     <Grid container columnSpacing={2} rowSpacing={2} className={styles.wrapper}>
-      <Grid item xs={6} md={8}>
+      <Grid item xs={12} md={8}>
         <div className={styles.itemsOnStock}>
           {props.children}
         </div>
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={12} md={4}>
         <div className={styles.itemsOnBuy}>
           <ItemsOnBuy />
         </div>

@@ -1,72 +1,47 @@
+import React, {useState} from 'react';
 import { CardMedia, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-// import { useBuying } from "../../../../Context/BuyingContext";
+import useContextDashboard  from "../../../Context/DashboardContext";
 import { makeStyles } from "@mui/styles";
 // import { useTranslation } from "react-i18next";
+import cardBackground from './../../../assets/images/cardBackground.png';
+import styles from './ItemLine.module.css';
 
 const useStyles = makeStyles((theme) => ({
-  text: {
-    fontSize: "12px",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    width: "100%",
-    paddingTop: 10
-  },
-  textName: {
-    fontSize: "13px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    display: "-webkit-box",
-    "-webkit-line-clamp": 2,
-    "-webkit-box-orient": "vertical",
-  },
   card: {
-    height: "250px",
-    padding: "15px 3px",
-    maxWidth: "250px",
+    height: "100px",
+    padding: "15px 5px 0 3px",
+    width: "100%",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
+    backgroundSize: "cover",
+    backgroundImage: "url(" + cardBackground +")",
     marginLeft: "0%",
     "&:hover": {
-      transition: "transform 0.15s ease-in-out",
+      transition: "transform 0.2s ease-in-out",
       transform: "scale3d(1.1, 1.05, 1)",
+      cursor: "pointer",
     },
-  },
-  divider: {
-    border: "1px solid #ebeff2",
-    margin: "0px 0 2px 0",
-  },
+  }
 }));
+
 
 const ItemCard = (props) => {
   const classes = useStyles();
+  const [product, setProduct] = useState(props.item);
   // const { t } = useTranslation();
 
-  // const { addToBuyingList } = useBuying();
+  const handleCardClick = () => {
+    props.addToInvoice(product);
+  }
 
   return (
     <Card className={classes.card} 
-    // onClick={() => addToBuyingList(props.item)}
+       onClick={() => {handleCardClick()}}
     >
-      <CardMedia
-        component="img"
-        alt={props.item.name}
-        image={
-          !props.item.imageVirtualPath
-            ? props.item.imageVirtualPath
-            : "https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg"
-        }
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          height: "50%",
-          width: "80%",
-        }}
-      />
       <CardContent
         style={{
           padding: "5px 5px",
@@ -75,30 +50,29 @@ const ItemCard = (props) => {
       >
         <div
           style={{
-            minHeight: "40px",
             width: "100%",
           }}
         >
           <Typography
             variant="body2"
             color="text.secondary"
-            className={classes.textName}
+            className={styles.textName}
           >
             {props.item.name}
           </Typography>
         </div>
-        <Divider className={classes.divider} />
+        <Divider className={styles.divider} />
         <Typography
           variant="body2"
           color="text.secondary"
-          className={classes.text}
+          className={styles.stockText}
         >
           "stock" {Number(props.item.stock).toFixed(2)}
         </Typography>
 
         <Typography
           variant="body"
-          className={classes.text}
+          className={styles.priceText}
           color="#81c868"
           style={{
             fontWeight: "700",
@@ -108,6 +82,7 @@ const ItemCard = (props) => {
         </Typography>
       </CardContent>
     </Card>
+    
   );
 };
 

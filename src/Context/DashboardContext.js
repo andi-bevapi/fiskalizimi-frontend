@@ -6,6 +6,7 @@ const DashboardContext = createContext({});
 const DashboardProvider = (props) => {
     const [productList, setProductList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
 
     useEffect(() => {
         getProductsList();
@@ -34,12 +35,16 @@ const DashboardProvider = (props) => {
         }
     }
 
-    const values = { productList, setProductList, productToUpdate, isLoading }
-    return (
-        <DashboardContext.Provider value={values}>
-            {props.children}
-        </DashboardContext.Provider>
-    )
+    const addToInvocieList = async (product) => {
+        setListedInvoiceProducts([...listedInvoiceProducts, product]);
+     }
+
+const values = { productList, listedInvoiceProducts, setProductList, productToUpdate, addToInvocieList, isLoading }
+return (
+    <DashboardContext.Provider value={values}>
+        {props.children}
+    </DashboardContext.Provider>
+)
 }
 
 const useContextDashboard = () => { return useContext(DashboardContext) }

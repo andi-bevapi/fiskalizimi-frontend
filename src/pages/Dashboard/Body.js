@@ -24,32 +24,31 @@ const useStyles = makeStyles(() => ({
 }));
 
 const BodyDashboard = (props) => {
-  console.log("Lista", props);
   const classes = useStyles();
   return (
     <div className={classes.body}>
       {props.data.length > 0 ? (
         <div>
           {props.display === 'cards' ? (
-            <div>
-              <Grid spacing={2}>
-                {props.data?.map((item, index) => {
-                  if (props.data?.length === index + 1) {
-                    return (
-                      <Grid item xs={12} lg={3} md={3} sm={4} xl={3}>
-                        <ItemCard key={index} item={item} />
-                      </Grid>
-                    );
-                  } else {
-                    return (
-                      <Grid item xs={12} lg={3} md={3} sm={4} xl={3}>
-                        <ItemCard key={index} item={item} />
-                      </Grid>
-                    );
-                  }
-                })}
-              </Grid>
-            </div>
+                        <div>
+                        <Grid spacing={3}>
+                          {props.data?.map((item, index) => {
+                            if (props.data?.length === index + 1) {
+                              return (
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                </Grid>
+                              );
+                            } else {
+                              return (
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                </Grid>
+                              );
+                            }
+                          })}
+                        </Grid>
+                      </div>
           ) : (
             props.data.map((item, index) => {
               if (data.length === index + 1) {
