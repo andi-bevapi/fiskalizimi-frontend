@@ -15,7 +15,8 @@ const DashboardProvider = (props) => {
     const getProductsList = async () => {
         setIsLoading(true);
         try {
-            const products = await getProducts();
+            //HERE !!!! get banch ID
+            const products = await getProducts(1);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
