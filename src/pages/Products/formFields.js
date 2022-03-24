@@ -51,25 +51,29 @@ export default [
         name: 'categoryId',
         component: 'Select',
         label: 'Kategoria',
-        options: []
+        options: [],
+        identifier: 'categoryList'
     },
     {
         name: 'supplierId',
         component: 'Select',
         label: 'Furnizuesi',
-        options: []
+        options: [],
+        identifier: 'suppliersList'
     },
     {
         name: 'sellingUnitId',
         component: 'Select',
         label: 'Njesia Matese',
-        options: []
+        options: [],
+        identifier: 'sellingUnitList'
     },
     {
         name: 'branchId',
         component: 'Select',
         label: 'Dega',
-        options: []
+        options: [],
+        identifier: 'branchList'
     },
     {
         name: 'imageVirtualPath',

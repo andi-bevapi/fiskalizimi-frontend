@@ -5,7 +5,6 @@ import { Form, Formik } from "formik";
 import { useState, useEffect } from 'react';
 import FormRender from '../FormRender';
 import SnackbarComponent from '../Snackbar';
-import { useCategoryContext } from "../../Context/CategoryContext";
 import SaveIcon from '@mui/icons-material/Save';
 import { isFile } from '../../helpers/isFile';
 
@@ -19,8 +18,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SidebarAction = (props) => {
-  const { categoryList } = useCategoryContext();
-
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
@@ -31,21 +28,25 @@ const SidebarAction = (props) => {
   }, [props.formFields, props.open]);
 
   const fillSelectOptions = () => {
-    const options = categoryList.map(el => {
-      return {
-        value: el.id,
-        label: el.name
-      }
+    if(!props.contexts) return;
+
+    Object.keys(props.contexts).map(context => {
+      const options = props.contexts[context].map(el => {
+        return {
+          value: el.id,
+          label: el.name
+        }
+      })
+  
+      let formattedFields = [...fields];
+  
+      formattedFields = formattedFields.map(field => {
+        if (field?.options?.length === 0 && field.identifier === context) field.options = options;
+        return field;
+      });
+  
+      setFields(formattedFields);
     })
-
-    let formattedFields = [...fields];
-
-    formattedFields = formattedFields.map(field => {
-      if (field?.options?.length === 0) field.options = options;
-      return field;
-    });
-
-    setFields(formattedFields);
   };
 
   const toggleDrawer = (open) => (event) => {

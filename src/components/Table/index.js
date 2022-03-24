@@ -88,6 +88,7 @@ const TableComponent = (props) => {
         update={props.update}
         editItem={editItem}
         setEditItem={setEditItem}
+        contexts={props.contexts}
       />
 
       <div className={classes.headerContainer}>
