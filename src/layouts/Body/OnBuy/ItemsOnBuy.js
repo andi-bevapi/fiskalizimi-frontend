@@ -48,7 +48,7 @@ const ItemsOnBuy = () => {
   return (
     <div className={styles.mainHolder}>
       <Grid container columns={12} marginBottom={3}>
-        <Grid item={true} xs={10} md={6} className={activeInvoice ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
+        <Grid item={true} xs={6} md={6} className={activeInvoice ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
           <button onClick={handleTabChanges} className={styles.tabButton}>
             <span className={activeInvoice ? (styles.tabTitleActive) : (styles.tabTitleDeactive)}>Fatura Aktive</span>
           </button>
