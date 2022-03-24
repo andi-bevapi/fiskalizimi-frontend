@@ -1,9 +1,12 @@
-export default [
+import * as yup from 'yup';
+
+export const formFields = [
   {
     name: 'branchId',
     component: 'Select',
     label: 'Dega',
     options: [],
+    identifier: 'branchList'
   },
   {
     name: 'username',
@@ -46,3 +49,16 @@ export default [
     label: 'Fjalekalimi',
   },
 ];
+
+export const validationSchema = yup.object({
+  branchId: yup.number().required("Ju lutem vendosni degen"),
+  username: yup.string().min(2, "Emri i perdoruesit duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin e perdoruesit"),
+  firstName: yup.string().min(2, "Emri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin"),
+  lastName: yup.string().min(2, "Mbiemri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni mbiemrin"),
+  operatorCode: yup.string().required("Ju lutem vendosni kodin e operatorit"),
+  position: yup.string(),
+  phone: yup.string(),
+  email: yup.string(),
+  password: yup.string().min(4, "Fjalekalimi duhet te kete me shume se 4 karaktere").required("Ju lutem vendosni fjalekalimin"),
+  repeatPass: yup.string().oneOf([yup.ref("password"), null], "Fjalekalimet nuk perputhen")
+});

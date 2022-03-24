@@ -84,6 +84,7 @@ const TableComponent = (props) => {
         open={openSideBar}
         setOpenSideBar={setOpenSideBar}
         formFields={props.formFields}
+        validationSchema={props.validationSchema}
         create={props.create}
         update={props.update}
         editItem={editItem}
@@ -91,6 +92,7 @@ const TableComponent = (props) => {
         user={props.user}
         permissions={props.permissions}
         setPermissions={props.setPermissions}
+        contexts={props.contexts}
       />
 
       <div className={classes.headerContainer}>

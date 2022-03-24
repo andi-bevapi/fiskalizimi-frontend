@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
+/*/////////////////////////////////////*/
+/*///////////  Table Styles  //////////*/
 
 table {
   width: 100%;
@@ -57,15 +59,19 @@ tbody > tr > td {
   font-size: 1em !important;
   color: #fff !important;
   background-color: #74A19E !important;
+  font-family: "Poppins",sans-serif !important;
 }
 
 .tableBodyCell{
-  
+  font-family: "Poppins",sans-serif !important;
 }
 
 .customTableContainer {
   height: 100%
 }
+
+/*/////////////////////////////////////*/
+/*////////////  Tab Styles  ///////////*/
 
 .tableMainHeader{
   background-color: #74A19E,
@@ -117,5 +123,15 @@ tbody > tr > td {
   display: flex;
   margin-right: 0%;
   margin-left: auto;
+}
+
+/*/////////////////////////////////////*/
+/*/////  Loading Spinner Styles  //////*/
+
+.loadingDiv{
+  height: 90%;
+  margin-top: 50%;
+  margin-left: -5%;
+  opacity: 0.5;
 }
 

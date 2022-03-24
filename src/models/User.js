@@ -8,6 +8,7 @@ class User {
     firstName;
     lastName;
     branchId;
+    clientId;
     permissions;
 
     constructor(user = {}) {
@@ -20,6 +21,7 @@ class User {
         this.firstName = user.firstName || '';
         this.lastName = user.lastName || '';
         this.branchId = user.branchId || '';
+        this.clientId = user.clientId || '';
         this.permissions = user.permissions || [];
     }
 

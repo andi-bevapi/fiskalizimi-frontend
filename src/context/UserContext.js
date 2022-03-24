@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-
 import { getUsers, createUser, updateUser, deleteUser } from '../services/user/index';
 import { getPermissions } from '../services/permission';
+import { useModel } from 'umi';
 
 const UserContext = createContext({});
 
 const UserProvider = (props) => {
+  const { initialState } = useModel('@@initialState');
+
+  console.log(initialState)
+
   const [users, setUsers] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,8 +18,7 @@ const UserProvider = (props) => {
     setIsLoading(true);
 
     try {
-      //HERE!!! get user's client id
-      const response = await getUsers(1);
+      const response = await getUsers(initialState?.currentUser?.clientId);
       if (response.statusCode === 200) {
         setUsers(response.data);
       }
@@ -67,7 +70,6 @@ const UserProvider = (props) => {
         const list = prevState.filter((el) => el.id !== id);
         return [...list];
       });
-      // getUsersList();
       return response;
     } catch (error) {
       console.log(error);

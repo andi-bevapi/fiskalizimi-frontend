@@ -33,8 +33,8 @@ const SearchByBarcode = () => {
 
   return (
       <div className={styles.searchContainer}>
-        <Grid container columns={12}>
-          <Grid item={true} xs={10} md={4} style={{ textAlign: 'left' }}>
+        <Grid container columns={12} marginBottom={1} spacing={1}>
+          <Grid item={true} xs={10} md={6} style={{ textAlign: 'left', width: '90% !important'}}>
             <BootstrapInputField
               placeholder="Kërko sipas barkodit"
               style={{ margin: 0}}
