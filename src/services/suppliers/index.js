@@ -24,4 +24,11 @@ const updateSupplier = async (data) => {
   });
 };
 
-export { getSuppliersList, createSupplier, updateSupplier };
+const deleteSupplier = async (id) => {
+  return request(`/supplier/delete/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+  });
+};
+
+export { getSuppliersList, createSupplier, updateSupplier, deleteSupplier };

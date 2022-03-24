@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getSuppliersList, createSupplier, updateSupplier } from '../services/suppliers';
+import {
+  getSuppliersList,
+  createSupplier,
+  updateSupplier,
+  deleteSupplier,
+} from '../services/suppliers';
 
 const SupplierContext = createContext({});
 
@@ -25,10 +30,8 @@ const SupplierProvider = (props) => {
   };
 
   const supplierToCreate = async (data) => {
-    console.log('Supplier to create', data);
     try {
       const response = await createSupplier(data);
-      console.log(response);
       getSuppliers();
       return response;
     } catch (error) {
@@ -38,7 +41,6 @@ const SupplierProvider = (props) => {
 
   const supplierToUpdate = async (data) => {
     try {
-      console.log("----", data);
       const response = await updateSupplier(data);
       getSuppliers();
       return response;
@@ -48,16 +50,16 @@ const SupplierProvider = (props) => {
   };
 
   const supplierToDelete = async (id) => {
-    // try {
-    //   setCategoryList((prevState) => {
-    //     const newState = prevState.filter((el) => el.id !== id);
-    //     return [...newState];
-    //   });
-    //   const result = await deleteCategory(id);
-    //   return result;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await deleteSupplier(id);
+      setSuppliersList((prevState) => {
+        const newState = prevState.filter((el) => el.id !== id);
+        return [...newState];
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const values = {

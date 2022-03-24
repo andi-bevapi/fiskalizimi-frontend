@@ -16,7 +16,8 @@ const ProductProvider = (props) => {
     const getProductsList = async () => {
         setIsLoading(true);
         try {
-            const products = await getProducts(initialState?.currentUser?.branchId);
+            const products = await getProducts(1);
+            console.log(products);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
