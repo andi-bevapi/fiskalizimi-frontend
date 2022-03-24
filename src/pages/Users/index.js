@@ -1,12 +1,12 @@
 import Users from './Users';
 import { UserProvider } from '../../context/UserContext';
+import { BranchListProvider } from "../../Context/BranchListContext";
+import Compose from '../../components/Compose';
 
-const UserIndex = () => {
+export default () => {
   return (
-    <UserProvider>
+    <Compose components={[UserProvider, BranchListProvider]}>
       <Users />
-    </UserProvider>
+    </Compose>
   );
 };
-
-export default UserIndex;
