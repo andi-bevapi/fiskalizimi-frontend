@@ -75,7 +75,6 @@ const SidebarAction = (props) => {
         if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
-    console.log("initialValues-----",initialValues)
     return initialValues;
   };
 
