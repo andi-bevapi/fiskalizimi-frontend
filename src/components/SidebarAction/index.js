@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import FormRender from '../FormRender';
 import SnackbarComponent from '../Snackbar';
 import { useCategoryContext } from "../../Context/CategoryContext";
+import { validateFormInput } from './validationSchema';
 import SaveIcon from '@mui/icons-material/Save';
 import { isFile } from '../../helpers/isFile';
 
@@ -31,7 +32,7 @@ const SidebarAction = (props) => {
   }, [props.formFields, props.open]);
 
   const fillSelectOptions = () => {
-    const options = categoryList.map(el => {
+    const options = categoryList?.map(el => {
       return {
         value: el.id,
         label: el.name
@@ -74,7 +75,7 @@ const SidebarAction = (props) => {
         if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
-
+    console.log("initialValues-----",initialValues)
     return initialValues;
   };
 
@@ -139,6 +140,7 @@ const SidebarAction = (props) => {
       >
         <Formik
           initialValues={generateInitialValues()}
+          validationSchema={validateFormInput}
           onSubmit={(values) => {
             handleSubmit(values);
           }}
