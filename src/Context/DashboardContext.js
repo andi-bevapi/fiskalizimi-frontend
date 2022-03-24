@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProducts, updateProduct } from "../services/product";
+import { useModel } from 'umi';
 
 const DashboardContext = createContext({});
 
 const DashboardProvider = (props) => {
+    const { initialState } = useModel('@@initialState');
     const [productList, setProductList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
@@ -15,7 +17,7 @@ const DashboardProvider = (props) => {
     const getProductsList = async () => {
         setIsLoading(true);
         try {
-            const products = await getProducts();
+            const products = await getProducts(initialState?.currentUser?.branchId);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
@@ -37,14 +39,15 @@ const DashboardProvider = (props) => {
 
     const addToInvocieList = async (product) => {
         setListedInvoiceProducts([...listedInvoiceProducts, product]);
-     }
+    }
 
-const values = { productList, listedInvoiceProducts, setProductList, productToUpdate, addToInvocieList, isLoading }
-return (
-    <DashboardContext.Provider value={values}>
-        {props.children}
-    </DashboardContext.Provider>
-)
+    const values = { productList, listedInvoiceProducts, setProductList, productToUpdate, addToInvocieList, isLoading }
+    
+    return (
+        <DashboardContext.Provider value={values}>
+            {props.children}
+        </DashboardContext.Provider>
+    )
 }
 
 const useContextDashboard = () => { return useContext(DashboardContext) }

@@ -60,18 +60,16 @@ const NavItems = () => {
     <>
       {navItems.map((item, i) => {
         return (
-          <>
-            <Access key={i} accessible={true /* item.access */}>
-              <Button
-                fullWidth={true}
-                className={styles.menuLink}
-                onClick={() => handleClick(item.path)}
-                color="inherit"
-              >
-                {renderNavItems(item.title)}
-              </Button>
-            </Access>
-          </>
+          <Access key={i} accessible={true /* item.access */}>
+            <Button
+              fullWidth={true}
+              className={styles.menuLink}
+              onClick={() => handleClick(item.path)}
+              color="inherit"
+            >
+              {renderNavItems(item.title)}
+            </Button>
+          </Access>
         )
       })}
       <span className={styles.companyName}><span className={styles.orange}>Ovla</span> Systems</span>
