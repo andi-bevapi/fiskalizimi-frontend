@@ -3,7 +3,7 @@ import { listFormat } from "../../helpers/listFormater";
 import { useSupplierContext } from "../../Context/SuppliersContext";
 import formFields from './formFields';
 
-const tableHeaders = ['Id', 'Name', 'Actions'];
+const tableHeaders = ['Id', 'Name', 'StartDate', 'EndDate', 'Actions'];
 
 const Suppliers = () => {
   const { suppliersList,

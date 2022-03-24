@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getSuppliersList, createSupplier } from '../services/suppliers';
+import { getSuppliersList, createSupplier, updateSupplier } from '../services/suppliers';
 
 const SupplierContext = createContext({});
 
@@ -25,7 +25,7 @@ const SupplierProvider = (props) => {
   };
 
   const supplierToCreate = async (data) => {
-      console.log("Supplier to create", data);
+    console.log('Supplier to create', data);
     try {
       const response = await createSupplier(data);
       console.log(response);
@@ -37,13 +37,14 @@ const SupplierProvider = (props) => {
   };
 
   const supplierToUpdate = async (data) => {
-    // try {
-    //   const result = await updateCategory(data);
-    //   getCategoryList();
-    //   return result;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      console.log("----", data);
+      const response = await updateSupplier(data);
+      getSuppliers();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const supplierToDelete = async (id) => {

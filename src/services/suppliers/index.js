@@ -16,4 +16,12 @@ const createSupplier = async (data) => {
   });
 };
 
-export { getSuppliersList, createSupplier };
+const updateSupplier = async (data) => {
+  return request(`/supplier/update/${data.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data,
+  });
+};
+
+export { getSuppliersList, createSupplier, updateSupplier };

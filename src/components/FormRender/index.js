@@ -141,28 +141,6 @@ const FormRender = ({ formFields }) => {
             )}
           </Field>
         );
-      case 'Date':
-        return (
-          <Field name={formField.name} key={formField.name}>
-            {({ field, form: { setFieldValue }, meta }) => (
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                {/* <Stack spacing={3}> */}
-                <DesktopDatePicker
-                  label={formField.label}
-                  inputFormat="MM/dd/yyyy"
-                  onChange={(event) => {
-                    console.log("EVENT---", event);
-                    setFieldValue(event);
-                    console.log(field);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                    // {...field}
-                />
-                {/* </Stack> */}
-              </LocalizationProvider>
-            )}
-          </Field>
-        );
     }
   });
 };
