@@ -2,16 +2,17 @@ import { makeStyles } from '@mui/styles';
 import ItemCard from './Item/ItemCard';
 import ItemLine from './Item/ItemLine';
 import NoData from '../../components/NoData';
+import Grid from '@mui/material/Grid';
 
 const useStyles = makeStyles(() => ({
   body: {
     height: '100%',
     width: '100%',
     overflowY: 'scroll',
+    marginTop: 40,
   },
   divider: {
     width: '100%',
-    marginBottom: '20px',
   },
   noDataCont: {
     width: '100%',
@@ -26,32 +27,31 @@ const BodyDashboard = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.body}>
-      {props.filteredData.length > 0 ? (
+      {props.data.length > 0 ? (
         <div>
           {props.display === 'cards' ? (
-            <div>
-              <Divider className={classes.divider} />
-              <Grid container spacing={2}>
-                {props.filteredData.map((item, index) => {
-                  if (props.filteredData.length === index + 1) {
-                    return (
-                      <Grid item xs={12} lg={2} md={3} sm={4} xs={6}>
-                        <ItemCard key={index} item={item} />
-                      </Grid>
-                    );
-                  } else {
-                    return (
-                      <Grid item xs={12} lg={2} md={3} sm={4} xs={6}>
-                        <ItemCard key={index} item={item} />
-                      </Grid>
-                    );
-                  }
-                })}
-              </Grid>
-            </div>
+                        <div>
+                        <Grid spacing={3}>
+                          {props.data?.map((item, index) => {
+                            if (props.data?.length === index + 1) {
+                              return (
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                </Grid>
+                              );
+                            } else {
+                              return (
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                </Grid>
+                              );
+                            }
+                          })}
+                        </Grid>
+                      </div>
           ) : (
-            props.filteredData.map((item, index) => {
-              if (filteredData.length === index + 1) {
+            props.data.map((item, index) => {
+              if (data.length === index + 1) {
                 return <ItemLine item={item} />;
               } else {
                 return <ItemLine item={item} />;

@@ -1,4 +1,4 @@
-// import { useBuying } from "../../../Context/BuyingContext";
+import { useContextDashboard } from "../../../Context/DashboardContext";
 import React, { useState, useEffect } from 'react';
 import IconButtonComponent from "../../../components/Button/IconButton.js";
 import Table from "@mui/material/Table";
@@ -7,62 +7,27 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PriceDescription from "./PriceDescription";
 import { Divider } from "@mui/material";
 import styles from "./ItemsOnBuy.module.css";
 // import { useTranslation } from "react-i18next";
 import SearchByBarcode from "./SearchByBarcode";
 import Grid from '@mui/material/Grid';
+import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-  
-  const tempArraywithProducts = [
-    {
-        id: 1,
-        name: 'Akullore Algida',
-        quantity: 1,
-        price: 50,
-        sellingUnit: 'cope',
-    },
-    {
-        id: 2,
-        name: 'Uje Tepelene',
-        quantity: 2,
-        price: 60,
-        sellingUnit: 'cope',
-    },
-    {
-        id: 3,
-        name: 'Patate',
-        quantity: 2,
-        price: 40,
-        sellingUnit: 'kg',
-    },
-    {
-        id: 4,
-        name: 'Kos',
-        quantity: 3,
-        price: 40,
-        sellingUnit: 'cope',
-    },
-    {
-        id: 5,
-        name: 'Marlboro',
-        quantity: 1,
-        price: 330,
-    },
-  ]
+  const { listedInvoiceProducts } = useContextDashboard(); //all invoice products from context
   const [activeInvoice, setActiveInvoice] = useState(true);
   const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
-  const [invoiceProducts, setInvoiceProducts] = useState(tempArraywithProducts); //Keeps the products in the invoice list
+  const [invoiceProducts, setInvoiceProducts] = useState([]); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
-  const [loadingInvoice, setLoadingInvoice] = useState(true); //laoding state when updating invoice sale
+  const [loadingInvoice, setLoadingInvoice] = useState(true); //loading state when updating invoice sale
 
   useEffect(() => {
-   setLoadingInvoice(false);
+    setLoadingInvoice(false);
   }, []);
 
   const handleTabChanges = () => {
@@ -70,10 +35,16 @@ const ItemsOnBuy = () => {
     setActiveInvoice(!activeInvoice)
   }
 
+  const removeProduct = (product) => {
+      setLoadingInvoice(true);
+      const newArrayWithAllInvoices = invoiceProducts.filter(item => item.id !== product.id);
+      setInvoiceProducts(newArrayWithAllInvoices);
+      setLoadingInvoice(false);
+  }
+
   // const { handleRemoveProduct, buyingList, handleDestroyBuyingList } =
   //   useBuying();
   // const { t } = useTranslation();
-
   return (
     <div className={styles.mainHolder}>
       <Grid container columns={12} marginBottom={3}>
@@ -90,62 +61,64 @@ const ItemsOnBuy = () => {
         </Grid>
       </Grid>
 
-      {activeInvoice? (
+      {activeInvoice ? (
         <>
-
-       <SearchByBarcode />
-          {loadingInvoice? (
-            <>
-         
-            </>
+          <SearchByBarcode />
+          {loadingInvoice ? (
+            <div className={styles.loadingDiv}>
+              <PuffLoader />
+            </div>
           ) : (
             <>
-                <TableContainer classes={{ root: styles.customTableContainer }} style={{ marginTop: 20 }}>
-            <Table stickyHeader className={styles.table}>
-              <TableHead className={styles.tableMainHeader}>
-                <TableRow>
-                  <TableCell className={styles.tableHead}>Nr.</TableCell>
-                  <TableCell className={styles.tableHead} id={styles["name"]}>
-                    Produkti
-                  </TableCell>
-                  <TableCell className={styles.tableHead} id={styles["quantity"]}>
-                    Sasia
-                  </TableCell>
-                  <TableCell className={styles.tableHead} id={styles["price"]}>
-                    Çmimi
-                  </TableCell>
-                  <TableCell className={styles.tableHead} id={styles["delete"]}>
-                    &nbsp;&nbsp;
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+              <TableContainer classes={{ root: styles.customTableContainer }} style={{ marginTop: 20 }}>
+                <Table stickyHeader className={styles.table}>
+                  <TableHead className={styles.tableMainHeader}>
+                    <TableRow>
+                      <TableCell className={styles.tableHead}>Nr.</TableCell>
+                      <TableCell className={styles.tableHead} id={styles["name"]}>
+                        Produkti
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["quantity"]}>
+                        Sasia
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                        Çmimi
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["delete"]}>
+                        &nbsp;
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
 
-              <TableBody>
-                {invoiceProducts?.map( (item, index) => {
-                  <TableRow key={index}>
-                      <TableCell className={styles.tableBodyCell}>
-                      {index}
-                    </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                      {item.name}
-                    </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                      {item.name}
-                    </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                      {item.name}
-                    </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                      {item.name}
-                    </TableCell>
-                  </TableRow>
-                })}
+                  <TableBody>
+                    {invoiceProducts.map((row, index) => (
+                      <TableRow key={row.id}>
+                        <TableCell className={styles.tableBodyCell}>
+                          {index+1}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          {row.name}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          {row.quantity}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          {row.price}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          <IconButtonComponent
+                            style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                            icon={<DeleteForeverIcon />}
+                            iconColor={{ color: '#fff' }}
+                            onClick={() => {removeProduct(row)}}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
 
-
-              </TableBody>
-
-            </Table>
-          </TableContainer>
+                </Table>
+              </TableContainer>
             </>
           )}
           <Divider />
@@ -153,7 +126,7 @@ const ItemsOnBuy = () => {
         </>
       ) : (
         <>
-        
+
         </>
       )}
     </div>

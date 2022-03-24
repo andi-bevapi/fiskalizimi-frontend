@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 
 const Body = (props) => {
   //   const { open } = useSettingsContext();
-
   return (
     <Grid container columnSpacing={2} rowSpacing={2} className={styles.wrapper}>
       <Grid item xs={12} md={8}>

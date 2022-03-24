@@ -54,7 +54,7 @@ const ActionButtons = (props) => {
           <Grid item xs={12} sm={4} md={4} style={{display:'block', alignItems:"center"}}>
             <ButtonComponent
             title="PAGUAJ"
-            lightColor="#3fa71acc"
+            lightColor="#0d4d47"
             //darkColor="#34a138"
             addIcon={false}
             // onClick={props.handlePay}
@@ -64,7 +64,7 @@ const ActionButtons = (props) => {
          <Grid item xs={12} sm={4} md={4} style={{display:'block', alignItems:"center"}}>
             <ButtonComponent
             title="RUAJ"
-            lightColor="#5fbeaa"
+            lightColor="#74a19e"
             //darkColor="#51a794"
             addIcon={false}
             onClick={props.freeze}
