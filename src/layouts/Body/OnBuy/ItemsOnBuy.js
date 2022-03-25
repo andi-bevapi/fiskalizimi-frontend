@@ -1,4 +1,4 @@
-import { useContextDashboard } from "../../../Context/DashboardContext";
+import { useContextProduct } from "../../../Context/ProductContext";
 import React, { useState, useEffect } from 'react';
 import IconButtonComponent from "../../../components/Button/IconButton.js";
 import Table from "@mui/material/Table";
@@ -18,7 +18,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-  const { listedInvoiceProducts } = useContextDashboard(); //all invoice products from context
+  const { listedInvoiceProducts } = useContextProduct(); //all invoice products from context
   const [activeInvoice, setActiveInvoice] = useState(true);
   const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
   const [invoiceProducts, setInvoiceProducts] = useState([]); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts

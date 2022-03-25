@@ -1,10 +1,16 @@
-import {DashboardProvider} from "../../Context/DashboardContext"
+import { ProductProvider } from "../../Context/ProductContext";
+import { CategoryProvider } from "../../Context/CategoryContext";
+import { InvoiceProvider } from "../../Context/InvoiceContext";
 import DashboardHeader from "./DashboardHeader";
 
 export default () => {
   return (
-    <DashboardProvider>
-            <DashboardHeader/>
-    </DashboardProvider>
+    <ProductProvider>
+      <CategoryProvider>
+        <InvoiceProvider>
+          <DashboardHeader />
+        </InvoiceProvider>
+      </CategoryProvider>
+    </ProductProvider>
   );
 };
