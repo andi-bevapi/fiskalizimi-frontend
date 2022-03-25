@@ -1,0 +1,154 @@
+import { Typography, FormControlLabel, Checkbox, Grid } from "@mui/material";
+import { fontFamily, grid, margin, width } from "@mui/system";
+import { FormControl } from "@mui/material";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import { MenuItem } from "@mui/material";
+import { Button } from "bootstrap";
+import SaveIcon from '@mui/icons-material/Save';
+import ButtonComponent from "../../components/Button/InvoiceButton";
+import PanToolIcon from '@mui/icons-material/PanTool';
+
+
+const handleChange = (event) => {
+    //handle printer name selection
+};
+
+
+
+
+const Configurations = () => {
+
+    return (
+        <span> <h1>  Konfigurime </h1>
+            <Grid container >
+                <Grid item xs={12} md={12}>
+                    <Typography
+                        style={{
+                            fontSize: "18px",
+                            fontFamily: "Poppins",
+                            margin: '40px auto 20px 10px',
+                            textAlign: "left"
+                        }}
+                    > Zgjidh konfigurime per shitjet</Typography>
+                </Grid>
+                <Grid item xs={12} md={6} style={{ textAlign: 'left' }}>
+                    <FormControlLabel control={<Checkbox defaultChecked sx={{
+                        color: '#666666',
+                        '&.Mui-checked': {
+                            color: '#17625D',
+                        },
+                    }}
+                    />} label={
+                        <Typography sx={{
+                            fontSize: '15px',
+                            fontFamily: 'poppins',
+                            paddingLeft: '12px'
+                        }}>
+                            Lejo shitje me çmim 0
+                        </Typography>
+                    } />
+                </Grid>
+                <Grid item xs={12} md={6} style={{ textAlign: 'left' }}>
+                    <FormControlLabel control={<Checkbox defaultChecked sx={{
+                        color: '#666666',
+                        '&.Mui-checked': {
+                            color: '#17625D',
+                        },
+                    }} />} label={
+                        <Typography sx={{
+                            fontSize: '15px',
+                            fontFamily: 'poppins'
+                        }}>
+                            Çmimet përmbajnë TVSH
+                        </Typography>
+                    } />
+                </Grid>
+            </Grid>
+
+            <Typography
+                style={{
+                    fontSize: "18px",
+                    fontFamily: "Poppins",
+                    margin: '40px auto 20px 10px',
+                    textAlign: "left"
+                }}
+            > Zgjidh printerin </Typography>
+            <Box sx={{ minWidth: 120, paddingLeft: 12, paddingRight: 12 }}>
+                <FormControl fullWidth>
+                    <InputLabel id="printerName" minWidth="200px" style={{
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        background: 'white',
+                    }}
+                    >Emri i printerit &nbsp; </InputLabel>
+                    <Select
+                        labelId="chosenNamePrinter"
+                        id="chosenPrinter"
+                        //value={name}
+                        style={{fontFamily: 'Poppins'}}
+                        label="Name"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={10} style={{
+                            fontSize: "14px",
+                            fontFamily: "Poppins"
+                        }}>Emri 1</MenuItem>
+                        <MenuItem value={20} style={{
+                            fontSize: "14px",
+                            fontFamily: "Poppins"
+                        }}>Emri 2</MenuItem>
+                        <MenuItem value={30} style={{
+                            fontSize: "14px",
+                            fontFamily: "Poppins"
+                        }}>Emri 3</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+
+            <Typography
+                style={{
+                    fontSize: "18px",
+                    fontFamily: "Poppins",
+                    margin: '40px auto 20px 10px',
+                    textAlign: "left"
+                }}
+            > Zgjidh gjuhën e përdorimit </Typography>
+            <Box sx={{ minWidth: 120, paddingLeft: 12, paddingRight: 12 }} >
+                <FormControl fullWidth>
+                    <InputLabel id="language" minWidth="200px" style={{
+                        fontSize: "14px",
+                        fontFamily: "Poppins",
+                        background: 'white',
+                    }}
+                    >Gjuha e perdorimit &nbsp; </InputLabel>
+                    <Select
+                        labelId="chosenNamePrinter"
+                        id="chosenPrinter"
+                        //value={name}
+                        label="Name"
+                        onChange={handleChange}
+                        style={{fontFamily: 'Poppins'}}
+                    >
+                        <MenuItem value={10} style={{
+                            fontSize: "14px",
+                            fontFamily: "Poppins"
+                        }}>Shqip</MenuItem>
+                        <MenuItem value={20} style={{
+                            fontSize: "14px",
+                            fontFamily: "Poppins"
+                        }}>Anglisht</MenuItem>
+
+                    </Select>
+                </FormControl>
+            </Box>
+          
+        </span>
+
+
+
+    );
+};
+
+export default Configurations;
