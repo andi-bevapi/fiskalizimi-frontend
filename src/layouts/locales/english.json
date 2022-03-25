@@ -1,0 +1,14 @@
+{
+  "Id":"Id",
+  "Name":"Name",
+  "Price":"Price",
+  "Barcode" :"Barcode",
+  "Stock" :"Stock",
+  "Category":"Category",
+  "Address"	:"Address",
+  "City":"City",
+  "BusinessUnitCode" : "Business Unit Code",
+  "MaintainerCode" :"Maintainer Code",
+  "Code":"Code",
+  "Actions":"Actions"
+}

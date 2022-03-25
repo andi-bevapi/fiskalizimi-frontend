@@ -1,0 +1,14 @@
+{
+  "Id":"Id",
+  "Name":"Emri",
+  "Price":"Cmimi",
+  "Barcode" :"Barkodi",
+  "Stock" :"Stoku",
+  "Category":"Kategoria",
+  "Address"	:"Adresa",
+  "City":"Qyteti",
+  "BusinessUnitCode" : "Kodi i njesise",
+  "MaintainerCode" :"Kodi i mirembajtjes",
+  "Code":"Kodi",
+  "Actions":"Veprimet"
+}
