@@ -11,7 +11,7 @@ import { useContextProduct } from '../../Context/ProductContext';
 import { useInvoiceContext } from '../../Context/InvoiceContext';
 
 const useStyles = makeStyles(() => ({
-    container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%'},
+    container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
     headContainer: {
         width: '100%',
         display: 'flex',
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const DashboardHeader = () => {
     const { productList } = useContextProduct();
-    const { addToInvocieList } = useInvoiceContext();
+    const { addToInvoiceList } = useInvoiceContext();
     const classes = useStyles();
     const [filteredData, setFilteredData] = useState([...productList]);
     const [display, setDisplay] = useState('cards');
@@ -66,7 +66,7 @@ const DashboardHeader = () => {
                     <PuffLoader />
                 </div>
             ) : (
-                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvocieList}/>
+                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} />
             )
             }
         </div>

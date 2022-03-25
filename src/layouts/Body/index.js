@@ -3,6 +3,7 @@ import ItemsOnBuy from './OnBuy/ItemsOnBuy.js';
 import styles from './Body.module.css';
 // import Transactions from './Transactions/Transactions';
 import Grid from '@mui/material/Grid';
+import { InvoiceProvider } from '../../Context/InvoiceContext.js';
 
 const Body = (props) => {
   //   const { open } = useSettingsContext();
@@ -19,7 +20,7 @@ const Body = (props) => {
         </div>
       </Grid>
     </Grid>
-   );
+  );
 };
 
 export default Body;

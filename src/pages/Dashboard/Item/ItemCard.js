@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { CardMedia, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #ebeff2",
     borderRadius: "0",
     backgroundSize: "cover",
-    backgroundImage: "url(" + cardBackground +")",
+    backgroundImage: "url(" + cardBackground + ")",
     marginLeft: "0%",
     "&:hover": {
       transition: "transform 0.2s ease-in-out",
-      transform: "scale3d(1.1, 1.05, 1)",
+      transform: "scale(1.05)",
       cursor: "pointer",
     },
   }
@@ -31,15 +31,17 @@ const useStyles = makeStyles((theme) => ({
 const ItemCard = (props) => {
   const classes = useStyles();
   const [product, setProduct] = useState(props.item);
+  const [quantity, setProductQuantity] = useState(1);
   // const { t } = useTranslation();
 
   const handleCardClick = () => {
-    props.addToInvoice(product);
+    setProductQuantity(quantity + 1)
+    props.addToInvoiceList(product, quantity);
   }
 
   return (
-    <Card className={classes.card} 
-       onClick={() => {handleCardClick()}}
+    <Card className={classes.card}
+      onClick={() => { handleCardClick() }}
     >
       <CardContent
         style={{
@@ -66,7 +68,7 @@ const ItemCard = (props) => {
           color="text.secondary"
           className={styles.stockText}
         >
-          "stock" {Number(props.item.stock).toFixed(2)}
+          Stoku: {Number(props.item.stock)}
         </Typography>
 
         <Typography
@@ -77,11 +79,11 @@ const ItemCard = (props) => {
             fontWeight: "700",
           }}
         >
-          ALL {props.item.price}
+          ALL {Number(props.item.price).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>
-    
+
   );
 };
 
