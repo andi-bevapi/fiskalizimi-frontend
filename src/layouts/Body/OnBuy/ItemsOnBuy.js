@@ -25,14 +25,39 @@ const ItemsOnBuy = () => {
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
   const [loadingInvoice, setLoadingInvoice] = useState(false); //loading state when updating invoice sale
+  const [stopIncrement, setStopIncrement] = useState(false);
+  const [stopDecrement, setStopDecrement] = useState(false);
 
   useEffect(() => {
-    
+
   }, [listedInvoiceProducts]);
 
   const handleTabChanges = () => {
     setActiveSavedInvoices(!activeSavedInvoices);
     setActiveInvoice(!activeInvoice)
+  }
+  const incrementCount = (item) => {
+    setStopDecrement(false);
+    let addQuantity = item.quantity + 1;
+    if (!item.stockCheck) {
+      if (item.quantity == Number(item.stock)) {
+        setStopIncrement(true)
+      } else {
+        addToInvoiceList(item, addQuantity);
+      }
+    } else {
+      addToInvoiceList(item, addQuantity);
+    }
+  }
+
+  const decrementCount = (item) => {
+    setStopIncrement(false);
+    let subtractQuantity = item.quantity - 1;
+    if (item.quantity == 1) {
+      setStopDecrement(true)
+    } else {
+      addToInvoiceList(item, subtractQuantity);
+    }
   }
 
   return (
@@ -81,26 +106,28 @@ const ItemsOnBuy = () => {
                   </TableHead>
 
                   <TableBody>
-                    {listedInvoiceProducts?.map((row, index) => (
-                      <TableRow key={row.id}>
+                    {listedInvoiceProducts?.map((item, index) => (
+                      <TableRow key={item.id}>
                         <TableCell className={styles.tableBodyCell}>
                           {index + 1}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          {row.name}
+                          {item.name}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp; {row.quantity}
+                          <button className={styles.valueButton} disabled={stopDecrement} onClick={() => { decrementCount(item) }}>-</button>
+                          &nbsp; {item.quantity} &nbsp;
+                          <button className={styles.valueButton} disabled={stopIncrement} onClick={() => { incrementCount(item) }}>+</button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {row.price}
+                          &nbsp;  {Number(item.price).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent
                             style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
                             icon={<DeleteForeverIcon />}
                             iconColor={{ color: '#fff' }}
-                            onClick={() => { removeProductFromInvoiceList(row) }}
+                            onClick={() => { removeProductFromInvoiceList(item) }}
                           />
                         </TableCell>
                       </TableRow>
@@ -112,7 +139,7 @@ const ItemsOnBuy = () => {
             </>
           )}
           <Divider />
-          <PriceDescription />
+          <PriceDescription invoiceList={listedInvoiceProducts} />
         </>
       ) : (
         <>

@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const DashboardHeader = () => {
     const { productList } = useContextProduct();
-    const { addToInvoiceList } = useInvoiceContext();
+    const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
     const classes = useStyles();
     const [filteredData, setFilteredData] = useState([...productList]);
     const [display, setDisplay] = useState('cards');
@@ -66,7 +66,7 @@ const DashboardHeader = () => {
                     <PuffLoader />
                 </div>
             ) : (
-                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} />
+                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} invoiceList={listedInvoiceProducts}/>
             )
             }
         </div>

@@ -17,12 +17,12 @@ table {
 }
 
 #quantity {
-  width: 110px;
+  width: 120px;
   font-family: "Poppins",sans-serif !important;
 }
 
 #name {
-  width: 135px;
+  width: 130px;
   max-width: 260px;
   font-family: "Poppins",sans-serif !important;
 }
@@ -68,6 +68,20 @@ tbody > tr > td {
 
 .customTableContainer {
   height: 100%
+}
+
+.valueButton{
+  background-color: #e9edef;
+  border-radius: 28%;
+  border: none;
+  color: #0d4d47;
+  font-weight: 900;
+  cursor: pointer;
+}
+.valueButton:disabled{
+  background-color: #f050502e;
+  color: #fff;
+  cursor: not-allowed;
 }
 
 /*/////////////////////////////////////*/

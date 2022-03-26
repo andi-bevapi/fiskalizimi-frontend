@@ -36,13 +36,13 @@ const BodyDashboard = (props) => {
                             if (props.data?.length === index + 1) {
                               return (
                                 <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
-                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc}/>
+                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
                             } else {
                               return (
                                 <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
-                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc}/>
+                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
                             }

@@ -4,7 +4,7 @@ import ActionButtons from "./ActionButtons";
 import PriceInformations from "./PriceInformations";
 import ModalManager from "./ModalManager";
 
-const PriceDescription = () => {
+const PriceDescription = (props) => {
   const [open, setOpen] = useState("");
 
   const handlePay = () => {
@@ -32,7 +32,7 @@ const PriceDescription = () => {
   
   return (
     <div>
-      <PriceInformations />
+      <PriceInformations invoiceList={props.invoiceList}/>
       <ActionButtons handlePay={handlePay} freeze={handleFreezeOrder}/>
       <ModalManager
         modal={open}

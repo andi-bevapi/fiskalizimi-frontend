@@ -7,6 +7,7 @@ const InvoiceProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
 
+    //Method to products in the invoice list
     const addToInvoiceList = (product, productQuantity) => {
         const isExisting = ((listedInvoiceProducts?.filter(item => item.id === product.id)).length >= 1 ? true : false); //check if product is already in the invoice list
         if (isExisting) {
@@ -18,7 +19,7 @@ const InvoiceProvider = (props) => {
                 ...listedInvoiceProducts,
                 [productIndex]: { ...listedInvoiceProducts[productIndex], quantity: productQuantity }
             }); //create new array tha will only update the quantity of the selected product
-            setListedInvoiceProducts(newArrayUpdated);
+            setListedInvoiceProducts([...newArrayUpdated]);
         } else { //if it doesn't exist add new product at the invoice list
             let newProduct = {
                 ...product,
@@ -28,6 +29,7 @@ const InvoiceProvider = (props) => {
         }
     }
 
+    //Method to remove a product the invoice list
     const removeProductFromInvoiceList = (product) => {
         const newArrayWithoutSelectedProduct = listedInvoiceProducts?.filter(item => item.id !== product.id);
         setListedInvoiceProducts(newArrayWithoutSelectedProduct);
