@@ -11,8 +11,8 @@ const DashboardProvider = (props) => {
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
 
     useEffect(() => {
-        getProductsList();
-    }, [])
+        if(initialState?.currentUser?.branchId) getProductsList();
+    }, [initialState?.currentUser])
 
     const getProductsList = async () => {
         setIsLoading(true);

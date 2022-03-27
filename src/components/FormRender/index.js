@@ -26,8 +26,8 @@ const FormRender = ({ formFields }) => {
     switch (formField.component) {
       case 'Text':
         return (
-          <div className={classes.inputContainer}>
-            <Field name={formField.name} key={formField.name}>
+          <div className={classes.inputContainer} key={formField.name}>
+            <Field name={formField.name}>
               {({ field, meta }) => (
                 <TextField
                   label={formField.label}
@@ -55,8 +55,8 @@ const FormRender = ({ formFields }) => {
         );
       case 'Number':
         return (
-          <div className={classes.inputContainer}>
-            <Field name={formField.name} key={formField.name}>
+          <div className={classes.inputContainer} key={formField.name}>
+            <Field name={formField.name}>
               {({ field, meta }) => (
                 <TextField
                   type="number"
@@ -84,8 +84,8 @@ const FormRender = ({ formFields }) => {
         );
       case 'Select':
         return (
-          <div className={classes.inputContainer}>
-            <Field name={formField.name} key={formField.name}>
+          <div className={classes.inputContainer} key={formField.name}>
+            <Field name={formField.name}>
               {({ field, meta }) => (
                 <TextField
                   select

@@ -1,14 +1,18 @@
 {
-  "Id":"Id",
   "Name":"Emri",
   "Price":"Cmimi",
   "Barcode" :"Barkodi",
-  "Stock" :"Stoku",
+  "Stock" :"Sasia",
   "Category":"Kategoria",
   "Address"	:"Adresa",
   "City":"Qyteti",
-  "BusinessUnitCode" : "Kodi i njesise",
-  "MaintainerCode" :"Kodi i mirembajtjes",
+  "BusinessUnitCode" : "Kodi i Njesise",
+  "MaintainerCode" :"Kodi i Mirembajtjes",
   "Code":"Kodi",
+  "Username": "Emri i Perdoruesit",
+  "Firstname": "Emri",
+  "Lastname": "Mbiemri",
+  "Phone": "Numri i Telefonit",
+  "Email": "Email",
   "Actions":"Veprimet"
 }

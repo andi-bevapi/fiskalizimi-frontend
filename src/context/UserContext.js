@@ -8,8 +8,6 @@ const UserContext = createContext({});
 const UserProvider = (props) => {
   const { initialState } = useModel('@@initialState');
 
-  console.log(initialState)
-
   const [users, setUsers] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

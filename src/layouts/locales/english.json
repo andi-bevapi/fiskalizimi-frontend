@@ -1,5 +1,4 @@
 {
-  "Id":"Id",
   "Name":"Name",
   "Price":"Price",
   "Barcode" :"Barcode",
@@ -10,5 +9,10 @@
   "BusinessUnitCode" : "Business Unit Code",
   "MaintainerCode" :"Maintainer Code",
   "Code":"Code",
+  "Username": "Username",
+  "Firstname": "First Name",
+  "Lastname": "Last Name",
+  "Phone": "Phone Number",
+  "Email": "Email",
   "Actions":"Actions"
 }

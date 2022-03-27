@@ -27,7 +27,7 @@ export const login = async (data) => {
     });
 }
 
-export const  createUser = async (data) => {
+export const createUser = async (data) => {
     return request("/user/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,7 +35,7 @@ export const  createUser = async (data) => {
     })
 }
 
-export const  updateUser = async (id, data) => {
+export const updateUser = async (id, data) => {
     return request(`/user/update/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ export const  updateUser = async (id, data) => {
     })
 }
 
-export const  deleteUser = async (id) => {
+export const deleteUser = async (id) => {
     return request(`/user/delete/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

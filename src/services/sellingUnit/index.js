@@ -20,7 +20,9 @@ const updateSellingUnit = async (data) => {
   return request(`/selling-units/update/${data.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    data,
+    data: {
+      name: data.name
+    },
   });
 };
 

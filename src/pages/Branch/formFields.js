@@ -19,7 +19,7 @@ export const formFields = [
     {
         name: 'businessUnitCode',
         component: 'Text',
-        label: 'Business UnitCode'
+        label: 'Business Unit Code'
     },
     {
         name: 'maintainerCode',
@@ -38,6 +38,6 @@ export const validationSchema = yup.object({
     address: yup.string().min(2, "Adresa duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni adresen"),
     businessUnitCode: yup.string().min(2, "Kodi i biznesit duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni kodin e biznesit"),
     city: yup.string().min(2, "Qyteti duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin e qytetit"),
-    code: yup.string().min(5, "Kodi duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin e kodin"),
-    maintainerCode: yup.string().min(5, "Kodi i mirembajtjes duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni kodi i mirembajtjes"),
+    code: yup.string().min(5, "Kodi duhet te kete me shume se 5 karaktere").required("Ju lutem vendosni emrin e kodin"),
+    maintainerCode: yup.string().min(5, "Kodi i mirembajtjes duhet te kete me shume se 5 karaktere").required("Ju lutem vendosni kodi i mirembajtjes"),
 });

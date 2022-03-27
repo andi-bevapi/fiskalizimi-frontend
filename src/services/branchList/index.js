@@ -9,21 +9,27 @@ const getAllBranch = async () => {
     });
 }
 
-const createBranchList = async(data) =>{
+const createBranchList = async(clientId, data) =>{
     return request("/branch/create",{
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
-        data
+        data: {
+            clientId,
+            ...data
+        }
     })
 }
 
-const updateBranchList = async(data) => {
+const updateBranchList = async(clientId, data) => {
     return request(`/branch/update/${data.id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
-        data
+        data: {
+            clientId,
+            ...data
+        }
     })
 };
 

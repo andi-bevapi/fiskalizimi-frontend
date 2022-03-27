@@ -3,14 +3,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { makeStyles } from '@mui/styles';
-import { useState , useEffect } from 'react';
+import { useState } from 'react';
+import { useTranslation } from "react-i18next";
 import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
-import CircularProgress from '@mui/material/CircularProgress';
-import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
   },
   btnContainer: {
     display: 'flex',
+    justifyContent: 'flex-end'
   },
   spinContainer: {
     display: 'flex',
@@ -73,8 +74,6 @@ const TableComponent = (props) => {
     setOpenSideBar(true);
   }
 
-  
-
   return (
     <>
       <SnackbarComponent
@@ -112,10 +111,14 @@ const TableComponent = (props) => {
         <TableContainer sx={{ fontSize: '14px' }}>
           <Table stickyHeader aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow
+                sx={{
+                  'th': { padding: '16px 0' },
+                }}
+              >
                 <TableCell className={classes.tableCell}>Nr</TableCell>
                 {props.tableHeaders.map((header, index) => {
-                  if (header !== 'Id') return <TableCell key={index} className={classes.tableCell}>{t(header)} </TableCell>;
+                  if (header !== 'Id') return <TableCell key={index} className={classes.tableCell} style={index === props.tableHeaders.length - 1 ? { textAlign: 'right', paddingRight: 20 } : {}}>{t(header)}</TableCell>;
                 })}
               </TableRow>
             </TableHead>
@@ -124,7 +127,7 @@ const TableComponent = (props) => {
                 <TableRow
                   key={item.id}
                   sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
+                    'td': { padding: '16px 0' },
                   }}
                   id={item.id}
                 >

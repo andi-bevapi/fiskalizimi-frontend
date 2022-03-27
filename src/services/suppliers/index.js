@@ -20,7 +20,9 @@ const updateSupplier = async (data) => {
   return request(`/supplier/update/${data.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    data,
+    data: {
+      name: data.name
+    },
   });
 };
 

@@ -95,11 +95,9 @@ export const validationSchema = yup.object({
     price: yup.number().required("Ju lutem vendosni cmimi"),
     barcode:  yup.number().min(2, "Barkodi duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni barkodin"),
     vat: yup.number().required("Ju lutem vendosni TVSH"),
-    stock: yup.number().required("Ju lutem vendosni Stokun"),
-    stockCheck: yup.boolean().required("Ju lutem vendosni stock check"),
-    branchId:  yup.number().required("Ju lutem vendosni Id e branch"),
-    categoryId:  yup.number().required("Ju lutem vendosni id e kategorise"),
-    sellingUnitId: yup.number().required("Ju lutem vendosni id e njesise"),
-    supplierId: yup.number().required("Ju lutem vendosni id furnizuesit"),
-    imageVirtualPath: yup.string().required("Ju lutem vendosni Imazhi"),
+    stock: yup.number().required("Ju lutem vendosni sasine"),
+    branchId:  yup.number().required("Ju lutem zgjidhni degen"),
+    categoryId:  yup.number().required("Ju lutem zgjidhni kategorine"),
+    sellingUnitId: yup.number().required("Ju lutem zgjidhni njesine matese"),
+    supplierId: yup.number().required("Ju lutem zgjidhni furnizuesin")
 });
