@@ -18,13 +18,13 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList } = useInvoiceContext();
+  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList, isLoading } = useInvoiceContext();
   const [activeInvoice, setActiveInvoice] = useState(true);
   const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
-  const [loadingInvoice, setLoadingInvoice] = useState(false); //loading state when updating invoice sale
+  const [loadingInvoice, setLoadingInvoice] = useState(isLoading); //loading state when updating invoice sale
   const [stopIncrement, setStopIncrement] = useState(false);
   const [stopDecrement, setStopDecrement] = useState(false);
 
@@ -39,7 +39,7 @@ const ItemsOnBuy = () => {
   const incrementCount = (item) => {
     setStopDecrement(false);
     let addQuantity = item.quantity + 1;
-    if (!item.stockCheck) {
+    if (item.stockCheck) {
       if (item.quantity == Number(item.stock)) {
         setStopIncrement(true)
       } else {
@@ -120,7 +120,7 @@ const ItemsOnBuy = () => {
                           <button className={styles.valueButton} disabled={stopIncrement} onClick={() => { incrementCount(item) }}>+</button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {Number(item.price).toFixed(2)}
+                          &nbsp;  {Number(item.price*item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent

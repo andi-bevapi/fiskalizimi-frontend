@@ -1,14 +1,18 @@
+import { useEffect } from 'react';
 import { Typography } from "@mui/material";
-// import { useBuying } from "../../../../../Context/BuyingContext";
 import styles from "./PriceInformations.module.css";
-// import { useTranslation } from "react-i18next";
 import { makeStyles } from "@mui/styles";
+import { useInvoiceContext } from "../../../../../Context/InvoiceContext";
 
 const PriceInformations = (props) => {
-  // const { buyingList, totalPrice } = useBuying();
-  // const { t } = useTranslation();
+  const { totalPriceVAT, getTotalPriceWithVAT, listedInvoiceProducts } = useInvoiceContext();
   const buyingList = [...props.invoiceList];
   const totalPrice = 0;
+
+  useEffect(() => {
+    getTotalPriceWithVAT();
+  }, [listedInvoiceProducts]);
+
   return (
     <div className={styles.mainHolder}>
       <div className={styles.itemsHolder}>
@@ -27,7 +31,7 @@ const PriceInformations = (props) => {
         <div>
           {buyingList.length === 0 ? (
             <Typography variant="body2" className={styles.text}>
-              <b>0.0ALL</b>
+              <b>0.00ALL</b>
             </Typography>
           ) : (
             <Typography variant="body2" className={styles.text}>
@@ -46,11 +50,11 @@ const PriceInformations = (props) => {
         <div>
           {buyingList.length === 0 ? (
             <Typography variant="body2" className={styles.text}>
-             <b>0.0ALL</b>
+             <b>0.00ALL</b>
             </Typography>
           ) : (
             <Typography variant="body" className={styles.text}>
-              <b>{Number(totalPrice + totalPrice * 0.2).toFixed(2)}ALL</b>
+              <b>{Number(totalPriceVAT).toFixed(2)}ALL</b>
             </Typography>
           )}
         </div>

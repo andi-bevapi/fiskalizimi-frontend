@@ -10,9 +10,9 @@ import styles from './ItemLine.module.css';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: "100px",
-    padding: "15px 5px 0 3px",
-    width: "100%",
+    height: "200px",
+    padding: "10px 5px 0 3px",
+    width: "80%",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardDisabled: {
-    height: "100px",
-    padding: "15px 5px 0 3px",
-    width: "100%",
+    height: "200px",
+    padding: "10px 5px 0 3px",
+    width: "80%",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
@@ -54,29 +54,36 @@ const ItemCard = (props) => {
   // const { t } = useTranslation();
 
   const handleCardClick = () => {
-    const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false); 
-    if(isExisting){
+    const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
+    if (isExisting) {
       if (quantity > Number(product.stock)) {
         setStopAdding(true);
       } else {
         setProductQuantity(quantity + 1);
         props.addToInvoiceList(product, quantity);
       }
-    }else{
+    } else {
       setProductQuantity(1);
       (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
     }
-    
+
   }
 
   return (
     <Card className={stopAdding ? classes.cardDisabled : classes.card}
       onClick={() => { handleCardClick() }}
     >
+      <CardMedia
+        component="img"
+        alt={props.item.name}
+        image={props.item.imageVirtualPath ? (props.item.imageVirtualPath) : "https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg"}
+        style={{ width: 100, height: 100, margin: "auto", marginLeft: 5, marginTop: -5, borderRadius: "50%" }}
+      />
       <CardContent
         style={{
-          padding: "5px 5px",
+          padding: "5px",
           textAlign: "center",
+          marginTop: -8
         }}
       >
         <div
