@@ -10,8 +10,8 @@ const ProductProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        getProductsList();
-    }, [])
+        if(initialState?.currentUser?.branchId) getProductsList();
+    }, [initialState?.currentUser])
 
     const getProductsList = async () => {
         setIsLoading(true);

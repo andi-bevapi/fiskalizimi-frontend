@@ -1,28 +1,32 @@
 import request from '../../utils/request';
 
-const getSellingUnits = () => {
-  return request('/selling-units/', {
+const getSellingUnits = (branchId) => {
+  return request(`/selling-units/${branchId}`, {
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + localStorage.getItem('poslaToken'),
     },
   });
 };
 
-const createSellingUnit = async (data) => {
+const createSellingUnit = async (branchId, data) => {
   return request('/selling-units/create', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data,
+    data: {
+      branchId,
+      ...data
+    },
   });
 };
 
-const updateSellingUnit = async (data) => {
+const updateSellingUnit = async (branchId, data) => {
   return request(`/selling-units/update/${data.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: {
-      name: data.name
-    },
+      branchId,
+      ...data
+    }
   });
 };
 

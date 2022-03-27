@@ -1,28 +1,32 @@
 import request from '../../utils/request';
 
-const getSuppliersList = () => {
-  return request('/supplier', {
+const getSuppliersList = (branchId) => {
+  return request(`/supplier/${branchId}`, {
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + localStorage.getItem('poslaToken'),
     },
   });
 };
 
-const createSupplier = async (data) => {
+const createSupplier = async (branchId, data) => {
   return request('/supplier/create', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data,
+    data: {
+      branchId,
+      ...data
+    },
   });
 };
 
-const updateSupplier = async (data) => {
+const updateSupplier = async (branchId, data) => {
   return request(`/supplier/update/${data.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: {
-      name: data.name
-    },
+      branchId,
+      ...data
+    }
   });
 };
 

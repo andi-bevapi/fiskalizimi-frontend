@@ -1,7 +1,7 @@
 import request from "../../utils/request";
 
-const getAllCategory = async () => {
-    return request("/categories", {
+const getAllCategory = async (branchId) => {
+    return request(`/categories/${branchId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -9,23 +9,29 @@ const getAllCategory = async () => {
     });
 }
 
-const createCategory = async(data) =>{
+const createCategory = async(branchId, data) =>{
     return request("/categories/create",{
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
-        data
+        data: {
+            branchId,
+            ...data
+        }
     })
 }
 
-const updateCategory = async (data) => {
+const updateCategory = async (branchId, data) => {
     return request(`/categories/update/${data.id}`,{
         method:"PUT",
         headers:{
             'Content-Type': 'application/json',
         },
-        data:{name: data.name}
+        data: {
+            branchId,
+            ...data
+        }
     })
 }
 

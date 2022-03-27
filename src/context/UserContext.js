@@ -14,9 +14,8 @@ const UserProvider = (props) => {
 
   const getUsersList = async () => {
     setIsLoading(true);
-
     try {
-      const response = await getUsers(initialState?.currentUser?.clientId);
+      const response = await getUsers(initialState?.currentUser?.branchId);
       if (response.statusCode === 200) {
         setUsers(response.data);
       }
@@ -75,9 +74,9 @@ const UserProvider = (props) => {
   };
 
   useEffect(() => {
-    getUsersList();
+    if(initialState?.currentUser?.branchId) getUsersList();
     getPermissionsList();
-  }, []);
+  }, [initialState?.currentUser]);
 
   const values = {
     users,

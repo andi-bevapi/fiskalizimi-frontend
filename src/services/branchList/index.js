@@ -1,7 +1,7 @@
 import request from "../../utils/request";
 
-const getAllBranch = async () => {
-    return request("/branch", {
+const getAllBranch = async (clientId) => {
+    return request(`/branch/${clientId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

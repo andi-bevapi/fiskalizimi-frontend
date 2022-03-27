@@ -1,7 +1,7 @@
 import { Redirect } from 'umi'
 
 export default (props) => {
-    if (localStorage.token) {
+    if (localStorage.poslaToken) {
         return props.children;
     }
 

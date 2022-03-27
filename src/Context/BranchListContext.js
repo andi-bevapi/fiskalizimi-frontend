@@ -11,13 +11,13 @@ const BranchListProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        getBranchList();
-    }, []);
+        if(initialState?.currentUser?.clientId) getBranchList();
+    }, [initialState?.currentUser]);
 
     const getBranchList = async () => {
         setIsLoading(true);
         try {
-            const result = await getAllBranch();
+            const result = await getAllBranch(initialState?.currentUser?.clientId);
             if (result.statusCode === 200) {
                 setBranchList(result.data);
             }

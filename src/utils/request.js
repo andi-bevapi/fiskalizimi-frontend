@@ -21,7 +21,7 @@ const codeMessage = {
 const errorHandler = (error) => {
     const { response } = error;
     if (response && response.status == 401) {
-        localStorage.removeItem('token');
+        localStorage.removeItem('poslaToken');
     }
     return response;
 };

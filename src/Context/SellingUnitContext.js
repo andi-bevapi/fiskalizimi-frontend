@@ -5,21 +5,24 @@ import {
   updateSellingUnit,
   deleteSellingUnit,
 } from '../services/sellingUnit';
+import { useModel } from 'umi';
 
 const SellingUnitContext = createContext({});
 
 const SellingUnitProvider = (props) => {
+  const { initialState } = useModel('@@initialState');
+
   const [sellingUnitList, setSellingUnitList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    getSellingUnitList();
-  }, []);
+    if(initialState?.currentUser?.branchId) getSellingUnitList();
+  }, [initialState?.currentUser]);
 
   const getSellingUnitList = async () => {
     setIsLoading(true);
     try {
-      const response = await getSellingUnits();
+      const response = await getSellingUnits(initialState?.currentUser?.branchId);
       if (response.statusCode === 200) {
         setSellingUnitList(response.data);
       }
@@ -31,7 +34,7 @@ const SellingUnitProvider = (props) => {
 
   const sellingUnitToCreate = async (data) => {
     try {
-      const response = await createSellingUnit(data);
+      const response = await createSellingUnit(initialState?.currentUser?.branchId, data);
       getSellingUnitList();
       return response;
     } catch (error) {
@@ -41,7 +44,7 @@ const SellingUnitProvider = (props) => {
 
   const sellingUnitToUpdate = async (data) => {
     try {
-      const response = await updateSellingUnit(data);
+      const response = await updateSellingUnit(initialState?.currentUser?.branchId, data);
       getSellingUnitList();
       return response;
     } catch (error) {

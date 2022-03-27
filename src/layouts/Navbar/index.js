@@ -17,7 +17,7 @@ const Navbar = () => {
   }, [])
 
   const onLogoutHandler = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('poslaToken');
     history.replace('/');
   };
 

@@ -3,13 +3,13 @@ import request from '../../utils/request';
 export async function getCurrentUser() {
     return request('/user/current/info', {
         headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token')
+            Authorization: 'Bearer ' + localStorage.getItem('poslaToken')
         },
     });
 }
 
-export const getUsers = async (clientId) => {
-    return request(`/user/${clientId}`, {
+export const getUsers = async (branchId) => {
+    return request(`/user/${branchId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

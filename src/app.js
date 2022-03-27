@@ -5,7 +5,7 @@ import User from './models/User';
 export async function getInitialState() {
   const fetchUserInfo = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('poslaToken');
       if (token) {
         return getCurrentUser();
       }
