@@ -4,11 +4,11 @@ import styles from "./PriceInformations.module.css";
 // import { useTranslation } from "react-i18next";
 import { makeStyles } from "@mui/styles";
 
-const PriceInformations = () => {
+const PriceInformations = (props) => {
   // const { buyingList, totalPrice } = useBuying();
   // const { t } = useTranslation();
-  const buyingList = [];
-
+  const buyingList = [...props.invoiceList];
+  const totalPrice = 0;
   return (
     <div className={styles.mainHolder}>
       <div className={styles.itemsHolder}>

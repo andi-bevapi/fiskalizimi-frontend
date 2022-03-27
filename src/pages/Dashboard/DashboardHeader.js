@@ -7,11 +7,11 @@ import DehazeIcon from '@mui/icons-material/Dehaze';
 import BodyDashboard from './Body';
 import { makeStyles } from '@mui/styles';
 import PuffLoader from "react-spinners/PuffLoader";
-import { useContextDashboard } from '../../Context/DashboardContext';
-import { render } from 'react-dom';
+import { useContextProduct } from '../../Context/ProductContext';
+import { useInvoiceContext } from '../../Context/InvoiceContext';
 
 const useStyles = makeStyles(() => ({
-    container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%'},
+    container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
     headContainer: {
         width: '100%',
         display: 'flex',
@@ -32,7 +32,8 @@ const useStyles = makeStyles(() => ({
 
 
 const DashboardHeader = () => {
-    const { productList, getProductsList, productToUpdate, addToInvocieList } = useContextDashboard();
+    const { productList } = useContextProduct();
+    const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
     const classes = useStyles();
     const [filteredData, setFilteredData] = useState([...productList]);
     const [display, setDisplay] = useState('cards');
@@ -44,6 +45,7 @@ const DashboardHeader = () => {
 
     //Search Product
     const filterProducts = () => {
+
     };
 
     return (
@@ -64,7 +66,7 @@ const DashboardHeader = () => {
                     <PuffLoader />
                 </div>
             ) : (
-                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvocieList}/>
+                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} invoiceList={listedInvoiceProducts}/>
             )
             }
         </div>

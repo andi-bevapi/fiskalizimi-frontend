@@ -31,18 +31,18 @@ const BodyDashboard = (props) => {
         <div>
           {props.display === 'cards' ? (
                         <div>
-                        <Grid >
+                        <Grid container spacing={3}>
                           {props.data?.map((item, index) => {
                             if (props.data?.length === index + 1) {
                               return (
                                 <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
                             } else {
                               return (
                                 <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                                  <ItemCard key={index} item={item} addToInvoice={props.addToInvoiceFunc}/>
+                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
                             }
