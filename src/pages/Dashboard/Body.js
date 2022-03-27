@@ -35,13 +35,13 @@ const BodyDashboard = (props) => {
                           {props.data?.map((item, index) => {
                             if (props.data?.length === index + 1) {
                               return (
-                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
                                   <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
                             } else {
                               return (
-                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2}>
+                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
                                   <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
                                 </Grid>
                               );
@@ -50,11 +50,11 @@ const BodyDashboard = (props) => {
                         </Grid>
                       </div>
           ) : (
-            props.data.map((item, index) => {
-              if (data.length === index + 1) {
-                return <ItemLine item={item} />;
+            props.data?.map((item, index) => {
+              if (props.data.length === index + 1) {
+                return <div key={index}><ItemLine item={item} /></div>;
               } else {
-                return <ItemLine item={item} />;
+                return <div key={index}><ItemLine item={item} /></div>;
               }
             })
           )}

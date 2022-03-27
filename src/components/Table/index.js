@@ -4,12 +4,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
 import CircularProgress from '@mui/material/CircularProgress';
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -38,6 +39,7 @@ const TableComponent = (props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const [editItem, setEditItem] = useState(null);
+  const {t} = useTranslation();
 
   const handleEditButton = (id) => {
     setOpenSideBar(true);
@@ -71,6 +73,8 @@ const TableComponent = (props) => {
     setOpenSideBar(true);
   }
 
+  
+
   return (
     <>
       <SnackbarComponent
@@ -84,10 +88,15 @@ const TableComponent = (props) => {
         open={openSideBar}
         setOpenSideBar={setOpenSideBar}
         formFields={props.formFields}
+        validationSchema={props.validationSchema}
         create={props.create}
         update={props.update}
         editItem={editItem}
         setEditItem={setEditItem}
+        user={props.user}
+        permissions={props.permissions}
+        setPermissions={props.setPermissions}
+        contexts={props.contexts}
       />
 
       <div className={classes.headerContainer}>
@@ -106,7 +115,7 @@ const TableComponent = (props) => {
               <TableRow>
                 <TableCell className={classes.tableCell}>Nr</TableCell>
                 {props.tableHeaders.map((header, index) => {
-                  if (header !== 'Id') return <TableCell key={index} className={classes.tableCell}>{header} </TableCell>;
+                  if (header !== 'Id') return <TableCell key={index} className={classes.tableCell}>{t(header)} </TableCell>;
                 })}
               </TableRow>
             </TableHead>

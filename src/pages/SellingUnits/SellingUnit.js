@@ -1,7 +1,7 @@
 import TableComponent from '../../components/Table';
 import { listFormat } from '../../helpers/listFormater';
 import { useSellingUnitContext } from '../../Context/SellingUnitContext';
-import formFields from './formFields';
+import { formFields, validationSchema } from './formFields';
 
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
@@ -28,6 +28,7 @@ const SellingUnits = () => {
       update={sellingUnitToUpdate}
       delete={sellingUnitToDelete}
       formFields={formFields}
+      validationSchema={validationSchema}
       isLoading={isLoading}
     />
   );
