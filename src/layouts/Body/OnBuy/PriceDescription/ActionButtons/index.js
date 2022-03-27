@@ -1,20 +1,18 @@
 import { Divider } from '@mui/material';
 import ButtonComponent from '../../../../../components/Button/InvoiceButton';
-// import styles from "../PriceDescription.module.css";
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import IconButtonComponent from '../../../../../components/Button/IconButton';
 import BlockIcon from '@mui/icons-material/Block';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import styles from '../../../OnBuy/ItemsOnBuy.module.css';
-// import { useBuying } from "../../../../../Context/BuyingContext";
 // import { useTranslation } from "react-i18next";
 import { Grid } from '@mui/material';
 import { margin } from '@mui/system';
+import { useInvoiceContext } from '../../../../../Context/InvoiceContext';
 
 const ActionButtons = (props) => {
-  // const { handleDestroyBuyingList } = useBuying();
-  // const { t } = useTranslation();
+  const { deleteInvoice } = useInvoiceContext();
 
   return (
     <div className={styles.actionButtonContainer}>
@@ -23,7 +21,6 @@ const ActionButtons = (props) => {
           width: '1050%',
         }}
       >
-        {/* <Divider /> */}
       </div>
       <div
         className={styles.buttonsList}
@@ -44,10 +41,8 @@ const ActionButtons = (props) => {
             <ButtonComponent
               title="FSHI"
               lightColor="rgb(240, 80, 80)"
-              //darkColor="rgb(220, 80, 80)"
               addIcon={false}
-              // onClick={handleDestroyBuyingList}
-              // onClickAdd={props.handleAddProduct}
+              onClick={deleteInvoice}
               icon={<BlockIcon />}
             />
           </Grid>
@@ -55,7 +50,6 @@ const ActionButtons = (props) => {
             <ButtonComponent
             title="PAGUAJ"
             lightColor="#0d4d47"
-            //darkColor="#34a138"
             addIcon={false}
             // onClick={props.handlePay}
             icon={<LocalAtmIcon />}
@@ -65,7 +59,6 @@ const ActionButtons = (props) => {
             <ButtonComponent
             title="RUAJ"
             lightColor="#74a19e"
-            //darkColor="#51a794"
             addIcon={false}
             onClick={props.freeze}
             icon={<PanToolIcon />}
