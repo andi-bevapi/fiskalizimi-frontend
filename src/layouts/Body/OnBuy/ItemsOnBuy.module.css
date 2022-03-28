@@ -149,3 +149,38 @@ tbody > tr > td {
   opacity: 0.5;
 }
 
+/*/////////////////////////////////////*/
+/*//////  Payment Modal Styles  //////*/
+
+.payTitle{
+  padding: 5px 1px;
+  font-weight: bold !important;
+  font-size: 22px !important;
+  color: #000 !important;
+  font-family: "Poppins",sans-serif !important;
+}
+
+.subMainHolder {
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.inputHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonStyle {
+  background-color: #17625D !important;
+  font-family: 'Poppins'!important;
+}  
+
+.totalPrice{
+  padding: 5px 1px;
+  font-weight: bold !important;
+  font-size: 18px !important;
+  color: #062623 !important;
+  font-family: "Poppins",sans-serif !important;
+}
