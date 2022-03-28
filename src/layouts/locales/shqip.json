@@ -14,5 +14,13 @@
   "Lastname": "Mbiemri",
   "Phone": "Numri i Telefonit",
   "Email": "Email",
+  "username":"emri",
+  "operatorCode":"kodi operatorit",
+  "position":"pozicioni",
+  "phone":"telefoni",
+  "firstName":"Emri",
+  "lastName":"mbiemri",
+  "branchId":"id e deges",
+  "clientId" : "id e klientit",
   "Actions":"Veprimet"
 }

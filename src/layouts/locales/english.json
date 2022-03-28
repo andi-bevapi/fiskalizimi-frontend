@@ -14,5 +14,13 @@
   "Lastname": "Last Name",
   "Phone": "Phone Number",
   "Email": "Email",
+  "username":"username",
+  "operatorCode":"operator code",
+  "position":"position",
+  "phone":"phone",
+  "firstName":"firstname",
+  "lastName":"lastname",
+  "branchId":"branch id",
+  "clientId" : "client id",
   "Actions":"Actions"
 }
