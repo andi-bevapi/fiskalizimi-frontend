@@ -31,23 +31,23 @@ const SidebarAction = (props) => {
   const fillSelectOptions = () => {
     if (!props.contexts) return;
 
-    Object.keys(props.contexts).map(context => {
-      const options = props.contexts[context].map(el => {
+    Object.keys(props.contexts).map((context) => {
+      const options = props.contexts[context].map((el) => {
         return {
           value: el.id,
-          label: el.name
-        }
-      })
+          label: el.name,
+        };
+      });
 
       let formattedFields = [...fields];
 
-      formattedFields = formattedFields.map(field => {
+      formattedFields = formattedFields.map((field) => {
         if (field?.options?.length === 0 && field.identifier === context) field.options = options;
         return field;
       });
 
       setFields(formattedFields);
-    })
+    });
   };
 
   const toggleDrawer = (open) => (event) => {
@@ -66,7 +66,7 @@ const SidebarAction = (props) => {
     let initialValues = {};
 
     if (props.editItem) {
-      fields.forEach(field => {
+      fields.forEach((field) => {
         initialValues[field.name] = props.editItem[field.name];
       });
       initialValues['id'] = props.editItem.id;
@@ -74,8 +74,8 @@ const SidebarAction = (props) => {
         initialValues['password'] = '';
       }
     } else {
-      fields.forEach(field => {
-        initialValues[field.name] = "";
+      fields.forEach((field) => {
+        initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
@@ -87,14 +87,15 @@ const SidebarAction = (props) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 
   const handleSubmit = (values) => {
-    let file, fileKeyName = null;
+    let file,
+      fileKeyName = null;
 
-    Object.entries(values).map(item => {
+    Object.entries(values).map((item) => {
       if (isFile(item[1])) {
         file = item[1];
         fileKeyName = item[0];
@@ -102,7 +103,7 @@ const SidebarAction = (props) => {
     });
 
     if (file) {
-      getBase64(file).then(result => {
+      getBase64(file).then((result) => {
         values[fileKeyName] = result;
         postData(values);
       });
@@ -115,48 +116,49 @@ const SidebarAction = (props) => {
   const postData = async (values) => {
     const permissions = [];
     if (props.user) {
-      const tmp = props.permissions.filter((el) => el.checked == true);
+      const tmp = props.permissions.filter((el) => el.permissions.checked == true);
       tmp.map((el) => permissions.push(el.id));
+      console.log(permissions);
     }
 
     const action = props.editItem ? props.update : props.create;
 
-    let response = {};
-    if (props.user) {
-      if (props.editItem) {
-        let id = values.id;
-        delete values.id;
-        response = await action(id, {
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
-          permissions: permissions,
-        });
-      } else {
-        response = await action({
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
-          permissions: permissions,
-        });
-      }
-    } else {
-      response = await action({
-        ...values,
-      });
-    }
+    // let response = {};
+    // if (props.user) {
+    //   if (props.editItem) {
+    //     let id = values.id;
+    //     delete values.id;
+    //     response = await action(id, {
+    //       user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+    //       permissions: permissions,
+    //     });
+    //   } else {
+    //     response = await action({
+    //       user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+    //       permissions: permissions,
+    //     });
+    //   }
+    // } else {
+    //   response = await action({
+    //     ...values,
+    //   });
+    // }
 
-    if (response?.statusCode === 200) {
-      setOpenSnackBar({ status: true, message: response.message, success: true });
-      props.setOpenSideBar(false);
-      if(props.user) {
-        props.setPermissions(
-          props.permissions.map((el) => {
-            return { ...el, checked: false };
-          }),
-        );
-      }
-      return;
-    }
+    // if (response?.statusCode === 200) {
+    //   setOpenSnackBar({ status: true, message: response.message, success: true });
+    //   props.setOpenSideBar(false);
+    //   if (props.user) {
+    //     props.setPermissions(
+    //       props.permissions.map((el) => {
+    //         return { ...el, checked: false };
+    //       }),
+    //     );
+    //   }
+    //   return;
+    // }
 
-    const resJson = await response.json();
-    setOpenSnackBar({ status: true, message: resJson.message, success: false });
+    // const resJson = await response.json();
+    // setOpenSnackBar({ status: true, message: resJson.message, success: false });
   };
 
   const handleCheck = (id) => {
@@ -167,7 +169,7 @@ const SidebarAction = (props) => {
     });
   };
 
-
+  console.log(props.permissions);
   return (
     <>
       <SnackbarComponent
@@ -189,7 +191,24 @@ const SidebarAction = (props) => {
             <FormRender formFields={fields} />
             {props.user && (
               <>
-                {props.permissions.map((permission) => {
+                {Object.keys(props.permissions).map((key, idx) => {
+                  return (
+                    <>
+                      <p>{key.toUpperCase()}</p>
+                      {props.permissions[key].permissions.map((permission) => {
+                        return (
+                          <BootstrapCheckbox
+                            key={permission.id}
+                            label={permission.label}
+                            checked={permission.checked}
+                            handleCheck={() => handleCheck(permission.id)}
+                          />
+                        );
+                      })}
+                    </>
+                  );
+                })}
+                {/* {props.permissions.map((permission) => {
                   return (
                     <BootstrapCheckbox
                       key={permission.id}
@@ -198,7 +217,7 @@ const SidebarAction = (props) => {
                       handleCheck={() => handleCheck(permission.id)}
                     />
                   );
-                })}
+                })} */}
               </>
             )}
             <Button variant="contained" type="submit">
