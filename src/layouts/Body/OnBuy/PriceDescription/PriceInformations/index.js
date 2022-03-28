@@ -5,12 +5,13 @@ import { makeStyles } from "@mui/styles";
 import { useInvoiceContext } from "../../../../../Context/InvoiceContext";
 
 const PriceInformations = (props) => {
-  const { totalPriceVAT, getTotalPriceWithVAT, listedInvoiceProducts } = useInvoiceContext();
+  const { totalPriceVAT, getTotalPriceWithVAT, listedInvoiceProducts, totalPriceNoVAT, getTotalPriceWithoutVAT } = useInvoiceContext();
   const buyingList = [...props.invoiceList];
   const totalPrice = 0;
 
   useEffect(() => {
     getTotalPriceWithVAT();
+    getTotalPriceWithoutVAT();
   }, [listedInvoiceProducts]);
 
   return (
@@ -35,7 +36,7 @@ const PriceInformations = (props) => {
             </Typography>
           ) : (
             <Typography variant="body2" className={styles.text}>
-              <b>{Number(totalPrice).toFixed(2)}ALL</b>
+              <b>{Number(totalPriceNoVAT).toFixed(2)}ALL</b>
             </Typography>
           )}
         </div>

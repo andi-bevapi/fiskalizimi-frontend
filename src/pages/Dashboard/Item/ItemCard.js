@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CardMedia, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -52,6 +52,10 @@ const ItemCard = (props) => {
   const [quantity, setProductQuantity] = useState(1);
   const [stopAdding, setStopAdding] = useState(false);
   // const { t } = useTranslation();
+
+  useEffect(() => {
+    ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+  }, [props.invoiceList]);
 
   const handleCardClick = () => {
     const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
