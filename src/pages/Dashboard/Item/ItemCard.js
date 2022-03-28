@@ -51,26 +51,40 @@ const ItemCard = (props) => {
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState(1);
   const [stopAdding, setStopAdding] = useState(false);
-  // const { t } = useTranslation();
 
   useEffect(() => {
+    const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
+    (arrayProduct[0]?.stockCheck ? (
+      (arrayProduct[0].quantity >= Number(product.stock) ? (setStopAdding(true)) : (setStopAdding(false)))
+    ) : (setStopAdding(false)));
     ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+    //setProductQuantity(arrayProduct[0]?.quantity);
   }, [props.invoiceList]);
+
 
   const handleCardClick = () => {
     const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
-    if (isExisting) {
-      if (quantity > Number(product.stock)) {
-        setStopAdding(true);
+    if (product.stockCheck) {
+      if (isExisting) {
+        if (quantity > Number(product.stock)) {
+          setStopAdding(true);
+        } else {
+          setProductQuantity(quantity + 1);
+          props.addToInvoiceList(product, quantity);
+        }
       } else {
-        setProductQuantity(quantity + 1);
-        props.addToInvoiceList(product, quantity);
+        setProductQuantity(1);
+        (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
       }
     } else {
-      setProductQuantity(1);
-      (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+      if (isExisting) {
+        setProductQuantity(quantity + 1);
+        props.addToInvoiceList(product, quantity);
+      } else {
+        setProductQuantity(1);
+        (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+      }
     }
-
   }
 
   return (

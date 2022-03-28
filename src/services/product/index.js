@@ -7,6 +7,13 @@ const getProducts = async (branchId) => {
     })
 }
 
+const getProductByBarcode = async(barcode, branchId) => {
+    return request(`/product/${branchId}?barcode=${barcode}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" }
+    })
+}
+
 const createProduct = async (data) => {
     return request("/product/create", {
         method: "POST",
@@ -30,4 +37,5 @@ const deleteProduct = (id) => {
     })
 }
 
-export { getProducts, createProduct, updateProduct, deleteProduct };
+
+export { getProducts, getProductByBarcode, createProduct, updateProduct, deleteProduct };

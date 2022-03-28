@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { getProductByBarcode } from './../services/product';
+import { useModel } from 'umi';
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
@@ -8,6 +9,7 @@ const InvoiceProvider = (props) => {
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
     const [totalPriceNoVAT, setTotalPriceNoVAT] = useState(0); //The value of total price without VAT
     const [totalVAT, setTotalVAT] = useState(0); //The value of total VAT
+    const { initialState } = useModel('@@initialState');
     const vatObject = [
         {
             type: 0,
@@ -31,6 +33,12 @@ const InvoiceProvider = (props) => {
         },
     ]
     const [vatValues, setVATValues] = useState(vatObject); //Object with all VAT values and types
+    const [invoiceFinalObject, setInvoiceFinalObject] = useState({});
+    const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
+
+    useEffect(() => {
+        console.log("initialState?.currentUser?", initialState?.currentUser);
+    }, [initialState?.currentUser]);
 
 
     //Method to products in the invoice list
@@ -65,7 +73,7 @@ const InvoiceProvider = (props) => {
                 id: product.id,
                 name: product.name,
                 unitSellingId: product.sellingUnitId,
-                branchId: product.branch.id,
+                // branchId: product.branch.id,
                 description: product.description,
                 price: product.price,
                 originalPrice: (product.price - vatValueProduct),
@@ -118,14 +126,50 @@ const InvoiceProvider = (props) => {
 
     //Method that calculates VAT value per invoice
     const getTotalVAT = () => {
-        let totalVAT = 0;
+        let totalVat= 0;
         listedInvoiceProducts?.map((product) => {
-            totalVAT += Number((product.price - product.originalPrice)* product.quantity);
+            totalVat += Number((product.price - product.originalPrice)* product.quantity);
         });
-        setTotalVAT(totalVAT);
+        setTotalVAT(totalVat);
+        return totalVat;
     }
 
-    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT }
+    //Method that filters product by barcode
+    const getProductBarcode = async (barcode = "") => {
+        try {
+            const result = await getProductByBarcode(barcode, initialState?.currentUser?.branchId);
+            if (result.statusCode === 200) {
+                setFilteredBarcodeProduct(result.data);
+                return result.data;
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    //Method that returns the full invoice object
+    const returnInvoiceObject = () => {
+        const invoiceItemsArray = [];
+        listedInvoiceProducts?.map((item) => {
+            invoiceItemsArray.push({
+                productId: item.id,
+                quantity: item.quantity,
+                finalPrice: item.price,
+                originalPrice: item.originalPrice,
+            })
+        });
+        const invoiceObject = {
+            clientId: initialState?.currentUser.clientId,
+            branchId: initialState?.currentUser.branchId,
+            totalAmount: totalPriceVAT,
+            totalVat: getTotalVAT(),
+            paymentMethod: 1,
+            invoiceItems: [...invoiceItemsArray]
+        }
+        setInvoiceFinalObject(invoiceObject);
+    }
+
+    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject }
 
     return (
         <InvoiceContext.Provider value={values}>
