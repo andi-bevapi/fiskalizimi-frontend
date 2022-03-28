@@ -93,7 +93,8 @@ const FormRender = ({ formFields }) => {
                   error={meta.touched && meta.error}
                   helperText={meta.error}
                   style={{
-                    width: '100%'
+                    width: '100%',
+                    ...formField.style
                   }}
                   InputProps={{
                     style: {

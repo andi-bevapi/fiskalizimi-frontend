@@ -1,7 +1,9 @@
 import request from '../../utils/request';
+import { buildUrl } from '../../helpers/buildUrl';
 
-const getProducts = async (branchId) => {
-    return request(`/product/${branchId}`, {
+const getProducts = async (branchId, query) => {
+    const url = buildUrl(query);
+    return request(`/product/${branchId}${url}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" }
     })

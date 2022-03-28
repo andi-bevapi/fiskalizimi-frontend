@@ -9,6 +9,7 @@ import { makeStyles } from '@mui/styles';
 import PuffLoader from "react-spinners/PuffLoader";
 import { useContextProduct } from '../../Context/ProductContext';
 import { useInvoiceContext } from '../../Context/InvoiceContext';
+import Filters from './components/Filters';
 
 const useStyles = makeStyles(() => ({
     container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
@@ -35,23 +36,13 @@ const DashboardHeader = () => {
     const { productList } = useContextProduct();
     const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
     const classes = useStyles();
-    const [filteredData, setFilteredData] = useState([...productList]);
     const [display, setDisplay] = useState('cards');
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        //setFilteredData(productList);
-    }, []);
-
-    //Search Product
-    const filterProducts = () => {
-
-    };
 
     return (
         <div className={classes.container}>
             <div className={classes.headContainer}>
-                <SearchFilter onFilter={filterProducts} placeholder="Kerko Produkt" />
+                <Filters />
                 <div className={classes.iconsContainer}>
                     <IconButton onClick={() => setDisplay('cards')}>
                         <AppsIcon />
@@ -66,7 +57,7 @@ const DashboardHeader = () => {
                     <PuffLoader />
                 </div>
             ) : (
-                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} invoiceList={listedInvoiceProducts}/>
+                <BodyDashboard data={productList} display={display} addToInvoiceFunc={addToInvoiceList} invoiceList={listedInvoiceProducts} />
             )
             }
         </div>
