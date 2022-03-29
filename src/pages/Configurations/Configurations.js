@@ -8,7 +8,7 @@ import { MenuItem } from "@mui/material";
 import { Button } from "bootstrap";
 import SaveIcon from '@mui/icons-material/Save';
 import ButtonComponent from "../../components/Button/InvoiceButton";
-import PanToolIcon from '@mui/icons-material/PanTool';
+
 
 
 const handleChange = (event) => {
@@ -143,11 +143,20 @@ const Configurations = () => {
                     </Select>
                 </FormControl>
             </Box>
+            <Grid container justifyContent="flex-end" marginTop={8} marginRight={10}>
+            <Grid item xs={12} sm={12} md={3} style={{display:'block'}}>
+            <ButtonComponent
+            title="RUAJ"
+            lightColor="#FF7A00"
+            //addIcon={false}
+            //onClick={}
+            width={120}
+            height={40}
+          />
+          </Grid>
+          </Grid>
           
         </span>
-
-
-
     );
 };
 
