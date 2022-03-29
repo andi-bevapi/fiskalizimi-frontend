@@ -1,0 +1,25 @@
+.payTitle{
+    padding: 5px 1px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    color: #000 !important;
+    font-family: "Poppins",sans-serif !important;
+  }
+
+  .couponDiv{
+    padding: 15px 120px;
+  }
+
+  .buttonStyle {
+    background-color: #17625D !important;
+    font-family: 'Poppins'!important;
+  }  
+
+  .headerInvoice{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .couponImage{
+      border: 1px solid #cbcbcb;
+  }

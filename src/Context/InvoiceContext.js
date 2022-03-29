@@ -169,7 +169,7 @@ const InvoiceProvider = (props) => {
         setInvoiceFinalObject(invoiceObject);
     }
 
-    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject }
+    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>
