@@ -155,21 +155,18 @@ tbody > tr > td {
 .payTitle{
   padding: 5px 1px;
   font-weight: bold !important;
-  font-size: 22px !important;
+  font-size: 25px !important;
   color: #000 !important;
   font-family: "Poppins",sans-serif !important;
 }
 
 .subMainHolder {
-  text-align: center;
-  padding: 10px 20px;
+  /* text-align: center; */
+  padding: 22px 20px;
 }
 
 .inputHolder {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .buttonStyle {
@@ -177,10 +174,22 @@ tbody > tr > td {
   font-family: 'Poppins'!important;
 }  
 
+.buttonStyle:disabled {
+  background-color: #c9c9c9 !important;
+  color:white !important;
+}  
+
+
 .totalPrice{
   padding: 5px 1px;
   font-weight: bold !important;
-  font-size: 18px !important;
-  color: #062623 !important;
+  font-size: 22px !important;
+  color: #db6a00 !important;
   font-family: "Poppins",sans-serif !important;
+}
+
+.describeInvoice{
+  font-family: 'Poppins';
+  font-size: 20px;
+  margin-right: 40px;
 }
