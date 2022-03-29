@@ -26,28 +26,49 @@ const SidebarAction = (props) => {
 
   useEffect(() => {
     fillSelectOptions();
+    if (props.user) {
+      fillPermissions();
+    }
   }, [props.formFields, props.open]);
+
+  const fillPermissions = () => {
+    if (props.editItem) {
+      props.editItem.permissions.map((permission) => {
+        props.setPermissions((prev) => {
+          let index = prev.findIndex((item) => item.id === permission.id);
+          prev[index].checked = true;
+          return [...prev];
+        });
+      });
+    } else {
+      Object.keys(props.permissions).map((key, idx) => {
+        props.permissions[key].permissions.map((el) => {
+          el.checked = false;
+        });
+      });
+    }
+  };
 
   const fillSelectOptions = () => {
     if (!props.contexts) return;
 
-    Object.keys(props.contexts).map(context => {
-      const options = props.contexts[context].map(el => {
+    Object.keys(props.contexts).map((context) => {
+      const options = props.contexts[context].map((el) => {
         return {
           value: el.id,
-          label: el.name
-        }
-      })
+          label: el.name,
+        };
+      });
 
       let formattedFields = [...fields];
 
-      formattedFields = formattedFields.map(field => {
+      formattedFields = formattedFields.map((field) => {
         if (field?.options?.length === 0 && field.identifier === context) field.options = options;
         return field;
       });
 
       setFields(formattedFields);
-    })
+    });
   };
 
   const toggleDrawer = (open) => (event) => {
@@ -66,7 +87,7 @@ const SidebarAction = (props) => {
     let initialValues = {};
 
     if (props.editItem) {
-      fields.forEach(field => {
+      fields.forEach((field) => {
         initialValues[field.name] = props.editItem[field.name];
       });
       initialValues['id'] = props.editItem.id;
@@ -74,8 +95,8 @@ const SidebarAction = (props) => {
         initialValues['password'] = '';
       }
     } else {
-      fields.forEach(field => {
-        initialValues[field.name] = "";
+      fields.forEach((field) => {
+        initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
       });
     }
@@ -87,14 +108,15 @@ const SidebarAction = (props) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 
   const handleSubmit = (values) => {
-    let file, fileKeyName = null;
+    let file,
+      fileKeyName = null;
 
-    Object.entries(values).map(item => {
+    Object.entries(values).map((item) => {
       if (isFile(item[1])) {
         file = item[1];
         fileKeyName = item[0];
@@ -102,7 +124,7 @@ const SidebarAction = (props) => {
     });
 
     if (file) {
-      getBase64(file).then(result => {
+      getBase64(file).then((result) => {
         values[fileKeyName] = result;
         postData(values);
       });
@@ -115,8 +137,10 @@ const SidebarAction = (props) => {
   const postData = async (values) => {
     const permissions = [];
     if (props.user) {
-      const tmp = props.permissions.filter((el) => el.checked == true);
-      tmp.map((el) => permissions.push(el.id));
+      Object.keys(props.permissions).map((key, idx) => {
+        const tmp = props.permissions[key].permissions.filter((el) => el.checked == true);
+        tmp.map((el) => permissions.push(el.id));
+      });
     }
 
     const action = props.editItem ? props.update : props.create;
@@ -145,12 +169,12 @@ const SidebarAction = (props) => {
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
-      if(props.user) {
-        props.setPermissions(
-          props.permissions.map((el) => {
-            return { ...el, checked: false };
-          }),
-        );
+      if (props.user) {
+        Object.keys(props.permissions).map((key, idx) => {
+          props.permissions[key].permissions.map((el) => {
+            el.checked = false;
+          });
+        });
       }
       return;
     }
@@ -166,7 +190,6 @@ const SidebarAction = (props) => {
       return [...prev];
     });
   };
-
 
   return (
     <>
@@ -189,14 +212,21 @@ const SidebarAction = (props) => {
             <FormRender formFields={fields} />
             {props.user && (
               <>
-                {props.permissions.map((permission) => {
+                {Object.keys(props.permissions).map((key, idx) => {
                   return (
-                    <BootstrapCheckbox
-                      key={permission.id}
-                      label={permission.name}
-                      checked={permission.checked}
-                      handleCheck={() => handleCheck(permission.id)}
-                    />
+                    <>
+                      <p>{key.toUpperCase()}</p>
+                      {props.permissions[key].permissions.map((permission) => {
+                        return (
+                          <BootstrapCheckbox
+                            key={permission.id}
+                            label={permission.label}
+                            checked={permission.checked}
+                            handleCheck={() => handleCheck(permission.id)}
+                          />
+                        );
+                      })}
+                    </>
                   );
                 })}
               </>
