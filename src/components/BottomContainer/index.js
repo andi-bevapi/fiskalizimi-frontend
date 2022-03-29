@@ -11,12 +11,13 @@ const BottomContainer = (props) => {
 
   const handleProductClick = (product) => {
     const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
+    const arrayProduct = (props.invoiceList?.filter(item => item.id === product.id));
     if (isExisting) {
-      if (quantity > Number(product.stock) && product.stockCheck) {
+      if (arrayProduct[0].quantity > Number(product.stock).toFixed(0).to && product.stockCheck) {
         setStopAdding(true);
       } else {
-        setProductQuantity(quantity + 1);
-        props.addToList(product, quantity);
+        setProductQuantity(arrayProduct[0].quantity + 1);
+        props.addToList(product, arrayProduct[0].quantity + 1);
       }
     } else {
       setProductQuantity(1);
