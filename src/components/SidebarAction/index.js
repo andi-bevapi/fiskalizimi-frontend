@@ -26,7 +26,28 @@ const SidebarAction = (props) => {
 
   useEffect(() => {
     fillSelectOptions();
+    if (props.user) {
+      fillPermissions();
+    }
   }, [props.formFields, props.open]);
+
+  const fillPermissions = () => {
+    if (props.editItem) {
+      props.editItem.permissions.map((permission) => {
+        props.setPermissions((prev) => {
+          let index = prev.findIndex((item) => item.id === permission.id);
+          prev[index].checked = true;
+          return [...prev];
+        });
+      });
+    } else {
+      Object.keys(props.permissions).map((key, idx) => {
+        props.permissions[key].permissions.map((el) => {
+          el.checked = false;
+        });
+      });
+    }
+  };
 
   const fillSelectOptions = () => {
     if (!props.contexts) return;
@@ -116,49 +137,50 @@ const SidebarAction = (props) => {
   const postData = async (values) => {
     const permissions = [];
     if (props.user) {
-      const tmp = props.permissions.filter((el) => el.permissions.checked == true);
-      tmp.map((el) => permissions.push(el.id));
-      console.log(permissions);
+      Object.keys(props.permissions).map((key, idx) => {
+        const tmp = props.permissions[key].permissions.filter((el) => el.checked == true);
+        tmp.map((el) => permissions.push(el.id));
+      });
     }
 
     const action = props.editItem ? props.update : props.create;
 
-    // let response = {};
-    // if (props.user) {
-    //   if (props.editItem) {
-    //     let id = values.id;
-    //     delete values.id;
-    //     response = await action(id, {
-    //       user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
-    //       permissions: permissions,
-    //     });
-    //   } else {
-    //     response = await action({
-    //       user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
-    //       permissions: permissions,
-    //     });
-    //   }
-    // } else {
-    //   response = await action({
-    //     ...values,
-    //   });
-    // }
+    let response = {};
+    if (props.user) {
+      if (props.editItem) {
+        let id = values.id;
+        delete values.id;
+        response = await action(id, {
+          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          permissions: permissions,
+        });
+      } else {
+        response = await action({
+          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          permissions: permissions,
+        });
+      }
+    } else {
+      response = await action({
+        ...values,
+      });
+    }
 
-    // if (response?.statusCode === 200) {
-    //   setOpenSnackBar({ status: true, message: response.message, success: true });
-    //   props.setOpenSideBar(false);
-    //   if (props.user) {
-    //     props.setPermissions(
-    //       props.permissions.map((el) => {
-    //         return { ...el, checked: false };
-    //       }),
-    //     );
-    //   }
-    //   return;
-    // }
+    if (response?.statusCode === 200) {
+      setOpenSnackBar({ status: true, message: response.message, success: true });
+      props.setOpenSideBar(false);
+      if (props.user) {
+        Object.keys(props.permissions).map((key, idx) => {
+          props.permissions[key].permissions.map((el) => {
+            el.checked = false;
+          });
+        });
+      }
+      return;
+    }
 
-    // const resJson = await response.json();
-    // setOpenSnackBar({ status: true, message: resJson.message, success: false });
+    const resJson = await response.json();
+    setOpenSnackBar({ status: true, message: resJson.message, success: false });
   };
 
   const handleCheck = (id) => {
@@ -169,7 +191,6 @@ const SidebarAction = (props) => {
     });
   };
 
-  console.log(props.permissions);
   return (
     <>
       <SnackbarComponent
@@ -208,16 +229,6 @@ const SidebarAction = (props) => {
                     </>
                   );
                 })}
-                {/* {props.permissions.map((permission) => {
-                  return (
-                    <BootstrapCheckbox
-                      key={permission.id}
-                      label={permission.name}
-                      checked={permission.checked}
-                      handleCheck={() => handleCheck(permission.id)}
-                    />
-                  );
-                })} */}
               </>
             )}
             <Button variant="contained" type="submit">
