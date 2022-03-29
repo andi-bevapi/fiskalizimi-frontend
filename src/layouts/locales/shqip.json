@@ -14,6 +14,7 @@
   "Lastname": "Mbiemri",
   "Phone": "Numri i Telefonit",
   "Email": "Email",
+  "email":"email",
   "username":"emri",
   "operatorCode":"kodi operatorit",
   "position":"pozicioni",
@@ -22,5 +23,9 @@
   "lastName":"mbiemri",
   "branchId":"id e deges",
   "clientId" : "id e klientit",
+  "password":"fjalekalimi",
+  "insertPass":"ju lutem vendosni fjalekalimin",
+  "save":"Ruaj",
+  "editData":"Perditeso te dhenat",
   "Actions":"Veprimet"
 }

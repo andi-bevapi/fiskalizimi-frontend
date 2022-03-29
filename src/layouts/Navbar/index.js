@@ -25,13 +25,9 @@ const Navbar = () => {
     history.replace('/');
   };
 
-
   const handleEditUser = () =>{
     history.replace('/edit-profile');
   }
-   
-
-  //console.log("editUser----",editUser);
 
   return (
     <div className={styles.navContainer}>
@@ -39,21 +35,15 @@ const Navbar = () => {
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
-
-      
-      {/* <span className={styles.userName}>{initialState.currentUser.username}</span> */}
-        
-     
-      <FormControl style={{width:"200px"}}>
-      <InputLabel id="demo-simple-select-label">{initialState.currentUser.username}</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-        >
-          <MenuItem value={30} onClick={() => handleEditUser()}>Edito {initialState.currentUser.username}</MenuItem>
-        </Select>
+        <FormControl style={{width:"200px"}}>
+        <InputLabel id="demo-simple-select-label">{initialState.currentUser.username}</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+          >
+            <MenuItem value={30} onClick={() => handleEditUser()}>Edito {initialState.currentUser.username}</MenuItem>
+          </Select>
         </FormControl>
-      
         <IconButtonComponent
           style={{ backgroundColor: '#FF7A00', width: '50px', height: '50px', boxShadow: 'none' }}
           icon={<Logout />}
