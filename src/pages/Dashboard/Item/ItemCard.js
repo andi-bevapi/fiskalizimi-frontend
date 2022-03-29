@@ -49,28 +49,28 @@ const useStyles = makeStyles((theme) => ({
 const ItemCard = (props) => {
   const classes = useStyles();
   const [product, setProduct] = useState(props.item);
-  const [quantity, setProductQuantity] = useState(1);
+  const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
     (arrayProduct[0]?.stockCheck ? (
-      (arrayProduct[0].quantity >= Number(product.stock) ? (setStopAdding(true)) : (setStopAdding(false)))
+      (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
     ) : (setStopAdding(false)));
     ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
-    //setProductQuantity(arrayProduct[0]?.quantity);
   }, [props.invoiceList]);
 
 
   const handleCardClick = () => {
-    const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
+    const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
+    const isExisting = (productFromArray.length >= 1 ? true : false);
     if (product.stockCheck) {
       if (isExisting) {
-        if (quantity > Number(product.stock)) {
+        if (productFromArray[0].quantity >= Number(product.stock).toFixed(0)) {
           setStopAdding(true);
         } else {
-          setProductQuantity(quantity + 1);
-          props.addToInvoiceList(product, quantity);
+          setProductQuantity(productFromArray[0].quantity + 1);
+          props.addToInvoiceList(product, productFromArray[0].quantity + 1);
         }
       } else {
         setProductQuantity(1);
@@ -78,18 +78,18 @@ const ItemCard = (props) => {
       }
     } else {
       if (isExisting) {
-        setProductQuantity(quantity + 1);
-        props.addToInvoiceList(product, quantity);
+        setProductQuantity(productFromArray[0].quantity + 1);
+        props.addToInvoiceList(product, productFromArray[0].quantity + 1);
       } else {
+        
         setProductQuantity(1);
         (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
       }
     }
   }
-
   return (
     <Card className={stopAdding ? classes.cardDisabled : classes.card}
-      onClick={() => { handleCardClick() }}
+      onClick={() =>  handleCardClick()}
     >
       <CardMedia
         component="img"
