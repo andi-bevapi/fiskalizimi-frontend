@@ -25,7 +25,7 @@ export default [
       { exact: true, path: '/pikat-shitjes', component: './Branch' },
       { exact: true, path: '/njesite-shitjes', component: './SellingUnits' },
       { exact: true, path: '/perdoruesit', component: './Users' },
-      { exact: true, path: '/konfigurime', component: './Categories' },
+      { exact: true, path: '/konfigurime', component: './Configurations' },
       { exact: true, path: '/furnizuesit', component: './Suppliers' },
     ],
   },
