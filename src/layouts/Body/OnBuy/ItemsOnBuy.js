@@ -18,9 +18,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList, isLoading, getProductBarcode, filteredBarcodeProduct } = useInvoiceContext();
-  const [activeInvoice, setActiveInvoice] = useState(true);
-  const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
+  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList, isLoading, getProductBarcode, filteredBarcodeProduct, activeInvoice, setActiveInvoice } = useInvoiceContext();
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
@@ -33,8 +31,11 @@ const ItemsOnBuy = () => {
   }, [listedInvoiceProducts, filteredBarcodeProduct]);
 
   const handleTabChanges = () => {
-    setActiveSavedInvoices(!activeSavedInvoices);
-    setActiveInvoice(!activeInvoice)
+    setActiveInvoice("active")
+  }
+
+  const handleTabChangesToPending = () => {
+    setActiveInvoice("pending")
   }
   const incrementCount = (item) => {
     setStopDecrement(false);
@@ -63,20 +64,20 @@ const ItemsOnBuy = () => {
   return (
     <div className={styles.mainHolder}>
       <Grid container columns={12} marginBottom={3}>
-        <Grid item={true} xs={6} md={6} className={activeInvoice ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
+        <Grid item={true} xs={6} md={6} className={activeInvoice == "active" ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
           <button onClick={handleTabChanges} className={styles.tabButton}>
-            <span className={activeInvoice ? (styles.tabTitleActive) : (styles.tabTitleDeactive)}>Fatura Aktive</span>
+            <span className={activeInvoice == "active" ? (styles.tabTitleActive) : (styles.tabTitleDeactive)}>Fatura Aktive</span>
           </button>
         </Grid>
-        <Grid item={true} xs={6} md={6} className={activeSavedInvoices ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
-          <button onClick={handleTabChanges} className={styles.tabButton}>
-            <span className={activeSavedInvoices ? (styles.tabTitleActive) : (styles.tabTitleDeactive)}>Fatura te ruajtura</span>
+        <Grid item={true} xs={6} md={6} className={activeInvoice == "pending" ? (styles.tabLabelActive) : (styles.tabLabelDeactive)}>
+          <button onClick={handleTabChangesToPending} className={styles.tabButton}>
+            <span className={activeInvoice == "pending" ? (styles.tabTitleActive) : (styles.tabTitleDeactive)}>Fatura te ruajtura</span>
           </button>
 
         </Grid>
       </Grid>
 
-      {activeInvoice ? (
+      {activeInvoice == "active" ? (
         <>
           <SearchByBarcode searchFunction={getProductBarcode} product={filteredBarcodeProduct}/>
           {loadingInvoice ? (
@@ -143,7 +144,7 @@ const ItemsOnBuy = () => {
         </>
       ) : (
         <>
-
+        pending invoices
         </>
       )}
     </div>

@@ -12,7 +12,7 @@ import { Form, Formik, Field } from "formik";
 import TextField from "@mui/material/TextField";
 
 const ActionButtons = (props) => {
-  const { deleteInvoice, invoiceFinalObject, listedInvoiceProducts, returnInvoiceObject } = useInvoiceContext();
+  const { deleteInvoice, invoiceFinalObject, listedInvoiceProducts, returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice } = useInvoiceContext();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -29,6 +29,13 @@ const ActionButtons = (props) => {
   }
 
   const goToGeneratedInvoice = () => {
+
+  }
+
+  const freezeInvoice = () => {
+    returnInvoiceObject();
+    setActiveInvoice("pending");
+    createPendingInvoice();
 
   }
 
@@ -67,7 +74,7 @@ const ActionButtons = (props) => {
               title="RUAJ"
               lightColor="#74a19e"
               addIcon={false}
-              onClick={props.freeze}
+              onClick={freezeInvoice}
               icon={<PanToolIcon />}
             />
           </Grid>

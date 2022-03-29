@@ -21,11 +21,6 @@ const PriceDescription = (props) => {
     setOpen("bill");
   };
 
-  const handleFreezeOrder = (e) => {
-    e.preventDefault();
-    setOpen("freeze");
-  };
-
   const handleClose = () => {
     setOpen("");
   };
@@ -33,7 +28,7 @@ const PriceDescription = (props) => {
   return (
     <div>
       <PriceInformations invoiceList={props.invoiceList}/>
-      <ActionButtons handlePay={handlePay} freeze={handleFreezeOrder}/>
+      <ActionButtons handlePay={handlePay} />
       <ModalManager
         modal={open}
         handleClose={handleClose}
