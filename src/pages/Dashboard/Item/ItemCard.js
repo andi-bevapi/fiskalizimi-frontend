@@ -4,13 +4,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
-// import { useTranslation } from "react-i18next";
 import cardBackground from './../../../assets/images/cardBackground.png';
 import styles from './ItemLine.module.css';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: "200px",
+    height: "220px",
     padding: "10px 5px 0 3px",
     width: "80%",
     boxShadow: "none",
@@ -24,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
       transform: "scale(1.05)",
       cursor: "pointer",
     },
+    marginBottom: "5px",
   },
 
   cardDisabled: {
-    height: "200px",
+    height: "220px",
     padding: "10px 5px 0 3px",
     width: "80%",
     boxShadow: "none",
@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
       transform: "scale(1.05)",
       cursor: "not-allowed",
     },
-    opacity: 0.5
+    opacity: 0.5,
+    marginBottom: "5px",
   }
 }));
 
@@ -89,7 +90,7 @@ const ItemCard = (props) => {
   }
   return (
     <Card className={stopAdding ? classes.cardDisabled : classes.card}
-      onClick={() =>  handleCardClick()}
+      onClick={() => handleCardClick()}
     >
       <CardMedia
         component="img"
@@ -118,6 +119,13 @@ const ItemCard = (props) => {
           </Typography>
         </div>
         <Divider className={styles.divider} />
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          className={styles.stockText}
+        >
+          Barcode: {Number(props.item.barcode)}
+        </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
