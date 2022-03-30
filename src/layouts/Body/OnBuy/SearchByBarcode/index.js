@@ -68,7 +68,7 @@ const SearchByBarcode = (props) => {
           isVisible={isVisible}
           className={styles.drawerStyle}
         >
-          <BottomContainer searchedItem = {searchedProduct} barcode={barcode} addToList={addToInvoiceList} invoiceList={listedInvoiceProducts}/>
+          <BottomContainer searchedItem={searchedProduct} barcode={barcode} addToList={addToInvoiceList} invoiceList={listedInvoiceProducts} />
         </Drawer>
       </>
     </div>
