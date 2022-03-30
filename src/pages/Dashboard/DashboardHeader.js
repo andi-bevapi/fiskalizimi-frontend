@@ -1,49 +1,32 @@
-import { Divider, Grid, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import SearchFilter from '../../components/SearchFilter';
+import { useState, useEffect } from 'react';;
 import AppsIcon from '@mui/icons-material/Apps';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import BodyDashboard from './Body';
-import { makeStyles } from '@mui/styles';
 import PuffLoader from "react-spinners/PuffLoader";
 import { useContextProduct } from '../../Context/ProductContext';
 import { useInvoiceContext } from '../../Context/InvoiceContext';
 import Filters from './components/Filters';
-
-const useStyles = makeStyles(() => ({
-    container: { display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
-    headContainer: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    iconsContainer: {
-        display: 'flex',
-        height: '40px',
-    },
-    loadingDiv: {
-        height: '90%',
-        marginTop: '30%',
-        marginLeft: '-5%',
-        opacity: 0.5
-    }
-}));
+import styles from './index.css';
 
 
 const DashboardHeader = () => {
     const { productList } = useContextProduct();
     const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
-    const classes = useStyles();
     const [display, setDisplay] = useState('cards');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (productList.length > 0 ? (setLoading(false)) : (setLoading(true)))
+      }, [productList]);
+    
 
     return (
-        <div className={classes.container}>
-            <div className={classes.headContainer}>
+        <div className={styles.container}>
+            <div className={styles.headContainer}>
                 <Filters />
-                <div className={classes.iconsContainer}>
+                <div className={styles.iconsContainer}>
                     <IconButton onClick={() => setDisplay('cards')}>
                         <AppsIcon />
                     </IconButton>
@@ -53,7 +36,7 @@ const DashboardHeader = () => {
                 </div>
             </div>
             {loading ? (
-                <div className={classes.loadingDiv}>
+                <div className={styles.loadingDiv}>
                     <PuffLoader />
                 </div>
             ) : (
