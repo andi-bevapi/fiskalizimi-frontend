@@ -52,9 +52,9 @@ const BodyDashboard = (props) => {
           ) : (
             props.data?.map((item, index) => {
               if (props.data.length === index + 1) {
-                return <div key={index}><ItemLine item={item} /></div>;
+                return <div key={index}><ItemLine item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} /></div>;
               } else {
-                return <div key={index}><ItemLine item={item} /></div>;
+                return <div key={index}><ItemLine item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/></div>;
               }
             })
           )}

@@ -162,6 +162,7 @@ const InvoiceProvider = (props) => {
             console.log(error);
         }
         setActiveInvoice("pending");
+        deleteInvoice();
     }
 
     const updateInvoiceToActive = async (invoice) => {
@@ -213,7 +214,7 @@ const InvoiceProvider = (props) => {
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive, deleteInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>

@@ -10,6 +10,7 @@ import { useInvoiceContext } from '../../../../../Context/InvoiceContext';
 import ModalComponent from '../../../../../components/Modal/Modal';
 import { Form, Formik, Field } from 'formik';
 import TextField from '@mui/material/TextField';
+import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
 
 const ActionButtons = (props) => {
   const {
@@ -21,6 +22,10 @@ const ActionButtons = (props) => {
   } = useInvoiceContext();
   const [isOpen, setIsOpen] = useState(false);
   const [freeze, setFreeze] = useState(false);
+  const [isOpenStep2, setIsOpenStep2] = useState(false);
+  const [returnChange, setReturnChange] = useState();
+  const [disabledSubmit, setDisabledSubmit] = useState(true);
+
 
   useEffect(() => {
     if (freeze) createPendingInvoice();
@@ -28,15 +33,33 @@ const ActionButtons = (props) => {
   }, [invoiceFinalObject]);
 
   const goToPaymentMethod = () => {
-    listedInvoiceProducts.length == 0 ? null : setIsOpen(true);
+    (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)))
     returnInvoiceObject();
   };
 
   const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+    setisOpen(!isOpen);
+  }
 
-  const goToGeneratedInvoice = () => {};
+  const toggleModalStep2 = () => {
+    setIsOpenStep2(!isOpenStep2);
+    deleteInvoice();
+  }
+
+  const goToGeneratedInvoice = async (values) => {
+    setisOpen(false);
+    setIsOpenStep2(true);
+  }
+
+  const calculateMoney = (field) => {
+    if (Number(field.value) >= Number(invoiceFinalObject?.totalAmount).toFixed(2)) {
+      setDisabledSubmit(false)
+    } else {
+      setDisabledSubmit(true)
+    }
+    const returnMoney = (Number(field.value) - Number(invoiceFinalObject?.totalAmount)).toFixed(2);
+    (isNaN(returnMoney) ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : (setReturnChange(returnMoney)));
+  }
 
   const freezeInvoice = () => {
     setFreeze(true);
@@ -87,19 +110,20 @@ const ActionButtons = (props) => {
             />
           </Grid>
           <ModalComponent open={isOpen} handleClose={toggleModal} title="">
-            <span className={styles.payTitle}>Paguaj Faturën</span>
-            <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-            <Grid container marginBottom={1} spacing={1} direction="row">
-              <Grid item xs={12} sm={12} md={12} style={{ display: 'block' }}>
-                <Formik
-                  initialValues={{ description: '' }}
-                  onSubmit={(values) => {
-                    goToGeneratedInvoice(values);
-                  }}
-                >
-                  <Form>
+            <Formik
+              initialValues={{ description: "" }}
+              onSubmit={(values) => {
+                goToGeneratedInvoice(values);
+              }}
+            >
+              <Form>
+                <span className={styles.payTitle}>Paguaj Faturën</span>
+                <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+                <Grid container marginBottom={1} spacing={1} direction="row">
+                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
                     <div className={styles.subMainHolder}>
                       <div className={styles.inputHolder}>
+                        <span className={styles.describeInvoice}>Përshkrimi:</span>
                         <Field name="description">
                           {({ field, meta }) => (
                             <TextField
@@ -109,15 +133,17 @@ const ActionButtons = (props) => {
                               helperText={meta.error}
                               InputProps={{
                                 style: {
-                                  fontFamily: 'Poppins',
-                                  resize: 'both',
+                                  fontFamily: "Poppins",
+                                  resize: "both",
                                   width: 500,
-                                },
+                                  marginTop: -15
+                                }
                               }}
                               InputLabelProps={{
                                 style: {
-                                  fontFamily: 'Poppins',
-                                },
+                                  fontFamily: "Poppins",
+                                  marginTop: -15
+                                }
                               }}
                               {...field}
                             />
@@ -125,63 +151,62 @@ const ActionButtons = (props) => {
                         </Field>
                       </div>
                     </div>
-                  </Form>
-                </Formik>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', textAlign: 'center' }}>
-                <Grid item xs={12} sm={6} md={6} style={{ display: 'block' }}>
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'block' }}>
-                    <Formik
-                      initialValues={{ sum: '' }}
-                      onSubmit={(values) => {
-                        goToGeneratedInvoice(values);
-                      }}
-                    >
-                      <Form>
-                        <div className={styles.subMainHolder}>
-                          <div className={styles.inputHolder}>
-                            <Field name="sum">
-                              {({ field, meta }) => (
-                                <TextField
-                                  label="Vendosni Shumën"
-                                  error={meta.touched && meta.error}
-                                  helperText={meta.error}
-                                  InputProps={{
-                                    style: {
-                                      fontFamily: 'Poppins',
-                                      resize: 'both',
-                                      width: 500,
-                                    },
-                                  }}
-                                  InputLabelProps={{
-                                    style: {
-                                      fontFamily: 'Poppins',
-                                    },
-                                  }}
-                                  {...field}
-                                />
-                              )}
-                            </Field>
-                          </div>
-                        </div>
-                      </Form>
-                    </Formik>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'block' }}>
-                    <span className={styles.totalPrice}>Kusuri: </span>
+                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div className={styles.subMainHolder}>
+                      <div className={styles.inputHolder}>
+                        <span className={styles.describeInvoice}>Shuma:  &nbsp; &nbsp; &nbsp;</span>
+                        <Field name="sum">
+                          {({
+                            field,
+                            meta
+                          }) => (
+                            <TextField
+                              onChange={calculateMoney(field)}
+                              type="number"
+                              label="Vendosni Shumën"
+                              error={meta.touched && meta.error}
+                              helperText={meta.error}
+                              InputProps={{
+                                style: {
+                                  fontFamily: "Poppins",
+                                  resize: "both",
+                                  width: 500,
+                                  marginTop: -15
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: "Poppins",
+                                  marginTop: -15
+                                }
+                              }}
+                              {...field}
+                            />
+                          )}
+                        </Field>
+                      </div>
+                    </div>
+                    <div className={styles.subMainHolder}>
+                      <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} ALL</span>
+                    </div>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} style={{ display: 'block', alignSelf: 'center' }}>
                   <Grid item xs={12} style={{ display: 'block' }}>
-                    <span className={styles.totalPrice}>
-                      Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} ALL
-                    </span>
+                    <div className={styles.subMainHolder}>
+                      <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)}  ALL</span>
+                    </div>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
+                <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={disabledSubmit}>
+                  Vazhdo
+                </Button>
+              </Form>
+            </Formik>
           </ModalComponent>
         </Grid>
+        <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
+              <InvoiceCoupon />
+        </ModalComponent>
       </div>
     </div>
   );

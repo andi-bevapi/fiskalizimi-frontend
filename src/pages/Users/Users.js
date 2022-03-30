@@ -1,16 +1,27 @@
 import TableComponent from '../../components/Table';
-import { listFormat } from '../../helpers/listFormater';
+import { listFormat, permissionFormat } from '../../helpers/listFormater';
 import { useContextUser } from '../../context/UserContext';
-import { useBranchListContext } from "../../Context/BranchListContext";
+import { useBranchListContext } from '../../Context/BranchListContext';
 import { formFields, validationSchema } from './formFields';
+import { useEffect } from 'react';
 
 const tableHeaders = ['Id', 'Username', 'Firstname', 'Lastname', 'Phone', 'Email', 'Actions'];
 
 const Users = () => {
-  const { users, setUsers, userToCreate, userToUpdate, userToDelete, isLoading, permissions, setPermissions } = useContextUser();
+  const {
+    users,
+    setUsers,
+    userToCreate,
+    userToUpdate,
+    userToDelete,
+    isLoading,
+    permissions,
+    setPermissions,
+  } = useContextUser();
   const { branchList } = useBranchListContext();
 
   const formatedUsers = listFormat(users, tableHeaders);
+  const formatedPermissions = permissionFormat(permissions);
 
   return (
     <TableComponent
@@ -26,10 +37,10 @@ const Users = () => {
       validationSchema={validationSchema}
       isLoading={isLoading}
       user={true}
-      permissions={permissions}
+      permissions={formatedPermissions}
       setPermissions={setPermissions}
       contexts={{
-        branchList
+        branchList,
       }}
     />
   );

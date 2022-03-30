@@ -1,28 +1,12 @@
 import {useEffect, useState} from 'react';
 import styles from '../BottomContainer/bottomStyles.css'
+import ProductItem from './productItem';
 
 const BottomContainer = (props) => {
 
   useEffect(() => {
+
   }, [props.invoiceList]);
-
-  const [quantity, setProductQuantity] = useState(1);
-  const [stopAdding, setStopAdding] = useState(false);
-
-  const handleProductClick = (product) => {
-    const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
-    if (isExisting) {
-      if (quantity > Number(product.stock) && product.stockCheck) {
-        setStopAdding(true);
-      } else {
-        setProductQuantity(quantity + 1);
-        props.addToList(product, quantity);
-      }
-    } else {
-      setProductQuantity(1);
-      (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToList(product, 1)));
-    }
-  }
 
   return (
     <>
@@ -36,16 +20,7 @@ const BottomContainer = (props) => {
             <>
             {props.searchedItem.map((item, index) => {
               return(
-                <>
-              <p className={stopAdding ? (styles.productBlockDisabled) : (styles.productBlock)} onClick={() => {handleProductClick(item)}}>
-                <span className={styles.details}><b>{index+1}) </b></span>
-                <span className={styles.details}><b>{item.name}</b></span>
-                <span className={styles.details}>Përshkrimi: {item.description}</span>
-                <span className={styles.details}>Çmimi: {Number(item.price).toFixed(2)} ALL</span>
-                <span className={styles.details}>Stoku: {item.stock}</span>
-                <span className={styles.details}>Barcode: {item.barcode}</span>
-              </p>
-                </>
+                   <ProductItem key={index} index={index} item={item} addToList={props.addToList} invoiceList={props.invoiceList}/>
               )
             })}
                <span className={styles.results}><b>Rezultate: {props.searchedItem.length}</b></span>

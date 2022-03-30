@@ -9,3 +9,28 @@ export const listFormat = (data, tableHeaders) => {
   });
   return newList;
 };
+
+export const permissionFormat = (permissions) => {
+  let newPermissions = {};
+  permissions.map((permission) => {
+    let entity = permission.name.split('.')[1];
+    if (!newPermissions.hasOwnProperty(entity)) {
+      permission.label = 'Shiko';
+      let entityObj = {
+        label: entity,
+        permissions: [permission],
+      };
+      newPermissions[entity] = entityObj;
+    } else {
+      if (permission.name.includes('create')) {
+        permission.label = 'Krijo';
+      } else if (permission.name.includes('update')) {
+        permission.label = 'Perditeso';
+      } else {
+        permission.label = 'Fshi';
+      }
+      newPermissions[entity].permissions.push(permission);
+    }
+  });
+  return newPermissions;
+};

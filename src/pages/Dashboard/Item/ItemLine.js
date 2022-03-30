@@ -1,48 +1,56 @@
-import { Typography, Divider } from "@mui/material/";
-// import { useBuying } from "../../../../Context/BuyingContext";
+import React, { useState, useEffect } from 'react';
+import { Typography } from "@mui/material/";
 import styles from "./ItemLine.module.css";
-// import { useTranslation } from "react-i18next";
 
 const ItemLine = (props) => {
-  // const { addToBuyingList } = useBuying();
-  // const { t } = useTranslation();
+  const [product, setProduct] = useState(props.item);
+  const [quantity, setProductQuantity] = useState();
+  const [stopAdding, setStopAdding] = useState(false);
+
+  useEffect(() => {
+    const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
+    (arrayProduct[0]?.stockCheck ? (
+      (arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
+    ) : (setStopAdding(false)));
+    ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+  }, [props.invoiceList]);
+
+  const handleCardClick = () => {
+    const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
+    const isExisting = (productFromArray.length >= 1 ? true : false);
+    if (product.stockCheck) {
+      if (isExisting) {
+        if (productFromArray[0]?.quantity >= Number(product.stock).toFixed(0)) {
+          setStopAdding(true);
+        } else {
+          setProductQuantity(productFromArray[0].quantity + 1);
+          props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+        }
+      } else {
+        setProductQuantity(1);
+        (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+      }
+    } else {
+      if (isExisting) {
+        setProductQuantity(productFromArray[0].quantity + 1);
+        props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+      } else {
+
+        setProductQuantity(1);
+        (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+      }
+    }
+  }
 
   return (
-    <div
-      // onClick={() => addToBuyingList(props.item)}
-      className={styles.container}
+    <div className={styles.container}
+      onClick={() => handleCardClick()}
     >
-      <Divider
-        style={{
-          marginBottom: "10px",
-        }}
-      />
-      <div style={{ display: "flex" }}>
-        <Typography variant="body2" color="text.secondary">
-          {props.item.name}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="rgb(129, 200, 104)"
-          style={{
-            fontWeight: "bold!important",
-            marginLeft: "auto",
-            marginRight: "0%",
-          }}
-        >
-          {props.item.price} ALL
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          style={{
-            fontWeight: "bold!important",
-            marginLeft: "15%",
-            marginRight: "1%",
-            width: "120px"
-          }}
-        >
-          "stock": {props.item.stock}
+      <div className={stopAdding ? styles.lineContainerDisabled : styles.lineContainer}>
+        <Typography className={styles.productName}>{props.item.name}</Typography>
+        <Typography className={styles.productBarcode}>Barcode: {props.item.barcode}</Typography>
+        <Typography className={styles.productPrice}> {props.item.price} ALL </Typography>
+        <Typography className={styles.productStock}> Stoku: {props.item.stock}
         </Typography>
       </div>
     </div>
