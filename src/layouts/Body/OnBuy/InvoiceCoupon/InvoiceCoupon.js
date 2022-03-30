@@ -1,8 +1,14 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { Divider, Button } from '@mui/material';
 import styles from './coupon.css';
 import qrcode from '../../../../assets/images/qrcodexample.png'
+
 const InvoiceCoupon = (props) => {
+
+    useEffect(() => {
+
+    }, [props.data.productList]);
+
     const printCoupon = () => {
 
     }
@@ -32,13 +38,26 @@ const InvoiceCoupon = (props) => {
                     <br />
                     <span className={styles.couponTitleCapital}>ARTIKUJT</span> <br />
                     <table>
-                        <tr style={{ borderBottom: "1px solid #000" }}>
+                        <tr>
                             <th className={styles.couponText}>Nr.</th>
                             <th className={styles.couponText}>Artikulli</th>
                             <th className={styles.couponText}>Sasia</th>
                             <th className={styles.couponText}>Çmimi</th>
-                            <th className={styles.couponText}>Totali</th>
+                            <th className={styles.productPriceRow}>Totali</th>
                         </tr>
+                        {props.data.productList?.map((item, index) => {
+                            return (
+                                <>
+                                    <tr style={{textAlign: "left"}}>
+                                        <td className={styles.productDataRow}>{index + 1}</td>
+                                        <td className={styles.productDataRow}>{item.productName}</td>
+                                        <td className={styles.productDataRow}>{item.quantity}</td>
+                                        <td className={styles.productDataRow}>{item.finalPrice.toFixed(2)}</td>
+                                        <td className={styles.productPriceRow}>{Number(item.finalPrice * item.quantity).toFixed(2)}</td>
+                                    </tr>
+                                </>
+                            )
+                        })}
                     </table>
                     <hr /><hr />
                     <div className={styles.couponAmounts}>
@@ -50,14 +69,14 @@ const InvoiceCoupon = (props) => {
                     <br />
                     <img src={qrcode} className={styles.qrCode} />
                     <br />
-                    <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br/>
+                    <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br />
                     <span className={styles.couponText}>NSLF: {props.data.nslf}</span>
-                    <br/><br/><br/>
-                    <span className={styles.couponText}>{props.data.message}</span> <br/><br/>
-                    <span className={styles.couponText}>Ovla Systems</span> <br/>
+                    <br /><br /><br />
+                    <span className={styles.couponText}>{props.data.message}</span> <br /><br />
+                    <span className={styles.couponText}>Ovla Systems</span> <br />
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
-                
+
             </div>
         </>
     );

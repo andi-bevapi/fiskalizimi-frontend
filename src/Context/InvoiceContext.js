@@ -17,6 +17,7 @@ const InvoiceProvider = (props) => {
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
     const [couponObject, setCouponObject] = useState({});
     const [clientData, setClientData] = useState();
+
     useEffect(() => {
         console.log("initialState?.currentUser?", initialState?.currentUser);
     }, [initialState?.currentUser]);
@@ -159,6 +160,7 @@ const InvoiceProvider = (props) => {
         listedInvoiceProducts?.map((item) => {
             invoiceItemsArray.push({
                 productId: item.id,
+                productName: item.name,
                 quantity: item.quantity,
                 finalPrice: item.price,
                 originalPrice: item.originalPrice,
@@ -201,17 +203,16 @@ const InvoiceProvider = (props) => {
                 paymentMethodType = "CASH"
                 break;
         }
-        let allProducts = [];
         let couponGenerateObject = {
             invoiceCode: "20850/2022/hj025df663", //will be returned from post response
-            clientName: clientData?.name,
+            clientName: clientData?.name, //may change
             clientNUIS: "E12050785",  //TODO
-            clientAddress: clientData?.city,
+            clientAddress: clientData?.city, //may change
             dateTime: String(date), //will be returned from post response
             branchCode: "hj025df663", //TODO
             operatorCode: initialState?.currentUser.operatorCode,
             paymentMethod: paymentMethodType,
-            productList: [...allProducts],
+            productList: [...invoiceObject.invoiceItems],
             totalPriceNoVAT: (invoiceObject.totalPriceNoVAT).toFixed(2),
             totalVAT6: (invoiceObject.totalVAT6).toFixed(2),
             totalVAT20: (invoiceObject.totalVAT20).toFixed(2),
