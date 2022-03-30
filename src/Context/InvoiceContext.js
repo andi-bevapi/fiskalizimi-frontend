@@ -1,27 +1,23 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProductByBarcode } from './../services/product';
-import { getAllBranch } from './../services/branchList';
+import { getProductByBarcode } from '../services/product';
+import { getAllBranch } from '../services/branchList';
+import { submitInvoice } from '../services/invoice';
 import { useModel } from 'umi';
+
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
-    const [totalPriceNoVAT, setTotalPriceNoVAT] = useState(0); //The value of total price without VAT
+    const [totalAmountNoVAT, settotalAmountNoVAT] = useState(0); //The value of total price without VAT
     const [totalVAT, setTotalVAT] = useState(0); //The value of total VAT
-    const [totalVAT6, setTotalVAT6] = useState(0); //The value of total 6% VAT
-    const [totalVAT20, setTotalVAT20] = useState(0); //The value of total 20% VAT
+    const [totalVat6, settotalVat6] = useState(0); //The value of total 6% VAT
+    const [totalVat20, settotalVat20] = useState(0); //The value of total 20% VAT
     const { initialState } = useModel('@@initialState');
     const [invoiceFinalObject, setInvoiceFinalObject] = useState({});
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
     const [couponObject, setCouponObject] = useState({});
-    const [clientData, setClientData] = useState();
-
-    useEffect(() => {
-        console.log("initialState?.currentUser?", initialState?.currentUser);
-    }, [initialState?.currentUser]);
-
 
     //Method to products in the invoice list
     const addToInvoiceList = (product, productQuantity) => {
@@ -54,7 +50,6 @@ const InvoiceProvider = (props) => {
             let newProduct = {
                 id: product.id,
                 name: product.name,
-                unitSellingId: product.sellingUnitId,
                 description: product.description,
                 price: product.price,
                 originalPrice: (product.price - vatValueProduct),
@@ -82,7 +77,7 @@ const InvoiceProvider = (props) => {
         setIsLoading(true);
         setListedInvoiceProducts([]);
         setTotalPriceVAT(0);
-        setTotalPriceNoVAT(0);
+        settotalAmountNoVAT(0);
         setIsLoading(false);
     }
 
@@ -98,25 +93,25 @@ const InvoiceProvider = (props) => {
     //Method that calculates price depending on VAT value per product
     const getTotalPriceWithoutVAT = () => {
         let totalNoVAT = 0;
-        let totalVAT6 = 0;
-        let totalVAT20 = 0;
+        let totalVat6 = 0;
+        let totalVat20 = 0;
         listedInvoiceProducts?.map((product) => {
             totalNoVAT += Number(product.originalPrice * product.quantity);
             switch (product.vat) {
                 case 1:
-                    totalVAT6 += Number((product.price - product.originalPrice) * product.quantity)
+                    totalVat6 += Number((product.price - product.originalPrice) * product.quantity)
                     break;
                 case 2:
-                    totalVAT20 += Number((product.price - product.originalPrice) * product.quantity)
+                    totalVat20 += Number((product.price - product.originalPrice) * product.quantity)
                     break;
                 default:
                     break;
             }
         });
 
-        setTotalVAT6(Number(totalVAT6.toFixed(2)));
-        setTotalVAT20(Number(totalVAT20.toFixed(2)));
-        setTotalPriceNoVAT(totalNoVAT);
+        settotalVat6(Number(totalVat6.toFixed(2)));
+        settotalVat20(Number(totalVat20.toFixed(2)));
+        settotalAmountNoVAT(totalNoVAT);
     }
 
     //Method that calculates VAT value per invoice
@@ -142,20 +137,8 @@ const InvoiceProvider = (props) => {
         }
     }
 
-    //Method that gets information about current client
-    const getClientData = async () => {
-        try {
-            const result = await getAllBranch(initialState?.currentUser?.branchId);
-            if (result.statusCode === 200) {
-                setClientData(result.data[0]);
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     //Method that returns the full invoice object
-    const returnInvoiceObject = (invoiceDescription, invoiceMessage) => {
+    const returnInvoiceObject = async (shouldPost = true, invoiceDescription = "", invoiceMessage = "") => {
         const invoiceItemsArray = [];
         listedInvoiceProducts?.map((item) => {
             invoiceItemsArray.push({
@@ -171,23 +154,24 @@ const InvoiceProvider = (props) => {
             branchId: initialState?.currentUser.branchId,
             totalAmount: totalPriceVAT,
             totalVat: Number(getTotalVAT()),
-            totalPriceNoVAT: totalPriceNoVAT,
-            totalVAT6: totalVAT6,
-            totalVAT20: totalVAT20,
+            totalAmountNoVAT: totalAmountNoVAT,
+            totalVat6: totalVat6,
+            totalVat20: totalVat20,
             paymentMethod: 1,
             description: String(invoiceDescription),
             message: invoiceMessage,
             invoiceItems: [...invoiceItemsArray]
         }
         setInvoiceFinalObject(invoiceObject);
-        postInvoice(invoiceObject);
+        if(shouldPost) await postInvoice(invoiceObject);
     }
 
     //POST method to register Invoice DB
-    const postInvoice = (invoiceObject) => {
+    const postInvoice = async (invoiceObject) => {
         //Add post method for invoice
-        //get result and create object to generate coupon
-        getClientData();
+        const response = await submitInvoice(invoiceObject);
+        const invoiceData = response.data;
+
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
         let paymentMethodType = "";
         switch (invoiceObject.paymentMethod) {
@@ -204,18 +188,18 @@ const InvoiceProvider = (props) => {
                 break;
         }
         let couponGenerateObject = {
-            invoiceCode: "20850/2022/hj025df663", //will be returned from post response
-            clientName: clientData?.name, //may change
-            clientNUIS: "E12050785",  //TODO
-            clientAddress: clientData?.city, //may change
+            invoiceCode: invoiceData.invoiceCode,
+            clientName: invoiceData.client.name,
+            clientNUIS: invoiceData.client.NUIS,
+            clientAddress: invoiceData.client.address,
             dateTime: String(date), //will be returned from post response
-            branchCode: "hj025df663", //TODO
+            branchCode: invoiceData.branch.code, //TODO
             operatorCode: initialState?.currentUser.operatorCode,
             paymentMethod: paymentMethodType,
             productList: [...invoiceObject.invoiceItems],
-            totalPriceNoVAT: (invoiceObject.totalPriceNoVAT).toFixed(2),
-            totalVAT6: (invoiceObject.totalVAT6).toFixed(2),
-            totalVAT20: (invoiceObject.totalVAT20).toFixed(2),
+            totalAmountNoVAT: (invoiceObject.totalAmountNoVAT).toFixed(2),
+            totalVat6: (invoiceObject.totalVat6).toFixed(2),
+            totalVat20: (invoiceObject.totalVat20).toFixed(2),
             totalAmount: (invoiceObject.totalAmount).toFixed(2),
             nivf: "59c5cc1a-126e-258j-a789-err78456ls1b", //will be returned from post response
             nslf: "DE0495ASDF562VCS94F36565942S9I456", //will be returned from post response
@@ -224,7 +208,7 @@ const InvoiceProvider = (props) => {
         setCouponObject(couponGenerateObject);
     }
 
-    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice, couponObject }
+    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice, couponObject }
 
     return (
         <InvoiceContext.Provider value={values}>

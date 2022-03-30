@@ -61,9 +61,9 @@ const InvoiceCoupon = (props) => {
                     </table>
                     <hr /><hr />
                     <div className={styles.couponAmounts}>
-                        <span>Vlera</span> <span className={styles.rightText}>{props.data.totalPriceNoVAT}</span><br />
-                        <span>Total TVSH 6%</span> <span className={styles.rightText}>{props.data.totalVAT6}</span><br />
-                        <span>Total TVSH 20%</span> <span className={styles.rightText}>{props.data.totalVAT20}</span><br />
+                        <span>Vlera</span> <span className={styles.rightText}>{props.data.totalAmountNoVAT}</span><br />
+                        <span>Total TVSH 6%</span> <span className={styles.rightText}>{props.data.totalVat6}</span><br />
+                        <span>Total TVSH 20%</span> <span className={styles.rightText}>{props.data.totalVat20}</span><br />
                         <span><b>Total meTVSH</b></span> <span className={styles.rightText}><b>{props.data.totalAmount}</b></span><br />
                     </div>
                     <br />

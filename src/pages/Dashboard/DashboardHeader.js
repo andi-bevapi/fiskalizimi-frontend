@@ -10,7 +10,6 @@ import { useInvoiceContext } from '../../Context/InvoiceContext';
 import Filters from './components/Filters';
 import styles from './index.css';
 
-
 const DashboardHeader = () => {
     const { productList } = useContextProduct();
     const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();

@@ -19,13 +19,9 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState();
   const [disabledSubmit, setDisabledSubmit] = useState(true);
 
-  useEffect(() => {
-     
-  }, [invoiceFinalObject], couponObject);
-
   const goToPaymentMethod = () => {
     (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)));
-    returnInvoiceObject("");
+    returnInvoiceObject(false);
   }
 
   const toggleModal = () => {
@@ -38,7 +34,7 @@ const ActionButtons = (props) => {
   }
 
   const goToGeneratedInvoice = async (values) => {
-    returnInvoiceObject(values.description, values.message);
+    await returnInvoiceObject(true, values.description, values.message);
     setisOpen(false);
     setIsOpenStep2(true);
   }
@@ -94,7 +90,7 @@ const ActionButtons = (props) => {
           </Grid>
           <ModalComponent open={isOpen} handleClose={toggleModal} title="">
             <Formik
-              initialValues={{ description: "" }}
+              initialValues={{ description: "", message: "" }}
               onSubmit={(values) => {
                 goToGeneratedInvoice(values);
               }}
