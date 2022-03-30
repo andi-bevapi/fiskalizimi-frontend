@@ -28,3 +28,12 @@
 .orange{
     color:#FF7A00;
 }
+
+.productMenu{
+    justify-content: space-between;
+}
+
+.downArrow{
+    font-size: 22px;
+    padding-left: 50px;
+}

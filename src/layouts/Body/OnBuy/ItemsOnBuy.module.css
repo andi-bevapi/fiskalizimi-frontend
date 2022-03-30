@@ -16,13 +16,17 @@ table {
   font-family: "Poppins",sans-serif !important;
 }
 
+#number{
+  width: 60px;
+}
+
 #quantity {
-  width: 120px;
+  width: 150px;
   font-family: "Poppins",sans-serif !important;
 }
 
 #name {
-  width: 130px;
+  width: 180px;
   max-width: 260px;
   font-family: "Poppins",sans-serif !important;
 }
@@ -34,7 +38,7 @@ table {
 }
 
 #delete{
-  width: 90px;
+  width: 70px;
 }
 
 table th {

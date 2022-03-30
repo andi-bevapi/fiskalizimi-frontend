@@ -50,7 +50,7 @@
   }
 
   .couponBusinessName{
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 900;
   }
 
@@ -65,4 +65,20 @@
 
   .qrCode{
     width: 60%;
+  }
+
+  .productDataRow{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    padding: 5px 10px;
+  }
+  .productPriceRow{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: end;
+    padding: 5px 10px;
+    padding-right: 15px;
   }

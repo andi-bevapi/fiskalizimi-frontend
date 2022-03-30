@@ -89,7 +89,7 @@ const ItemsOnBuy = () => {
                 <Table stickyHeader className={styles.table}>
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
-                      <TableCell className={styles.tableHead}>Nr.</TableCell>
+                      <TableCell className={styles.tableHead} id={styles["number"]}>Nr.</TableCell>
                       <TableCell className={styles.tableHead} id={styles["name"]}>
                         Produkti
                       </TableCell>
