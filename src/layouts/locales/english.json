@@ -24,6 +24,8 @@
   "branchId":"branch id",
   "clientId" : "client id",
   "password":"password",
+  "passwordNew":"new password",
+  "passwordConfirm":"confirm password",
   "insertPass":"please insert password",
   "save":"Save",
   "editData":"Edit Data",

@@ -24,6 +24,8 @@
   "branchId":"id e deges",
   "clientId" : "id e klientit",
   "password":"fjalekalimi",
+  "passwordNew":"fjalekalimi i ri",
+  "passwordConfirm":"konfirmo fjalekalimin",
   "insertPass":"ju lutem vendosni fjalekalimin",
   "save":"Ruaj",
   "editData":"Perditeso te dhenat",

@@ -35,13 +35,14 @@ const Navbar = () => {
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
-        <FormControl style={{width:"200px"}}>
-        <InputLabel id="demo-simple-select-label">{initialState.currentUser.username}</InputLabel>
+        <FormControl style={{width:"170px"}}>
+        <InputLabel id="demo-simple-select-label" className={styles.usenameStyles}>{initialState.currentUser.username}</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+             className= {styles.customSelect}
+             disableUnderline
+             variant="standard"
           >
-            <MenuItem value={30} onClick={() => handleEditUser()}>Edito {initialState.currentUser.username}</MenuItem>
+            <MenuItem value={30} onClick={() => handleEditUser()}>Edito profilin</MenuItem>
           </Select>
         </FormControl>
         <IconButtonComponent
