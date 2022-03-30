@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode } from './../services/product';
-import { createInvoice } from "../services/invoice";
+import { createInvoice, getInvoices } from "../services/invoice";
 import { useModel } from 'umi';
 const InvoiceContext = createContext({});
 
@@ -10,8 +10,9 @@ const InvoiceProvider = (props) => {
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
     const [totalPriceNoVAT, setTotalPriceNoVAT] = useState(0); //The value of total price without VAT
     const [totalVAT, setTotalVAT] = useState(0); //The value of total VAT
-    const [activeInvoice, setActiveInvoice] = useState("active");  //The value of invoices opened
+    const [activeInvoice, setActiveInvoice] = useState("active");  //The tab of invoices opened, values are active or pending
     const { initialState } = useModel('@@initialState');
+    const [pendingInvoices, setPendingInvoices] = useState([]);
     const vatObject = [
         {
             type: 0,
@@ -39,11 +40,12 @@ const InvoiceProvider = (props) => {
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
 
     useEffect(() => {
-        console.log("initialState?.currentUser?", initialState?.currentUser);
+        // console.log("initialState?.currentUser?", initialState?.currentUser);
+        getListOfInvoices("pending");
     }, [initialState?.currentUser]);
 
 
-    //Method to products in the invoice list
+    //Method to add products in the invoice list
     const addToInvoiceList = (product, productQuantity) => {
         setIsLoading(true);
         let vatValueProduct = 0;
@@ -85,7 +87,7 @@ const InvoiceProvider = (props) => {
                 vat: product.vat,
             }
             getTotalPriceWithoutVAT();
-            setListedInvoiceProducts([...listedInvoiceProducts, newProduct]);
+            setListedInvoiceProducts((prevState) => [...prevState, newProduct]);
         }
         setIsLoading(false);
         //getTotalVAT();
@@ -150,28 +152,46 @@ const InvoiceProvider = (props) => {
     }
 
     const createPendingInvoice = async () => {
-        console.log("invoiceFinalObject--", invoiceFinalObject);
         const data = invoiceFinalObject;
         data.status = "pending";
         data.quantity = listedInvoiceProducts?.length;
-        console.log("data here", data);
-        if (Object.keys(invoiceFinalObject).length !== 0) {
-            console.log("hereeee");
-            try {
-                const response = await createInvoice(data);
-                console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+            const response = await createInvoice(data);
+            getListOfInvoices("pending");
+        } catch (error) {
+            console.log(error);
+        }
+        setActiveInvoice("pending");
     }
 
+    const updateInvoiceToActive = async (invoice) => {
+        setActiveInvoice("active");
+        const items = invoice.items;
+        delete invoice["items"];
+        invoice.invoiceItems = items;
+        invoice.status = "active";
+        try {
+            const response = await createInvoice(invoice);
+            getListOfInvoices("pending");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getListOfInvoices = async (status) => {
+        try {
+            const response = await getInvoices(initialState?.currentUser?.branchId, status);
+            if (response.statusCode == 200) {
+                setPendingInvoices(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     //Method that returns the full invoice object
     const returnInvoiceObject = () => {
         const invoiceItemsArray = [];
-        console.log(listedInvoiceProducts);
-        console.log(initialState.currentUser.clientId);
         listedInvoiceProducts?.map((item) => {
             invoiceItemsArray.push({
                 productId: item.id,
@@ -193,7 +213,7 @@ const InvoiceProvider = (props) => {
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive }
 
     return (
         <InvoiceContext.Provider value={values}>

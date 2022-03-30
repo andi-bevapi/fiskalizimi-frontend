@@ -8,36 +8,40 @@ import styles from '../../../OnBuy/ItemsOnBuy.module.css';
 import { Grid } from '@mui/material';
 import { useInvoiceContext } from '../../../../../Context/InvoiceContext';
 import ModalComponent from '../../../../../components/Modal/Modal';
-import { Form, Formik, Field } from "formik";
-import TextField from "@mui/material/TextField";
+import { Form, Formik, Field } from 'formik';
+import TextField from '@mui/material/TextField';
 
 const ActionButtons = (props) => {
-  const { deleteInvoice, invoiceFinalObject, listedInvoiceProducts, returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice } = useInvoiceContext();
+  const {
+    deleteInvoice,
+    invoiceFinalObject,
+    listedInvoiceProducts,
+    returnInvoiceObject,
+    createPendingInvoice,
+  } = useInvoiceContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [freeze, setFreeze] = useState(false);
 
   useEffect(() => {
-
+    if (freeze) createPendingInvoice();
+    setFreeze(false);
   }, [invoiceFinalObject]);
 
   const goToPaymentMethod = () => {
-    (listedInvoiceProducts.length == 0 ? null : (setIsOpen(true)))
+    listedInvoiceProducts.length == 0 ? null : setIsOpen(true);
     returnInvoiceObject();
-  }
+  };
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
-  const goToGeneratedInvoice = () => {
-
-  }
+  const goToGeneratedInvoice = () => {};
 
   const freezeInvoice = () => {
+    setFreeze(true);
     returnInvoiceObject();
-    setActiveInvoice("pending");
-    createPendingInvoice();
-
-  }
+  };
 
   return (
     <div className={styles.actionButtonContainer}>
@@ -45,13 +49,17 @@ const ActionButtons = (props) => {
         sx={{
           width: '1050%',
         }}
-      >
-      </div>
-      <div
-        className={styles.buttonsList}
-      >
-        <Grid container marginBottom={1} spacing={1} alignItems="center" direction="row" justifyContent="center">
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+      ></div>
+      <div className={styles.buttonsList}>
+        <Grid
+          container
+          marginBottom={1}
+          spacing={1}
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+        >
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="FSHI"
               lightColor="rgb(240, 80, 80)"
@@ -60,7 +68,7 @@ const ActionButtons = (props) => {
               icon={<BlockIcon />}
             />
           </Grid>
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="PAGUAJ"
               lightColor="#0d4d47"
@@ -69,7 +77,7 @@ const ActionButtons = (props) => {
               icon={<LocalAtmIcon />}
             />
           </Grid>
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="RUAJ"
               lightColor="#74a19e"
@@ -84,7 +92,7 @@ const ActionButtons = (props) => {
             <Grid container marginBottom={1} spacing={1} direction="row">
               <Grid item xs={12} sm={12} md={12} style={{ display: 'block' }}>
                 <Formik
-                  initialValues={{ description: "" }}
+                  initialValues={{ description: '' }}
                   onSubmit={(values) => {
                     goToGeneratedInvoice(values);
                   }}
@@ -93,10 +101,7 @@ const ActionButtons = (props) => {
                     <div className={styles.subMainHolder}>
                       <div className={styles.inputHolder}>
                         <Field name="description">
-                          {({
-                            field,
-                            meta
-                          }) => (
+                          {({ field, meta }) => (
                             <TextField
                               label="Përshkruaj Faturën"
                               multiline
@@ -104,15 +109,15 @@ const ActionButtons = (props) => {
                               helperText={meta.error}
                               InputProps={{
                                 style: {
-                                  fontFamily: "Poppins",
-                                  resize: "both",
-                                  width: 500
-                                }
+                                  fontFamily: 'Poppins',
+                                  resize: 'both',
+                                  width: 500,
+                                },
                               }}
                               InputLabelProps={{
                                 style: {
-                                  fontFamily: "Poppins"
-                                }
+                                  fontFamily: 'Poppins',
+                                },
                               }}
                               {...field}
                             />
@@ -123,11 +128,11 @@ const ActionButtons = (props) => {
                   </Form>
                 </Formik>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', textAlign: "center" }}>
+              <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', textAlign: 'center' }}>
                 <Grid item xs={12} sm={6} md={6} style={{ display: 'block' }}>
                   <Grid item xs={12} sm={12} md={12} style={{ display: 'block' }}>
                     <Formik
-                      initialValues={{ sum: "" }}
+                      initialValues={{ sum: '' }}
                       onSubmit={(values) => {
                         goToGeneratedInvoice(values);
                       }}
@@ -136,25 +141,22 @@ const ActionButtons = (props) => {
                         <div className={styles.subMainHolder}>
                           <div className={styles.inputHolder}>
                             <Field name="sum">
-                              {({
-                                field,
-                                meta
-                              }) => (
+                              {({ field, meta }) => (
                                 <TextField
                                   label="Vendosni Shumën"
                                   error={meta.touched && meta.error}
                                   helperText={meta.error}
                                   InputProps={{
                                     style: {
-                                      fontFamily: "Poppins",
-                                      resize: "both",
-                                      width: 500
-                                    }
+                                      fontFamily: 'Poppins',
+                                      resize: 'both',
+                                      width: 500,
+                                    },
                                   }}
                                   InputLabelProps={{
                                     style: {
-                                      fontFamily: "Poppins"
-                                    }
+                                      fontFamily: 'Poppins',
+                                    },
                                   }}
                                   {...field}
                                 />
@@ -169,9 +171,11 @@ const ActionButtons = (props) => {
                     <span className={styles.totalPrice}>Kusuri: </span>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} style={{ display: 'block', alignSelf: "center" }}>
+                <Grid item xs={12} sm={6} md={6} style={{ display: 'block', alignSelf: 'center' }}>
                   <Grid item xs={12} style={{ display: 'block' }}>
-                    <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} ALL</span>
+                    <span className={styles.totalPrice}>
+                      Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} ALL
+                    </span>
                   </Grid>
                 </Grid>
               </Grid>
