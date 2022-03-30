@@ -99,6 +99,9 @@ const ItemsOnBuy = () => {
                       <TableCell className={styles.tableHead} id={styles["price"]}>
                         Çmimi
                       </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                        Totali
+                      </TableCell>
                       <TableCell className={styles.tableHead} id={styles["delete"]}>
                         &nbsp;
                       </TableCell>
@@ -118,6 +121,9 @@ const ItemsOnBuy = () => {
                           <button className={styles.valueButton} onClick={() => { decrementCount(item) }}>-</button>
                           &nbsp; {item.quantity} &nbsp;
                           <button className={styles.valueButton} onClick={() => { incrementCount(item) }}>+</button>
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          &nbsp;  {Number(item.price).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           &nbsp;  {Number(item.price * item.quantity).toFixed(2)}

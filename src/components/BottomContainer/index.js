@@ -11,7 +11,7 @@ const BottomContainer = (props) => {
   return (
     <>
       <div className={styles.mainDiv}>
-        <span className={styles.title}>Barcode: {props.barcode}</span>
+        <span className={styles.title}>Barkodi: {props.barcode}</span>
         <hr className={styles.hr} />
         <div className={styles.mainDiv}>
           {props?.searchedItem.length < 1 ? (

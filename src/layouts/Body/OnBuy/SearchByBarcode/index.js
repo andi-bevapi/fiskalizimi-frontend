@@ -42,16 +42,16 @@ const SearchByBarcode = (props) => {
 
   return (
     <div className={styles.searchContainer}>
-      <Grid container columns={12} marginBottom={1} spacing={1}>
-        <Grid item={true} xs={10} md={6} style={{ textAlign: 'left', width: '90% !important' }}>
+      <Grid container columns={12} marginBottom={1} spacing={0}>
+        <Grid item={true} xs={10} md={10} style={{ textAlign: 'left', width: '90% !important' }}>
           <BootstrapInputField
-            placeholder="Kërko sipas barkodit"
+            placeholder="Skano barkod"
             style={{ margin: 0 }}
             value={barcode}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item={true} xs={2} md={6}>
+        <Grid item={true} xs={2} md={2}>
           <IconButtonComponent
             style={{ backgroundColor: '#12AC7A', height: 40, width: 40 }}
             icon={<ManageSearchIcon />}

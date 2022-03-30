@@ -19,7 +19,7 @@ const SellingUnits = () => {
 
   return (
     <TableComponent
-      title="Lista e Njesive te shitjes"
+      title="Lista e Njesive Matese"
       tableHeaders={tableHeaders}
       fullList={sellingUnitList}
       data={formatedProducts}
