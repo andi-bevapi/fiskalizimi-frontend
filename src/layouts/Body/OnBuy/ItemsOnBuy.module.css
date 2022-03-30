@@ -190,6 +190,18 @@ tbody > tr > td {
 
 .describeInvoice{
   font-family: 'Poppins';
-  font-size: 20px;
-  margin-right: 40px;
+  font-size: 18px;
+  margin-right: 17%;
+}
+
+.messageInvoice{
+  font-family: 'Poppins';
+  font-size: 18px;
+  margin-right: 42px;
+}
+
+.amountInvoice{
+  font-family: 'Poppins';
+  font-size: 18px;
+  margin-right: 20%;
 }

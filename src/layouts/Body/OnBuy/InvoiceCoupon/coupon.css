@@ -20,6 +20,49 @@
     justify-content: space-between;
   }
 
-  .couponImage{
+  .couponBG{
       border: 1px solid #cbcbcb;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 25px;
+      width: 500px;
+  }
+
+  .leftText{
+    text-align: left;
+  }
+
+  .couponBigTitle{
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .couponText{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .couponTitleCapital{
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .couponBusinessName{
+    font-size: 19px;
+    font-weight: 900;
+  }
+
+  .couponAmounts{
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .rightText{
+    float: right;
+  }
+
+  .qrCode{
+    width: 60%;
   }

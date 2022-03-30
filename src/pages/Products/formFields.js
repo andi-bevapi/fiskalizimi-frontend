@@ -14,7 +14,7 @@ export const formFields = [
     {
         name: 'price',
         component: 'Number',
-        label: 'Cmimi'
+        label: 'Cmimi meTVSH'
     },
     {
         name: 'barcode',

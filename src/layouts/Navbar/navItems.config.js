@@ -13,7 +13,7 @@ export const navItems = [
     path: "/kategorite"
   },
   {
-    title: "Njesite e shitjes",
+    title: "Njesite matese",
     path: "/njesite-shitjes",
   },
   {

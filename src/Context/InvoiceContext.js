@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode } from './../services/product';
+import { getAllBranch } from './../services/branchList';
 import { useModel } from 'umi';
 const InvoiceContext = createContext({});
 
@@ -9,33 +10,13 @@ const InvoiceProvider = (props) => {
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
     const [totalPriceNoVAT, setTotalPriceNoVAT] = useState(0); //The value of total price without VAT
     const [totalVAT, setTotalVAT] = useState(0); //The value of total VAT
+    const [totalVAT6, setTotalVAT6] = useState(0); //The value of total 6% VAT
+    const [totalVAT20, setTotalVAT20] = useState(0); //The value of total 20% VAT
     const { initialState } = useModel('@@initialState');
-    const vatObject = [
-        {
-            type: 0,
-            name: "përjashtuar nga TVSH-ja",
-            value: 0,
-        },
-        {
-            type: 1,
-            name: "TVSH 6%",
-            value: 0,
-        },
-        {
-            type: 2,
-            name: "TVSH 20%",
-            value: 0,
-        },
-        {
-            type: 3,
-            name: "pa TVSH",
-            value: 0,
-        },
-    ]
-    const [vatValues, setVATValues] = useState(vatObject); //Object with all VAT values and types
     const [invoiceFinalObject, setInvoiceFinalObject] = useState({});
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
-
+    const [couponObject, setCouponObject] = useState({});
+    const [clientData, setClientData] = useState();
     useEffect(() => {
         console.log("initialState?.currentUser?", initialState?.currentUser);
     }, [initialState?.currentUser]);
@@ -73,7 +54,6 @@ const InvoiceProvider = (props) => {
                 id: product.id,
                 name: product.name,
                 unitSellingId: product.sellingUnitId,
-                // branchId: product.branch.id,
                 description: product.description,
                 price: product.price,
                 originalPrice: (product.price - vatValueProduct),
@@ -86,7 +66,6 @@ const InvoiceProvider = (props) => {
             setListedInvoiceProducts([...listedInvoiceProducts, newProduct]);
         }
         setIsLoading(false);
-        //getTotalVAT();
     }
 
     //Method to remove a product in the invoice list
@@ -118,20 +97,35 @@ const InvoiceProvider = (props) => {
     //Method that calculates price depending on VAT value per product
     const getTotalPriceWithoutVAT = () => {
         let totalNoVAT = 0;
+        let totalVAT6 = 0;
+        let totalVAT20 = 0;
         listedInvoiceProducts?.map((product) => {
             totalNoVAT += Number(product.originalPrice * product.quantity);
+            switch (product.vat) {
+                case 1:
+                    totalVAT6 += Number((product.price - product.originalPrice) * product.quantity)
+                    break;
+                case 2:
+                    totalVAT20 += Number((product.price - product.originalPrice) * product.quantity)
+                    break;
+                default:
+                    break;
+            }
         });
+
+        setTotalVAT6(Number(totalVAT6.toFixed(2)));
+        setTotalVAT20(Number(totalVAT20.toFixed(2)));
         setTotalPriceNoVAT(totalNoVAT);
     }
 
     //Method that calculates VAT value per invoice
     const getTotalVAT = () => {
-        let totalVat= 0;
+        let totalVat = 0;
         listedInvoiceProducts?.map((product) => {
-            totalVat += Number((product.price - product.originalPrice)* product.quantity);
+            totalVat += Number((product.price - product.originalPrice) * product.quantity);
         });
-        setTotalVAT(totalVat);
-        return totalVat;
+        setTotalVAT(Number(totalVat).toFixed(2));
+        return (totalVat).toFixed(2);
     }
 
     //Method that filters product by barcode
@@ -147,8 +141,20 @@ const InvoiceProvider = (props) => {
         }
     }
 
+    //Method that gets information about current client
+    const getClientData = async () => {
+        try {
+            const result = await getAllBranch(initialState?.currentUser?.branchId);
+            if (result.statusCode === 200) {
+                setClientData(result.data[0]);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     //Method that returns the full invoice object
-    const returnInvoiceObject = () => {
+    const returnInvoiceObject = (invoiceDescription, invoiceMessage) => {
         const invoiceItemsArray = [];
         listedInvoiceProducts?.map((item) => {
             invoiceItemsArray.push({
@@ -162,14 +168,62 @@ const InvoiceProvider = (props) => {
             clientId: initialState?.currentUser.clientId,
             branchId: initialState?.currentUser.branchId,
             totalAmount: totalPriceVAT,
-            totalVat: getTotalVAT(),
+            totalVat: Number(getTotalVAT()),
+            totalPriceNoVAT: totalPriceNoVAT,
+            totalVAT6: totalVAT6,
+            totalVAT20: totalVAT20,
             paymentMethod: 1,
+            description: String(invoiceDescription),
+            message: invoiceMessage,
             invoiceItems: [...invoiceItemsArray]
         }
         setInvoiceFinalObject(invoiceObject);
+        postInvoice(invoiceObject);
     }
 
-    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice }
+    //POST method to register Invoice DB
+    const postInvoice = (invoiceObject) => {
+        //Add post method for invoice
+        //get result and create object to generate coupon
+        getClientData();
+        let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
+        let paymentMethodType = "";
+        switch (invoiceObject.paymentMethod) {
+            case 1:
+                paymentMethodType = "CASH"
+                break;
+
+            case 2:
+                paymentMethodType = "CARD"
+                break;
+
+            default:
+                paymentMethodType = "CASH"
+                break;
+        }
+        let allProducts = [];
+        let couponGenerateObject = {
+            invoiceCode: "20850/2022/hj025df663", //will be returned from post response
+            clientName: clientData?.name,
+            clientNUIS: "E12050785",  //TODO
+            clientAddress: clientData?.city,
+            dateTime: String(date), //will be returned from post response
+            branchCode: "hj025df663", //TODO
+            operatorCode: initialState?.currentUser.operatorCode,
+            paymentMethod: paymentMethodType,
+            productList: [...allProducts],
+            totalPriceNoVAT: (invoiceObject.totalPriceNoVAT).toFixed(2),
+            totalVAT6: (invoiceObject.totalVAT6).toFixed(2),
+            totalVAT20: (invoiceObject.totalVAT20).toFixed(2),
+            totalAmount: (invoiceObject.totalAmount).toFixed(2),
+            nivf: "59c5cc1a-126e-258j-a789-err78456ls1b", //will be returned from post response
+            nslf: "DE0495ASDF562VCS94F36565942S9I456", //will be returned from post response
+            message: invoiceObject.message,
+        }
+        setCouponObject(couponGenerateObject);
+    }
+
+    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalPriceNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice, couponObject }
 
     return (
         <InvoiceContext.Provider value={values}>
@@ -177,6 +231,7 @@ const InvoiceProvider = (props) => {
         </InvoiceContext.Provider>
     )
 }
+
 
 const useInvoiceContext = () => { return useContext(InvoiceContext) }
 
