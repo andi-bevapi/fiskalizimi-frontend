@@ -17,7 +17,7 @@ const DashboardHeader = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        (productList.length > 0 ? (setLoading(false)) : (setLoading(true)))
+        (productList? (setLoading(false)) : (setLoading(true)))
       }, [productList]);
     
 

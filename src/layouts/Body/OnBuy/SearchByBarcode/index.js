@@ -10,6 +10,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import BottomContainer from './../../../../components/BottomContainer';
 import Drawer from "react-bottom-drawer";
 import { useInvoiceContext } from '../../../../Context/InvoiceContext';
+import { useContextProduct } from '../../../../Context/ProductContext';
 
 const useStyles = makeStyles(() => ({
   searchInput: { display: 'block' },
@@ -20,6 +21,7 @@ const useStyles = makeStyles(() => ({
 const SearchByBarcode = (props) => {
   const styles = useStyles();
   const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
+  const { getProductByBarcode } = useContextProduct();
   const [barcode, setBarcode] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [searchedProduct, setSearchedProduct] = useState({});
@@ -40,6 +42,14 @@ const SearchByBarcode = (props) => {
     openDrawer();
   }
 
+  const checkKeyPressed = (event) => {
+      (event.key === 'Enter' ? (scanBarcode()) : null);
+  }
+
+  const scanBarcode = () => {
+     //method to return the product with the entered barcode
+  }
+
   return (
     <div className={styles.searchContainer}>
       <Grid container columns={12} marginBottom={1} spacing={0}>
@@ -49,6 +59,7 @@ const SearchByBarcode = (props) => {
             style={{ margin: 0 }}
             value={barcode}
             onChange={handleChange}
+            onKeyDown={checkKeyPressed}
           />
         </Grid>
         <Grid item={true} xs={2} md={2}>
