@@ -30,6 +30,11 @@ const SellingUnits = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      acceses={{
+        create: 'canCreateSellingUnit',
+        update: 'canUpdateSellingUnit',
+        delete: 'canDeleteSellingUnit'
+      }}
     />
   );
 };

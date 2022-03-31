@@ -22,6 +22,11 @@ const BranchList = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      acceses={{
+        create: 'canCreateBranch',
+        update: 'canUpdateBranch',
+        delete: 'canDeleteBranch'
+      }}
     />
   );
 }

@@ -22,6 +22,11 @@ const Categories = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      acceses={{
+        create: 'canCreateCategory',
+        update: 'canUpdateCategory',
+        delete: 'canDeleteCategory'
+      }}
     />
   );
 };
