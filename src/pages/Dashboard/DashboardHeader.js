@@ -14,6 +14,12 @@ const DashboardHeader = () => {
     const { productList, isLoading } = useContextProduct();
     const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
     const [display, setDisplay] = useState('cards');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (productList? (setLoading(false)) : (setLoading(true)))
+      }, [productList]);
+    
 
     return (
         <div className={styles.container}>

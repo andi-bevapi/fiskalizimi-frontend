@@ -39,5 +39,12 @@ const deleteProduct = (id) => {
     })
 }
 
+const returnProductWithBarcode = (barcode) => {
+    return request(`/product/barcode/${barcode}`, {
+        method: 'GET',
+        headers: { "Content-Type" : "application/json" }
+    })
+}
 
-export { getProducts, getProductByBarcode, createProduct, updateProduct, deleteProduct };
+
+export { getProducts, getProductByBarcode, createProduct, updateProduct, deleteProduct, returnProductWithBarcode };
