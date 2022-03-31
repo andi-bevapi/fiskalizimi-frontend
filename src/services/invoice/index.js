@@ -1,7 +1,7 @@
 import request from "../../utils/request";
 
 const getInvoices = async (branchId, status) => {
-    return request(`/invoice/${branchId}/${status}`, {
+    return request(`/invoice/${branchId}/?status=${status}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
