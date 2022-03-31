@@ -8,7 +8,7 @@ import SnackbarComponent from '../Snackbar';
 import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
-
+import {useModel } from 'umi';
 const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SidebarAction = (props) => {
+  const { initialState, refresh } = useModel('@@initialState');
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
@@ -130,6 +131,7 @@ const SidebarAction = (props) => {
           user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
+        
       } else {
         response = await action({
           user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
@@ -146,6 +148,7 @@ const SidebarAction = (props) => {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       if(props.user) {
+        refresh();
         props.setPermissions(
           props.permissions.map((el) => {
             return { ...el, checked: false };

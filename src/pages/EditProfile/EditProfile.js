@@ -32,6 +32,8 @@ const EditProfile = () => {
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const classes = useStyles();
 
+  
+
   useEffect(() => {
     refresh();
   }, []);
