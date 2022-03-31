@@ -43,10 +43,9 @@ const EditProfile = () => {
       delete values["passwordConfirm"];
       const permissions = userValue.permissions;
       const userData = {user:values,permissions}
-      console.log("userData-----",userData);
       const result = await userToUpdate(id,userData);
-      console.log("result-----",result);
       setOpenSnackBar({ status: true, message: result.message });
+      refresh();
     };
 
   return (

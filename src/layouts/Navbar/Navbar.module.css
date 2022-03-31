@@ -21,3 +21,34 @@
 .usenameStyles{
   color: #ffffff !important;
 }
+
+.menuContainer{
+  position: relative;
+  background-color: #e0e0e0;
+  width: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.editProfileContainer{
+  position: absolute;
+  left: 2px;
+  list-style-type: none;
+  width: auto;
+  position: absolute;
+  list-style-type: none;
+  background-color:#1a625d;
+  color: white;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 0px;
+  display: none;
+  cursor: pointer;
+  z-index: 10;
+}
+.editProfileContainer > li{padding: 10px;font-weight: bolder;}
+
+.editProfileContainer > li:hover{background-color: rgba(0, 0, 0, 0.04);}
+
+
+.menuContainer:hover .editProfileContainer{display:block}
