@@ -9,7 +9,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
 import { useModel } from 'umi';
-import User from '../../models/User';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SidebarAction = (props) => {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState, refresh } = useModel('@@initialState');
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
@@ -137,15 +136,6 @@ const SidebarAction = (props) => {
     postData(values);
   };
 
-  const setCurrentUser = async (values, permissions) => {
-    const newUser = new User({
-      ...values,
-      clientId: initialState?.currentUser?.clientId,
-      permissions
-    });
-    await setInitialState({ ...initialState, currentUser: newUser });
-  };
-
   const postData = async (values) => {
     const permissions = [];
     if (props.user) {
@@ -166,13 +156,13 @@ const SidebarAction = (props) => {
           user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
-        setCurrentUser(values, permissions);
+        refresh();
       } else {
         response = await action({
           user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
-        setCurrentUser(values, permissions);
+        refresh();
       }
     } else {
       response = await action({
@@ -184,6 +174,7 @@ const SidebarAction = (props) => {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       if (props.user) {
+        refresh();
         Object.keys(props.permissions).map((key, idx) => {
           props.permissions[key].permissions.map((el) => {
             el.checked = false;
