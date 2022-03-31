@@ -3,6 +3,8 @@ import { Form, Formik, useFormikContext } from 'formik';
 import FormRender from '../../../components/FormRender';
 import { useContextProduct } from '../../../Context/ProductContext';
 import { useCategoryContext } from '../../../Context/CategoryContext';
+import { useSellingUnitContext } from '../../../Context/SellingUnitContext';
+import { useSupplierContext } from '../../../Context/SuppliersContext';
 
 const SubmitListener = () => {
     const formik = useFormikContext();
@@ -19,6 +21,8 @@ const SubmitListener = () => {
 const Filters = () => {
     const { getProductsList } = useContextProduct();
     const { categoryList } = useCategoryContext();
+    const { sellingUnitList } = useSellingUnitContext();
+    const { suppliersList } = useSupplierContext();
 
     return (
         <Formik
@@ -39,12 +43,54 @@ const Filters = () => {
                             name: 'categoryId',
                             component: 'Select',
                             label: 'Kategoria',
-                            options: categoryList.map(category => ({
-                                value: category.id,
-                                label: category.name
-                            })),
+                            options: [
+                                {
+                                    value: null,
+                                    label: 'Te Gjitha'
+                                },
+                                ...categoryList?.map(category => ({
+                                    value: category.id,
+                                    label: category.name
+                                }))
+                            ],
                             style: {
                                 marginLeft: 20
+                            }
+                        },
+                        {
+                            name: 'sellingUnitId',
+                            component: 'Select',
+                            label: 'Njesia Matese',
+                            options: [
+                                {
+                                    value: null,
+                                    label: 'Te Gjitha'
+                                },
+                                ...sellingUnitList?.map(sellingUnit => ({
+                                    value: sellingUnit.id,
+                                    label: sellingUnit.name
+                                }))
+                            ],
+                            style: {
+                                marginLeft: 40
+                            }
+                        },
+                        {
+                            name: 'supplierId',
+                            component: 'Select',
+                            label: 'Furnitori',
+                            options: [
+                                {
+                                    value: null,
+                                    label: 'Te Gjitha'
+                                },
+                                ...suppliersList?.map(supplier => ({
+                                    value: supplier.id,
+                                    label: supplier.name
+                                }))
+                            ],
+                            style: {
+                                marginLeft: 60
                             }
                         }
                     ]}

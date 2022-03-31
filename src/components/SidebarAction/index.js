@@ -8,6 +8,7 @@ import SnackbarComponent from '../Snackbar';
 import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
+import { useModel } from 'umi';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SidebarAction = (props) => {
+  const { initialState, refresh } = useModel('@@initialState');
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
@@ -151,14 +153,16 @@ const SidebarAction = (props) => {
         let id = values.id;
         delete values.id;
         response = await action(id, {
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
+        refresh();
       } else {
         response = await action({
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
+        refresh();
       }
     } else {
       response = await action({
@@ -170,6 +174,7 @@ const SidebarAction = (props) => {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
       if (props.user) {
+        refresh();
         Object.keys(props.permissions).map((key, idx) => {
           props.permissions[key].permissions.map((el) => {
             el.checked = false;

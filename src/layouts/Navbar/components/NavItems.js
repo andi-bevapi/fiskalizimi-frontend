@@ -1,12 +1,12 @@
 import React from 'react';
 import { navItems } from '../navItems.config';
 import Button from '@mui/material/Button';
-import { history, Access } from 'umi';
+import { history, Access, useAccess } from 'umi';
 import { makeStyles } from '@mui/styles';
 import styles from '../components/navigationStyles.css'
 import HomeIcon from '@mui/icons-material/Home';//home
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; // users
-import StorefrontIcon from '@mui/icons-material/Storefront';; //furnizuesit
+import StorefrontIcon from '@mui/icons-material/Storefront';; //furnitoret
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //njesite e shitjes
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
 import CategoryIcon from '@mui/icons-material/Category'; //category
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
 
 const NavItems = () => {
   const classes = useStyles();
+  const access = useAccess();
 
   const handleClick = (path) => {
     history.push(path);
@@ -42,7 +43,7 @@ const NavItems = () => {
       case "Pikat e shitjes":
         return <>
           <> <Box m={1} pt={1}> <StoreMallDirectoryIcon /> </Box> </> <span>{title}</span> </>;
-      case "Furnizuesit":
+      case "Furnitoret":
         return <>
           <> <Box m={1} pt={1}> <StorefrontIcon /> </Box> </> <span>{title}</span> </>;
       case "Perdoruesit":
@@ -60,7 +61,7 @@ const NavItems = () => {
     <>
       {navItems.map((item, i) => {
         return (
-          <Access key={i} accessible={true /* item.access */}>
+          <Access key={i} accessible={item.access ? access[item.access] : true}>
             <Button
               fullWidth={true}
               className={styles.menuLink}

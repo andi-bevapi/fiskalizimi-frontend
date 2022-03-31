@@ -28,6 +28,11 @@ const Suppliers = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      acceses={{
+        create: 'canCreateSupplier',
+        update: 'canUpdateSupplier',
+        delete: 'canDeleteSupplier'
+      }}
     />
   );
 };

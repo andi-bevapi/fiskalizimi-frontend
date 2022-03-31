@@ -10,23 +10,28 @@ export const navItems = [
   },
   {
     title: "Kategorite",
-    path: "/kategorite"
+    path: "/kategorite",
+    access: 'canViewCategory'
   },
   {
     title: "Njesite matese",
     path: "/njesite-shitjes",
+    access: 'canViewSellingUnit'
   },
   {
-    title: "Furnizuesit",
-    path: "/furnizuesit",
+    title: "Furnitoret",
+    path: "/furnitoret",
+    access: 'canViewSupplier'
   },
   {
     title: "Pikat e shitjes",
     path: "/pikat-shitjes",
+    access: 'canViewBranch'
   },
   {
     title: "Perdoruesit",
     path: "/perdoruesit",
+    access: 'canViewUser'
   },
   {
     title: "Konfigurime",

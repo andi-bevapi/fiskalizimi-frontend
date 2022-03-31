@@ -21,12 +21,13 @@ export default [
     routes: [
       { exact: true, path: '/', component: './Dashboard' },
       { exact: true, path: '/produktet', component: './Products', access: 'canViewProduct' },
-      { exact: true, path: '/kategorite', component: './Categories' },
-      { exact: true, path: '/pikat-shitjes', component: './Branch' },
-      { exact: true, path: '/njesite-shitjes', component: './SellingUnits' },
-      { exact: true, path: '/perdoruesit', component: './Users' },
+      { exact: true, path: '/kategorite', component: './Categories', access: 'canViewCategory' },
+      { exact: true, path: '/pikat-shitjes', component: './Branch', access: 'canViewBranch' },
+      { exact: true, path: '/njesite-shitjes', component: './SellingUnits', access: 'canViewSellingUnit' },
+      { exact: true, path: '/perdoruesit', component: './Users', access: 'canViewUser' },
+      { exact: true, path: '/furnitoret', component: './Suppliers', access: 'canViewSupplier' },
       { exact: true, path: '/konfigurime', component: './Configurations' },
-      { exact: true, path: '/furnizuesit', component: './Suppliers' },
+      { exact: true, path: '/edit-profile', component: './EditProfile' },
     ],
   },
 ];

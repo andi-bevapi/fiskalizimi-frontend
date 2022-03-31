@@ -205,12 +205,12 @@ const ActionButtons = (props) => {
                       </div>
                     </div>
                     <div className={styles.subMainHolder}>
-                      <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} ALL</span>
+                      <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
                     </div>
                   </Grid>
                   <Grid item xs={12} style={{ display: 'block' }}>
                     <div className={styles.subMainHolder}>
-                      <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)}  ALL</span>
+                      <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)} LEK</span>
                     </div>
                   </Grid>
                 </Grid>

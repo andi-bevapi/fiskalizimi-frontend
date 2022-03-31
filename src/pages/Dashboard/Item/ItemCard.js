@@ -142,7 +142,7 @@ const ItemCard = (props) => {
             fontWeight: "700",
           }}
         >
-          ALL {Number(props.item.price).toFixed(2)}
+          LEK {Number(props.item.price).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

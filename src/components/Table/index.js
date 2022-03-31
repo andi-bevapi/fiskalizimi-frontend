@@ -11,6 +11,7 @@ import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
+import { Access, useAccess } from 'umi';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -40,7 +41,8 @@ const TableComponent = (props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const [editItem, setEditItem] = useState(null);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const access = useAccess();
 
   const handleEditButton = (id) => {
     setOpenSideBar(true);
@@ -100,7 +102,9 @@ const TableComponent = (props) => {
 
       <div className={classes.headerContainer}>
         <h1>{props.title}</h1>
-        <Button variant="contained" onClick={handleCreate}>Shto <AddIcon /></Button>
+        <Access accessible={access[props.acceses['create']]}>
+          <Button variant="contained" onClick={handleCreate}>Shto <AddIcon /></Button>
+        </Access>
       </div>
 
       {props.isLoading ? (
@@ -138,25 +142,29 @@ const TableComponent = (props) => {
 
                   <TableCell className={classes.tableCell}>
                     <div className={classes.btnContainer}>
-                      <IconButtonComponent
-                        style={{
-                          backgroundColor: '#ffa500',
-                          marginRight: '10px',
-                        }}
-                        icon={<EditIcon />}
-                        iconColor={{ color: 'white' }}
-                        onClick={(e) => handleEditButton(item.id)}
-                      />
+                      <Access accessible={access[props.acceses['update']]}>
+                        <IconButtonComponent
+                          style={{
+                            backgroundColor: '#ffa500',
+                            marginRight: '10px',
+                          }}
+                          icon={<EditIcon />}
+                          iconColor={{ color: 'white' }}
+                          onClick={(e) => handleEditButton(item.id)}
+                        />
+                      </Access>
 
-                      <IconButtonComponent
-                        style={{
-                          backgroundColor: '#f05050',
-                          marginRight: '10px',
-                        }}
-                        icon={<DeleteForeverIcon />}
-                        iconColor={{ color: 'white' }}
-                        onClick={(e) => handleDelete(item.id)}
-                      />
+                      <Access accessible={access[props.acceses['delete']]}>
+                        <IconButtonComponent
+                          style={{
+                            backgroundColor: '#f05050',
+                            marginRight: '10px',
+                          }}
+                          icon={<DeleteForeverIcon />}
+                          iconColor={{ color: 'white' }}
+                          onClick={(e) => handleDelete(item.id)}
+                        />
+                      </Access>
                     </div>
                   </TableCell>
                 </TableRow>
