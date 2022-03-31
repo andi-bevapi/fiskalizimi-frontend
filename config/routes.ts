@@ -27,6 +27,7 @@ export default [
       { exact: true, path: '/perdoruesit', component: './Users', access: 'canViewUser' },
       { exact: true, path: '/furnizuesit', component: './Suppliers', access: 'canViewSupplier' },
       { exact: true, path: '/konfigurime', component: './Configurations' },
+      { exact: true, path: '/edit-profile', component: './EditProfile' },
     ],
   },
 ];
