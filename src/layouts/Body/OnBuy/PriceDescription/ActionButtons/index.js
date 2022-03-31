@@ -100,79 +100,25 @@ const ActionButtons = (props) => {
                 <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                 <Grid container marginBottom={1} spacing={1} direction="row">
                   <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
-                    <div className={styles.subMainHolder}>
-                      <div className={styles.inputHolder}>
-                        <span className={styles.describeInvoice}>Përshkrimi:</span>
-                        <Field name="description">
-                          {({
-                            field,
-                            meta
-                          }) => (
-                            <TextField
-                              label="Përshkruaj Faturën"
-                              multiline
-                              error={meta.touched && meta.error}
-                              helperText={meta.error}
-                              InputProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  resize: "both",
-                                  width: 500,
-                                  marginTop: -15
-                                }
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  marginTop: -15
-                                }
-                              }}
-                              {...field}
-                            />
-                          )}
-                        </Field>
+                    <Grid item xs={12} sm={12} md={1}> </Grid>
+                    <Grid item xs={12} sm={12} md={5}>
+                      <div className={styles.subMainHolder}>
+                        <div className={styles.paymentMethodsDiv}>
+                          <span className={styles.totalPrice}>Zgjidhni mënyrën e pagesës: </span> <br /><br />
+                          <Button className={styles.cashPayment}>
+                            CASH
+                          </Button><br />
+                          <Button className={styles.bankPayment} disabled={true}>
+                            BANKË
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
-                    <div className={styles.subMainHolder}>
-                      <div className={styles.inputHolder}>
-                        <span className={styles.messageInvoice}>Mesazhi i faturës:</span>
-                        <Field name="message">
-                          {({
-                            field,
-                            meta
-                          }) => (
-                            <TextField
-                              label="p.sh: Ju Faleminderit!"
-                              multiline
-                              error={meta.touched && meta.error}
-                              helperText={meta.error}
-                              InputProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  resize: "both",
-                                  width: 500,
-                                  marginTop: -15
-                                }
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  marginTop: -15
-                                }
-                              }}
-                              {...field}
-                            />
-                          )}
-                        </Field>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                      <div className={styles.subMainHolder}>
+                        <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
                       </div>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div className={styles.subMainHolder}>
-                      <div className={styles.inputHolder}>
-                        <span className={styles.describeInvoice}>Shuma:  &nbsp; &nbsp; &nbsp;</span>
+                      <div className={styles.subMainHolder}>
                         <Field name="sum">
                           {({
                             field,
@@ -188,8 +134,9 @@ const ActionButtons = (props) => {
                                 style: {
                                   fontFamily: "Poppins",
                                   resize: "both",
-                                  width: 500,
-                                  marginTop: -15
+                                  width: 245,
+                                  marginTop: -15,
+                                  marginBottom: 20
                                 }
                               }}
                               InputLabelProps={{
@@ -202,27 +149,73 @@ const ActionButtons = (props) => {
                             />
                           )}
                         </Field>
+                        <br />
+                        <Grid item xs={12} md={12} className={styles.calculatorDiv}>
+                          <div className={styles.calculatorButtons}>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 1 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 2 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 3 </Button>
+                            </Grid>
+                          </div>
+                          <div className={styles.calculatorButtons}>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 4 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 5 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 6 </Button>
+                            </Grid>
+                          </div>
+                          <div className={styles.calculatorButtons}>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 7 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 8 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 9 </Button>
+                            </Grid>
+                          </div>
+                          <div className={styles.calculatorButtons}>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> C </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                              <Button className={styles.numberButton}> 0 </Button>
+                            </Grid>
+                            <Grid item xs={2} md={2}>
+                               <Button className={styles.numberButton}> Fshi </Button>
+                            </Grid>
+                          </div>
+                        </Grid>
                       </div>
-                    </div>
-                    <div className={styles.subMainHolder}>
-                      <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
-                    </div>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} style={{ display: 'block' }}>
+                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div className={styles.subMainHolder}>
                       <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)} LEK</span>
                     </div>
+                    <div className={styles.subMainHolder}>
+                      <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={disabledSubmit}>
+                        Vazhdo
+                      </Button>
+                    </div>
                   </Grid>
                 </Grid>
-                <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={disabledSubmit}>
-                  Vazhdo
-                </Button>
               </Form>
             </Formik>
           </ModalComponent>
         </Grid>
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
-          <InvoiceCoupon data={couponObject}/>
+          <InvoiceCoupon data={couponObject} />
         </ModalComponent>
       </div>
     </div>
