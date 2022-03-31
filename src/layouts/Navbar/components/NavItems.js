@@ -1,7 +1,7 @@
 import React from 'react';
 import { navItems } from '../navItems.config';
 import Button from '@mui/material/Button';
-import { history, Access } from 'umi';
+import { history, Access, useAccess } from 'umi';
 import { makeStyles } from '@mui/styles';
 import styles from '../components/navigationStyles.css'
 import HomeIcon from '@mui/icons-material/Home';//home
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
 
 const NavItems = () => {
   const classes = useStyles();
+  const access = useAccess();
 
   const handleClick = (path) => {
     history.push(path);
@@ -60,7 +61,7 @@ const NavItems = () => {
     <>
       {navItems.map((item, i) => {
         return (
-          <Access key={i} accessible={true /* item.access */}>
+          <Access key={i} accessible={item.access ? access[item.access] : true}>
             <Button
               fullWidth={true}
               className={styles.menuLink}

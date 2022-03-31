@@ -42,6 +42,11 @@ const Users = () => {
       contexts={{
         branchList,
       }}
+      acceses={{
+        create: 'canCreateUser',
+        update: 'canUpdateUser',
+        delete: 'canDeleteUser'
+      }}
     />
   );
 };

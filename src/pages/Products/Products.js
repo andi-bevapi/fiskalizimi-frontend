@@ -38,6 +38,11 @@ const Products = () => {
         suppliersList,
         sellingUnitList
       }}
+      acceses={{
+        create: 'canCreateProduct',
+        update: 'canUpdateProduct',
+        delete: 'canDeleteProduct'
+      }}
     />
   );
 };

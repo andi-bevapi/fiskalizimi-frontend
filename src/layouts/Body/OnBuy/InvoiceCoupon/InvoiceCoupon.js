@@ -1,26 +1,23 @@
-import { useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Divider, Button } from '@mui/material';
 import styles from './coupon.css';
 import qrcode from '../../../../assets/images/qrcodexample.png'
+import ReactToPrint from "react-to-print";
 
 const InvoiceCoupon = (props) => {
-
-    useEffect(() => {
-
-    }, [props.data.productList]);
-
-    const printCoupon = () => {
-
-    }
+    let componentRef = useRef();
 
     return (
         <>
             <div className={styles.headerInvoice}>
                 <span className={styles.payTitle}>Fatura Tatimore:</span>
-                <Button variant="contained" type="submit" className={styles.buttonStyle} onClick={printCoupon}> Printo Faturën </Button>
+                <ReactToPrint
+                    trigger={() => <Button variant="contained" type="submit" className={styles.buttonStyle}> Printo Faturën </Button>}
+                    content={() => componentRef}
+                />
             </div>
             <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-            <div className={styles.couponDiv}>
+            <div className={styles.couponDiv} ref={(el) => (componentRef = el)}>
                 <div id="couponToPrint" className={styles.couponBG}>
                     <span className={styles.couponBigTitle}>FATURË TATIMORE</span> <br />
                     <span className={styles.couponText}>Kodi: {props.data.invoiceCode}</span>
@@ -48,7 +45,7 @@ const InvoiceCoupon = (props) => {
                         {props.data.productList?.map((item, index) => {
                             return (
                                 <>
-                                    <tr style={{textAlign: "left"}}>
+                                    <tr style={{ textAlign: "left" }}>
                                         <td className={styles.productDataRow}>{index + 1}</td>
                                         <td className={styles.productDataRow}>{item.productName}</td>
                                         <td className={styles.productDataRow}>{item.quantity}</td>
@@ -76,7 +73,6 @@ const InvoiceCoupon = (props) => {
                     <span className={styles.couponText}>Ovla Systems</span> <br />
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
-
             </div>
         </>
     );
