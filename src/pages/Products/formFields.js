@@ -59,7 +59,7 @@ export const formFields = [
     {
         name: 'supplierId',
         component: 'Select',
-        label: 'Furnizuesi',
+        label: 'Furnitoret',
         options: [],
         identifier: 'suppliersList'
     },
@@ -99,5 +99,5 @@ export const validationSchema = yup.object({
     branchId:  yup.number().required("Ju lutem zgjidhni degen"),
     categoryId:  yup.number().required("Ju lutem zgjidhni kategorine"),
     sellingUnitId: yup.number().required("Ju lutem zgjidhni njesine matese"),
-    supplierId: yup.number().required("Ju lutem zgjidhni furnizuesin")
+    supplierId: yup.number().required("Ju lutem zgjidhni Furnitoret")
 });

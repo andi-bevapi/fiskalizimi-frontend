@@ -19,8 +19,8 @@ export const navItems = [
     access: 'canViewSellingUnit'
   },
   {
-    title: "Furnizuesit",
-    path: "/furnizuesit",
+    title: "Furnitoret",
+    path: "/furnitoret",
     access: 'canViewSupplier'
   },
   {

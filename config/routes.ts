@@ -25,7 +25,7 @@ export default [
       { exact: true, path: '/pikat-shitjes', component: './Branch', access: 'canViewBranch' },
       { exact: true, path: '/njesite-shitjes', component: './SellingUnits', access: 'canViewSellingUnit' },
       { exact: true, path: '/perdoruesit', component: './Users', access: 'canViewUser' },
-      { exact: true, path: '/furnizuesit', component: './Suppliers', access: 'canViewSupplier' },
+      { exact: true, path: '/furnitoret', component: './Suppliers', access: 'canViewSupplier' },
       { exact: true, path: '/konfigurime', component: './Configurations' },
       { exact: true, path: '/edit-profile', component: './EditProfile' },
     ],

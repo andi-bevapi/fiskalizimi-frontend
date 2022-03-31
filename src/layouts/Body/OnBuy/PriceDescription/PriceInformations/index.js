@@ -32,11 +32,11 @@ const PriceInformations = (props) => {
         <div>
           {buyingList.length === 0 ? (
             <Typography variant="body2" className={styles.text}>
-              <b>0.00ALL</b>
+              <b>0.00LEK</b>
             </Typography>
           ) : (
             <Typography variant="body2" className={styles.text}>
-              <b>{Number(totalAmountNoVAT).toFixed(2)}ALL</b>
+              <b>{Number(totalAmountNoVAT).toFixed(2)}LEK</b>
             </Typography>
           )}
         </div>
@@ -51,11 +51,11 @@ const PriceInformations = (props) => {
         <div>
           {buyingList.length === 0 ? (
             <Typography variant="body2" className={styles.text}>
-             <b>0.00ALL</b>
+             <b>0.00LEK</b>
             </Typography>
           ) : (
             <Typography variant="body" className={styles.text}>
-              <b>{Number(totalPriceVAT).toFixed(2)}ALL</b>
+              <b>{Number(totalPriceVAT).toFixed(2)}LEK</b>
             </Typography>
           )}
         </div>

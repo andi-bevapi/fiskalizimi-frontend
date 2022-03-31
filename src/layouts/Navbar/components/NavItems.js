@@ -6,7 +6,7 @@ import { makeStyles } from '@mui/styles';
 import styles from '../components/navigationStyles.css'
 import HomeIcon from '@mui/icons-material/Home';//home
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; // users
-import StorefrontIcon from '@mui/icons-material/Storefront';; //furnizuesit
+import StorefrontIcon from '@mui/icons-material/Storefront';; //furnitoret
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //njesite e shitjes
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
 import CategoryIcon from '@mui/icons-material/Category'; //category
@@ -43,7 +43,7 @@ const NavItems = () => {
       case "Pikat e shitjes":
         return <>
           <> <Box m={1} pt={1}> <StoreMallDirectoryIcon /> </Box> </> <span>{title}</span> </>;
-      case "Furnizuesit":
+      case "Furnitoret":
         return <>
           <> <Box m={1} pt={1}> <StorefrontIcon /> </Box> </> <span>{title}</span> </>;
       case "Perdoruesit":
