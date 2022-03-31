@@ -19,7 +19,7 @@ const SellingUnits = () => {
 
   return (
     <TableComponent
-      title="Lista e Njesive te shitjes"
+      title="Lista e Njesive Matese"
       tableHeaders={tableHeaders}
       fullList={sellingUnitList}
       data={formatedProducts}
@@ -30,6 +30,11 @@ const SellingUnits = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      acceses={{
+        create: 'canCreateSellingUnit',
+        update: 'canUpdateSellingUnit',
+        delete: 'canDeleteSellingUnit'
+      }}
     />
   );
 };

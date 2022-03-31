@@ -16,13 +16,17 @@ table {
   font-family: "Poppins",sans-serif !important;
 }
 
+#number{
+  width: 60px;
+}
+
 #quantity {
-  width: 120px;
+  width: 150px;
   font-family: "Poppins",sans-serif !important;
 }
 
 #name {
-  width: 130px;
+  width: 180px;
   max-width: 260px;
   font-family: "Poppins",sans-serif !important;
 }
@@ -34,7 +38,7 @@ table {
 }
 
 #delete{
-  width: 90px;
+  width: 70px;
 }
 
 table th {
@@ -149,3 +153,59 @@ tbody > tr > td {
   opacity: 0.5;
 }
 
+/*/////////////////////////////////////*/
+/*//////  Payment Modal Styles  //////*/
+
+.payTitle{
+  padding: 5px 1px;
+  font-weight: bold !important;
+  font-size: 25px !important;
+  color: #000 !important;
+  font-family: "Poppins",sans-serif !important;
+}
+
+.subMainHolder {
+  /* text-align: center; */
+  padding: 22px 20px;
+}
+
+.inputHolder {
+  display: flex;
+}
+
+.buttonStyle {
+  background-color: #17625D !important;
+  font-family: 'Poppins'!important;
+}  
+
+.buttonStyle:disabled {
+  background-color: #c9c9c9 !important;
+  color:white !important;
+}  
+
+
+.totalPrice{
+  padding: 5px 1px;
+  font-weight: bold !important;
+  font-size: 22px !important;
+  color: #db6a00 !important;
+  font-family: "Poppins",sans-serif !important;
+}
+
+.describeInvoice{
+  font-family: 'Poppins';
+  font-size: 18px;
+  margin-right: 17%;
+}
+
+.messageInvoice{
+  font-family: 'Poppins';
+  font-size: 18px;
+  margin-right: 42px;
+}
+
+.amountInvoice{
+  font-family: 'Poppins';
+  font-size: 18px;
+  margin-right: 20%;
+}

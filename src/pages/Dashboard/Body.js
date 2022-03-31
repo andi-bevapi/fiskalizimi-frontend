@@ -30,31 +30,31 @@ const BodyDashboard = (props) => {
       {props.data.length > 0 ? (
         <div>
           {props.display === 'cards' ? (
-                        <div>
-                        <Grid container spacing={3}>
-                          {props.data?.map((item, index) => {
-                            if (props.data?.length === index + 1) {
-                              return (
-                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
-                                </Grid>
-                              );
-                            } else {
-                              return (
-                                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                                  <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList}/>
-                                </Grid>
-                              );
-                            }
-                          })}
-                        </Grid>
-                      </div>
+            <div>
+              <Grid container spacing={3}>
+                {props.data?.map((item, index) => {
+                  if (props.data?.length === index + 1) {
+                    return (
+                      <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                        <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} />
+                      </Grid>
+                    );
+                  } else {
+                    return (
+                      <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                        <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} />
+                      </Grid>
+                    );
+                  }
+                })}
+              </Grid>
+            </div>
           ) : (
             props.data?.map((item, index) => {
               if (props.data.length === index + 1) {
-                return <div key={index}><ItemLine item={item} /></div>;
+                return <div key={index}><ItemLine item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} /></div>;
               } else {
-                return <div key={index}><ItemLine item={item} /></div>;
+                return <div key={index}><ItemLine item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} /></div>;
               }
             })
           )}

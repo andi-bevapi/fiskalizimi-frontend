@@ -18,7 +18,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 
 const ItemsOnBuy = () => {
-  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList, isLoading } = useInvoiceContext();
+  const { listedInvoiceProducts, addToInvoiceList, removeProductFromInvoiceList, isLoading, getProductBarcode, filteredBarcodeProduct } = useInvoiceContext();
   const [activeInvoice, setActiveInvoice] = useState(true);
   const [activeSavedInvoices, setActiveSavedInvoices] = useState(false);
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
@@ -30,7 +30,7 @@ const ItemsOnBuy = () => {
 
   useEffect(() => {
 
-  }, [listedInvoiceProducts]);
+  }, [listedInvoiceProducts, filteredBarcodeProduct]);
 
   const handleTabChanges = () => {
     setActiveSavedInvoices(!activeSavedInvoices);
@@ -40,7 +40,7 @@ const ItemsOnBuy = () => {
     setStopDecrement(false);
     let addQuantity = item.quantity + 1;
     if (item.stockCheck) {
-      if (item.quantity == Number(item.stock)) {
+      if (item.quantity >= Number(item.stock).toFixed(0)) {
         setStopIncrement(true)
       } else {
         addToInvoiceList(item, addQuantity);
@@ -51,10 +51,10 @@ const ItemsOnBuy = () => {
   }
 
   const decrementCount = (item) => {
-    setStopIncrement(false);
+    //setStopIncrement(false);
     let subtractQuantity = item.quantity - 1;
     if (item.quantity == 1) {
-      setStopDecrement(true)
+      //setStopDecrement(true)
     } else {
       addToInvoiceList(item, subtractQuantity);
     }
@@ -78,7 +78,7 @@ const ItemsOnBuy = () => {
 
       {activeInvoice ? (
         <>
-          <SearchByBarcode />
+          <SearchByBarcode searchFunction={getProductBarcode} product={filteredBarcodeProduct}/>
           {loadingInvoice ? (
             <div className={styles.loadingDiv}>
               <PuffLoader />
@@ -89,7 +89,7 @@ const ItemsOnBuy = () => {
                 <Table stickyHeader className={styles.table}>
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
-                      <TableCell className={styles.tableHead}>Nr.</TableCell>
+                      <TableCell className={styles.tableHead} id={styles["number"]}>Nr.</TableCell>
                       <TableCell className={styles.tableHead} id={styles["name"]}>
                         Produkti
                       </TableCell>
@@ -98,6 +98,9 @@ const ItemsOnBuy = () => {
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles["price"]}>
                         Çmimi
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                        Totali
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles["delete"]}>
                         &nbsp;
@@ -115,12 +118,15 @@ const ItemsOnBuy = () => {
                           {item.name}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          <button className={styles.valueButton} disabled={stopDecrement} onClick={() => { decrementCount(item) }}>-</button>
+                          <button className={styles.valueButton} onClick={() => { decrementCount(item) }}>-</button>
                           &nbsp; {item.quantity} &nbsp;
-                          <button className={styles.valueButton} disabled={stopIncrement} onClick={() => { incrementCount(item) }}>+</button>
+                          <button className={styles.valueButton} onClick={() => { incrementCount(item) }}>+</button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {Number(item.price*item.quantity).toFixed(2)}
+                          &nbsp;  {Number(item.price).toFixed(2)}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent

@@ -84,7 +84,7 @@ const FormRender = ({ formFields }) => {
         );
       case 'Select':
         return (
-          <div className={classes.inputContainer} key={formField.name}>
+          <div className={classes.inputContainer} key={formField.name} style={{ width: 200 }}>
             <Field name={formField.name}>
               {({ field, meta }) => (
                 <TextField
@@ -93,11 +93,14 @@ const FormRender = ({ formFields }) => {
                   error={meta.touched && meta.error}
                   helperText={meta.error}
                   style={{
-                    width: '100%'
+                    width: '100%',
+                    ...formField.style
                   }}
                   InputProps={{
                     style: {
-                      fontFamily: 'Poppins'
+                      fontFamily: 'Poppins',
+                      width: '100%',
+                      textAlign: 'left'
                     },
                   }}
                   InputLabelProps={{

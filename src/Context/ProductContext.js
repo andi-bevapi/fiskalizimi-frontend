@@ -13,10 +13,10 @@ const ProductProvider = (props) => {
         if(initialState?.currentUser?.branchId) getProductsList();
     }, [initialState?.currentUser])
 
-    const getProductsList = async () => {
+    const getProductsList = async (query = {}) => {
         setIsLoading(true);
         try {
-            const products = await getProducts(initialState?.currentUser?.branchId);
+            const products = await getProducts(initialState?.currentUser?.branchId, query);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
@@ -59,7 +59,7 @@ const ProductProvider = (props) => {
         }
     }
 
-    const values = { productList, setProductList, productToCreate, productToUpdate, productToDelete, isLoading }
+    const values = { productList, setProductList, productToCreate, productToUpdate, productToDelete, getProductsList, isLoading }
 
     return (
         <ProductContext.Provider value={values}>

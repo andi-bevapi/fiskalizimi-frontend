@@ -1,0 +1,84 @@
+.payTitle{
+    padding: 5px 1px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    color: #000 !important;
+    font-family: "Poppins",sans-serif !important;
+  }
+
+  .couponDiv{
+    padding: 15px 120px;
+  }
+
+  .buttonStyle {
+    background-color: #17625D !important;
+    font-family: 'Poppins'!important;
+  }  
+
+  .headerInvoice{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .couponBG{
+      border: 1px solid #cbcbcb;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 25px;
+      width: 500px;
+  }
+
+  .leftText{
+    text-align: left;
+  }
+
+  .couponBigTitle{
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .couponText{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .couponTitleCapital{
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .couponBusinessName{
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .couponAmounts{
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .rightText{
+    float: right;
+  }
+
+  .qrCode{
+    width: 60%;
+  }
+
+  .productDataRow{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    padding: 5px 10px;
+  }
+  .productPriceRow{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: end;
+    padding: 5px 10px;
+    padding-right: 15px;
+  }

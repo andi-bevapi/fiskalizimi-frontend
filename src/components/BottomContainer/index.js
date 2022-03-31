@@ -1,34 +1,33 @@
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles(() => ({
-  title: {
-      fontSize: 20,
-      color: '#1ea0b5',
-  },
-  hr: {
-      border: 'none',
-      borderBottom: '1px solid #ebeff2',
-  },
-  mainDiv: {
-      padding: 30,
-  },
-  noData: {
-    fontSize: 16,
-    color: '#d33f3f',
-  }
-}));
+import {useEffect, useState} from 'react';
+import styles from '../BottomContainer/bottomStyles.css'
+import ProductItem from './productItem';
 
 const BottomContainer = (props) => {
-  const classes = useStyles();
+
+  useEffect(() => {
+
+  }, [props.invoiceList]);
+
   return (
     <>
-     <div className={classes.mainDiv}>
-        <span className={classes.title}>Lista e Produkteve</span>
-        <hr className={classes.hr}/>
-        <div className={classes.mainDiv}>
-            <p className={classes.noData}>Nuk u gjet asnjë produkt</p>
+      <div className={styles.mainDiv}>
+        <span className={styles.title}>Barkodi: {props.barcode}</span>
+        <hr className={styles.hr} />
+        <div className={styles.mainDiv}>
+          {props?.searchedItem.length < 1 ? (
+            <p className={styles.noData}>Nuk u gjet asnjë produkt me këtë barkod</p>
+           ) : (
+            <>
+            {props.searchedItem.map((item, index) => {
+              return(
+                   <ProductItem key={index} index={index} item={item} addToList={props.addToList} invoiceList={props.invoiceList}/>
+              )
+            })}
+               <span className={styles.results}><b>Rezultate: {props.searchedItem.length}</b></span>
+            </>
+          )}
         </div>
-     </div>
+      </div>
     </>
   );
 };

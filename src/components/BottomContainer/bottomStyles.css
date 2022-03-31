@@ -1,0 +1,53 @@
+.title {
+    font-size: 25px;
+    color: #1ea0b5;
+}
+
+.mainDiv {
+    padding: 30px;
+  }
+
+.hr{
+    border-bottom: 1px solid #d4d4d4 !important;
+    width: 80%;
+    border:none;
+}
+
+.noData{
+    font-size: 16;
+    color: #d33f3f;
+}
+
+.details{
+    font-size: 20px;
+    padding: 0 15px;
+}
+
+.productBlock{
+    background: #eaf4f4;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.productBlock:hover{
+    cursor: pointer;
+    background: #cadfdf;
+}
+
+.productBlockDisabled{
+    background: #e3e3e3;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.productBlockDisabled:hover{
+    cursor:not-allowed;
+}
+
+
+.results{
+    font-size: 18px;
+    margin-right: 15px !important;
+    float: right;
+    color: #f87800;
+}
