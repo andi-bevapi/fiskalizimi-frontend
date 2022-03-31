@@ -50,7 +50,7 @@ const BottomContainer = (props) => {
                 <span className={styles.details}>Përshkrimi: {props.item.description}</span>
                 <span className={styles.details}>Çmimi: {Number(props.item.price).toFixed(2)} ALL</span>
                 <span className={styles.details}>Stoku: {props.item.stock}</span>
-                <span className={styles.details}>Barcode: {props.item.barcode}</span>
+                <span className={styles.details}>Barkodi: {props.item.barcode}</span>
             </p>
         </>
 

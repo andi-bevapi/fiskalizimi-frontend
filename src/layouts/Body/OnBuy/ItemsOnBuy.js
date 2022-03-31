@@ -148,8 +148,8 @@ const ItemsOnBuy = () => {
                 <Table stickyHeader className={styles.table}>
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
-                      <TableCell className={styles.tableHead}>Nr.</TableCell>
-                      <TableCell className={styles.tableHead} id={styles['name']}>
+                      <TableCell className={styles.tableHead} id={styles["number"]}>Nr.</TableCell>
+                      <TableCell className={styles.tableHead} id={styles["name"]}>
                         Produkti
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['quantity']}>
@@ -158,7 +158,10 @@ const ItemsOnBuy = () => {
                       <TableCell className={styles.tableHead} id={styles['price']}>
                         Çmimi
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles['delete']}>
+                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                        Totali
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles["delete"]}>
                         &nbsp;
                       </TableCell>
                     </TableRow>
@@ -189,7 +192,10 @@ const ItemsOnBuy = () => {
                           </button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp; {Number(item.price * item.quantity).toFixed(2)}
+                          &nbsp;  {Number(item.price).toFixed(2)}
+                        </TableCell>
+                        <TableCell className={styles.tableBodyCell}>
+                          &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent

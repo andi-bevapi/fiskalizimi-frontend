@@ -19,8 +19,9 @@ const ActionButtons = (props) => {
     listedInvoiceProducts,
     returnInvoiceObject,
     createPendingInvoice,
+    couponObject
   } = useInvoiceContext();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setisOpen] = useState(false);
   const [freeze, setFreeze] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
   const [returnChange, setReturnChange] = useState();
@@ -34,7 +35,7 @@ const ActionButtons = (props) => {
 
   const goToPaymentMethod = () => {
     (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)))
-    returnInvoiceObject();
+    returnInvoiceObject(false);
   };
 
   const toggleModal = () => {
@@ -47,6 +48,7 @@ const ActionButtons = (props) => {
   }
 
   const goToGeneratedInvoice = async (values) => {
+    await returnInvoiceObject(true, values.description, values.message);
     setisOpen(false);
     setIsOpenStep2(true);
   }
@@ -93,15 +95,6 @@ const ActionButtons = (props) => {
           </Grid>
           <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
-              title="PAGUAJ"
-              lightColor="#0d4d47"
-              addIcon={false}
-              onClick={goToPaymentMethod}
-              icon={<LocalAtmIcon />}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
-            <ButtonComponent
               title="RUAJ"
               lightColor="#74a19e"
               addIcon={false}
@@ -109,9 +102,18 @@ const ActionButtons = (props) => {
               icon={<PanToolIcon />}
             />
           </Grid>
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
+            <ButtonComponent
+              title="PAGUAJ"
+              lightColor="#0d4d47"
+              addIcon={false}
+              onClick={goToPaymentMethod}
+              icon={<LocalAtmIcon />}
+            />
+          </Grid>
           <ModalComponent open={isOpen} handleClose={toggleModal} title="">
             <Formik
-              initialValues={{ description: "" }}
+              initialValues={{ description: "", message: "" }}
               onSubmit={(values) => {
                 goToGeneratedInvoice(values);
               }}
@@ -128,6 +130,41 @@ const ActionButtons = (props) => {
                           {({ field, meta }) => (
                             <TextField
                               label="Përshkruaj Faturën"
+                              multiline
+                              error={meta.touched && meta.error}
+                              helperText={meta.error}
+                              InputProps={{
+                                style: {
+                                  fontFamily: "Poppins",
+                                  resize: "both",
+                                  width: 500,
+                                  marginTop: -15
+                                }
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  fontFamily: "Poppins",
+                                  marginTop: -15
+                                }
+                              }}
+                              {...field}
+                            />
+                          )}
+                        </Field>
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
+                    <div className={styles.subMainHolder}>
+                      <div className={styles.inputHolder}>
+                        <span className={styles.messageInvoice}>Mesazhi i faturës:</span>
+                        <Field name="message">
+                          {({
+                            field,
+                            meta
+                          }) => (
+                            <TextField
+                              label="p.sh: Ju Faleminderit!"
                               multiline
                               error={meta.touched && meta.error}
                               helperText={meta.error}
@@ -205,7 +242,7 @@ const ActionButtons = (props) => {
           </ModalComponent>
         </Grid>
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
-              <InvoiceCoupon />
+          <InvoiceCoupon data={couponObject}/>
         </ModalComponent>
       </div>
     </div>

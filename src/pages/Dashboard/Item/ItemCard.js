@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     height: "220px",
     padding: "10px 5px 0 3px",
-    width: "80%",
+    width: "90%",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   cardDisabled: {
     height: "220px",
     padding: "10px 5px 0 3px",
-    width: "80%",
+    width: "90%",
     boxShadow: "none",
     border: "1px solid #ebeff2",
     borderRadius: "0",
@@ -96,13 +96,13 @@ const ItemCard = (props) => {
         component="img"
         alt={props.item.name}
         image={props.item.imageVirtualPath ? (props.item.imageVirtualPath) : "https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg"}
-        style={{ width: 100, height: 100, margin: "auto", marginLeft: 5, marginTop: -5, borderRadius: "50%" }}
+        style={{ width: 90, height: 90, margin: "auto", marginLeft: 5, marginTop: -2, borderRadius: "50%" }}
       />
       <CardContent
         style={{
           padding: "5px",
           textAlign: "center",
-          marginTop: -8
+          marginTop: 2
         }}
       >
         <div
@@ -124,7 +124,7 @@ const ItemCard = (props) => {
           color="text.secondary"
           className={styles.stockText}
         >
-          Barcode: {Number(props.item.barcode)}
+          Barkodi: {Number(props.item.barcode)}
         </Typography>
         <Typography
           variant="body2"

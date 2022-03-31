@@ -13,16 +13,16 @@ export const navItems = [
     path: "/kategorite"
   },
   {
-    title: "Njesite e shitjes",
+    title: "Njesite matese",
     path: "/njesite-shitjes",
-  },
-  {
-    title: "Pikat e shitjes",
-    path: "/pikat-shitjes",
   },
   {
     title: "Furnizuesit",
     path: "/furnizuesit",
+  },
+  {
+    title: "Pikat e shitjes",
+    path: "/pikat-shitjes",
   },
   {
     title: "Perdoruesit",

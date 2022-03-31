@@ -36,7 +36,7 @@ const NavItems = () => {
       case "Kategorite":
         return <>
           <> <Box m={1} pt={1}> <CategoryIcon /> </Box> </> <span>{title}</span> </>;
-      case "Njesite e shitjes":
+      case "Njesite matese":
         return <>
           <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>{title}</span> </>;
       case "Pikat e shitjes":
