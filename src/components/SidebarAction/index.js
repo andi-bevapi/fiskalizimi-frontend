@@ -8,6 +8,8 @@ import SnackbarComponent from '../Snackbar';
 import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
+import { useModel } from 'umi';
+import User from '../../models/User';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -19,6 +21,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SidebarAction = (props) => {
+  const { initialState, setInitialState } = useModel('@@initialState');
   const classes = useStyles();
 
   const [fields, setFields] = useState(props.formFields);
@@ -134,6 +137,15 @@ const SidebarAction = (props) => {
     postData(values);
   };
 
+  const setCurrentUser = async (values, permissions) => {
+    const newUser = new User({
+      ...values,
+      clientId: initialState?.currentUser?.clientId,
+      permissions
+    });
+    await setInitialState({ ...initialState, currentUser: newUser });
+  };
+
   const postData = async (values) => {
     const permissions = [];
     if (props.user) {
@@ -151,14 +163,16 @@ const SidebarAction = (props) => {
         let id = values.id;
         delete values.id;
         response = await action(id, {
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
+        setCurrentUser(values, permissions);
       } else {
         response = await action({
-          user: { ...values, clientId: 1, isFirstTimeLogin: props.editItem ? false : true },
+          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
           permissions: permissions,
         });
+        setCurrentUser(values, permissions);
       }
     } else {
       response = await action({
