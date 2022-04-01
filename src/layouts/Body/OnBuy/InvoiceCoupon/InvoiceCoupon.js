@@ -7,20 +7,15 @@ import QRCode from "react-qr-code";
 const InvoiceCoupon = (props) => {
     let componentRef = useRef();
 
-    const [value, setValue] = useState("test");
+    const [value, setValue] = useState("");
     const url = `https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify`;
     const tin = "L91806031N";
-
-    // `https://efiskalizimi-app-test.tatime.gov.al/invoice-
-    // check/#/verify?iic=EA26D5BE7F45827026108F825A8A512B&tin=L91806031N&crtd=2019-09-
-    // 26T13:50:13+01:00&ord=6&bu=bg517kw842&cr=xb131ap287&sw=gz434bv927&prc=199.00`
 
     useEffect(() => {
         const date = new Date(props.data.dateTime).toISOString().split(".")[0].concat("+01:00");
         const orderNumber = props.data.invoiceCode.split("/")[0];
         const tmp = url.concat("?iic=", props.data.nslf, "&tin=", tin, "&crtd=", date, "&ord=", orderNumber, "&bu=", 
         props.data.businessUnitCode, "&cr=", props.data.TRCCode, "&sw=", props.data.softCode, "&prc=", props.data.totalAmount);
-        console.log(tmp);
         setValue(tmp);
 
     })
