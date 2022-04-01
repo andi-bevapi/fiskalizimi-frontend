@@ -26,5 +26,6 @@ export default function (initialState) {
         canCreateUser: permissions.includes('permission.user.create'),
         canUpdateUser: permissions.includes('permission.user.update'),
         canDeleteUser: permissions.includes('permission.user.delete'),
+        canViewReports: permissions.includes('permission.reports.view'),
     };
 }

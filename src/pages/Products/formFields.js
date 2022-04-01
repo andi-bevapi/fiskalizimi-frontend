@@ -99,5 +99,6 @@ export const validationSchema = yup.object({
     branchId:  yup.number().required("Ju lutem zgjidhni degen"),
     categoryId:  yup.number().required("Ju lutem zgjidhni kategorine"),
     sellingUnitId: yup.number().required("Ju lutem zgjidhni njesine matese"),
-    supplierId: yup.number().required("Ju lutem zgjidhni Furnitoret")
+    supplierId: yup.number().required("Ju lutem zgjidhni Furnitoret"),
+    imageVirtualPath: yup.string()
 });

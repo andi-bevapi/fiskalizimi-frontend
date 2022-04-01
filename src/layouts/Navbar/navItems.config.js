@@ -34,6 +34,11 @@ export const navItems = [
     access: 'canViewUser'
   },
   {
+    title: "Raportet",
+    path: "/raportet",
+    access: 'canViewReports'
+  },
+  {
     title: "Konfigurime",
     path: "/konfigurime",
   },

@@ -49,6 +49,9 @@ const NavItems = () => {
       case "Perdoruesit":
         return <>
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{title}</span> </>;
+      case "Raportet":
+        return <>
+          <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{title}</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{title}</span> </>;
