@@ -174,7 +174,7 @@ tbody > tr > td {
 }
 
 .buttonStyle {
-  background-color: #17625D !important;
+  background-color: #ff7a00 !important;
   font-family: 'Poppins'!important;
 }  
 
@@ -185,17 +185,16 @@ tbody > tr > td {
 
 
 .totalPrice{
-  padding: 5px 1px;
   font-weight: bold !important;
-  font-size: 22px !important;
-  color: #db6a00 !important;
+  font-size: 18px !important;
+  color: #317a6a !important;
   font-family: "Poppins",sans-serif !important;
 }
 
 .describeInvoice{
   font-family: 'Poppins';
   font-size: 18px;
-  margin-right: 17%;
+  /* margin-right: 17%; */
 }
 
 .messageInvoice{
@@ -208,4 +207,56 @@ tbody > tr > td {
   font-family: 'Poppins';
   font-size: 18px;
   margin-right: 20%;
+}
+
+.paymentMethodsDiv{
+  
+}
+
+.cashPayment{
+  background: #0a4741 !important;
+  padding: 10px 35px !important;
+  border-radius: 7px !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  font-family: 'Poppins' !important;
+  cursor: pointer !important;
+}
+
+.bankPayment{
+  background: #83b2a8 !important;
+  padding: 10px 31px !important;
+  border-radius: 7px !important;
+  color: #0a4741 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  font-family: 'Poppins' !important;
+  margin-top: 8px !important;
+}
+
+.bankPayment:disabled{
+  background: #83b2a89c !important;
+}
+
+.bankPayment:disabled:hover{
+  cursor: not-allowed !important;
+}
+
+.calculatorButtons{
+  display: flex;
+}
+
+.calculatorDiv{
+  display: block;
+}
+
+.numberButton{
+  border: 1px solid #b3d0ca !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 65px;
+  font-size: 24px !important;
+  font-family: 'Poppins' !important;
+  font-weight: 600 !important;
 }

@@ -56,21 +56,26 @@ const SearchByBarcode = (props) => {
   const scanBarcode = async () => {
     const product = await getProductByBarcode(barcode);
     if (product) {
-      setScannedProduct(product)  
-      setHasBarcodeData(true);
-      const productFromInvoice = listedInvoiceProducts?.filter(item => item.id === product.id);
-      if(productFromInvoice.length > 0){
-        if (productFromInvoice[0].stockCheck) {
-            if(productFromInvoice[0].quantity >= product.stock){
+      if (Number(product.stock).toFixed(0) != 0) {
+        setScannedProduct(product)
+        setHasBarcodeData(true);
+        const productFromInvoice = listedInvoiceProducts?.filter(item => item.id === product.id);
+        if (productFromInvoice.length > 0) {
+          if (productFromInvoice[0].stockCheck) {
+            if (productFromInvoice[0].quantity >= product.stock) {
               setStopAddingProduct(true);
-            }else{
+            } else {
               addToInvoiceList(product, productFromInvoice[0].quantity + 1);
             }
+          } else {
+            addToInvoiceList(product, productFromInvoice[0].quantity + 1);
+          }
         } else {
-          addToInvoiceList(product, productFromInvoice[0].quantity + 1);
+          addToInvoiceList(product, 1)
         }
       }else{
-        addToInvoiceList(product, 1)
+        setHasBarcodeData(false);
+        handleSwalNoStock();
       }
     } else {
       setHasBarcodeData(false);
@@ -81,6 +86,18 @@ const SearchByBarcode = (props) => {
   const handleSwal = async () => {
     return SwalModal(
       "Nuk u gjet asnjë produkt me këtë barkod!",
+      "",
+      "warning",
+      "Mbyll",
+      "",
+      () => { },
+      () => { },
+    );
+  };
+
+  const handleSwalNoStock = async () => {
+    return SwalModal(
+      "Ky produkt nuk ka stok",
       "",
       "warning",
       "Mbyll",
