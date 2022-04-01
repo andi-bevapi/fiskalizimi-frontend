@@ -37,3 +37,11 @@
     font-size: 22px;
     padding-left: 50px;
 }
+
+.mainPageLink {
+    font-size: 17px !important;
+    font-family: 'Poppins' !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    padding: 0 25px !important;
+}

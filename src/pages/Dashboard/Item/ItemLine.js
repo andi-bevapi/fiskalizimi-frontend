@@ -5,14 +5,16 @@ import styles from "./ItemLine.module.css";
 const ItemLine = (props) => {
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
-  const [stopAdding, setStopAdding] = useState(false);
+  const [stopAdding, setStopAdding] = useState(true);
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
     (arrayProduct[0]?.stockCheck ? (
-      (arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
-    ) : (setStopAdding(false)));
-    ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+      ((arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) || Number(product.stock) == 0) ? (setStopAdding(true)) : (setStopAdding(false)))
+    ) : (
+      (Number(product.stock).toFixed(0) == 0 ? (() => {setStopAdding(true)}) : (setStopAdding(false)))
+    ));
+    // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
   }, [props.invoiceList]);
 
   const handleCardClick = () => {

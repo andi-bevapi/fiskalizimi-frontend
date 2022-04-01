@@ -35,6 +35,7 @@ const ActionButtons = (props) => {
   const toggleModalStep2 = () => {
     setIsOpenStep2(!isOpenStep2);
     deleteInvoice();
+    window.location.reload(false);
   }
 
   const goToGeneratedInvoice = async (values) => {
