@@ -25,8 +25,11 @@ const InvoiceProvider = (props) => {
 
     useEffect(() => {
         // console.log("initialState?.currentUser?", initialState?.currentUser);
-        getListOfInvoices("pending");
     }, [initialState?.currentUser]);
+
+    useEffect(() => {
+        if (activeInvoice == "pending") getListOfInvoices("pending");
+    }, [activeInvoice]);
 
     //Method to add products in the invoice list
     const addToInvoiceList = (product, productQuantity) => {
