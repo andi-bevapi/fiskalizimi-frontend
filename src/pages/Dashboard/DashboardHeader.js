@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';;
+import { useState, useEffect } from 'react';;
 import AppsIcon from '@mui/icons-material/Apps';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import BodyDashboard from './Body';
@@ -14,6 +14,12 @@ const DashboardHeader = () => {
     const { productList, isLoading } = useContextProduct();
     const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
     const [display, setDisplay] = useState('cards');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (productList? (setLoading(false)) : (setLoading(true)))
+      }, [productList]);
+    
 
     return (
         <div className={styles.container}>

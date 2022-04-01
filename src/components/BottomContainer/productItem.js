@@ -48,7 +48,7 @@ const BottomContainer = (props) => {
                 <span className={styles.details}><b>{props.index + 1}) </b></span>
                 <span className={styles.details}><b>{props.item.name}</b></span>
                 <span className={styles.details}>Përshkrimi: {props.item.description}</span>
-                <span className={styles.details}>Çmimi: {Number(props.item.price).toFixed(2)} ALL</span>
+                <span className={styles.details}>Çmimi: {Number(props.item.price).toFixed(2)} LEK</span>
                 <span className={styles.details}>Stoku: {props.item.stock}</span>
                 <span className={styles.details}>Barkodi: {props.item.barcode}</span>
             </p>

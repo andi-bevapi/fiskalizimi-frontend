@@ -18,7 +18,7 @@ const BottomContainer = (props) => {
             <p className={styles.noData}>Nuk u gjet asnjë produkt me këtë barkod</p>
            ) : (
             <>
-            {props.searchedItem.map((item, index) => {
+            {props.searchedItem?.map((item, index) => {
               return(
                    <ProductItem key={index} index={index} item={item} addToList={props.addToList} invoiceList={props.invoiceList}/>
               )

@@ -19,12 +19,13 @@ export default function (initialState) {
         canUpdateSupplier: permissions.includes('permission.supplier.update'),
         canDeleteSupplier: permissions.includes('permission.supplier.delete'),
         canViewSellingUnit: permissions.includes('permission.sellingUnit.view'),
-        canCreateSellinUnit: permissions.includes('permission.sellingUnit.create'),
+        canCreateSellingUnit: permissions.includes('permission.sellingUnit.create'),
         canUpdateSellingUnit: permissions.includes('permission.sellingUnit.update'),
         canDeleteSellingUnit: permissions.includes('permission.sellingUnit.delete'),
         canViewUser: permissions.includes('permission.user.view'),
         canCreateUser: permissions.includes('permission.user.create'),
         canUpdateUser: permissions.includes('permission.user.update'),
         canDeleteUser: permissions.includes('permission.user.delete'),
+        canViewReports: permissions.includes('permission.reports.view'),
     };
 }
