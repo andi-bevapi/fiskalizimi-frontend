@@ -192,6 +192,9 @@ const InvoiceProvider = (props) => {
             clientName: invoiceData.client.name,
             clientNUIS: invoiceData.client.NUIS,
             clientAddress: invoiceData.client.address,
+            TRCCode: invoiceData.client.TCRCode,
+            softCode: invoiceData.client.softCode,
+            businessUnitCode: invoiceData.branch.businessUnitCode,
             dateTime: String(date), //will be returned from post response
             branchCode: invoiceData.branch.code, //TODO
             operatorCode: initialState?.currentUser.operatorCode,

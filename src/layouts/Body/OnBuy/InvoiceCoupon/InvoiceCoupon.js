@@ -1,11 +1,29 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Divider, Button } from '@mui/material';
 import styles from './coupon.css';
-import qrcode from '../../../../assets/images/qrcodexample.png'
 import ReactToPrint from "react-to-print";
+import QRCode from "react-qr-code";
 
 const InvoiceCoupon = (props) => {
     let componentRef = useRef();
+
+    const [value, setValue] = useState("test");
+    const url = `https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify`;
+    const tin = "L91806031N";
+
+    // `https://efiskalizimi-app-test.tatime.gov.al/invoice-
+    // check/#/verify?iic=EA26D5BE7F45827026108F825A8A512B&tin=L91806031N&crtd=2019-09-
+    // 26T13:50:13+01:00&ord=6&bu=bg517kw842&cr=xb131ap287&sw=gz434bv927&prc=199.00`
+
+    useEffect(() => {
+        const date = new Date(props.data.dateTime).toISOString().split(".")[0].concat("+01:00");
+        const orderNumber = props.data.invoiceCode.split("/")[0];
+        const tmp = url.concat("?iic=", props.data.nslf, "&tin=", tin, "&crtd=", date, "&ord=", orderNumber, "&bu=", 
+        props.data.businessUnitCode, "&cr=", props.data.TRCCode, "&sw=", props.data.softCode, "&prc=", props.data.totalAmount);
+        console.log(tmp);
+        setValue(tmp);
+
+    })
 
     return (
         <>
@@ -64,7 +82,9 @@ const InvoiceCoupon = (props) => {
                         <span><b>Total meTVSH</b></span> <span className={styles.rightText}><b>{props.data.totalAmount}</b></span><br />
                     </div>
                     <br />
-                    <img src={qrcode} className={styles.qrCode} />
+                    <div style={{ background: 'white', padding: '16px' }}>
+                        <QRCode value={value} size={200} />
+                    </div>
                     <br />
                     <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br />
                     <span className={styles.couponText}>NSLF: {props.data.nslf}</span>
