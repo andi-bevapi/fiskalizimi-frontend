@@ -8,13 +8,23 @@ import styles from '../../../OnBuy/ItemsOnBuy.module.css';
 import { Grid } from '@mui/material';
 import { useInvoiceContext } from '../../../../../Context/InvoiceContext';
 import ModalComponent from '../../../../../components/Modal/Modal';
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from 'formik';
+import TextField from '@mui/material/TextField';
 import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
 
 const ActionButtons = (props) => {
-  const { deleteInvoice, invoiceFinalObject, listedInvoiceProducts, returnInvoiceObject, couponObject } = useInvoiceContext();
+  const {
+    deleteInvoice,
+    invoiceFinalObject,
+    listedInvoiceProducts,
+    returnInvoiceObject,
+    createPendingInvoice,
+    couponObject
+  } = useInvoiceContext();
   const [isOpen, setisOpen] = useState(false);
+  const [freeze, setFreeze] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
+  const [openForFreeze, setOpenForFreeze] = useState(false);
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
@@ -23,10 +33,16 @@ const ActionButtons = (props) => {
     (!returnChange ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : null);
   }, [invoiceFinalObject]);
 
+
+  useEffect(() => {
+    if (freeze) createPendingInvoice();
+    setFreeze(false);
+  }, [invoiceFinalObject]);
+
   const goToPaymentMethod = () => {
-    (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)));
+    (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)))
     returnInvoiceObject(false);
-  }
+  };
 
   const toggleModal = () => {
     setisOpen(!isOpen);
@@ -36,6 +52,10 @@ const ActionButtons = (props) => {
     setIsOpenStep2(!isOpenStep2);
     deleteInvoice();
     window.location.reload(false);
+  }
+
+  const toggleModalFreeze = () => {
+    setOpenForFreeze(!openForFreeze);
   }
 
   const goToGeneratedInvoice = async (values) => {
@@ -74,19 +94,29 @@ const ActionButtons = (props) => {
     }
   }
 
+  const savePendingInvoice = async (values) => {
+    setFreeze(true);
+    setOpenForFreeze(false);
+    await returnInvoiceObject(false, values.idCode);
+  }
+
   return (
     <div className={styles.actionButtonContainer}>
       <div
         sx={{
           width: '1050%',
         }}
-      >
-      </div>
-      <div
-        className={styles.buttonsList}
-      >
-        <Grid container marginBottom={1} spacing={1} alignItems="center" direction="row" justifyContent="center">
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+      ></div>
+      <div className={styles.buttonsList}>
+        <Grid
+          container
+          marginBottom={1}
+          spacing={1}
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+        >
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="FSHI"
               lightColor="rgb(240, 80, 80)"
@@ -95,16 +125,16 @@ const ActionButtons = (props) => {
               icon={<BlockIcon />}
             />
           </Grid>
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="RUAJ"
               lightColor="#74a19e"
               addIcon={false}
-              onClick={props.freeze}
+              onClick={toggleModalFreeze}
               icon={<PanToolIcon />}
             />
           </Grid>
-          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: "center" }}>
+          <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
               title="PAGUAJ"
               lightColor="#0d4d47"
@@ -213,6 +243,47 @@ const ActionButtons = (props) => {
         </Grid>
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
           <InvoiceCoupon data={couponObject} />
+        </ModalComponent>
+        <ModalComponent open={openForFreeze} handleClose={toggleModalFreeze} title="">
+            <Formik
+              initialValues={{ idCode: ""}}
+              onSubmit={(values) => {
+                savePendingInvoice(values);
+              }}
+            >
+              <Form>
+                <span className={styles.payTitle}>Vendos kodin identifikues</span>
+                <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+                <Field name="idCode">
+                  {({ field, meta }) => (
+                    <TextField
+                      required
+                      label="Kodi Identifikues"
+                      multiline
+                      error={meta.touched && meta.error}
+                      helperText={meta.error}
+                      InputProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                          resize: "both",
+                          width: 300,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                        }
+                      }}
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <br></br>
+                <Button variant="contained" style={{ marginTop: 10}}  type="submit" >
+                  Ruaj
+                </Button>
+              </Form>
+            </Formik>
         </ModalComponent>
       </div>
     </div>
