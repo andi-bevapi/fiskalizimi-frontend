@@ -11,14 +11,15 @@ const BottomContainer = (props) => {
         (arrayProduct[0]?.stockCheck ? (
             (arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
         ) : (
-            (Number(product.stock).toFixed(0) == 0 ? (() => {setStopAdding(true)}) : (setStopAdding(false)))
-          ));
+            (Number(product.stock).toFixed(0) == 0 ? (() => { setStopAdding(true) }) : (setStopAdding(false)))
+        ));
         //((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
     }, [props.invoiceList], props.item);
 
 
     const handleProductClick = () => {
-        const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
+        if(!stopAdding){
+            const isExisting = ((props.invoiceList?.filter(item => item.id === product.id)).length >= 1 ? true : false);
         const arrayProduct = (props.invoiceList?.filter(item => item.id === product.id));
         if (product.stockCheck) {
             if (isExisting) {
@@ -30,7 +31,8 @@ const BottomContainer = (props) => {
                 }
             } else {
                 setProductQuantity(1);
-                (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToList(product, 1)));
+                props.addToList(product, 1);
+                (Number(product.stock) == 1 ? (setStopAdding(true)) : (setStopAdding(false)));
             }
         } else {
             if (isExisting) {
@@ -40,6 +42,7 @@ const BottomContainer = (props) => {
                 setProductQuantity(1);
                 (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToList(product, 1)));
             }
+        }
         }
 
     }
