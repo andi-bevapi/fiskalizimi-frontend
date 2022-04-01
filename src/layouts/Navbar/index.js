@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <div className={styles.navContainer}>
-      <div >
+      <div>
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
