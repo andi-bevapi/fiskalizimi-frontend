@@ -5,6 +5,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import NavItems from './NavItems';
 import styles from '../components/navigationStyles.css'
+import { history } from 'umi';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles({
   fab: {
@@ -49,6 +51,7 @@ const SideDrawer = () => {
       <Drawer anchor="left" className={classes.drawer} open={state.right} onClose={toggleDrawer('left', false)}>
         {sideDrawerList('left')}
       </Drawer>
+      <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}>Faqja kryesore</Button>
     </React.Fragment>
   );
 };

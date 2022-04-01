@@ -1,13 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProductByBarcode } from './../services/product';
+import { getProductByBarcode, updateProduct } from '../services/product';
 import { createInvoice, getInvoices } from "../services/invoice";
 import { getAllBranch } from '../services/branchList';
 
 import { useModel } from 'umi';
+import { useContextProduct } from './ProductContext';
 
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
+    const { productToUpdate, productToDelete } = useContextProduct();
+
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
@@ -69,6 +72,10 @@ const InvoiceProvider = (props) => {
                 stock: product.stock,
                 stockCheck: product.stockCheck,
                 vat: product.vat,
+                barcode: product.barcode,
+                sellingUnitId: product.sellingUnitId,
+                categoryId: product.categoryId,
+                supplierId: product.supplierId
             }
             getTotalPriceWithoutVAT();
             setListedInvoiceProducts((prevState) => [...prevState, newProduct]);
@@ -213,7 +220,7 @@ const InvoiceProvider = (props) => {
             invoiceItems: [...invoiceItemsArray]
         }
         setInvoiceFinalObject(invoiceObject);
-        if(shouldPost) await postInvoice(invoiceObject);
+        if (shouldPost) await postInvoice(invoiceObject);
     }
 
     //POST method to register Invoice DB
@@ -256,6 +263,32 @@ const InvoiceProvider = (props) => {
             message: invoiceObject.message,
         }
         setCouponObject(couponGenerateObject);
+        updateProductsStock(couponGenerateObject.productList);
+    }
+
+    //Method that updates product stock after selling
+    const updateProductsStock = (updatedroductsInvoice) => {
+        let updatedStock = 0;
+        (listedInvoiceProducts.map((product) => {
+            updatedStock = updatedroductsInvoice?.filter(item => item.productId === product.id)[0];
+                let body = {
+                    id: product.id,
+                    name: product.name, 
+                    description: product.description,
+                    price: product.price, 
+                    barcode: product.barcode, 
+                    vat: product.vat, 
+                    supplierId: product.supplierId, 
+                    stock: Number(product.stock - updatedStock.quantity), 
+                    stockCheck: product.stockCheck, 
+                    branchId: initialState?.currentUser?.branchId,
+                    sellingUnitId: product.sellingUnitId, 
+                    categoryId: product.categoryId, 
+                    isActive: true,
+                    isDeleted: false,
+                }
+                productToUpdate(body);
+        }))
     }
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
