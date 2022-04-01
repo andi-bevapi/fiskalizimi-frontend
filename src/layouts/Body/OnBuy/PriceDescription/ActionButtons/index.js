@@ -8,16 +8,20 @@ import styles from '../../../OnBuy/ItemsOnBuy.module.css';
 import { Grid } from '@mui/material';
 import { useInvoiceContext } from '../../../../../Context/InvoiceContext';
 import ModalComponent from '../../../../../components/Modal/Modal';
-import { Form, Formik, Field } from "formik";
-import TextField from "@mui/material/TextField";
+import { Form, Formik } from "formik";
 import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
 
 const ActionButtons = (props) => {
   const { deleteInvoice, invoiceFinalObject, listedInvoiceProducts, returnInvoiceObject, couponObject } = useInvoiceContext();
   const [isOpen, setisOpen] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
-  const [returnChange, setReturnChange] = useState();
+  const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    (!returnChange ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : null);
+  }, [invoiceFinalObject]);
 
   const goToPaymentMethod = () => {
     (listedInvoiceProducts.length == 0 ? null : (setisOpen(true)));
@@ -39,14 +43,34 @@ const ActionButtons = (props) => {
     setIsOpenStep2(true);
   }
 
-  const calculateMoney = (field) => {
-    if (Number(field.value) >= Number(invoiceFinalObject?.totalAmount).toFixed(2)) {
-      setDisabledSubmit(false)
-    } else {
-      setDisabledSubmit(true)
+  const calculateMoney = (value) => {
+    switch (value) {
+      case "C":
+        setAmount(0);
+        setReturnChange(-Number(invoiceFinalObject?.totalAmount));
+        setDisabledSubmit(true);
+        break;
+
+      case "D":
+        setAmount(Math.floor(amount / 10));
+        setReturnChange(Number(Math.floor(amount / 10)) - Number(invoiceFinalObject?.totalAmount).toFixed(2));
+        if (Number(amount + String(value)) >= Number(invoiceFinalObject?.totalAmount).toFixed(2)) {
+          setDisabledSubmit(false)
+        } else {
+          setDisabledSubmit(true)
+        }
+        break;
+
+      default:
+        setAmount(amount + String(value));
+        if (Number(amount + String(value)) >= Number(invoiceFinalObject?.totalAmount).toFixed(2)) {
+          setDisabledSubmit(false)
+        } else {
+          setDisabledSubmit(true)
+        }
+        const returnMoney = (Number(amount + String(value)) - Number(invoiceFinalObject?.totalAmount)).toFixed(2);
+        (isNaN(returnMoney) ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : (setReturnChange(returnMoney)));
     }
-    const returnMoney = (Number(field.value) - Number(invoiceFinalObject?.totalAmount)).toFixed(2);
-    (isNaN(returnMoney) ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : (setReturnChange(returnMoney)));
   }
 
   return (
@@ -100,7 +124,6 @@ const ActionButtons = (props) => {
                 <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                 <Grid container marginBottom={1} spacing={1} direction="row">
                   <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
-                    <Grid item xs={12} sm={12} md={1}> </Grid>
                     <Grid item xs={12} sm={12} md={5}>
                       <div className={styles.subMainHolder}>
                         <div className={styles.paymentMethodsDiv}>
@@ -119,80 +142,53 @@ const ActionButtons = (props) => {
                         <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
                       </div>
                       <div className={styles.subMainHolder}>
-                        <Field name="sum">
-                          {({
-                            field,
-                            meta
-                          }) => (
-                            <TextField
-                              onChange={calculateMoney(field)}
-                              type="number"
-                              label="Vendosni Shumën"
-                              error={meta.touched && meta.error}
-                              helperText={meta.error}
-                              InputProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  resize: "both",
-                                  width: 245,
-                                  marginTop: -15,
-                                  marginBottom: 20
-                                }
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontFamily: "Poppins",
-                                  marginTop: -15
-                                }
-                              }}
-                              {...field}
-                            />
-                          )}
-                        </Field>
+                        <div className={styles.amountEntered}>
+                          <span className={styles.describeInvoice}><b>Shuma: </b> &nbsp; {Number(amount)} LEK</span>
+                        </div>
                         <br />
                         <Grid item xs={12} md={12} className={styles.calculatorDiv}>
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 1 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(1) }}> 1 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 2 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(2) }}> 2 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 3 </Button>
-                            </Grid>
-                          </div>
-                          <div className={styles.calculatorButtons}>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 4 </Button>
-                            </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 5 </Button>
-                            </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 6 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(3) }}> 3 </Button>
                             </Grid>
                           </div>
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 7 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(4) }}> 4 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 8 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(5) }}> 5 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 9 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(6) }}> 6 </Button>
                             </Grid>
                           </div>
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> C </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(7) }}> 7 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                              <Button className={styles.numberButton}> 0 </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(8) }}> 8 </Button>
                             </Grid>
-                            <Grid item xs={2} md={2}>
-                               <Button className={styles.numberButton}> Fshi </Button>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(9) }}> 9 </Button>
+                            </Grid>
+                          </div>
+                          <div className={styles.calculatorButtons}>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney("C") }}> C </Button>
+                            </Grid>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney(0) }}> 0 </Button>
+                            </Grid>
+                            <Grid item xs={3} md={3}>
+                              <Button className={styles.numberButton} onClick={() => { calculateMoney("D") }}> Fshi </Button>
                             </Grid>
                           </div>
                         </Grid>
