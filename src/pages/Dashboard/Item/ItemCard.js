@@ -51,14 +51,16 @@ const ItemCard = (props) => {
   const classes = useStyles();
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
-  const [stopAdding, setStopAdding] = useState(false);
+  const [stopAdding, setStopAdding] = useState(true);
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
     (arrayProduct[0]?.stockCheck ? (
       (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
-    ) : (setStopAdding(false)));
-    ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+    ) : (
+      (Number(product.stock).toFixed(0) == 0 ? (() => {setStopAdding(true)}) : (setStopAdding(false)))
+    ));
+    // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(true));
   }, [props.invoiceList]);
 
 
@@ -88,6 +90,7 @@ const ItemCard = (props) => {
       }
     }
   }
+
   return (
     <Card className={stopAdding ? classes.cardDisabled : classes.card}
       onClick={() => handleCardClick()}
