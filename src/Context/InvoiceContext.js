@@ -156,7 +156,6 @@ const InvoiceProvider = (props) => {
         } catch (error) {
             console.log(error);
         }
-        setActiveInvoice("pending");
         deleteInvoice();
     }
 

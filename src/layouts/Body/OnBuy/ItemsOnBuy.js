@@ -223,7 +223,7 @@ const ItemsOnBuy = () => {
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead}>Nr.</TableCell>
+                  <TableCell className={styles.tableHead}>Kodi</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
                     Produkte
                   </TableCell>
@@ -237,9 +237,9 @@ const ItemsOnBuy = () => {
               </TableHead>
 
               <TableBody>
-                {pendingInvoices.map((invoice, key) => (
+                {pendingInvoices?.map((invoice, key) => (
                   <TableRow key={invoice.id}>
-                    <TableCell className={styles.tableBodyCell}>{key + 1}</TableCell>
+                    <TableCell className={styles.tableBodyCell}>{invoice.description}</TableCell>
                     <TableCell className={styles.tableBodyCell}>{invoice.items.length}</TableCell>
                     <TableCell className={styles.tableBodyCell}>{invoice.totalAmount} </TableCell>
                     <TableCell className={styles.tableBodyCell}>

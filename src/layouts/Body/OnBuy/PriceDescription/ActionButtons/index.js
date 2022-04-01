@@ -24,6 +24,7 @@ const ActionButtons = (props) => {
   const [isOpen, setisOpen] = useState(false);
   const [freeze, setFreeze] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
+  const [openForFreeze, setOpenForFreeze] = useState(false);
   const [returnChange, setReturnChange] = useState();
   const [disabledSubmit, setDisabledSubmit] = useState(true);
 
@@ -47,6 +48,10 @@ const ActionButtons = (props) => {
     deleteInvoice();
   }
 
+  const toggleModalFreeze = () => {
+    setOpenForFreeze(!openForFreeze);
+  }
+
   const goToGeneratedInvoice = async (values) => {
     await returnInvoiceObject(true, values.description, values.message);
     setisOpen(false);
@@ -63,10 +68,11 @@ const ActionButtons = (props) => {
     (isNaN(returnMoney) ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : (setReturnChange(returnMoney)));
   }
 
-  const freezeInvoice = () => {
+  const savePendingInvoice = async (values) => {
     setFreeze(true);
-    returnInvoiceObject();
-  };
+    setOpenForFreeze(false);
+    await returnInvoiceObject(false, values.idCode);
+  }
 
   return (
     <div className={styles.actionButtonContainer}>
@@ -98,7 +104,7 @@ const ActionButtons = (props) => {
               title="RUAJ"
               lightColor="#74a19e"
               addIcon={false}
-              onClick={freezeInvoice}
+              onClick={toggleModalFreeze}
               icon={<PanToolIcon />}
             />
           </Grid>
@@ -243,6 +249,47 @@ const ActionButtons = (props) => {
         </Grid>
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
           <InvoiceCoupon data={couponObject}/>
+        </ModalComponent>
+        <ModalComponent open={openForFreeze} handleClose={toggleModalFreeze} title="">
+            <Formik
+              initialValues={{ idCode: ""}}
+              onSubmit={(values) => {
+                savePendingInvoice(values);
+              }}
+            >
+              <Form>
+                <span className={styles.payTitle}>Vendos kodin identifikues</span>
+                <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+                <Field name="idCode">
+                  {({ field, meta }) => (
+                    <TextField
+                      required
+                      label="Kodi Identifikues"
+                      multiline
+                      error={meta.touched && meta.error}
+                      helperText={meta.error}
+                      InputProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                          resize: "both",
+                          width: 300,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                        }
+                      }}
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <br></br>
+                <Button variant="contained" style={{ marginTop: 10}}  type="submit" >
+                  Ruaj
+                </Button>
+              </Form>
+            </Formik>
         </ModalComponent>
       </div>
     </div>
