@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProducts, createProduct, updateProduct, deleteProduct } from "../services/product";
+import { getProducts, createProduct, updateProduct, deleteProduct, returnProductWithBarcode } from "../services/product";
 import { useModel } from 'umi';
 
 const ProductContext = createContext({});
@@ -7,10 +7,11 @@ const ProductContext = createContext({});
 const ProductProvider = (props) => {
     const { initialState } = useModel('@@initialState');
     const [productList, setProductList] = useState([]);
+    const [filteredProduct, setFilteredProduct] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if(initialState?.currentUser?.branchId) getProductsList();
+        if (initialState?.currentUser?.branchId) getProductsList();
     }, [initialState?.currentUser])
 
     const getProductsList = async (query = {}) => {
@@ -59,7 +60,19 @@ const ProductProvider = (props) => {
         }
     }
 
-    const values = { productList, setProductList, productToCreate, productToUpdate, productToDelete, getProductsList, isLoading }
+    const getProductByBarcode = async (barcode) => {
+        try {
+            const result = await returnProductWithBarcode(barcode);
+            if(result.statusCode == 200){
+                setFilteredProduct(result.data);
+                return result.data;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const values = { productList, setProductList, productToCreate, productToUpdate, productToDelete, getProductsList, isLoading, filteredProduct, getProductByBarcode }
 
     return (
         <ProductContext.Provider value={values}>
