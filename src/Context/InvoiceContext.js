@@ -1,25 +1,40 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProductByBarcode } from '../services/product';
+import { getProductByBarcode, updateProduct } from '../services/product';
+import { createInvoice, getInvoices } from "../services/invoice";
 import { getAllBranch } from '../services/branchList';
-import { submitInvoice } from '../services/invoice';
+
 import { useModel } from 'umi';
+import { useContextProduct } from './ProductContext';
 
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
+    const { productToUpdate, productToDelete } = useContextProduct();
+
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
     const [totalPriceVAT, setTotalPriceVAT] = useState(0); //The value of total price with VAT
     const [totalAmountNoVAT, settotalAmountNoVAT] = useState(0); //The value of total price without VAT
     const [totalVAT, setTotalVAT] = useState(0); //The value of total VAT
+    const [activeInvoice, setActiveInvoice] = useState("active");  //The tab of invoices opened, values are active or pending
     const [totalVat6, settotalVat6] = useState(0); //The value of total 6% VAT
     const [totalVat20, settotalVat20] = useState(0); //The value of total 20% VAT
     const { initialState } = useModel('@@initialState');
     const [invoiceFinalObject, setInvoiceFinalObject] = useState({});
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
+    const [pendingInvoices, setPendingInvoices] = useState([]);
     const [couponObject, setCouponObject] = useState({});
 
-    //Method to products in the invoice list
+
+    useEffect(() => {
+        // console.log("initialState?.currentUser?", initialState?.currentUser);
+    }, [initialState?.currentUser]);
+
+    useEffect(() => {
+        if (activeInvoice == "pending") getListOfInvoices("pending");
+    }, [activeInvoice]);
+
+    //Method to add products in the invoice list
     const addToInvoiceList = (product, productQuantity) => {
         setIsLoading(true);
         let vatValueProduct = 0;
@@ -57,9 +72,13 @@ const InvoiceProvider = (props) => {
                 stock: product.stock,
                 stockCheck: product.stockCheck,
                 vat: product.vat,
+                barcode: product.barcode,
+                sellingUnitId: product.sellingUnitId,
+                categoryId: product.categoryId,
+                supplierId: product.supplierId
             }
             getTotalPriceWithoutVAT();
-            setListedInvoiceProducts([...listedInvoiceProducts, newProduct]);
+            setListedInvoiceProducts((prevState) => [...prevState, newProduct]);
         }
         setIsLoading(false);
     }
@@ -137,6 +156,44 @@ const InvoiceProvider = (props) => {
         }
     }
 
+    const createPendingInvoice = async () => {
+        const data = invoiceFinalObject;
+        data.status = "pending";
+        data.quantity = listedInvoiceProducts?.length;
+        try {
+            const response = await createInvoice(data);
+            getListOfInvoices("pending");
+        } catch (error) {
+            console.log(error);
+        }
+        deleteInvoice();
+    }
+
+    const updateInvoiceToActive = async (invoice) => {
+        setActiveInvoice("active");
+        const items = invoice.items;
+        delete invoice["items"];
+        invoice.invoiceItems = items;
+        invoice.status = "active";
+        try {
+            const response = await createInvoice(invoice);
+            getListOfInvoices("pending");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getListOfInvoices = async (status) => {
+        try {
+            const response = await getInvoices(initialState?.currentUser?.branchId, status);
+            if (response.statusCode == 200) {
+                setPendingInvoices(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     //Method that returns the full invoice object
     const returnInvoiceObject = async (shouldPost = true, invoiceDescription = "", invoiceMessage = "") => {
         const invoiceItemsArray = [];
@@ -163,13 +220,13 @@ const InvoiceProvider = (props) => {
             invoiceItems: [...invoiceItemsArray]
         }
         setInvoiceFinalObject(invoiceObject);
-        if(shouldPost) await postInvoice(invoiceObject);
+        if (shouldPost) await postInvoice(invoiceObject);
     }
 
     //POST method to register Invoice DB
     const postInvoice = async (invoiceObject) => {
         //Add post method for invoice
-        const response = await submitInvoice(invoiceObject);
+        const response = await createInvoice(invoiceObject);
         const invoiceData = response.data;
 
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
@@ -192,6 +249,9 @@ const InvoiceProvider = (props) => {
             clientName: invoiceData.client.name,
             clientNUIS: invoiceData.client.NUIS,
             clientAddress: invoiceData.client.address,
+            TRCCode: invoiceData.client.TCRCode,
+            softCode: invoiceData.client.softCode,
+            businessUnitCode: invoiceData.branch.businessUnitCode,
             dateTime: String(date), //will be returned from post response
             branchCode: invoiceData.branch.code, //TODO
             operatorCode: initialState?.currentUser.operatorCode,
@@ -206,9 +266,37 @@ const InvoiceProvider = (props) => {
             message: invoiceObject.message,
         }
         setCouponObject(couponGenerateObject);
+        updateProductsStock(couponGenerateObject.productList);
     }
 
-    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, returnInvoiceObject, deleteInvoice, couponObject }
+    //Method that updates product stock after selling
+    const updateProductsStock = (updatedroductsInvoice) => {
+        let updatedStock = 0;
+        (listedInvoiceProducts.map((product) => {
+            updatedStock = updatedroductsInvoice?.filter(item => item.productId === product.id)[0];
+                let body = {
+                    id: product.id,
+                    name: product.name, 
+                    description: product.description,
+                    price: product.price, 
+                    barcode: product.barcode, 
+                    vat: product.vat, 
+                    supplierId: product.supplierId, 
+                    stock: Number(product.stock - updatedStock.quantity), 
+                    stockCheck: product.stockCheck, 
+                    branchId: initialState?.currentUser?.branchId,
+                    sellingUnitId: product.sellingUnitId, 
+                    categoryId: product.categoryId, 
+                    isActive: true,
+                    isDeleted: false,
+                }
+                productToUpdate(body);
+        }))
+    }
+
+    const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
+        getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject }
 
     return (
         <InvoiceContext.Provider value={values}>
