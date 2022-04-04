@@ -29,6 +29,7 @@ const Configurations = () => {
         values.isDeleted = false;
         delete values.messageBill;
         delete values.description;
+        i18n.changeLanguage(values.language);
         const result = await configure(values);
         setOpenSnackBar({ status: true, message: result.message });
         refresh();
