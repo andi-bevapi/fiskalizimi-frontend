@@ -15,7 +15,6 @@ i18n
       escapeValue: false, // not needed for react!!
       formatSeparator: ",",
     },
-    lng:"sq",
     resources: {
       en: {
         translations: english,

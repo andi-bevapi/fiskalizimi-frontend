@@ -1,8 +1,15 @@
 import request from "../../utils/request";
 
+const getConfiguration = async(id) =>{
+    return request("/configuration",{
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+}
 
 const configure = async(data) =>{
-    console.log("data-----",data);
     return request("/configuration",{
         method: "POST",
         headers: {
@@ -14,4 +21,4 @@ const configure = async(data) =>{
     })
 }
 
-export {configure};
+export {configure,getConfiguration};

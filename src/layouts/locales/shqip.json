@@ -38,5 +38,11 @@
   "printerName":"Emri i printerit",
   "billMessage":"Mesazhi i fatures",
   "billDescription":"Peshkrimi i fatures",
-  "Actions":"Veprimet"
+  "Actions":"Veprimet",
+  "choosePrinterName":"Ju lutem zgjidhni emrin e printerit",
+  "chooseLanguageName":"Ju lutem zgjidhni gjuhen e perdorimit",
+  "messageLength":"Mesazhi duhet te kete me shume se 2 karaktere",
+  "messageBill":"Ju lutem vendosni mesazhin",
+  "descriptionLength":"Pershkrimin duhet te kete me shume se 2 karaktere",
+  "description":"Ju lutem vendosni pershkrimin"
 }

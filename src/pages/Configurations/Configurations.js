@@ -27,9 +27,11 @@ const Configurations = () => {
         values.branchId = initialState?.currentUser?.branchId;
         values.isActive = true;
         values.isDeleted = false;
+        values.id = 13;
         delete values.messageBill;
         delete values.description;
         i18n.changeLanguage(values.language);
+        console.log(values);
         const result = await configure(values);
         setOpenSnackBar({ status: true, message: result.message });
         refresh();
@@ -38,6 +40,7 @@ const Configurations = () => {
         setOpenSnackBar({ status: false });
       }
 
+      console.log("i18n",i18n.languages[0])
     return (
         <>
 
@@ -58,7 +61,7 @@ const Configurations = () => {
                     }}
                 > {t("chooseConfig")}</Typography>
             </Grid>
-            <Formik initialValues={{ printer: "", language :"", allowSellsWithZero:"" , messageBill:"" , description :""}}
+            <Formik initialValues={{ printer: "", language : i18n.languages[0], allowSellsWithZero:"" , messageBill:"" , description :""}}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     onSubmitHandler(values);
