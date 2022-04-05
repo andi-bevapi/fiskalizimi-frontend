@@ -6,6 +6,11 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { getDashboardReports, getChartsReports } from '../../../services/reports';
 import { useModel } from 'umi';
+import DateRangePicker from '@mui/lab/DateRangePicker';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {
   Chart,
   BarSeries,
@@ -17,17 +22,23 @@ import { Animation } from '@devexpress/dx-react-chart';
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
+  const [dateRange, setDateRange] = useState([null, null]);
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
 
   useEffect(() => {
     getTotals();
     getTotalsCharts();
-  }, [initialState?.currentUser]);
+  }, [initialState?.currentUser, dateRange]);
 
   const getTotals = async () => {
+
+    let startDate = new Date(dateRange[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+    let endDate = dateRange[1] ? new Date(dateRange[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-') 
+    : new Date().toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+
     try {
-      const response = await getDashboardReports(initialState?.currentUser?.clientId);
+      const response = await getDashboardReports(initialState?.currentUser?.clientId, {startDate, endDate});
       const formatted = [];
 
       Object.entries(response.data[0]).map(item => {
@@ -44,8 +55,13 @@ const Dashboard = () => {
   };
 
   const getTotalsCharts = async () => {
+
+    let startDate = new Date(dateRange[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+    let endDate = dateRange[1] ? new Date(dateRange[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-') 
+    : new Date().toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+
     try {
-      const response = await getChartsReports(initialState?.currentUser?.clientId);
+      const response = await getChartsReports(initialState?.currentUser?.clientId, {startDate, endDate});
       setTotalsCharts(response.data);
     } catch (error) {
       console.log(error);
@@ -54,6 +70,26 @@ const Dashboard = () => {
 
   return (
     <>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateRangePicker
+              startText="Data e Fillimit"
+              endText="Data e Mbarimit"
+              value={dateRange}
+              onChange={(newValue) => {
+                  setDateRange(newValue);
+              }}
+              renderInput={(startProps, endProps) => (
+                  <>
+                      <TextField {...startProps} />
+                      <Box sx={{ mx: 2 }}> deri ne </Box>
+                      <TextField {...endProps} />
+                  </>
+              )}
+          />
+      </LocalizationProvider>
+      
+      <br />
+      
       <Grid container spacing={2}>
         {totals?.map(item => (
           <Grid item xs={4}>
