@@ -100,6 +100,10 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
+        if (field.name == 'vat') {
+          let option = field.options.filter((el) => el.label == "TVSH 20%")
+          initialValues[field.name] = option[0].value;
+        }
       });
     }
     return initialValues;
@@ -153,13 +157,21 @@ const SidebarAction = (props) => {
         let id = values.id;
         delete values.id;
         response = await action(id, {
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: props.editItem ? false : true,
+          },
           permissions: permissions,
         });
         refresh();
       } else {
         response = await action({
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: props.editItem ? false : true,
+          },
           permissions: permissions,
         });
         refresh();

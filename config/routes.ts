@@ -16,7 +16,8 @@ export default [
     component: '../layouts',
     wrappers: [
       '@/wrappers/auth',
-      '@/wrappers/permissions'
+      '@/wrappers/permissions',
+      '@/wrappers/context'
     ],
     routes: [
       { exact: true, path: '/', component: './Dashboard' },
