@@ -1,7 +1,7 @@
 import request from "../../utils/request";
 
 const getConfiguration = async(id) =>{
-    return request("/configuration",{
+    return request(`/configuration/${id}`,{
         method: "GET",
         headers: {
             'Content-Type': 'application/json',

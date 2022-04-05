@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import { Button, IconButton, Typography ,MenuItem, FormControlLabel, Checkbox, Grid, Container } from "@mui/material";
 import { useState } from "react";
 import SnackbarComponent from '../../../src/components/Snackbar';
@@ -9,7 +10,7 @@ import { Form, Formik, Field } from "formik";
 import {validationSchema} from "./validationSchema";
 import {configure} from "../../services/configurations";
 import { useModel } from 'umi';
-
+import {useConfigProvider} from "../../Context/ConfigurationsContext";
 
 const useStyles = makeStyles(() => ({
    rightFormContainer:{marginTop:"50px !important"},
@@ -22,12 +23,17 @@ const Configurations = () => {
     const { t,i18n } = useTranslation();
     const { initialState , refresh } = useModel('@@initialState');
     const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
+    const { config } = useConfigProvider();
+
+    useEffect(()=>{
+        generateInitialValues();
+    },[config]);
 
     const onSubmitHandler = async(values) =>{
         values.branchId = initialState?.currentUser?.branchId;
         values.isActive = true;
         values.isDeleted = false;
-        values.id = 13;
+        if (config) values.id = config.id;
         delete values.messageBill;
         delete values.description;
         i18n.changeLanguage(values.language);
@@ -38,9 +44,20 @@ const Configurations = () => {
     }
     const handleSnackBarClose = () => {
         setOpenSnackBar({ status: false });
-      }
+    }
 
-      console.log("i18n",i18n.languages[0])
+    const generateInitialValues = () => {
+        let initialValues = {};
+
+        initialValues.printer = config ? config?.printer : "",
+        initialValues.language = config ? config?.language : "",
+        initialValues.allowSellsWithZero ="";
+        initialValues.messageBill = "";
+        initialValues.description = "";
+        return initialValues;
+      };
+    
+   
     return (
         <>
 
@@ -61,7 +78,8 @@ const Configurations = () => {
                     }}
                 > {t("chooseConfig")}</Typography>
             </Grid>
-            <Formik initialValues={{ printer: "", language : i18n.languages[0], allowSellsWithZero:"" , messageBill:"" , description :""}}
+            <Formik initialValues={generateInitialValues()}
+                enableReinitialize={true}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     onSubmitHandler(values);
