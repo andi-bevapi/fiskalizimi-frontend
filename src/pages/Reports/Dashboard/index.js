@@ -34,11 +34,9 @@ const Dashboard = () => {
 
   const getTotals = async () => {
 
-    let startDate = new Date(dateRange[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
-    let endDate = dateRange[1] ? new Date(dateRange[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-') 
-    : new Date().toISOString().replace('-', '-').split('T')[0].replace('-', '-');
-
-    console.log(startDate, endDate);
+    let startDate = formatDate(dateRange[0]);
+    let endDate = dateRange[1] ? formatDate(dateRange[1]) 
+    : formatDate(new Date());
 
     try {
       const response = await getDashboardReports(initialState?.currentUser?.clientId, {startDate, endDate});
