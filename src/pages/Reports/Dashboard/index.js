@@ -18,6 +18,7 @@ import {
   ArgumentAxis,
   ValueAxis,
 } from '@devexpress/dx-react-chart-material-ui';
+import { formatDate } from '../../../helpers/formatDate';
 import { Animation } from '@devexpress/dx-react-chart';
 
 const Dashboard = () => {
@@ -36,6 +37,8 @@ const Dashboard = () => {
     let startDate = new Date(dateRange[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
     let endDate = dateRange[1] ? new Date(dateRange[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-') 
     : new Date().toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+
+    console.log(startDate, endDate);
 
     try {
       const response = await getDashboardReports(initialState?.currentUser?.clientId, {startDate, endDate});
@@ -56,9 +59,9 @@ const Dashboard = () => {
 
   const getTotalsCharts = async () => {
 
-    let startDate = new Date(dateRange[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
-    let endDate = dateRange[1] ? new Date(dateRange[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-') 
-    : new Date().toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+    let startDate = formatDate(dateRange[0]);
+    let endDate = dateRange[1] ? formatDate(dateRange[1]) 
+    : formatDate(new Date());
 
     try {
       const response = await getChartsReports(initialState?.currentUser?.clientId, {startDate, endDate});
@@ -75,9 +78,7 @@ const Dashboard = () => {
               startText="Data e Fillimit"
               endText="Data e Mbarimit"
               value={dateRange}
-              onChange={(newValue) => {
-                  setDateRange(newValue);
-              }}
+              onChange={setDateRange}
               renderInput={(startProps, endProps) => (
                   <>
                       <TextField {...startProps} />
