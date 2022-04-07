@@ -25,6 +25,7 @@ export const formFields = [
         name: 'vat',
         component: 'Select',
         label: 'Klasifikimi i TVSH-se',
+        defaultValue: 2,
         options: [
             {
                 value: 0,
