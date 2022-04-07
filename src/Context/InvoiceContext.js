@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
-import { createInvoice, getInvoices } from "../services/invoice";
+import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
 import { getAllBranch } from '../services/branchList';
 
 import { useModel } from 'umi';
@@ -183,6 +183,17 @@ const InvoiceProvider = (props) => {
         }
     }
 
+    const deletePendingInvoice = async (id) => {
+        try {
+            const response = await deleteInvoiceById(id);
+            setPendingInvoices((prevState) => {
+                let newState = prevState.filter(item => item.id !== id);
+                return [...newState];
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const getListOfInvoices = async (status) => {
         try {
             const response = await getInvoices(initialState?.currentUser?.branchId, status);
@@ -296,7 +307,7 @@ const InvoiceProvider = (props) => {
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject, deletePendingInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>
