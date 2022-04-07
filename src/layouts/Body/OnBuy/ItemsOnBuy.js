@@ -271,7 +271,7 @@ const ItemsOnBuy = () => {
                     <TableCell className={styles.tableBodyCell}>{invoice.items.length}</TableCell>
                     <TableCell className={styles.tableBodyCell}>{invoice.totalAmount} </TableCell>
                     <TableCell className={styles.tableBodyCell}>
-                      <div style={{display: "flex"}}>
+                      <div className={styles.buttonContainer}>
                       <IconButtonComponent
                         style={{ backgroundColor: '#12AC7A', height: 35, width: 35, marginRight: "5px" }}
                         icon={<ShoppingCartIcon />}
@@ -296,7 +296,7 @@ const ItemsOnBuy = () => {
             </Table>
           </TableContainer>
           <Divider />
-          <div style={{marginTop: 10}}>
+          <div className={styles.bottomButtonContainer}>
             <ButtonComponent
               title="FSHI"
               lightColor="rgb(240, 80, 80)"
