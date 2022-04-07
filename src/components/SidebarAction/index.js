@@ -156,7 +156,7 @@ const SidebarAction = (props) => {
           user: {
             ...values,
             clientId: initialState?.currentUser?.clientId,
-            isFirstTimeLogin: props.editItem ? false : true,
+            isFirstTimeLogin: !props.editItem,
           },
           permissions: permissions,
         });
@@ -166,7 +166,7 @@ const SidebarAction = (props) => {
           user: {
             ...values,
             clientId: initialState?.currentUser?.clientId,
-            isFirstTimeLogin: props.editItem ? false : true,
+            isFirstTimeLogin: !props.editItem,
           },
           permissions: permissions,
         });
