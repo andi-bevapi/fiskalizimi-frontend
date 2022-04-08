@@ -42,4 +42,8 @@ export const navItems = [
     title: "Konfigurime",
     path: "/konfigurime",
   },
+  {
+    title: "Arka",
+    path: "/arka",
+  },
 ];

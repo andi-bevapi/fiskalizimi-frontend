@@ -11,6 +11,20 @@
   max-height: 33px;
 }
 
+.depositButton{
+  font: 700 16px "Poppins"!important;
+  text-align: center;
+  line-height: 1rem!important;
+  text-transform: unset!important;
+  box-shadow: unset !important;
+  padding: 15px 5px !important;
+}
+
+.fullContainer{
+  display: flex;
+  margin: 3px;
+}
+
 .icon {
   height: 22px;
   color: white;
