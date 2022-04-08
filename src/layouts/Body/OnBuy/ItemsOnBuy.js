@@ -46,15 +46,17 @@ const ItemsOnBuy = () => {
   const [stopDecrement, setStopDecrement] = useState(false);
   const [open, setOpen] = useState(false);
   const [filteredInvoice, setFilteredInvoice] = useState([]);
+  const [filteredInAllPages, setFilteredInAllPages] = useState([]);
 
   //---------------------paginate
   const [pageNumber, setPageNumber] = useState(0);
-  const invoicePerPage = 3;
+  const invoicePerPage = 4;
   const pagesVisited = pageNumber * invoicePerPage;
   const pageCount = Math.ceil(pendingInvoices.length / invoicePerPage);
 
-  const changePage = ({ selected }) => {
+  const changePage = ({selected}) => {
     setPageNumber(selected);
+  
   };
   //---------------------paginate
 
@@ -115,10 +117,19 @@ const ItemsOnBuy = () => {
     setOpen(false);
   };
 
+ 
+
   const handleChange = (e) => {
+   
     const temp = pendingInvoices.filter((el) => {
       return el.description.includes(e.target.value);
     });
+    
+     if(e.target.value.length >= 1){
+      setFilteredInAllPages(temp)
+      }else{
+        setFilteredInAllPages([]);
+      }
     setFilteredInvoice(temp);
   };
 
@@ -271,7 +282,28 @@ const ItemsOnBuy = () => {
               </TableHead>
 
               <TableBody>
-                {filteredInvoice.slice(pagesVisited, pagesVisited + invoicePerPage).map((el) => {
+                {
+                  filteredInAllPages.length ? filteredInAllPages.map((el) => {
+                    return(
+                      <TableRow key={el.id}>
+                      <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                          icon={<ShoppingCartIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            activateInvoice(el);
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    )
+                  })
+                  
+                  : filteredInvoice.slice(pagesVisited, pagesVisited + invoicePerPage).map((el) => {
                   return (
                     <TableRow key={el.id}>
                       <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
