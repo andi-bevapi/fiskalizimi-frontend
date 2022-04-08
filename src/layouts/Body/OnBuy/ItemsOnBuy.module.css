@@ -214,10 +214,6 @@ tbody > tr > td {
   margin-right: 20%;
 }
 
-.paymentMethodsDiv{
-  
-}
-
 .cashPayment{
   background: #0a4741 !important;
   padding: 10px 35px !important;
@@ -264,4 +260,40 @@ tbody > tr > td {
   font-size: 24px !important;
   font-family: 'Poppins' !important;
   font-weight: 600 !important;
+}
+
+
+
+/* Paginate styles */
+
+.paginationButtons {
+  width: 50%;
+  height: 40px;
+  margin: 50px auto;
+  list-style: none;
+  display: flex;
+}
+
+.paginationButtons a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #74a19e;
+  cursor: pointer;
+}
+
+.paginationButtons a:hover {
+  color: #ffffff;
+  background-color: #134d47;
+}
+
+.paginationActive a {
+  color: #ffffff;
+  background-color: #134d47;
+}
+
+.paginationDisabled a {
+  background-color: #74a19e;
 }

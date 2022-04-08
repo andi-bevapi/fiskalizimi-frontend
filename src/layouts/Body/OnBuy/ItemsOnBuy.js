@@ -1,5 +1,6 @@
 import { useInvoiceContext } from '../../../Context/InvoiceContext';
-import React, { useState, useEffect } from 'react';
+import BootstrapInputField from '../../../components/InputFields/BootstrapTextField';
+import React, { useState, useEffect, useMemo } from 'react';
 import IconButtonComponent from '../../../components/Button/IconButton.js';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,6 +18,8 @@ import Grid from '@mui/material/Grid';
 import PuffLoader from 'react-spinners/PuffLoader';
 import ModalComponent from '../../../components/Modal/Modal';
 import { useContextProduct } from '../../../Context/ProductContext';
+import Pagination from '../../../components/Pagination';
+import ReactPaginate from 'react-paginate';
 
 const ItemsOnBuy = () => {
   const {
@@ -29,9 +32,10 @@ const ItemsOnBuy = () => {
     activeInvoice,
     setActiveInvoice,
     pendingInvoices,
+    setPendingInvoices,
     returnInvoiceObject,
     invoiceFinalObject,
-    updateInvoiceToActive
+    updateInvoiceToActive,
   } = useInvoiceContext();
   const { productList } = useContextProduct();
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
@@ -41,6 +45,18 @@ const ItemsOnBuy = () => {
   const [stopIncrement, setStopIncrement] = useState(false);
   const [stopDecrement, setStopDecrement] = useState(false);
   const [open, setOpen] = useState(false);
+  const [filteredInvoice, setFilteredInvoice] = useState([]);
+
+  //---------------------paginate
+  const [pageNumber, setPageNumber] = useState(0);
+  const invoicePerPage = 3;
+  const pagesVisited = pageNumber * invoicePerPage;
+  const pageCount = Math.ceil(pendingInvoices.length / invoicePerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+  //---------------------paginate
 
   useEffect(() => {}, [listedInvoiceProducts, filteredBarcodeProduct]);
 
@@ -48,6 +64,10 @@ const ItemsOnBuy = () => {
   //   if (activeInvoice == "pending") console.log("hereee");
   //   updateInvoiceToActive();
   // }, [invoiceFinalObject]);
+
+  useEffect(() => {
+    setFilteredInvoice(pendingInvoices);
+  }, [pendingInvoices]);
 
   const handleTabChanges = () => {
     setActiveInvoice('active');
@@ -93,6 +113,13 @@ const ItemsOnBuy = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const temp = pendingInvoices.filter((el) => {
+      return el.description.includes(e.target.value);
+    });
+    setFilteredInvoice(temp);
   };
 
   return (
@@ -148,8 +175,10 @@ const ItemsOnBuy = () => {
                 <Table stickyHeader className={styles.table}>
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
-                      <TableCell className={styles.tableHead} id={styles["number"]}>Nr.</TableCell>
-                      <TableCell className={styles.tableHead} id={styles["name"]}>
+                      <TableCell className={styles.tableHead} id={styles['number']}>
+                        Nr.
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles['name']}>
                         Produkti
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['quantity']}>
@@ -158,10 +187,10 @@ const ItemsOnBuy = () => {
                       <TableCell className={styles.tableHead} id={styles['price']}>
                         Çmimi
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                      <TableCell className={styles.tableHead} id={styles['price']}>
                         Totali
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles["delete"]}>
+                      <TableCell className={styles.tableHead} id={styles['delete']}>
                         &nbsp;
                       </TableCell>
                     </TableRow>
@@ -192,10 +221,10 @@ const ItemsOnBuy = () => {
                           </button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {Number(item.price).toFixed(2)}
+                          &nbsp; {Number(item.price).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
+                          &nbsp; {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent
@@ -219,6 +248,11 @@ const ItemsOnBuy = () => {
         </>
       ) : (
         <>
+          <BootstrapInputField
+            placeholder="kerko..."
+            style={{ marginTop: 20, marginBottom: 20 }}
+            onChange={handleChange}
+          />
           <TableContainer className={styles.tableContainer}>
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
@@ -237,24 +271,37 @@ const ItemsOnBuy = () => {
               </TableHead>
 
               <TableBody>
-                {pendingInvoices?.map((invoice, key) => (
-                  <TableRow key={invoice.id}>
-                    <TableCell className={styles.tableBodyCell}>{invoice.description}</TableCell>
-                    <TableCell className={styles.tableBodyCell}>{invoice.items.length}</TableCell>
-                    <TableCell className={styles.tableBodyCell}>{invoice.totalAmount} </TableCell>
-                    <TableCell className={styles.tableBodyCell}>
-                      <IconButtonComponent
-                        style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
-                        icon={<ShoppingCartIcon />}
-                        iconColor={{ color: '#fff' }}
-                        onClick={() => {
-                          activateInvoice(invoice);
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {filteredInvoice.slice(pagesVisited, pagesVisited + invoicePerPage).map((el) => {
+                  return (
+                    <TableRow key={el.id}>
+                      <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                          icon={<ShoppingCartIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            activateInvoice(el);
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
+              <ReactPaginate
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={styles.paginationButtons}
+                previousLinkClassName={styles.previousButtons}
+                nextLinkClassName={styles.nextButtons}
+                disabledClassName={styles.paginationDisabled}
+                activeClassName={styles.paginationActive}
+              />
             </Table>
           </TableContainer>
         </>
