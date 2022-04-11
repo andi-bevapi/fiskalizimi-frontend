@@ -20,7 +20,7 @@ const handleChange = (event) => {
 const Configurations = () => {
 
     return (
-        <span> <h1>  Konfigurime </h1>
+        <span> <h1 align="left">  Konfigurime </h1>
             <Grid container >
                 
                     <Grid item xs={12} sm={6} md={6}>
