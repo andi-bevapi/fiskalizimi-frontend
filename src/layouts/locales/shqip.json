@@ -30,5 +30,9 @@
   "save":"Ruaj",
   "editData":"Perditeso te dhenat",
   "editProfile":"Edito Profilin",
-  "Actions":"Veprimet"
+  "Actions":"Veprimet",
+  "codeIdentifierLength":"Kodi Identifikues duhet te kete me shume se 2 karaktere",
+  "codeIdentifier":"Ju lutem vendosni Kodin Identifikues",
+  "identifierCode":"Kodi Identifikues",
+  "codeIdentifierText":"Vendos kodin identifikues"
 }

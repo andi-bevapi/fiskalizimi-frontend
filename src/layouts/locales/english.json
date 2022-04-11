@@ -30,5 +30,9 @@
   "save":"Save",
   "editData":"Edit Data",
   "editProfile":"Edit profile",
-  "Actions":"Actions"
+  "Actions":"Actions",
+  "codeIdentifierLength":"Identifier Code mus be more than 2 characters",
+  "codeIdentifier":"Please insert Identifier Code",
+  "identifierCode":"Identifier Code",
+  "codeIdentifierText":"Insert Identifier Code"
 }
