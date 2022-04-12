@@ -5,9 +5,6 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { Suspense } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { InvoiceProvider } from '../Context/InvoiceContext';
-import { ProductProvider } from '../Context/ProductContext';
-import {ConfigurationProvider} from "../Context/ConfigurationsContext";
 
 const theme = createTheme({
   palette: {
@@ -23,14 +20,8 @@ const BasicLayout = (props) => {
       <div className={styles.layout}>
         <Suspense fallback="Loading...">
           <I18nextProvider i18n={i18n}>
-            <ConfigurationProvider>
-              <Navbar />
-              <ProductProvider>
-                <InvoiceProvider>
-                  <Body children={props.children} />
-                </InvoiceProvider>
-              </ProductProvider>
-            </ConfigurationProvider>
+            <Navbar />
+              <Body children={props.children} />
           </I18nextProvider>
         </Suspense>
       </div>
