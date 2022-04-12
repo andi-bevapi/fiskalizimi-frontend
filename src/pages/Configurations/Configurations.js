@@ -13,9 +13,10 @@ import { useModel } from 'umi';
 import {useConfigProvider} from "../../Context/ConfigurationsContext";
 
 const useStyles = makeStyles(() => ({
-   rightFormContainer:{marginTop:"50px !important"},
+   rightFormContainer:{marginTop:"50px !important" , display:"block"},
    fieldContainer:{margin:"10px !important"},
-   submitButtonStyle:{backgroundColor:"#FF7A00 !important"}
+   submitButtonStyle:{backgroundColor:"#FF7A00 !important"},
+   iconStyles:{marginRight:"10px"}
   }));
 
 const Configurations = () => {
@@ -79,7 +80,7 @@ const Configurations = () => {
                 > {t("chooseConfig")}</Typography>
             </Grid>
             <Formik initialValues={generateInitialValues()}
-                enableReinitialize={true}
+                enableReinitialize
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     onSubmitHandler(values);
@@ -167,7 +168,7 @@ const Configurations = () => {
                             </Field>
                         </Grid>
                     </Grid>
-                    <Grid className={classes.rightFormContainer} item xs={12} sm={6} md={6} display={'block'}>
+                    <Grid className={classes.rightFormContainer} item xs={12} sm={6} md={6}>
                     <Grid className={classes.fieldContainer} item >
                         <Field name="language">
                         {({ field, meta }) => (
@@ -230,7 +231,7 @@ const Configurations = () => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} display={'block'}>
                         <Grid item>
-                            <Button className={classes.submitButtonStyle} variant="contained" type="submit" title="RUAJ"> <SaveIcon style={{marginRight:"10px"}}/> {t("save")}</Button>
+                            <Button className={classes.submitButtonStyle} variant="contained" type="submit" title="RUAJ"> <SaveIcon className={classes.iconStyles}/> {t("save")}</Button>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -15,9 +15,7 @@ const configure = async(data) =>{
         headers: {
             'Content-Type': 'application/json',
         },
-        data: {
-            ...data
-        }
+        data: data
     })
 }
 

@@ -27,9 +27,6 @@ const ConfigurationProvider = (props) => {
         setIsLoading(false);
     }
 
-    console.log("config---",config);
-
-
     const values = {setConfig,config};
 
     return(
