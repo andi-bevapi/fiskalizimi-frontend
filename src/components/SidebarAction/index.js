@@ -100,6 +100,10 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
+        // if (field.name == 'vat') {
+        //   let option = field.options.filter((el) => el.label == "TVSH 20%")
+        //   initialValues[field.name] = option[0].value;
+        // }
       });
     }
     return initialValues;
@@ -233,6 +237,7 @@ const SidebarAction = (props) => {
       <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
         <Formik
           initialValues={generateInitialValues()}
+          enableReinitialize={true}
           validationSchema={props.validationSchema}
           onSubmit={(values) => {
             handleSubmit(values);

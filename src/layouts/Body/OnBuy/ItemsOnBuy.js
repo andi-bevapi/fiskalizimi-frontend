@@ -63,11 +63,11 @@ const ItemsOnBuy = () => {
     setStopDecrement(false);
     let addQuantity = item.quantity + 1;
     if (item.stockCheck) {
-      if (item.quantity >= Number(item.stock).toFixed(0)) {
-        setStopIncrement(true);
-      } else {
-        addToInvoiceList(item, addQuantity);
-      }
+      // if (item.quantity >= Number(item.stock).toFixed(0)) {
+      //   setStopIncrement(true);
+      // } else {
+      addToInvoiceList(item, addQuantity);
+      // }
     } else {
       addToInvoiceList(item, addQuantity);
     }
