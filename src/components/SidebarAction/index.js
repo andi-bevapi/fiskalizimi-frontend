@@ -153,13 +153,21 @@ const SidebarAction = (props) => {
         let id = values.id;
         delete values.id;
         response = await action(id, {
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: !props.editItem,
+          },
           permissions: permissions,
         });
         refresh();
       } else {
         response = await action({
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: !props.editItem,
+          },
           permissions: permissions,
         });
         refresh();
@@ -191,6 +199,23 @@ const SidebarAction = (props) => {
   const handleCheck = (id) => {
     props.setPermissions((prev) => {
       let index = prev.findIndex((item) => item.id === id);
+      let entity = prev[index].name.split('.')[1];
+      if (prev[index].label != 'Shiko') {
+        if (prev[index].checked == false) {
+          let indexView = prev.findIndex((item) => item.name === `permission.${entity}.view`);
+          if (prev[indexView].checked == false) prev[indexView].checked = true;
+        }
+      } else {
+        if (prev[index].checked == true) {
+          let entityPermissions = prev.filter((item) => item.name.includes(`permission.${entity}`));
+          entityPermissions.map((el) => {
+            if (el.label != "Shiko") {
+              let indexPermission = prev.findIndex((item) => item.id === el.id);
+              prev[indexPermission].checked = false;
+            }
+          })
+        }
+      }
       prev[index].checked = !prev[index].checked;
       return [...prev];
     });
