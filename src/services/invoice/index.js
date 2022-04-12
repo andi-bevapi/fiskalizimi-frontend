@@ -19,4 +19,14 @@ const createInvoice = async (data) => {
     });
 }
 
-export { createInvoice, getInvoices }
+const printInvoice = async (data) => {
+    return request('/invoice/print', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data
+    })
+}
+
+export { createInvoice, getInvoices, printInvoice }

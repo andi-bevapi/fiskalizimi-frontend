@@ -14,9 +14,6 @@ const handleChange = (event) => {
     //handle printer name selection
 };
 
-
-
-
 const Configurations = () => {
 
     return (
