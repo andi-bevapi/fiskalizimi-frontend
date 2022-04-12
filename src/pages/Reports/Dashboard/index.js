@@ -60,13 +60,14 @@ const Dashboard = () => {
             <Card sx={{ minWidth: 275, textAlign: 'left' }}>
               <CardHeader
                 title={item?.label}
+                titleTypographyProps={{ variant: 'h6', fontFamily: 'Poppins' }}
                 style={{
-                  background: '#0D4D47',
-                  color: '#fff'
+                  background: '#74a19e',
+                  color: '#fff',
                 }}
               />
               <CardContent>
-                <Typography variant="h5" component="div" align='right' style={{ color: '#0D4D47' }}>
+                <Typography variant="h5" component="div" align='right' style={{ color: '#0D4D47', fontFamily: 'Poppins', fontWeight: 700 }}>
                   {Number.isInteger(item?.value) ? item?.value : item?.value.toFixed(2)}
                 </Typography>
               </CardContent>
@@ -75,10 +76,10 @@ const Dashboard = () => {
         ))}
       </Grid>
 
-      <br/><br/>
+      <br /><br />
 
       <Grid container spacing={6}>
-        <Grid item xs={6}>
+        <Grid item md={6} xs={12}>
           <Chart
             data={totalsCharts}
           >
@@ -88,12 +89,13 @@ const Dashboard = () => {
             <BarSeries
               valueField="totalAmount"
               argumentField="dateCreated"
+              color="#74A19E"
             />
-            <Title text="Vlera totale e faturave" />
+            <Title text="Vlera totale e faturave"/>
             <Animation />
           </Chart>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={6} xs={12}>
           <Chart
             data={totalsCharts}
           >
@@ -103,6 +105,7 @@ const Dashboard = () => {
             <BarSeries
               valueField="totalInvoices"
               argumentField="dateCreated"
+              color="#ff7a00"
             />
             <Title text="Numri total i faturave" />
             <Animation />

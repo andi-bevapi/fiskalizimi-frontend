@@ -3,6 +3,7 @@ import { Divider, Button } from '@mui/material';
 import styles from './coupon.css';
 import ReactToPrint from "react-to-print";
 import QRCode from "react-qr-code";
+import {useConfigProvider} from "../../../../Context/ConfigurationsContext";
 
 const InvoiceCoupon = (props) => {
     let componentRef = useRef();
@@ -10,6 +11,7 @@ const InvoiceCoupon = (props) => {
     const [value, setValue] = useState("");
     const url = `https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify`;
     const tin = "L91806031N";
+    const {config} = useConfigProvider();
 
     useEffect(() => {
         const date = new Date(props.data.dateTime).toISOString().split(".")[0].concat("+01:00");
@@ -84,7 +86,7 @@ const InvoiceCoupon = (props) => {
                     <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br />
                     <span className={styles.couponText}>NSLF: {props.data.nslf}</span>
                     <br /><br /><br />
-                    <span className={styles.couponText}>{props.data.message}</span> <br /><br />
+                    <span className={styles.couponText}>{config.billMessage}</span> <br /><br />
                     <span className={styles.couponText}>Ovla Systems</span> <br />
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
