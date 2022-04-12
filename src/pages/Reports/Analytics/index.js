@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import { getAnalyticsData } from '../../../services/reports';
+import { formatDate } from '../../../helpers/formatDate';
 
 const columns = [
     { field: 'invoiceCode', headerName: 'Kodi i Fatures', width: 150 },
@@ -36,8 +37,8 @@ const Analytics = () => {
         let endDate = "";
 
         if(value) {
-            startDate = new Date(value[0]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
-            endDate = new Date(value[1]).toISOString().replace('-', '-').split('T')[0].replace('-', '-');;
+            startDate = formatDate(value[0]);
+            endDate = formatDate(value[1]);
         }
 
         try {
