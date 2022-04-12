@@ -200,7 +200,7 @@ const ItemsOnBuy = () => {
                       <TableRow key={item.id}>
                         <TableCell className={styles.tableBodyCell}>{index + 1}</TableCell>
                         <TableCell className={styles.tableBodyCell}>{item.name}</TableCell>
-                        <TableCell className={styles.tableBodyCell}>
+                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
                           <button
                             className={styles.valueButton}
                             onClick={() => {
@@ -222,8 +222,8 @@ const ItemsOnBuy = () => {
                         <TableCell className={styles.tableBodyCell}>
                           &nbsp; {Number(item.price).toFixed(2)}
                         </TableCell>
-                        <TableCell className={styles.tableBodyCell}>
-                          &nbsp; {Number(item.price * item.quantity).toFixed(2)}
+                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
+                          &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent

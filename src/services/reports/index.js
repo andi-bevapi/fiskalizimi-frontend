@@ -1,8 +1,10 @@
 import request from "../../utils/request";
 import { buildUrl } from '../../helpers/buildUrl';
 
-const getDashboardReports = async (clientId) => {
-    return request(`/reports/${clientId}`, {
+const getDashboardReports = async (clientId, query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/${clientId}${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -10,8 +12,10 @@ const getDashboardReports = async (clientId) => {
     });
 }
 
-const getChartsReports = async (clientId) => {
-    return request(`/reports/charts/${clientId}`, {
+const getChartsReports = async (clientId, query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/charts/${clientId}${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
