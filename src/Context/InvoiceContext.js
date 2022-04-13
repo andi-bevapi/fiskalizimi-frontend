@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
-import { createInvoice, getInvoices } from "../services/invoice";
+import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
 import { getAllBranch } from '../services/branchList';
 
 import { useModel } from 'umi';
@@ -9,7 +9,7 @@ import { useContextProduct } from './ProductContext';
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
-    const { productToUpdate, productToDelete } = useContextProduct();
+    const { productToUpdate, productToDelete, setProductList, productList } = useContextProduct();
 
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
@@ -55,6 +55,13 @@ const InvoiceProvider = (props) => {
             listedInvoiceProducts?.map((item, index) => {
                 (item.id === product.id ? productIndex = index : "")
             });
+            setProductList((prevState) => {
+                let index = prevState.findIndex((el) => el.id == product.id);
+                if (listedInvoiceProducts[productIndex].quantity < productQuantity)
+                    prevState[index].stock = prevState[index].stock - 1;
+                else prevState[index].stock = prevState[index].stock + 1;
+                return [...prevState];
+            });
             const newArrayUpdated = Object.assign(listedInvoiceProducts, {
                 ...listedInvoiceProducts,
                 [productIndex]: { ...listedInvoiceProducts[productIndex], quantity: productQuantity }
@@ -79,12 +86,24 @@ const InvoiceProvider = (props) => {
             }
             getTotalPriceWithoutVAT();
             setListedInvoiceProducts((prevState) => [...prevState, newProduct]);
+            setProductList((prevState) => {
+                let index = prevState.findIndex((el) => el.id == product.id);
+                prevState[index].stock = prevState[index].stock - 1;
+                return [...prevState];
+            });
         }
         setIsLoading(false);
     }
 
     //Method to remove a product in the invoice list
     const removeProductFromInvoiceList = (product) => {
+        const productIndex = listedInvoiceProducts?.findIndex(item => item.id === product.id);
+        // console.log(listedInvoiceProducts[productIndex]);
+        setProductList((prevState) => {
+            let index = prevState.findIndex((el) => el.id == product.id);
+            prevState[index].stock = prevState[index].stock + listedInvoiceProducts[productIndex].quantity;
+            return [...prevState];
+        });
         const newArrayWithoutSelectedProduct = listedInvoiceProducts?.filter(item => item.id !== product.id);
         setListedInvoiceProducts(newArrayWithoutSelectedProduct);
         getTotalPriceWithoutVAT();
@@ -93,6 +112,13 @@ const InvoiceProvider = (props) => {
 
     //Method to remove all products from the invoice list
     const deleteInvoice = () => {
+        listedInvoiceProducts.map(product => {
+            setProductList((prevState) => {
+                let index = prevState.findIndex((el) => el.id == product.id);
+                prevState[index].stock = prevState[index].stock + product.quantity;
+                return [...prevState];
+            });
+        })
         setIsLoading(true);
         setListedInvoiceProducts([]);
         setTotalPriceVAT(0);
@@ -183,6 +209,17 @@ const InvoiceProvider = (props) => {
         }
     }
 
+    const deletePendingInvoice = async (id) => {
+        try {
+            const response = await deleteInvoiceById(id);
+            setPendingInvoices((prevState) => {
+                let newState = prevState.filter(item => item.id !== id);
+                return [...newState];
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const getListOfInvoices = async (status) => {
         try {
             const response = await getInvoices(initialState?.currentUser?.branchId, status);
@@ -296,7 +333,7 @@ const InvoiceProvider = (props) => {
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, setPendingInvoices , updateInvoiceToActive, deleteInvoice, couponObject }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, setPendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject, deletePendingInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>

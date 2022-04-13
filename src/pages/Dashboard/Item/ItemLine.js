@@ -5,15 +5,15 @@ import styles from "./ItemLine.module.css";
 const ItemLine = (props) => {
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
-  const [stopAdding, setStopAdding] = useState(true);
+  const [stopAdding, setStopAdding] = useState(false);
 
   useEffect(() => {
-    const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
-    (arrayProduct[0]?.stockCheck ? (
-      ((arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) || Number(product.stock) == 0) ? (setStopAdding(true)) : (setStopAdding(false)))
-    ) : (
-      (Number(product.stock).toFixed(0) == 0 ? (() => { setStopAdding(true) }) : (setStopAdding(false)))
-    ));
+    // const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
+    // (arrayProduct[0]?.stockCheck ? (
+    //   ((arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) || Number(product.stock) == 0) ? (setStopAdding(true)) : (setStopAdding(false)))
+    // ) : (
+    //   (Number(product.stock).toFixed(0) == 0 ? (() => { setStopAdding(true) }) : (setStopAdding(false)))
+    // ));
     // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
   }, [props.invoiceList]);
 
@@ -23,12 +23,12 @@ const ItemLine = (props) => {
       const isExisting = (productFromArray.length >= 1 ? true : false);
       if (product.stockCheck) {
         if (isExisting) {
-          if (productFromArray[0]?.quantity >= Number(product.stock).toFixed(0)) {
-            setStopAdding(true);
-          } else {
+          // if (productFromArray[0]?.quantity >= Number(product.stock).toFixed(0)) {
+          //   setStopAdding(true);
+          // } else {
             setProductQuantity(productFromArray[0].quantity + 1);
             props.addToInvoiceList(product, productFromArray[0].quantity + 1);
-          }
+          // }
         } else {
           setProductQuantity(1);
           props.addToInvoiceList(product, 1);

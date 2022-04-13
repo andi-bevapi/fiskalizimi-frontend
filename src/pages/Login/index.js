@@ -34,7 +34,6 @@ const Login = () => {
     const onLoginHandler = async (values) => {
         try {
             const response = await login(values);
-
             if (response.statusCode === 200) {
                 localStorage.setItem('poslaToken', response.data);
                 await fetchUserInfo();

@@ -266,7 +266,7 @@ const ActionButtons = (props) => {
                         style: {
                           fontFamily: "Poppins",
                           resize: "both",
-                          width: 300,
+                          width: "auto",
                         }
                       }}
                       InputLabelProps={{
@@ -274,12 +274,13 @@ const ActionButtons = (props) => {
                           fontFamily: "Poppins",
                         }
                       }}
+                      style ={{width: '100%'}} 
                       {...field}
                     />
                   )}
                 </Field>
                 <br></br>
-                <Button variant="contained" style={{ marginTop: 10}}  type="submit" >
+                <Button variant="contained" style={{ marginTop: 16}}  type="submit">
                   Ruaj
                 </Button>
               </Form>
