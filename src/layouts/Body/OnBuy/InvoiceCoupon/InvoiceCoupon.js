@@ -3,6 +3,7 @@ import { Divider, Button } from '@mui/material';
 import styles from './coupon.css';
 import ReactToPrint from "react-to-print";
 import QRCode from "react-qr-code";
+import {useConfigProvider} from "../../../../Context/ConfigurationsContext";
 
 const InvoiceCoupon = (props) => {
     let componentRef = useRef();
@@ -10,6 +11,7 @@ const InvoiceCoupon = (props) => {
     const [value, setValue] = useState("");
     const url = `https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify`;
     const tin = "L91806031N";
+    const {config} = useConfigProvider();
 
     useEffect(() => {
         const date = new Date(props.data.dateTime).toISOString().split(".")[0].concat("+01:00");
