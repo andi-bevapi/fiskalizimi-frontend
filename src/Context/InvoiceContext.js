@@ -333,7 +333,7 @@ const InvoiceProvider = (props) => {
 
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject, deletePendingInvoice }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, setPendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject, deletePendingInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>
