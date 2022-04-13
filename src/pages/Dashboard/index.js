@@ -1,4 +1,3 @@
-import { ProductProvider } from "../../Context/ProductContext";
 import { CategoryProvider } from "../../Context/CategoryContext";
 import { SellingUnitProvider } from "../../Context/SellingUnitContext";
 import { SupplierProvider } from "../../Context/SuppliersContext";
@@ -7,7 +6,7 @@ import Compose from '../../components/Compose';
 
 export default () => {
   return (
-    <Compose components={[ProductProvider, CategoryProvider, SellingUnitProvider, SupplierProvider]}>
+    <Compose components={[CategoryProvider, SellingUnitProvider, SupplierProvider]}>
       <DashboardHeader />
     </Compose>
   );

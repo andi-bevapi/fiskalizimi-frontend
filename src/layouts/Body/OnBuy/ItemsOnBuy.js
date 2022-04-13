@@ -16,7 +16,9 @@ import SearchByBarcode from './SearchByBarcode';
 import Grid from '@mui/material/Grid';
 import PuffLoader from 'react-spinners/PuffLoader';
 import ModalComponent from '../../../components/Modal/Modal';
+import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
+import ButtonComponent from '../../../components/Button/InvoiceButton';
 
 const ItemsOnBuy = () => {
   const {
@@ -31,7 +33,8 @@ const ItemsOnBuy = () => {
     pendingInvoices,
     returnInvoiceObject,
     invoiceFinalObject,
-    updateInvoiceToActive
+    updateInvoiceToActive,
+    deletePendingInvoice
   } = useInvoiceContext();
   const { productList } = useContextProduct();
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
@@ -60,11 +63,11 @@ const ItemsOnBuy = () => {
     setStopDecrement(false);
     let addQuantity = item.quantity + 1;
     if (item.stockCheck) {
-      if (item.quantity >= Number(item.stock).toFixed(0)) {
-        setStopIncrement(true);
-      } else {
-        addToInvoiceList(item, addQuantity);
-      }
+      // if (item.quantity >= Number(item.stock).toFixed(0)) {
+      //   setStopIncrement(true);
+      // } else {
+      addToInvoiceList(item, addQuantity);
+      // }
     } else {
       addToInvoiceList(item, addQuantity);
     }
@@ -94,6 +97,29 @@ const ItemsOnBuy = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleDelete = async (id) => {
+    return SwalModal(
+      "Deshironi ta fshini?",
+      "",
+      "warning",
+      "JO",
+      "PO",
+      () => { },
+      () => confirmDelete(id),
+      id
+    );
+  };
+
+  const confirmDelete = async (id) => {
+    const response = await deletePendingInvoice(id);
+  }
+
+  const deleteAllPendingInvoices = async () => {
+    pendingInvoices.map(async (invoice) => {
+      await confirmDelete(invoice.id);
+     });
+  }
 
   return (
     <div className={styles.mainHolder}>
@@ -148,8 +174,10 @@ const ItemsOnBuy = () => {
                 <Table stickyHeader className={styles.table}>
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
-                      <TableCell className={styles.tableHead} id={styles["number"]}>Nr.</TableCell>
-                      <TableCell className={styles.tableHead} id={styles["name"]}>
+                      <TableCell className={styles.tableHead} id={styles['number']}>
+                        Nr.
+                      </TableCell>
+                      <TableCell className={styles.tableHead} id={styles['name']}>
                         Produkti
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['quantity']}>
@@ -158,10 +186,10 @@ const ItemsOnBuy = () => {
                       <TableCell className={styles.tableHead} id={styles['price']}>
                         Çmimi
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles["price"]}>
+                      <TableCell className={styles.tableHead} id={styles['price']}>
                         Totali
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles["delete"]}>
+                      <TableCell className={styles.tableHead} id={styles['delete']}>
                         &nbsp;
                       </TableCell>
                     </TableRow>
@@ -172,7 +200,7 @@ const ItemsOnBuy = () => {
                       <TableRow key={item.id}>
                         <TableCell className={styles.tableBodyCell}>{index + 1}</TableCell>
                         <TableCell className={styles.tableBodyCell}>{item.name}</TableCell>
-                        <TableCell className={styles.tableBodyCell}>
+                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
                           <button
                             className={styles.valueButton}
                             onClick={() => {
@@ -192,9 +220,9 @@ const ItemsOnBuy = () => {
                           </button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp;  {Number(item.price).toFixed(2)}
+                          &nbsp; {Number(item.price).toFixed(2)}
                         </TableCell>
-                        <TableCell className={styles.tableBodyCell}>
+                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
                           &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
@@ -243,20 +271,40 @@ const ItemsOnBuy = () => {
                     <TableCell className={styles.tableBodyCell}>{invoice.items.length}</TableCell>
                     <TableCell className={styles.tableBodyCell}>{invoice.totalAmount} </TableCell>
                     <TableCell className={styles.tableBodyCell}>
+                      <div className={styles.buttonContainer}>
                       <IconButtonComponent
-                        style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                        style={{ backgroundColor: '#12AC7A', height: 35, width: 35, marginRight: "5px" }}
                         icon={<ShoppingCartIcon />}
                         iconColor={{ color: '#fff' }}
                         onClick={() => {
                           activateInvoice(invoice);
                         }}
                       />
+                      <IconButtonComponent
+                        style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                        icon={<DeleteForeverIcon />}
+                        iconColor={{ color: '#fff' }}
+                        onClick={() => {
+                          handleDelete(invoice.id);
+                        }}
+                      />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <Divider />
+          <div className={styles.bottomButtonContainer}>
+            <ButtonComponent
+              title="FSHI"
+              lightColor="rgb(240, 80, 80)"
+              addIcon={false}
+              onClick={deleteAllPendingInvoices}
+              icon={<DeleteForeverIcon />}
+            />
+          </div>
         </>
       )}
       <ModalComponent open={open} handleClose={handleClose} title="Kujdes">
