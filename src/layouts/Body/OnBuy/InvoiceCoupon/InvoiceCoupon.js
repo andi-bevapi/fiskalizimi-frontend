@@ -86,7 +86,7 @@ const InvoiceCoupon = (props) => {
                     <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br />
                     <span className={styles.couponText}>NSLF: {props.data.nslf}</span>
                     <br /><br /><br />
-                    <span className={styles.couponText}>{config.billMessage}</span> <br /><br />
+                    <span className={styles.couponText}>{config?.billMessage}</span> <br /><br />
                     <span className={styles.couponText}>Ovla Systems</span> <br />
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
