@@ -87,7 +87,7 @@ const InvoiceCoupon = (props) => {
                     <span className={styles.nslfText}>NSLF: {props.data.nslf}</span>
                     <br /><br /><br />
                     <span className={styles.couponText}>{config?.billMessage}</span> <br /><br />
-                    <span className={styles.couponText}>Ovla Systems</span> <br />
+                    <span className={styles.couponText}>Gjeneruar nga Ovla Systems</span> <br />
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
             </div>
