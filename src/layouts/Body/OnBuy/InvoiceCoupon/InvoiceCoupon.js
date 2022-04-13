@@ -20,7 +20,7 @@ const InvoiceCoupon = (props) => {
         props.data.businessUnitCode, "&cr=", props.data.TRCCode, "&sw=", props.data.softCode, "&prc=", props.data.totalAmount);
         setValue(tmp);
 
-    })
+    });
 
     return (
         <>
@@ -31,9 +31,9 @@ const InvoiceCoupon = (props) => {
                     content={() => componentRef}
                 />
             </div>
-            <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-            <div className={styles.couponDiv} ref={(el) => (componentRef = el)}>
-                <div id="couponToPrint" className={styles.couponBG}>
+            <Divider style={{ marginTop: -10, marginBottom: 20 }} />
+            <div className={styles.couponDiv} >
+                <div id="couponToPrint" className={styles.couponBG} ref={(el) => (componentRef = el)}>
                     <span className={styles.couponBigTitle}>FATURË TATIMORE</span> <br />
                     <span className={styles.couponText}>Kodi: {props.data.invoiceCode}</span>
                     <br /><br /><br />
@@ -45,7 +45,7 @@ const InvoiceCoupon = (props) => {
                         <span className={styles.couponText}>Data dhe ora: {props.data.dateTime}<b></b></span><br />
                         <span className={styles.couponText}>Kodi i Biznesit: <b>{props.data.branchCode}</b></span><br />
                         <span className={styles.couponText}>Kodi i Operatorit: <b>{props.data.operatorCode}</b></span><br />
-                        <span className={styles.couponText}>Menyra e pageses: <b>{props.data.paymentMethod}</b></span><br />
+                        <span className={styles.couponText}>Mënyra e pagesës: <b>{props.data.paymentMethod}</b></span><br />
                     </div>
                     <br />
                     <span className={styles.couponTitleCapital}>ARTIKUJT</span> <br />
@@ -80,11 +80,11 @@ const InvoiceCoupon = (props) => {
                     </div>
                     <br />
                     <div style={{ background: 'white', padding: '16px' }}>
-                        <QRCode value={value} size={200} />
+                        <QRCode value={value} size={150} />
                     </div>
                     <br />
-                    <span className={styles.couponText}>NIVF: {props.data.nivf}</span> <br />
-                    <span className={styles.couponText}>NSLF: {props.data.nslf}</span>
+                    <span className={styles.nslfText}>NIVF: {props.data.nivf}</span> <br />
+                    <span className={styles.nslfText}>NSLF: {props.data.nslf}</span>
                     <br /><br /><br />
                     <span className={styles.couponText}>{config?.billMessage}</span> <br /><br />
                     <span className={styles.couponText}>Ovla Systems</span> <br />
