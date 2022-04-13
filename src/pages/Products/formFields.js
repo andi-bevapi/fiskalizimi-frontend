@@ -25,6 +25,7 @@ export const formFields = [
         name: 'vat',
         component: 'Select',
         label: 'Klasifikimi i TVSH-se',
+        defaultValue: 2,
         options: [
             {
                 value: 0,
@@ -100,5 +101,5 @@ export const validationSchema = yup.object({
     categoryId:  yup.number().required("Ju lutem zgjidhni kategorine"),
     sellingUnitId: yup.number().required("Ju lutem zgjidhni njesine matese"),
     supplierId: yup.number().required("Ju lutem zgjidhni Furnitoret"),
-    imageVirtualPath: yup.string()
+    imageVirtualPath: yup.string().nullable(true)
 });

@@ -29,6 +29,20 @@
   "insertPass":"please insert password",
   "save":"Save",
   "editData":"Edit Data",
+  "configurations":"Configurations",
   "editProfile":"Edit profile",
-  "Actions":"Actions"
+  "chooseConfig":"chooseConfigurations",
+  "allowPrice":"Allow 0 price",
+  "choosePrinter":"Choose printer",
+  "chooseLanguage":"Choose language",
+  "printerName":"Printer name",
+  "billMessage":"Bill message",
+  "billDescription":"Peshkrimi i fatures",
+  "Actions":"Actions",
+  "choosePrinterName":"Please select the name of the printer",
+  "chooseLanguageName":"Please select the language",
+  "messageLength":"The message must have more then 2 characters",
+  "messageBill" :"Please insert the message",
+  "descriptionLength":"The description must have more then 2 characters",
+  "description":"Please insert the description"
 }
