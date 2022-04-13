@@ -290,12 +290,15 @@ const ItemsOnBuy = () => {
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead}>Kodi</TableCell>
+                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>Kodi</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
                     Produkte
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['price']}>
                     Çmimi
+                  </TableCell>
+                  <TableCell className={styles.tableHead} id={styles['delete']}>
+                    &nbsp;
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['delete']}>
                     &nbsp;
@@ -308,7 +311,7 @@ const ItemsOnBuy = () => {
                   filteredInAllPages.length ? filteredInAllPages.map((el) => {
                     return(
                       <TableRow key={el.id}>
-                      <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
+                      <TableCell className={styles.tableBodyCell} id={styles['invoiceKode']}>{el.description}</TableCell>
                       <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
                       <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
                       <TableCell className={styles.tableBodyCell}>
@@ -318,6 +321,16 @@ const ItemsOnBuy = () => {
                           iconColor={{ color: '#fff' }}
                           onClick={() => {
                             activateInvoice(el);
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                          icon={<DeleteForeverIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            handleDelete(el.id);
                           }}
                         />
                       </TableCell>
@@ -341,11 +354,23 @@ const ItemsOnBuy = () => {
                           }}
                         />
                       </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                          icon={<DeleteForeverIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            handleDelete(el.id);
+                          }}
+                        />
+                      </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
-              <ReactPaginate
+            </Table>
+          </TableContainer>
+          <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}
                 pageCount={pageCount}
@@ -356,8 +381,6 @@ const ItemsOnBuy = () => {
                 disabledClassName={styles.paginationDisabled}
                 activeClassName={styles.paginationActive}
               />
-            </Table>
-          </TableContainer>
           <Divider />
           <div className={styles.bottomButtonContainer}>
             <ButtonComponent
