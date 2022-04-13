@@ -29,4 +29,13 @@ const printInvoice = async (data) => {
     })
 }
 
-export { createInvoice, getInvoices, printInvoice }
+const deleteInvoiceById = async (id) => {
+    return request(`/invoice/delete/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+}
+
+export { createInvoice, getInvoices, deleteInvoiceById, printInvoice }

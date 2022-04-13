@@ -265,3 +265,11 @@ tbody > tr > td {
   font-family: 'Poppins' !important;
   font-weight: 600 !important;
 }
+
+.buttonContainer {
+  display: flex
+}
+
+.bottomButtonContainer {
+  margin-top: 10px;
+}
