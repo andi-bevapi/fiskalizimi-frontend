@@ -171,7 +171,7 @@ tbody > tr > td {
 
 .subMainHolder {
   /* text-align: center; */
-  padding: 22px 20px;
+  padding: 18px 4px;
 }
 
 .inputHolder {
@@ -250,10 +250,11 @@ tbody > tr > td {
 
 .calculatorButtons{
   display: flex;
+  justify-content: space-around;
 }
 
 .calculatorDiv{
-  display: block;
+  display: block !important;
 }
 
 .numberButton{
@@ -264,4 +265,5 @@ tbody > tr > td {
   font-size: 24px !important;
   font-family: 'Poppins' !important;
   font-weight: 600 !important;
+  padding: 2px !important;
 }

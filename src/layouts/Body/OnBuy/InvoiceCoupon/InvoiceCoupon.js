@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Divider, Button } from '@mui/material';
+import { Divider, Button, Grid } from '@mui/material';
 import styles from './coupon.css';
 import ReactToPrint from "react-to-print";
 import QRCode from "react-qr-code";
+import { display, grid } from '@mui/system';
 
 const InvoiceCoupon = (props) => {
     let componentRef = useRef();
@@ -14,22 +15,29 @@ const InvoiceCoupon = (props) => {
     useEffect(() => {
         const date = new Date(props.data.dateTime).toISOString().split(".")[0].concat("+01:00");
         const orderNumber = props.data.invoiceCode.split("/")[0];
-        const tmp = url.concat("?iic=", props.data.nslf, "&tin=", tin, "&crtd=", date, "&ord=", orderNumber, "&bu=", 
-        props.data.businessUnitCode, "&cr=", props.data.TRCCode, "&sw=", props.data.softCode, "&prc=", props.data.totalAmount);
+        const tmp = url.concat("?iic=", props.data.nslf, "&tin=", tin, "&crtd=", date, "&ord=", orderNumber, "&bu=",
+            props.data.businessUnitCode, "&cr=", props.data.TRCCode, "&sw=", props.data.softCode, "&prc=", props.data.totalAmount);
         setValue(tmp);
 
     })
 
     return (
         <>
-            <div className={styles.headerInvoice}>
-                <span className={styles.payTitle}>Fatura Tatimore:</span>
-                <ReactToPrint
-                    trigger={() => <Button variant="contained" type="submit" className={styles.buttonStyle}> Printo Faturën </Button>}
-                    content={() => componentRef}
-                />
-            </div>
+                <div className={styles.headerInvoice}>
+                    <Grid item xs={6} md={6}>
+                        <span className={styles.payTitle}>Fatura Tatimore:</span>
+                    </Grid>
+                    <Grid item xs={4} md={2}>
+                        <ReactToPrint
+                            trigger={() => <Button variant="contained" type="submit" className={styles.buttonStyle}> Printo Faturën </Button>}
+                            content={() => componentRef}
+                        />
+                    </Grid>
+                </div>
+
             <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+
+            <Grid container xs={8} md={8}> 
             <div className={styles.couponDiv} ref={(el) => (componentRef = el)}>
                 <div id="couponToPrint" className={styles.couponBG}>
                     <span className={styles.couponBigTitle}>FATURË TATIMORE</span> <br />
@@ -89,6 +97,7 @@ const InvoiceCoupon = (props) => {
                     <span className={styles.couponText}><b>posla.al</b></span>
                 </div>
             </div>
+            </Grid>
         </>
     );
 };
