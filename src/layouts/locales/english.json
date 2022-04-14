@@ -48,5 +48,6 @@
   "messageLength":"The message must have more then 2 characters",
   "messageBill" :"Please insert the message",
   "descriptionLength":"The description must have more then 2 characters",
-  "description":"Please insert the description"
+  "description":"Please insert the description",
+  "zeroPrice":"Product with 0 price are not allowed"
 }
