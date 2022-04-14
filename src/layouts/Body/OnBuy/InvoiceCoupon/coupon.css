@@ -21,12 +21,13 @@
   }
 
   .couponBG{
-      border: 1px solid #cbcbcb;
+      /* border: 1px solid #cbcbcb; */
       text-align: center;
       justify-content: center;
       align-items: center;
-      padding: 20px 25px;
-      width: 500px;
+      padding-left: 20px;
+      /* padding: 20px 25px; */
+      width: 260px;
   }
 
   .leftText{
@@ -34,18 +35,24 @@
   }
 
   .couponBigTitle{
-    font-size: 26px;
+    font-size: 16px;
     font-weight: 600;
   }
 
   .couponText{
-    font-size: 16px;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nslfText{
+    font-size: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .couponTitleCapital{
-    font-size: 19px;
+    font-size: 14px;
     font-weight: 600;
   }
 
@@ -57,6 +64,7 @@
   .couponAmounts{
     justify-content: space-between;
     text-align: left;
+    font-size: 13px;
   }
 
   .rightText{
@@ -68,17 +76,21 @@
   }
 
   .productDataRow{
-    font-size: 16px;
+    font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
     padding: 5px 10px;
   }
   .productPriceRow{
-    font-size: 16px;
+    font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: end;
-    padding: 5px 10px;
+    padding: 5px 0px;
     padding-right: 15px;
+  }
+
+  .pageStyle {
+    padding-left: 5px;
   }

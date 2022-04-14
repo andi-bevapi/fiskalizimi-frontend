@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Divider, Button } from '@mui/material';
 import ButtonComponent from '../../../../../components/Button/InvoiceButton';
 import BlockIcon from '@mui/icons-material/Block';
@@ -11,6 +12,7 @@ import ModalComponent from '../../../../../components/Modal/Modal';
 import { Form, Formik, Field } from 'formik';
 import TextField from '@mui/material/TextField';
 import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
+import {validationSchema} from "./validationSchema";
 
 const ActionButtons = (props) => {
   const {
@@ -28,6 +30,7 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
+  const {t} = useTranslation();
 
   useEffect(() => {
     (!returnChange ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : null);
@@ -281,46 +284,46 @@ const ActionButtons = (props) => {
           <InvoiceCoupon data={couponObject} />
         </ModalComponent>
         <ModalComponent open={openForFreeze} handleClose={toggleModalFreeze} title="">
-          <Formik
-            initialValues={{ idCode: "" }}
-            onSubmit={(values) => {
-              savePendingInvoice(values);
-            }}
-          >
-            <Form>
-              <span className={styles.payTitle}>Vendos kodin identifikues</span>
-              <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-              <Field name="idCode">
-                {({ field, meta }) => (
-                  <TextField
-                    required
-                    label="Kodi Identifikues"
-                    multiline
-                    error={meta.touched && meta.error}
-                    helperText={meta.error}
-                    InputProps={{
-                      style: {
-                        fontFamily: "Poppins",
-                        resize: "both",
-                        width: "auto",
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        fontFamily: "Poppins",
-                      }
-                    }}
-                    style={{ width: '100%' }}
-                    {...field}
-                  />
-                )}
-              </Field>
-              <br></br>
-              <Button variant="contained" style={{ marginTop: 16 }} type="submit">
-                Ruaj
-              </Button>
-            </Form>
-          </Formik>
+            <Formik
+              initialValues={{ idCode: ''}}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                savePendingInvoice(values);
+              }}
+            >
+              <Form>
+                <span className={styles.payTitle}>{t("codeIdentifierText")}</span>
+                <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+                <Field name="idCode">
+                  {({field, meta
+                  }) => (
+                    <TextField
+                      label={t("identifierCode")}
+                      error={meta.touched && meta.error}
+                      helperText={meta.error}
+                      InputProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                          resize: "both",
+                          width: "auto",
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: "Poppins",
+                        }
+                      }}
+                      style ={{width: '100%'}} 
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <br></br>
+                <Button variant="contained" style={{ marginTop: 16}}  type="submit">
+                  Ruaj
+                </Button>
+              </Form>
+            </Formik>
         </ModalComponent>
       </div>
     </div>
