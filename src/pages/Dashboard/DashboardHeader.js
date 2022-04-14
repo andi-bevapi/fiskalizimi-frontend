@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import * as React from 'react';
 import { useState, useEffect } from 'react';;
 import AppsIcon from '@mui/icons-material/Apps';
@@ -17,22 +17,33 @@ const DashboardHeader = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        (productList? (setLoading(false)) : (setLoading(true)))
-      }, [productList]);
+        (productList ? (setLoading(false)) : (setLoading(true)))
+    }, [productList]);
 
-      return (
+    return (
         <div className={styles.container}>
             <div className={styles.headContainer}>
-                <Filters />
-                <div className={styles.iconsContainer}>
-                    <IconButton onClick={() => setDisplay('cards')}>
-                        <AppsIcon />
-                    </IconButton>
-                    <IconButton style={{ paddingRight: 0 }} onClick={() => setDisplay('lines')}>
-                        <DehazeIcon />
-                    </IconButton>
-                </div>
+
+                <Grid container >
+                    <Grid item xs={12} sm={4} md={3} lg={3} xl={3}>
+                        <Filters />
+                    </Grid>
+
+                    <div className={styles.iconsContainer}>
+                        <Grid item xs={6} sm={6} md={6}>
+                            <IconButton onClick={() => setDisplay('cards')}>
+                                <AppsIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={6} style={{display:'flex-end'}}>
+                            <IconButton style={{ paddingRight: 0 }} onClick={() => setDisplay('lines')}>
+                                <DehazeIcon />
+                            </IconButton>
+                        </Grid>
+                    </div>
+                </Grid>
             </div>
+
             {isLoading ? (
                 <div className={styles.loadingDiv}>
                     <PuffLoader />
