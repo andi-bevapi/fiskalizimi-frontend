@@ -95,6 +95,7 @@ const TableComponent = (props) => {
         editItem={editItem}
         setEditItem={setEditItem}
         user={props.user}
+        product={props.product}
         permissions={props.permissions}
         setPermissions={props.setPermissions}
         contexts={props.contexts}
