@@ -308,7 +308,7 @@ const ItemsOnBuy = () => {
 
               <TableBody>
                 {
-                  filteredInAllPages.length ? filteredInAllPages.map((el) => {
+                  filteredInAllPages?.length > 0 ? filteredInAllPages.map((el) => {
                     return(
                       <TableRow key={el.id}>
                       <TableCell className={styles.tableBodyCell} id={styles['invoiceKode']}>{el.description}</TableCell>
