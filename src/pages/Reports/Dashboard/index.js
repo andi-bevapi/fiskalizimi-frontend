@@ -20,34 +20,41 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { formatDate } from '../../../helpers/formatDate';
 import { Animation } from '@devexpress/dx-react-chart';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
   const [dateRange, setDateRange] = useState([null, null]);
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('daily');
 
   useEffect(() => {
     getTotals();
     getTotalsCharts();
-  }, [initialState?.currentUser, dateRange]);
+  }, [initialState?.currentUser, dateRange, selectedOption]);
 
   const getTotals = async () => {
 
     let startDate = formatDate(dateRange[0]);
-    let endDate = dateRange[1] ? formatDate(dateRange[1]) 
-    : formatDate(new Date());
+    let endDate = dateRange[1] ? formatDate(dateRange[1])
+      : formatDate(new Date());
 
     try {
-      const response = await getDashboardReports(initialState?.currentUser?.clientId, {startDate, endDate});
+      const response = await getDashboardReports(initialState?.currentUser?.clientId, selectedOption);
       const formatted = [];
 
-      Object.entries(response.data[0]).map(item => {
-        formatted.push({
-          label: item[0] === 'totalAmount' ? 'Te ardhurat totale' : item[0] === 'totalVat' ? 'TVSH' : 'Numri i faturave',
-          value: item[1]
-        })
-      });
+      if(response.data.length > 0) {
+        Object.entries(response.data[0]).map(item => {
+          formatted.push({
+            label: item[0] === 'totalAmount' ? 'Te ardhurat totale' : item[0] === 'totalVat' ? 'TVSH' : 'Numri i faturave',
+            value: item[1]
+          })
+        });
+      }
 
       setTotals(formatted);
     } catch (error) {
@@ -58,11 +65,11 @@ const Dashboard = () => {
   const getTotalsCharts = async () => {
 
     let startDate = formatDate(dateRange[0]);
-    let endDate = dateRange[1] ? formatDate(dateRange[1]) 
-    : formatDate(new Date());
+    let endDate = dateRange[1] ? formatDate(dateRange[1])
+      : formatDate(new Date());
 
     try {
-      const response = await getChartsReports(initialState?.currentUser?.clientId, {startDate, endDate});
+      const response = await getChartsReports(initialState?.currentUser?.clientId, { startDate, endDate });
       setTotalsCharts(response.data);
     } catch (error) {
       console.log(error);
@@ -71,7 +78,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateRangePicker
               startText="Data e Fillimit"
               endText="Data e Mbarimit"
@@ -88,7 +95,24 @@ const Dashboard = () => {
       </LocalizationProvider>
       
       <br />
-      
+       */}
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Zgjidh Periudhen Kohore</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedOption}
+          label="Zgjidh Periudhen Kohore"
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <MenuItem value="daily">Per Diten e Sotme</MenuItem>
+          <MenuItem value="monthly">Per Muajin aktual</MenuItem>
+          <MenuItem value="yearly">Per Vitin aktual</MenuItem>
+        </Select>
+      </FormControl>
+
+      <br /><br />
+
       <Grid container spacing={2}>
         {totals?.map(item => (
           <Grid item xs={4}>
@@ -126,7 +150,7 @@ const Dashboard = () => {
               argumentField="dateCreated"
               color="#74A19E"
             />
-            <Title text="Vlera totale e faturave"/>
+            <Title text="Vlera totale e faturave" />
             <Animation />
           </Chart>
         </Grid>

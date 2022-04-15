@@ -43,7 +43,6 @@ const Invoices = () => {
 
     return (
         <>
-            <span className={styles.title}>  Faturat </span>
             <Tabs
                 value={value}
                 onChange={handleChange}
