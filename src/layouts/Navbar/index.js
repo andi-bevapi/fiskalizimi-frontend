@@ -73,7 +73,7 @@ const Navbar = () => {
             </Menu>
         </div>
         <IconButtonComponent
-          style={{ backgroundColor: '#FF7A00', width: '50px', height: '50px', boxShadow: 'none' }}
+          style={{ backgroundColor: '#FF7A00', width: '45px', height: '45px', boxShadow: 'none' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
           onClick={onLogoutHandler}
