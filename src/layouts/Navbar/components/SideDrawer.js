@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavItems from './NavItems';
 import styles from '../components/navigationStyles.css'
 import { history } from 'umi';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';//home
 
 const useStyles = makeStyles({
@@ -40,19 +40,20 @@ const SideDrawer = () => {
 
   return (
     <React.Fragment>
-          <Fab
-            className={classes.fab}
-            edge="start"
-            aria-label="menu"
-            onClick={toggleDrawer('right', true)}
-            size="small"
-          >
-            <Menu fontSize="small" />
-          </Fab>
-          <Drawer anchor="left" className={classes.drawer} open={state.right} onClose={toggleDrawer('left', false)}>
-            {sideDrawerList('left')}
-          </Drawer>
-          <IconButton className={styles.mainPageLink} onClick={() => { history.push('/') }}> <HomeIcon fontSize="large"/> </IconButton>
+      <Fab
+        className={classes.fab}
+        edge="start"
+        aria-label="menu"
+        onClick={toggleDrawer('right', true)}
+        size="small"
+      >
+        <Menu fontSize="small" />
+      </Fab>
+      <Drawer anchor="left" open={state.right} onClose={toggleDrawer('left', false)}>
+        {sideDrawerList('left')}
+      </Drawer>
+      <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}><HomeIcon /></Button>
+      <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>Arka</Button>
     </React.Fragment>
   );
 };

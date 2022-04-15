@@ -43,5 +43,13 @@
     font-family: 'Poppins' !important;
     font-weight: 600 !important;
     color: #fff !important;
-    padding: 0 10px !important;
+    padding: 0 25px !important;
+}
+
+.cashPageLink {
+    font-size: 17px !important;
+    font-family: 'Poppins' !important;
+    font-weight: 600 !important;
+    color: #ff7a00 !important;
+    padding: 0 !important;
 }
