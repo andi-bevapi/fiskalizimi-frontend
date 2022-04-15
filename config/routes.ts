@@ -30,6 +30,7 @@ export default [
       { exact: true, path: '/raportet', component: './Reports', access: 'canViewReports' },
       { exact: true, path: '/konfigurime', component: './Configurations' },
       { exact: true, path: '/edit-profile', component: './EditProfile' },
+      { exact: true, path: '/arka', component: './MoneyDeposit' },
     ],
   },
 ];

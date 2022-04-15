@@ -7,6 +7,7 @@ import NavItems from './NavItems';
 import styles from '../components/navigationStyles.css'
 import { history } from 'umi';
 import Button from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';//home
 
 const useStyles = makeStyles({
   fab: {
@@ -48,10 +49,11 @@ const SideDrawer = () => {
       >
         <Menu fontSize="small" />
       </Fab>
-      <Drawer anchor="left" className={classes.drawer} open={state.right} onClose={toggleDrawer('left', false)}>
+      <Drawer anchor="left" open={state.right} onClose={toggleDrawer('left', false)}>
         {sideDrawerList('left')}
       </Drawer>
-      <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}>Faqja kryesore</Button>
+      <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}><HomeIcon /></Button>
+      <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>Arka</Button>
     </React.Fragment>
   );
 };

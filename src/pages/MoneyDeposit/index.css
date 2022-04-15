@@ -1,0 +1,79 @@
+
+.title{
+    font: bold 2em 'Poppins';
+    color: rgb(0, 0, 0);
+    margin: 0;
+    line-height: 3;
+}
+
+.subTitle{
+    font: normal 1.5em 'Poppins';
+    color: rgb(0, 0, 0);
+    margin: 0;
+    line-height: 3;
+    margin-right: 20px;
+}
+
+.stateGrid{
+    display: contents;
+}
+
+.mt20{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.mt50{
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.amountInput{
+    width: 85%;
+}
+
+.changeAmountBtn{
+    margin-top: 5px !important;
+}
+
+.addAmountBtn{
+    margin-top: 5px !important;
+}
+
+.reduceAmountBtn{
+    margin-top: 5px !important;
+}
+
+.payTitle{
+    padding: 5px 1px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    color: #000 !important;
+    font-family: "Poppins",sans-serif !important;
+  }
+
+  .subMainHolder {
+    padding: 22px 0px;
+    float: right;
+  }
+
+  .buttonStyle {
+    background-color: #ff7a00 !important;
+    font-family: 'Poppins'!important;
+  }  
+
+  .currency{
+    padding-left: 5px;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    color: #000 !important;
+    font-family: "Poppins",sans-serif !important;
+  }
+
+  .warning{
+    padding-left: 5px;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    color: rgb(202, 8, 8) !important;
+    font-family: "Poppins",sans-serif !important;
+  }

@@ -19,8 +19,9 @@ const DashboardHeader = () => {
     useEffect(() => {
         (productList? (setLoading(false)) : (setLoading(true)))
       }, [productList]);
+    
 
-      return (
+    return (
         <div className={styles.container}>
             <div className={styles.headContainer}>
                 <Filters />

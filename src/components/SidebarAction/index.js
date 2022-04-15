@@ -16,8 +16,8 @@ const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 50,
-    width: 400,
+    padding: 30,
+    width: 260,
   },
 }));
 

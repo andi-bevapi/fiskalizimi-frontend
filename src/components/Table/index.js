@@ -118,7 +118,7 @@ const TableComponent = (props) => {
             <TableHead>
               <TableRow
                 sx={{
-                  'th': { padding: '16px 0' },
+                  'th': { padding: '16px 6px', fontFamily: 'Poppins' },
                 }}
               >
                 <TableCell className={classes.tableCell}>Nr</TableCell>
@@ -132,7 +132,7 @@ const TableComponent = (props) => {
                 <TableRow
                   key={item.id}
                   sx={{
-                    'td': { padding: '16px 0' },
+                    'td': { padding: '16px 6px',  fontFamily: 'Poppins' },
                   }}
                   id={item.id}
                 >
