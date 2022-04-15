@@ -1,5 +1,6 @@
 import { useInvoiceContext } from '../../../Context/InvoiceContext';
-import React, { useState, useEffect } from 'react';
+import BootstrapInputField from '../../../components/InputFields/BootstrapTextField';
+import React, { useState, useEffect, useMemo } from 'react';
 import IconButtonComponent from '../../../components/Button/IconButton.js';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,6 +19,7 @@ import PuffLoader from 'react-spinners/PuffLoader';
 import ModalComponent from '../../../components/Modal/Modal';
 import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
+import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
 
 const ItemsOnBuy = () => {
@@ -31,6 +33,7 @@ const ItemsOnBuy = () => {
     activeInvoice,
     setActiveInvoice,
     pendingInvoices,
+    setPendingInvoices,
     returnInvoiceObject,
     invoiceFinalObject,
     updateInvoiceToActive,
@@ -44,6 +47,19 @@ const ItemsOnBuy = () => {
   const [stopIncrement, setStopIncrement] = useState(false);
   const [stopDecrement, setStopDecrement] = useState(false);
   const [open, setOpen] = useState(false);
+  const [filteredInvoice, setFilteredInvoice] = useState([]);
+  const [filteredInAllPages, setFilteredInAllPages] = useState([]);
+
+  //---------------------paginate
+  const [pageNumber, setPageNumber] = useState(0);
+  const invoicePerPage = 4;
+  const pagesVisited = pageNumber * invoicePerPage;
+  const pageCount = Math.ceil(pendingInvoices.length / invoicePerPage);
+
+  const changePage = ({selected}) => {
+    setPageNumber(selected);
+  };
+  //---------------------paginate
 
   useEffect(() => {}, [listedInvoiceProducts, filteredBarcodeProduct]);
 
@@ -51,6 +67,10 @@ const ItemsOnBuy = () => {
   //   if (activeInvoice == "pending") console.log("hereee");
   //   updateInvoiceToActive();
   // }, [invoiceFinalObject]);
+
+  useEffect(() => {
+    setFilteredInvoice(pendingInvoices);
+  }, [pendingInvoices]);
 
   const handleTabChanges = () => {
     setActiveInvoice('active');
@@ -96,6 +116,20 @@ const ItemsOnBuy = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleChange = (e) => {
+   
+    const temp = pendingInvoices.filter((el) => {
+      return el.description.includes(e.target.value);
+    });
+    
+     if(e.target.value.length >= 1){
+      setFilteredInAllPages(temp)
+      }else{
+        setFilteredInAllPages([]);
+      }
+    setFilteredInvoice(temp);
   };
 
   const handleDelete = async (id) => {
@@ -247,11 +281,16 @@ const ItemsOnBuy = () => {
         </>
       ) : (
         <>
+          <BootstrapInputField
+            placeholder="kerko..."
+            style={{ marginTop: 20, marginBottom: 20 }}
+            onChange={handleChange}
+          />
           <TableContainer className={styles.tableContainer}>
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead}>Kodi</TableCell>
+                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>Kodi</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
                     Produkte
                   </TableCell>
@@ -261,40 +300,87 @@ const ItemsOnBuy = () => {
                   <TableCell className={styles.tableHead} id={styles['delete']}>
                     &nbsp;
                   </TableCell>
+                  <TableCell className={styles.tableHead} id={styles['delete']}>
+                    &nbsp;
+                  </TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {pendingInvoices?.map((invoice, key) => (
-                  <TableRow key={invoice.id}>
-                    <TableCell className={styles.tableBodyCell}>{invoice.description}</TableCell>
-                    <TableCell className={styles.tableBodyCell}>{invoice.items.length}</TableCell>
-                    <TableCell className={styles.tableBodyCell}>{invoice.totalAmount} </TableCell>
-                    <TableCell className={styles.tableBodyCell}>
-                      <div className={styles.buttonContainer}>
-                      <IconButtonComponent
-                        style={{ backgroundColor: '#12AC7A', height: 35, width: 35, marginRight: "5px" }}
-                        icon={<ShoppingCartIcon />}
-                        iconColor={{ color: '#fff' }}
-                        onClick={() => {
-                          activateInvoice(invoice);
-                        }}
-                      />
-                      <IconButtonComponent
-                        style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
-                        icon={<DeleteForeverIcon />}
-                        iconColor={{ color: '#fff' }}
-                        onClick={() => {
-                          handleDelete(invoice.id);
-                        }}
-                      />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {
+                  filteredInAllPages.length ? filteredInAllPages.map((el) => {
+                    return(
+                      <TableRow key={el.id}>
+                      <TableCell className={styles.tableBodyCell} id={styles['invoiceKode']}>{el.description}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                          icon={<ShoppingCartIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            activateInvoice(el);
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                          icon={<DeleteForeverIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            handleDelete(el.id);
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    )
+                  })
+                  
+                  : filteredInvoice.slice(pagesVisited, pagesVisited + invoicePerPage).map((el) => {
+                  return (
+                    <TableRow key={el.id}>
+                      <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                          icon={<ShoppingCartIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            activateInvoice(el);
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className={styles.tableBodyCell}>
+                        <IconButtonComponent
+                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                          icon={<DeleteForeverIcon />}
+                          iconColor={{ color: '#fff' }}
+                          onClick={() => {
+                            handleDelete(el.id);
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
+          <ReactPaginate
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={styles.paginationButtons}
+                previousLinkClassName={styles.previousButtons}
+                nextLinkClassName={styles.nextButtons}
+                disabledClassName={styles.paginationDisabled}
+                activeClassName={styles.paginationActive}
+              />
           <Divider />
           <div className={styles.bottomButtonContainer}>
             <ButtonComponent

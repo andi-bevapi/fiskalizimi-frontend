@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Divider, Button } from '@mui/material';
 import ButtonComponent from '../../../../../components/Button/InvoiceButton';
 import BlockIcon from '@mui/icons-material/Block';
@@ -11,6 +12,7 @@ import ModalComponent from '../../../../../components/Modal/Modal';
 import { Form, Formik, Field } from 'formik';
 import TextField from '@mui/material/TextField';
 import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
+import {validationSchema} from "./validationSchema";
 
 const ActionButtons = (props) => {
   const {
@@ -28,6 +30,7 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
+  const {t} = useTranslation();
 
   useEffect(() => {
     (!returnChange ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : null);
@@ -143,6 +146,9 @@ const ActionButtons = (props) => {
               icon={<LocalAtmIcon />}
             />
           </Grid>
+
+          {/* Modali paguaj faturen */}
+
           <ModalComponent open={isOpen} handleClose={toggleModal} title="">
             <Formik
               initialValues={{ description: "", message: "" }}
@@ -153,72 +159,101 @@ const ActionButtons = (props) => {
               <Form>
                 <span className={styles.payTitle}>Paguaj Faturën</span>
                 <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-                <Grid container marginBottom={1} spacing={1} direction="row">
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' }}>
-                    <Grid item xs={12} sm={12} md={5}>
+
+                {/* containeri i madh */}
+                <Grid container marginBottom={1} spacing={1}>
+
+                  {/* containeri i majte plus calculatorin pervec kusurit dhe butonit vazhdo*/}
+                  <Grid container xs={12} sm={12} md={12} lg={12}>
+
+                    {/* containeri ne te majte */}
+                    <Grid container xs={12} sm={6} md={6} lg={6}>
+
                       <div className={styles.subMainHolder}>
                         <div className={styles.paymentMethodsDiv}>
-                          <span className={styles.totalPrice}>Zgjidhni mënyrën e pagesës: </span> <br /><br />
-                          <Button className={styles.cashPayment}>
-                            CASH
-                          </Button><br />
-                          <Button className={styles.bankPayment} disabled={true}>
-                            BANKË
-                          </Button>
+
+                          <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <span className={styles.totalPrice}>Zgjidhni mënyrën e pagesës: </span> <br /><br />
+                          </Grid>
+
+                          <Grid container display={'flex'}>
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                              <Button className={styles.cashPayment}>
+                                CASH
+                              </Button><br />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                              <Button className={styles.bankPayment} disabled={true}>
+                                BANKË
+                              </Button>
+                            </Grid>
+                          </Grid>
                         </div>
                       </div>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-                      <div className={styles.subMainHolder}>
-                        <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
-                      </div>
-                      <div className={styles.subMainHolder}>
-                        <div className={styles.amountEntered}>
-                          <span className={styles.describeInvoice}><b>Shuma: </b> &nbsp; {Number(amount)} LEK</span>
+
+                    <Grid container xs={12} sm={6} md={6} lg={6}>
+
+                      <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <div className={styles.subMainHolder}>
+                          <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
                         </div>
+                      </Grid>
+
+                      <div className={styles.subMainHolder}>
+                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                          <div className={styles.amountEntered}>
+                            <span className={styles.describeInvoice}><b>Shuma: </b> &nbsp; {Number(amount)} LEK</span>
+                          </div>
+                        </Grid>
                         <br />
-                        <Grid item xs={12} md={12} className={styles.calculatorDiv}>
+
+                        <Grid container xs={12} sm={12} md={12} lg={12} className={styles.calculatorDiv}>
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(1) }}> 1 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(2) }}> 2 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(3) }}> 3 </Button>
                             </Grid>
                           </div>
+                          
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(4) }}> 4 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(5) }}> 5 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(6) }}> 6 </Button>
                             </Grid>
                           </div>
+                        
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(7) }}> 7 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(8) }}> 8 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(9) }}> 9 </Button>
                             </Grid>
                           </div>
+                         
                           <div className={styles.calculatorButtons}>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney("C") }}> C </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney(0) }}> 0 </Button>
                             </Grid>
-                            <Grid item xs={3} md={3}>
+                            <Grid item xs={4} md={4}>
                               <Button className={styles.numberButton} onClick={() => { calculateMoney("D") }}> Fshi </Button>
                             </Grid>
                           </div>
@@ -226,7 +261,8 @@ const ActionButtons = (props) => {
                       </div>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                  <Grid container xs={12} sm={12} md={12} lg={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div className={styles.subMainHolder}>
                       <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)} LEK</span>
                     </div>
@@ -241,25 +277,28 @@ const ActionButtons = (props) => {
             </Formik>
           </ModalComponent>
         </Grid>
+
+
+
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
           <InvoiceCoupon data={couponObject} />
         </ModalComponent>
         <ModalComponent open={openForFreeze} handleClose={toggleModalFreeze} title="">
             <Formik
-              initialValues={{ idCode: ""}}
+              initialValues={{ idCode: ''}}
+              validationSchema={validationSchema}
               onSubmit={(values) => {
                 savePendingInvoice(values);
               }}
             >
               <Form>
-                <span className={styles.payTitle}>Vendos kodin identifikues</span>
+                <span className={styles.payTitle}>{t("codeIdentifierText")}</span>
                 <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                 <Field name="idCode">
-                  {({ field, meta }) => (
+                  {({field, meta
+                  }) => (
                     <TextField
-                      required
-                      label="Kodi Identifikues"
-                      multiline
+                      label={t("identifierCode")}
                       error={meta.touched && meta.error}
                       helperText={meta.error}
                       InputProps={{

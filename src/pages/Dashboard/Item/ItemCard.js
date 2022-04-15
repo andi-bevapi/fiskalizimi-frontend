@@ -88,7 +88,8 @@ const ItemCard = (props) => {
         } else {
 
           setProductQuantity(1);
-          (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+          // (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
+          props.addToInvoiceList(product, 1);
         }
       }
     }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
@@ -9,19 +10,22 @@ import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
 import { useModel } from 'umi';
+import {useConfigProvider} from "../../Context/ConfigurationsContext";
 
 const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 50,
-    width: 400,
+    padding: 30,
+    width: 260,
   },
 }));
 
 const SidebarAction = (props) => {
   const { initialState, refresh } = useModel('@@initialState');
+  const {config} = useConfigProvider();
   const classes = useStyles();
+  const {t} = useTranslation();
 
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
@@ -152,6 +156,10 @@ const SidebarAction = (props) => {
     const action = props.editItem ? props.update : props.create;
 
     let response = {};
+    if (props.product && values.price === 0 && config.allowSellsWithZero === false) {
+      setOpenSnackBar({ status: true, message: t("zeroPrice"), success: false });
+      return
+    }
     if (props.user) {
       if (props.editItem) {
         let id = values.id;
@@ -182,6 +190,8 @@ const SidebarAction = (props) => {
       });
     }
 
+    console.log("response-----",response);
+    
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);

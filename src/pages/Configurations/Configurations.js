@@ -27,7 +27,7 @@ import { useConfigProvider } from '../../Context/ConfigurationsContext';
 
 const useStyles = makeStyles(() => ({
   rightFormContainer: { marginTop: '50px !important', display: 'block' },
-  fieldContainer: { margin: '10px !important' },
+  fieldContainer: { margin: '10px 0px !important' },
   submitButtonStyle: { backgroundColor: '#FF7A00 !important' , width:120 , height:40 },
   iconStyles: { marginRight: '10px' },
   setMax: {maxWidth: "220px;"}
@@ -95,7 +95,7 @@ const Configurations = () => {
           <Grid container>
             <Grid xs={12} sm={12} md={12}>
             <Grid item className={classes.fieldContainer}>
-                <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                <Box sx={{ minWidth: 120}}>
                     <Field name="allowSellsWithZero">
                     {({ field, meta }) => (
                         <Checkbox
@@ -114,10 +114,10 @@ const Configurations = () => {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container display='flex' justifyContent='space-between'>
             <Grid xs={12} sm={6} md={5}>
               <Grid item className={classes.fieldContainer}>
-                <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                <Box sx={{ minWidth: 120}}>
                   <Field name="printer">
                     {({ field, meta }) => (
                       <TextField
@@ -128,7 +128,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '220px',
+                            width: '230px',
                             textAlign: 'left',
                           },
                         }}
@@ -154,7 +154,7 @@ const Configurations = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                <Box sx={{ minWidth: 120}}>
                   <Field name="billMessage"  InputProps={{style: {maxWidth: '220px'}}}>
                     {({ field, meta }) => (
                       <TextField
@@ -164,7 +164,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '220px',
+                            width: '230px',
                           },
                         }}
                         InputLabelProps={{
@@ -181,7 +181,7 @@ const Configurations = () => {
             </Grid>
             <Grid xs={12} sm={6} md={5}>
               <Grid item className={classes.fieldContainer}>
-                <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                <Box sx={{ minWidth: 120}}>
                   <Field name="language">
                     {({ field, meta }) => (
                       <TextField
@@ -192,7 +192,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '220px',
+                            width: '230px',
                             textAlign: 'left',
                           },
                         }}
@@ -216,7 +216,7 @@ const Configurations = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                <Box sx={{ minWidth: 120}}>
                   <Field name="billDescription" InputProps={{style: {maxWidth: '220px'}}}>
                     {({ field, meta }) => (
                       <TextField
@@ -226,7 +226,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '220px',
+                            width: '230px',
                           },
                         }}
                         InputLabelProps={{
@@ -243,10 +243,10 @@ const Configurations = () => {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container paddingTop={5}>
                 <Grid xs={12} sm={12} md={12}>
                     <Grid item className={classes.fieldContainer}>
-                        <Box sx={{ minWidth: 120, paddingLeft: 1, paddingRight: 10 }}>
+                        <Box sx={{ minWidth: 120}}>
                             <Button
                                 className={classes.submitButtonStyle} 
                                 variant="contained" 
