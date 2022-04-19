@@ -27,7 +27,7 @@ const BodyDashboard = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.body}>
-      {props.data.length > 0 ? (
+      {props.data?.length > 0 ? (
         <div>
           {props.display === 'cards' ? (
             <div>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
@@ -9,19 +10,22 @@ import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
 import { useModel } from 'umi';
+import {useConfigProvider} from "../../Context/ConfigurationsContext";
 
 const useStyles = makeStyles(() => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 50,
-    width: 400,
+    padding: 30,
+    width: 260,
   },
 }));
 
 const SidebarAction = (props) => {
   const { initialState, refresh } = useModel('@@initialState');
+  const {config} = useConfigProvider();
   const classes = useStyles();
+  const {t} = useTranslation();
 
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
@@ -100,6 +104,10 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
+        // if (field.name == 'vat') {
+        //   let option = field.options.filter((el) => el.label == "TVSH 20%")
+        //   initialValues[field.name] = option[0].value;
+        // }
       });
     }
     return initialValues;
@@ -148,18 +156,30 @@ const SidebarAction = (props) => {
     const action = props.editItem ? props.update : props.create;
 
     let response = {};
+    if (props.product && values.price === 0 && config.allowSellsWithZero === false) {
+      setOpenSnackBar({ status: true, message: t("zeroPrice"), success: false });
+      return
+    }
     if (props.user) {
       if (props.editItem) {
         let id = values.id;
         delete values.id;
         response = await action(id, {
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: !props.editItem,
+          },
           permissions: permissions,
         });
         refresh();
       } else {
         response = await action({
-          user: { ...values, clientId: initialState?.currentUser?.clientId, isFirstTimeLogin: props.editItem ? false : true },
+          user: {
+            ...values,
+            clientId: initialState?.currentUser?.clientId,
+            isFirstTimeLogin: !props.editItem,
+          },
           permissions: permissions,
         });
         refresh();
@@ -170,6 +190,8 @@ const SidebarAction = (props) => {
       });
     }
 
+    console.log("response-----",response);
+    
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
@@ -191,6 +213,23 @@ const SidebarAction = (props) => {
   const handleCheck = (id) => {
     props.setPermissions((prev) => {
       let index = prev.findIndex((item) => item.id === id);
+      let entity = prev[index].name.split('.')[1];
+      if (prev[index].label != 'Shiko') {
+        if (prev[index].checked == false) {
+          let indexView = prev.findIndex((item) => item.name === `permission.${entity}.view`);
+          if (prev[indexView].checked == false) prev[indexView].checked = true;
+        }
+      } else {
+        if (prev[index].checked == true) {
+          let entityPermissions = prev.filter((item) => item.name.includes(`permission.${entity}`));
+          entityPermissions.map((el) => {
+            if (el.label != "Shiko") {
+              let indexPermission = prev.findIndex((item) => item.id === el.id);
+              prev[indexPermission].checked = false;
+            }
+          })
+        }
+      }
       prev[index].checked = !prev[index].checked;
       return [...prev];
     });
@@ -208,6 +247,7 @@ const SidebarAction = (props) => {
       <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
         <Formik
           initialValues={generateInitialValues()}
+          enableReinitialize={true}
           validationSchema={props.validationSchema}
           onSubmit={(values) => {
             handleSubmit(values);

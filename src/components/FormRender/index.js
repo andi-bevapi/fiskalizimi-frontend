@@ -86,7 +86,7 @@ const FormRender = ({ formFields }) => {
         return (
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
-              {({ field, meta }) => (
+              {({  field, form: {setFieldValue}, meta }) => (
                 <TextField
                   select
                   label={formField.label}
@@ -108,7 +108,9 @@ const FormRender = ({ formFields }) => {
                       fontFamily: 'Poppins',
                     },
                   }}
-                  {...field}
+                  defaultValue={formField.defaultValue}
+                  onChange={(event) => {
+                    setFieldValue(formField.name, event.target.value)}}
                 >
                   {formField.options.map((option) => (
                     <MenuItem key={option.value} value={option.value}>

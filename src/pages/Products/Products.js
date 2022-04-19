@@ -30,6 +30,7 @@ const Products = () => {
       update={productToUpdate}
       delete={productToDelete}
       formFields={formFields}
+      product={true}
       validationSchema={validationSchema}
       isLoading={isLoading}
       contexts={{

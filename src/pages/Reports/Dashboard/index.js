@@ -6,6 +6,11 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { getDashboardReports, getChartsReports } from '../../../services/reports';
 import { useModel } from 'umi';
+import DateRangePicker from '@mui/lab/DateRangePicker';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {
   Chart,
   BarSeries,
@@ -13,29 +18,43 @@ import {
   ArgumentAxis,
   ValueAxis,
 } from '@devexpress/dx-react-chart-material-ui';
+import { formatDate } from '../../../helpers/formatDate';
 import { Animation } from '@devexpress/dx-react-chart';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
+  const [dateRange, setDateRange] = useState([null, null]);
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('daily');
 
   useEffect(() => {
     getTotals();
     getTotalsCharts();
-  }, [initialState?.currentUser]);
+  }, [initialState?.currentUser, dateRange, selectedOption]);
 
   const getTotals = async () => {
+
+    let startDate = formatDate(dateRange[0]);
+    let endDate = dateRange[1] ? formatDate(dateRange[1])
+      : formatDate(new Date());
+
     try {
-      const response = await getDashboardReports(initialState?.currentUser?.clientId);
+      const response = await getDashboardReports(initialState?.currentUser?.clientId, selectedOption);
       const formatted = [];
 
-      Object.entries(response.data[0]).map(item => {
-        formatted.push({
-          label: item[0] === 'totalAmount' ? 'Te ardhurat totale' : item[0] === 'totalVat' ? 'TVSH' : 'Numri i faturave',
-          value: item[1]
-        })
-      });
+      if(response.data.length > 0) {
+        Object.entries(response.data[0]).map(item => {
+          formatted.push({
+            label: item[0] === 'totalAmount' ? 'Te ardhurat totale' : item[0] === 'totalVat' ? 'TVSH' : 'Numri i faturave',
+            value: item[1]
+          })
+        });
+      }
 
       setTotals(formatted);
     } catch (error) {
@@ -44,8 +63,13 @@ const Dashboard = () => {
   };
 
   const getTotalsCharts = async () => {
+
+    let startDate = formatDate(dateRange[0]);
+    let endDate = dateRange[1] ? formatDate(dateRange[1])
+      : formatDate(new Date());
+
     try {
-      const response = await getChartsReports(initialState?.currentUser?.clientId);
+      const response = await getChartsReports(initialState?.currentUser?.clientId, { startDate, endDate });
       setTotalsCharts(response.data);
     } catch (error) {
       console.log(error);
@@ -54,19 +78,55 @@ const Dashboard = () => {
 
   return (
     <>
+      {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateRangePicker
+              startText="Data e Fillimit"
+              endText="Data e Mbarimit"
+              value={dateRange}
+              onChange={setDateRange}
+              renderInput={(startProps, endProps) => (
+                  <>
+                      <TextField {...startProps} />
+                      <Box sx={{ mx: 2 }}> deri ne </Box>
+                      <TextField {...endProps} />
+                  </>
+              )}
+          />
+      </LocalizationProvider>
+      
+      <br />
+       */}
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Zgjidh Periudhen Kohore</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedOption}
+          label="Zgjidh Periudhen Kohore"
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <MenuItem value="daily">Per Diten e Sotme</MenuItem>
+          <MenuItem value="monthly">Per Muajin aktual</MenuItem>
+          <MenuItem value="yearly">Per Vitin aktual</MenuItem>
+        </Select>
+      </FormControl>
+
+      <br /><br />
+
       <Grid container spacing={2}>
         {totals?.map(item => (
           <Grid item xs={4}>
             <Card sx={{ minWidth: 275, textAlign: 'left' }}>
               <CardHeader
                 title={item?.label}
+                titleTypographyProps={{ variant: 'h6', fontFamily: 'Poppins' }}
                 style={{
-                  background: '#0D4D47',
-                  color: '#fff'
+                  background: '#74a19e',
+                  color: '#fff',
                 }}
               />
               <CardContent>
-                <Typography variant="h5" component="div" align='right' style={{ color: '#0D4D47' }}>
+                <Typography variant="h5" component="div" align='right' style={{ color: '#0D4D47', fontFamily: 'Poppins', fontWeight: 700 }}>
                   {Number.isInteger(item?.value) ? item?.value : item?.value.toFixed(2)}
                 </Typography>
               </CardContent>
@@ -75,10 +135,10 @@ const Dashboard = () => {
         ))}
       </Grid>
 
-      <br/><br/>
+      <br /><br />
 
       <Grid container spacing={6}>
-        <Grid item xs={6}>
+        <Grid item md={6} xs={12}>
           <Chart
             data={totalsCharts}
           >
@@ -88,12 +148,13 @@ const Dashboard = () => {
             <BarSeries
               valueField="totalAmount"
               argumentField="dateCreated"
+              color="#74A19E"
             />
             <Title text="Vlera totale e faturave" />
             <Animation />
           </Chart>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={6} xs={12}>
           <Chart
             data={totalsCharts}
           >
@@ -103,6 +164,7 @@ const Dashboard = () => {
             <BarSeries
               valueField="totalInvoices"
               argumentField="dateCreated"
+              color="#ff7a00"
             />
             <Title text="Numri total i faturave" />
             <Animation />
