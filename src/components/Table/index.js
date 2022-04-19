@@ -6,12 +6,12 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
-import { useTranslation } from "react-i18next";
 import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
 import { Access, useAccess } from 'umi';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -41,7 +41,7 @@ const TableComponent = (props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const [editItem, setEditItem] = useState(null);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const access = useAccess();
 
   const handleEditButton = (id) => {
@@ -104,7 +104,7 @@ const TableComponent = (props) => {
       <div className={classes.headerContainer}>
         <h1>{props.title}</h1>
         <Access accessible={access[props.acceses['create']]}>
-          <Button variant="contained" onClick={handleCreate}>Shto <AddIcon /></Button>
+          <Button variant="contained" onClick={handleCreate}>{t("add")} <AddIcon /></Button>
         </Access>
       </div>
 

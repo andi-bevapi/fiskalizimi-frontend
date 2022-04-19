@@ -189,8 +189,6 @@ const SidebarAction = (props) => {
         ...values,
       });
     }
-
-    console.log("response-----",response);
     
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
@@ -277,7 +275,7 @@ const SidebarAction = (props) => {
               </>
             )}
             <Button variant="contained" type="submit">
-              <SaveIcon style={{ marginRight: 10 }} /> Ruaj
+              <SaveIcon style={{ marginRight: 10 }} /> {t("save")}
             </Button>
           </Form>
         </Formik>

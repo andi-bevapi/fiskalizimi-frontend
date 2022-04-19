@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import i18n from "i18next";
 
 export const validationSchema = yup.object({
     username: yup.string().min(2, "Emri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin"),

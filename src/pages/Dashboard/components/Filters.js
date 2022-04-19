@@ -5,6 +5,7 @@ import { useContextProduct } from '../../../Context/ProductContext';
 import { useCategoryContext } from '../../../Context/CategoryContext';
 import { useSellingUnitContext } from '../../../Context/SellingUnitContext';
 import { useSupplierContext } from '../../../Context/SuppliersContext';
+import { useTranslation } from "react-i18next";
 
 const SubmitListener = () => {
     const formik = useFormikContext();
@@ -23,6 +24,7 @@ const Filters = () => {
     const { categoryList } = useCategoryContext();
     const { sellingUnitList } = useSellingUnitContext();
     const { suppliersList } = useSupplierContext();
+    const {t} = useTranslation();
 
     return (
         <Formik
@@ -37,16 +39,16 @@ const Filters = () => {
                         {
                             name: 'searchText',
                             component: 'Text',
-                            label: 'Kerko',
+                            label: t("search"),
                         },
                         {
                             name: 'categoryId',
                             component: 'Select',
-                            label: 'Kategoria',
+                            label: t("category"),
                             options: [
                                 {
                                     value: null,
-                                    label: 'Te Gjitha'
+                                    label: t("all")
                                 },
                                 ...categoryList?.map(category => ({
                                     value: category.id,
@@ -60,11 +62,11 @@ const Filters = () => {
                         {
                             name: 'sellingUnitId',
                             component: 'Select',
-                            label: 'Njesia Matese',
+                            label: t("measureUnits"),
                             options: [
                                 {
                                     value: null,
-                                    label: 'Te Gjitha'
+                                    label: t("all")
                                 },
                                 ...sellingUnitList?.map(sellingUnit => ({
                                     value: sellingUnit.id,
@@ -78,11 +80,11 @@ const Filters = () => {
                         {
                             name: 'supplierId',
                             component: 'Select',
-                            label: 'Furnitori',
+                            label: t("supplier"),
                             options: [
                                 {
                                     value: null,
-                                    label: 'Te Gjitha'
+                                    label: t("all")
                                 },
                                 ...suppliersList?.map(supplier => ({
                                     value: supplier.id,
