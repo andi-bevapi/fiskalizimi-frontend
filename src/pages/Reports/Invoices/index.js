@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import i18n from "i18next";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,8 +49,8 @@ const Invoices = () => {
                 onChange={handleChange}
                 tabItemContainerStyle={styles.activeInvoiceTab}
             >
-                <Tab {...a11yProps(0)}  label="Faturat e Fiskalizuara" {...a11yProps(0)} className={styles.tabFonts}/>
-                <Tab {...a11yProps(1)}  label="Faturat e PaFiskalizuara" {...a11yProps(1)} className={styles.tabFonts}/>
+                <Tab {...a11yProps(0)}  label= {i18n.t("fiscalizedBill")}  {...a11yProps(0)} className={styles.tabFonts}/>
+                <Tab {...a11yProps(1)}  label=  {i18n.t("noFiscalizedBill")} {...a11yProps(1)} className={styles.tabFonts}/>
             </Tabs>
             <TabPanel value={value} index={0}>
                

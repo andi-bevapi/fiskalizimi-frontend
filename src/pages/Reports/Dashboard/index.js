@@ -24,6 +24,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
@@ -31,6 +32,7 @@ const Dashboard = () => {
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
   const [selectedOption, setSelectedOption] = useState('daily');
+  const {t} = useTranslation();
 
   useEffect(() => {
     getTotals();
@@ -97,7 +99,7 @@ const Dashboard = () => {
       <br />
        */}
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Zgjidh Periudhen Kohore</InputLabel>
+        <InputLabel id="demo-simple-select-label"> {t("timePeriod")} </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -105,9 +107,9 @@ const Dashboard = () => {
           label="Zgjidh Periudhen Kohore"
           onChange={(e) => setSelectedOption(e.target.value)}
         >
-          <MenuItem value="daily">Per Diten e Sotme</MenuItem>
-          <MenuItem value="monthly">Per Muajin aktual</MenuItem>
-          <MenuItem value="yearly">Per Vitin aktual</MenuItem>
+          <MenuItem value="daily"> {t("actualDay")} </MenuItem>
+          <MenuItem value="monthly">{t("actualMonth")} </MenuItem>
+          <MenuItem value="yearly">{t("actualYear")}</MenuItem>
         </Select>
       </FormControl>
 
@@ -150,7 +152,7 @@ const Dashboard = () => {
               argumentField="dateCreated"
               color="#74A19E"
             />
-            <Title text="Vlera totale e faturave" />
+            <Title text={t("totallBillValue")}/>
             <Animation />
           </Chart>
         </Grid>
@@ -166,7 +168,7 @@ const Dashboard = () => {
               argumentField="dateCreated"
               color="#ff7a00"
             />
-            <Title text="Numri total i faturave" />
+            <Title text={t("totallBillValue")} />
             <Animation />
           </Chart>
         </Grid>

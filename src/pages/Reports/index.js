@@ -8,9 +8,11 @@ import Analytics from './Analytics';
 import Invoices from './Invoices';
 import SoldProducts from './SoldProducts';
 import styles from './reportsStyle.css'
+import i18n from "i18next";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
 
   return (
     <div
@@ -56,9 +58,9 @@ const Reports = () => {
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         <Tab label="Dashboard" {...a11yProps(0)} className={styles.tabFonts}/>
-        <Tab label="Regjistri Analitik" {...a11yProps(1)} className={styles.tabFonts}/>
-        <Tab label="Faturat" {...a11yProps(2)} className={styles.tabFonts}/>
-        <Tab label="Produktet e Shitura" {...a11yProps(3)} className={styles.tabFonts}/>
+        <Tab label= {i18n.t("analyticalRegister")} {...a11yProps(1)} className={styles.tabFonts}/>
+        <Tab label={i18n.t("bill")} {...a11yProps(2)} className={styles.tabFonts}/>
+        <Tab label={i18n.t("soldProducts")} {...a11yProps(3)} className={styles.tabFonts}/>
       </Tabs>
       <TabPanel value={value} index={0}>
         <Dashboard />
