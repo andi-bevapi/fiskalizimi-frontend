@@ -1,3 +1,5 @@
+import i18n from "i18next";
+
 export const listFormat = (data, tableHeaders) => {
   tableHeaders = tableHeaders.map((h) => h.toLowerCase());
   const newList = data.map((_arrayElement) => Object.assign({}, _arrayElement));
@@ -15,7 +17,7 @@ export const permissionFormat = (permissions) => {
   permissions.map((permission) => {
     let entity = permission.name.split('.')[1];
     if (!newPermissions.hasOwnProperty(entity)) {
-      permission.label = 'Shiko';
+      permission.label = i18n.t("view");
       let entityObj = {
         label: entity,
         permissions: [permission],
@@ -23,11 +25,11 @@ export const permissionFormat = (permissions) => {
       newPermissions[entity] = entityObj;
     } else {
       if (permission.name.includes('create')) {
-        permission.label = 'Krijo';
+        permission.label = i18n.t("create");
       } else if (permission.name.includes('update')) {
-        permission.label = 'Perditeso';
+        permission.label = i18n.t("update");
       } else {
-        permission.label = 'Fshi';
+        permission.label = i18n.t("delete");
       }
       newPermissions[entity].permissions.push(permission);
     }

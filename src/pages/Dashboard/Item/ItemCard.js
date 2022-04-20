@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import cardBackground from './../../../assets/images/cardBackground.png';
 import styles from './ItemLine.module.css';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -52,6 +53,7 @@ const ItemCard = (props) => {
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
+  const {t} = useTranslation();
 
   useEffect(() => {
     // const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
@@ -131,14 +133,14 @@ const ItemCard = (props) => {
           color="text.secondary"
           className={styles.stockText}
         >
-          Barkodi: {Number(props.item.barcode)}
+          {t("Barcode")}: {Number(props.item.barcode)}
         </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
           className={styles.stockText}
         >
-          Stoku: {Number(props.item.stock)}
+          {t("Stock")}: {Number(props.item.stock)}
         </Typography>
 
         <Typography
@@ -149,7 +151,7 @@ const ItemCard = (props) => {
             fontWeight: "700",
           }}
         >
-          LEK {Number(props.item.price).toFixed(2)}
+          {t("money")} {Number(props.item.price).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

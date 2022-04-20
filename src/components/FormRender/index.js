@@ -9,6 +9,7 @@ import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
 
+
 const useStyles = makeStyles(() => ({
   inputContainer: {
     marginBottom: 30

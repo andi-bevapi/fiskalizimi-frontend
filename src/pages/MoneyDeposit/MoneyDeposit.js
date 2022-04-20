@@ -7,6 +7,7 @@ import DepositButtonComponent from "../../components/Button/DepositButton";
 import ModalComponent from "../../components/Modal/Modal";
 import { Form, Formik, Field } from 'formik';
 import { useMoneyDepositContext } from "../../Context/MoneyDepositContext";
+import { useTranslation } from "react-i18next";
 
 const MoneyDeposit = () => {
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -19,6 +20,7 @@ const MoneyDeposit = () => {
         addAmountToDeposit,
         reduceAmountFromDeposit
     } = useMoneyDepositContext();
+    const {t} = useTranslation();
 
 
     const toggleUpdateModal = () => {
@@ -41,14 +43,12 @@ const MoneyDeposit = () => {
         <>
             <Grid container>
                 <Grid item xs={12} md={12}>
-                    <span className={styles.title}>Arka</span>
+                    <span className={styles.title}>{t("ark")}</span>
                 </Grid>
             </Grid>
             <Grid container className={styles.mt20}>
                 <Grid item xs={12} md={12}>
-                    <span className={styles.subTitle}>Gjendja e Arkës:  <b>{depositAmount.toFixed(2)} ALL</b> </span>
-
-
+                    <span className={styles.subTitle}> {t("cashCondition")} <b>{depositAmount.toFixed(2)} ALL</b> </span>
                 </Grid>
             </Grid>
             <Grid container className={styles.mt50}>
@@ -95,7 +95,7 @@ const MoneyDeposit = () => {
                     }}
                 >
                     <Form>
-                        <span className={styles.payTitle}>Vendosni gjendjen e re të arkës</span>
+                        <span className={styles.payTitle}>{t("insertCashStatus")}</span>
                         <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                         <Field name="amount">
                             {({ field }) => (
@@ -121,7 +121,7 @@ const MoneyDeposit = () => {
                         <span className={styles.currency}> (ALL)</span>
                         <div className={styles.subMainHolder}>
                             <Button variant="contained" type="submit" className={styles.buttonStyle}>
-                                Ndrysho
+                                {t("changeAmount")}
                             </Button>
                         </div>
                     </Form>
@@ -137,7 +137,7 @@ const MoneyDeposit = () => {
                     }}
                 >
                     <Form>
-                        <span className={styles.payTitle}>Shkruani sasinë që doni të shtoni në arkë</span>
+                        <span className={styles.payTitle}>{t("writeCashToAddAmount")}</span>
                         <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                         <Field name="amount">
                             {({ field }) => (
@@ -163,7 +163,7 @@ const MoneyDeposit = () => {
                         <span className={styles.currency}> (ALL)</span>
                         <div className={styles.subMainHolder}>
                             <Button variant="contained" type="submit" className={styles.buttonStyle}>
-                                Shto
+                                {t("add")}
                             </Button>
                         </div>
                     </Form>
@@ -179,7 +179,7 @@ const MoneyDeposit = () => {
                     }}
                 >
                     <Form>
-                        <span className={styles.payTitle}>Shkruani sasinë që doni të zbrisni nga arka</span>
+                        <span className={styles.payTitle}>{t("writeCashToWithdrow")}</span>
                         <Divider style={{ marginTop: 10, marginBottom: 20 }} />
                         <Field name="amount">
                             {({ field }) => (
@@ -206,12 +206,12 @@ const MoneyDeposit = () => {
                         <span className={styles.currency}> (ALL)</span>
                         <br />
                         {!isValidAmount ? (
-                            <span className={styles.warning}> Nuk mund të hiqni nga arka një vlerë më të madhe se gjendja e arkës!</span>
+                            <span className={styles.warning}>{t("noValueGreater")}</span>
                         ) : null}
                         <br />
                         <div className={styles.subMainHolder}>
                             <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={!isValidAmount}>
-                                Zbrit
+                                {t("substract")}
                             </Button>
                         </div>
                     </Form>
