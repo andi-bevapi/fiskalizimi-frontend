@@ -22,7 +22,6 @@ const Input = styled('input')({
 
 const FormRender = ({ formFields }) => {
   const classes = useStyles();
-
   return formFields.map((formField) => {
     switch (formField.component) {
       case 'Text':
@@ -30,6 +29,7 @@ const FormRender = ({ formFields }) => {
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
               {({ field, meta }) => (
+                
                 <TextField
                   label={formField.label}
                   error={meta.touched && meta.error}
@@ -146,6 +146,7 @@ const FormRender = ({ formFields }) => {
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, form: { setFieldValue }, meta }) => (
+              
               <label htmlFor={formField.name}>
                 <Input
                   accept="image/*"
@@ -158,13 +159,13 @@ const FormRender = ({ formFields }) => {
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>
-                {isFile(field.value) && (
+                {field.value && isFile(field.value) ? (
                   <>
                     <br />
                     <br />
                     <Thumbnail file={field.value} />
                   </>
-                )}
+                ) : field.value && <img src={field.value}  width="80px" height="80px"/>}
               </label>
             )}
           </Field>
