@@ -16,17 +16,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 const columns = [
-    { field: 'invoiceCode', headerName: 'Kodi i Fatures', width: 150 },
-    { field: 'totalAmount', headerName: 'Vlera Totale', width: 200 },
-    { field: 'totalAmountNoVAT', headerName: 'Vlera Totale pa TVSH', width: 200 },
-    { field: 'totalVat', headerName: 'Vlera Totale me TVSH', width: 200 },
-    { field: 'totalVat6', headerName: 'Vlera Totale TVSH 6%', width: 200 },
-    { field: 'totalVat20', headerName: 'Vlera Totale TVSH 20%', width: 200 },
-    { field: 'description', headerName: 'Pershkrimi', width: 200 },
-    { field: 'paymentMethod', headerName: 'Menyra e Pageses', width: 200 },
-    { field: 'dateTime', headerName: 'Data e Fatures', width: 200 }
+    { field: 'invoiceCode', headerName: i18n.t('billCode'), width: 150 },
+    { field: 'totalAmount', headerName: i18n.t('totalValue'), width: 200 },
+    { field: 'totalAmountNoVAT', headerName: i18n.t('totalValueNoVat') , width: 200 },
+    { field: 'totalVat', headerName: i18n.t('totalValueWithVat'), width: 200 },
+    { field: 'totalVat6', headerName: i18n.t('totalValueVat_6'), width: 200 },
+    { field: 'totalVat20', headerName: i18n.t('totalValueVat_20'), width: 200 },
+    { field: 'description', headerName: i18n.t('descriptionLabel'), width: 200 },
+    { field: 'paymentMethod', headerName: i18n.t('paymentMethod'), width: 200 },
+    { field: 'dateTime', headerName: i18n.t("billDate"), width: 200 }
 ];
 
 const Analytics = () => {
@@ -35,6 +36,7 @@ const Analytics = () => {
     const [value, setValue] = useState([null, null]);
     const [open, setOpen] = useState(false);
     const [rows, setRows] = useState(null);
+    const {t} = useTranslation();
 
     useEffect(() => {
         getData();
@@ -83,8 +85,8 @@ const Analytics = () => {
         <>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateRangePicker
-                    startText="Data e Fillimit"
-                    endText="Data e Mbarimit"
+                    startText= {t("beginingDate")}
+                    endText={t("endingngDate")}
                     value={value}
                     onChange={(newValue) => {
                         setValue(newValue);
@@ -93,7 +95,7 @@ const Analytics = () => {
                     renderInput={(startProps, endProps) => (
                         <>
                             <TextField {...startProps} />
-                            <Box sx={{ mx: 2 }}> deri ne </Box>
+                            <Box sx={{ mx: 2 }}> {t("until")} </Box>
                             <TextField {...endProps} />
                         </>
                     )}
@@ -129,17 +131,17 @@ const Analytics = () => {
                         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Kodi i Fatures</TableCell>
-                                    <TableCell>Vlera Totale</TableCell>
-                                    <TableCell>Vlera Totale pa TVSH</TableCell>
-                                    <TableCell>Vlera Totale me TVSH</TableCell>
-                                    <TableCell>Vlera Totale TVSH 6%</TableCell>
-                                    <TableCell>Vlera Totale TVSH 20%</TableCell>
-                                    <TableCell>Menyra e Pageses</TableCell>
-                                    <TableCell>Sasia</TableCell>
-                                    <TableCell>Emri i Produktit</TableCell>
-                                    <TableCell>Cmimi Origjinal</TableCell>
-                                    <TableCell>Cmimi Final</TableCell>
+                                    <TableCell>{t("billCode")}</TableCell>
+                                    <TableCell>{t("totalValue")}</TableCell>
+                                    <TableCell>{t("totalValueNoVat")}</TableCell>
+                                    <TableCell>{t("totalValueWithVat")}</TableCell>
+                                    <TableCell>{t("totalValueVat_6")}</TableCell>
+                                    <TableCell>{t("totalValueVat_20")}</TableCell>
+                                    <TableCell>{t("paymentMethod")}</TableCell>
+                                    <TableCell>{t("Stock")}</TableCell>
+                                    <TableCell>{t("product_name")}</TableCell>
+                                    <TableCell>{t("originalPrice")}</TableCell>
+                                    <TableCell>{t("finalPrice")}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

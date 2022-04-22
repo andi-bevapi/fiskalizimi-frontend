@@ -24,11 +24,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useTranslation } from "react-i18next";
 
 const SoldProducts = () => {
     const { initialState } = useModel('@@initialState');
     const [supplierProducts, setSupplierProducts] = useState([]);
     const [categoryProducts, setCategoryProducts] = useState([]);
+    const {t} = useTranslation();
 
     useEffect(() => {
         getSoldByCategory();
@@ -68,7 +70,7 @@ const SoldProducts = () => {
                             argumentField="name"
                             color="#74A19E"
                         />
-                        <Title text="Produktet e Shitura ne baze te kategorive" />
+                        <Title text={t("soldProductBasedOnCategory")} />
                         <Animation />
                     </Chart>
                 </Grid>
@@ -84,7 +86,7 @@ const SoldProducts = () => {
                             argumentField="name"
                             color="#ff7a00"
                         />
-                        <Title text="Produktet e Shitura ne baze te furnitoreve" />
+                        <Title text={t("soldProductBasedOnSupplier")} />
                         <Animation />
                     </Chart>
                 </Grid>

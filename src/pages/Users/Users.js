@@ -3,7 +3,7 @@ import { listFormat, permissionFormat } from '../../helpers/listFormater';
 import { useContextUser } from '../../context/UserContext';
 import { useBranchListContext } from '../../Context/BranchListContext';
 import { formFields, validationSchema } from './formFields';
-import { useEffect } from 'react';
+import { useTranslation } from "react-i18next";
 
 const tableHeaders = ['Id', 'Username', 'Firstname', 'Lastname', 'Phone', 'Email', 'Actions'];
 
@@ -22,10 +22,11 @@ const Users = () => {
 
   const formatedUsers = listFormat(users, tableHeaders);
   const formatedPermissions = permissionFormat(permissions);
+  const {t} = useTranslation();
 
   return (
     <TableComponent
-      title="Lista e Perdoruesve"
+      title={t("usersList")}
       tableHeaders={tableHeaders}
       fullList={users}
       data={formatedUsers}

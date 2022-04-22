@@ -2,6 +2,7 @@ import TableComponent from '../../components/Table';
 import { listFormat } from "../../helpers/listFormater";
 import { useSupplierContext } from "../../Context/SuppliersContext";
 import { formFields, validationSchema } from './formFields';
+import { useTranslation } from "react-i18next";
 
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
@@ -14,10 +15,11 @@ const Suppliers = () => {
     isLoading, } = useSupplierContext();
 
   const formatedProducts = listFormat(suppliersList, tableHeaders);
+  const {t} = useTranslation();
 
   return (
     <TableComponent
-      title="Lista e Furnitoreve"
+      title={t("supplierList")}
       tableHeaders={tableHeaders}
       fullList={suppliersList}
       data={formatedProducts}

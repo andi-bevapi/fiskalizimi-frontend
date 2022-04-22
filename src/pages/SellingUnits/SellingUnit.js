@@ -2,6 +2,7 @@ import TableComponent from '../../components/Table';
 import { listFormat } from '../../helpers/listFormater';
 import { useSellingUnitContext } from '../../Context/SellingUnitContext';
 import { formFields, validationSchema } from './formFields';
+import { useTranslation } from "react-i18next";
 
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
@@ -16,10 +17,11 @@ const SellingUnits = () => {
   } = useSellingUnitContext();
 
   const formatedProducts = listFormat(sellingUnitList, tableHeaders);
+  const {t} = useTranslation();
 
   return (
     <TableComponent
-      title="Lista e Njesive Matese"
+      title={t("sellingUnitList")}
       tableHeaders={tableHeaders}
       fullList={sellingUnitList}
       data={formatedProducts}

@@ -7,7 +7,7 @@
   }
 
   .couponDiv{
-    padding: 15px 20px;
+    padding: 15px;
   }
 
   .buttonStyle {
@@ -25,7 +25,7 @@
       text-align: center;
       justify-content: center;
       align-items: center;
-      padding-left: 20px;
+      padding-left: 8px;
       /* padding: 20px 25px; */
       width: 260px;
   }
@@ -35,7 +35,7 @@
   }
 
   .couponBigTitle{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
   }
 
@@ -43,6 +43,7 @@
     font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-transform: uppercase;
   }
 
   .nslfText{
@@ -53,12 +54,12 @@
 
   .couponTitleCapital{
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 800;
   }
 
   .couponBusinessName{
     font-size: 20px;
-    font-weight: 900;
+    font-weight: 700;
   }
 
   .couponAmounts{
@@ -80,17 +81,38 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
-    padding: 0px 10px;
+    padding: 0px;
   }
+
   .productPriceRow{
     font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: end;
-    padding: 5px 0px;
-    padding-right: 15px;
+    text-transform: uppercase;
   }
 
   .pageStyle {
     padding-left: 5px;
+  }
+
+  
+  .productDataRownoVAT{
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: end;
+    padding: 0px;
+    padding-right: 6px;
+  }
+
+  table th{
+    padding: 0;
+  }
+
+  
+  .couponTitleText{
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }

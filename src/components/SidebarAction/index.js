@@ -189,8 +189,6 @@ const SidebarAction = (props) => {
         ...values,
       });
     }
-
-    console.log("response-----",response);
     
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
@@ -214,7 +212,7 @@ const SidebarAction = (props) => {
     props.setPermissions((prev) => {
       let index = prev.findIndex((item) => item.id === id);
       let entity = prev[index].name.split('.')[1];
-      if (prev[index].label != 'Shiko') {
+      if (prev[index].label != t("view")) {
         if (prev[index].checked == false) {
           let indexView = prev.findIndex((item) => item.name === `permission.${entity}.view`);
           if (prev[indexView].checked == false) prev[indexView].checked = true;
@@ -223,7 +221,7 @@ const SidebarAction = (props) => {
         if (prev[index].checked == true) {
           let entityPermissions = prev.filter((item) => item.name.includes(`permission.${entity}`));
           entityPermissions.map((el) => {
-            if (el.label != "Shiko") {
+            if (el.label != t("view")) {
               let indexPermission = prev.findIndex((item) => item.id === el.id);
               prev[indexPermission].checked = false;
             }
@@ -277,7 +275,7 @@ const SidebarAction = (props) => {
               </>
             )}
             <Button variant="contained" type="submit">
-              <SaveIcon style={{ marginRight: 10 }} /> Ruaj
+              <SaveIcon style={{ marginRight: 10 }} /> {t("save")}
             </Button>
           </Form>
         </Formik>
