@@ -154,7 +154,7 @@ const ItemCard = (props) => {
             fontWeight: "700",
           }}
         >
-          {t("money")} {Number(props.item.price).toFixed(2)}
+          {t("price")} {Number(props.item.price).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

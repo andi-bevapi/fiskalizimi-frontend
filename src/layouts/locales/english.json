@@ -4,6 +4,8 @@
   "Barcode" :"Barcode",
   "Stock" :"Stock",
   "Category":"Category",
+  "SellingUnit":"Selling unit",
+  "Supplier":"Supplier",
   "Address"	:"Address",
   "City":"City",
   "BusinessUnitCode" : "Business Unit Code",
