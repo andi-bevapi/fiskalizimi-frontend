@@ -21,6 +21,7 @@ import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
 import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
+import { useTranslation } from "react-i18next";
 
 const ItemsOnBuy = () => {
   const {
@@ -49,6 +50,7 @@ const ItemsOnBuy = () => {
   const [open, setOpen] = useState(false);
   const [filteredInvoice, setFilteredInvoice] = useState([]);
   const [filteredInAllPages, setFilteredInAllPages] = useState([]);
+  const {t} = useTranslation();
 
   //---------------------paginate
   const [pageNumber, setPageNumber] = useState(0);
@@ -267,6 +269,7 @@ const ItemsOnBuy = () => {
                             onClick={() => {
                               removeProductFromInvoiceList(item);
                             }}
+                            text={t("delete")}
                           />
                         </TableCell>
                       </TableRow>
@@ -290,12 +293,12 @@ const ItemsOnBuy = () => {
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>Kodi</TableCell>
+                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>{t("code")}</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
-                    Produkte
+                    {t("product")}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['price']}>
-                    Çmimi
+                    {t("price")}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['delete']}>
                     &nbsp;
@@ -352,6 +355,7 @@ const ItemsOnBuy = () => {
                           onClick={() => {
                             activateInvoice(el);
                           }}
+                          text={t("addCart")}
                         />
                       </TableCell>
                       <TableCell className={styles.tableBodyCell}>
@@ -362,6 +366,7 @@ const ItemsOnBuy = () => {
                           onClick={() => {
                             handleDelete(el.id);
                           }}
+                          text={t("delete")}
                         />
                       </TableCell>
                     </TableRow>

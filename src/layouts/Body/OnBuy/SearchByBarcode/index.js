@@ -10,6 +10,7 @@ import { useInvoiceContext } from '../../../../Context/InvoiceContext';
 import { useContextProduct } from '../../../../Context/ProductContext';
 import { SwalModal } from '../../../../components/Modal/SwalModal';
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   searchInput: { display: 'block' },
@@ -22,6 +23,7 @@ const SearchByBarcode = (props) => {
   const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
   const { getProductByBarcode } = useContextProduct();
   const [barcode, setBarcode] = useState('');
+  const {t} = useTranslation();
   // const [isVisible, setIsVisible] = useState(false);
   // const [searchedProducts, setSearchedProducts] = useState({});
 
@@ -127,7 +129,7 @@ const SearchByBarcode = (props) => {
       <Grid container columns={12} marginBottom={1} spacing={0}>
         <Grid item={true} xs={10} md={10} style={{ textAlign: 'left', width: '90% !important' }}>
           <BootstrapInputField
-            placeholder="Skano barkod"
+            placeholder={t("scanBarcode")}
             style={{ margin: 0 }}
             value={barcode}
             onChange={handleChange}
@@ -139,6 +141,7 @@ const SearchByBarcode = (props) => {
             style={{ backgroundColor: '#12AC7A', height: 40, width: 40, cursor: 'default'}}
             icon={<CenterFocusStrongIcon />}
             iconColor={{ color: '#fff' }}
+            text={t("scanBarcode")}
           />
         </Grid>
       </Grid>

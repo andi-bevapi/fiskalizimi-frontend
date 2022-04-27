@@ -77,6 +77,7 @@
   "chooseHowToPay":"Choose how to pay",
   "amount":"Shuma",
   "delete":"Delete",
+  "edit":"Edit",
   "proceed":"Vashdo",
   "enterIdentificationCode":"Enter the identification code",
   "cash":"CASH",
@@ -193,5 +194,8 @@
   "finalPrice":"Fianl Price",
   "billDate":"Bill Date",
   "fiscalizedBill":"Fiscalized invoices",
-  "noFiscalizedBill":"Not Fiscalized Invoices"
+  "noFiscalizedBill":"Not Fiscalized Invoices",
+  "logout":"Logout",
+  "scanBarcode":"Scan Barcode",
+  "addCart":"Add to cart"
 }

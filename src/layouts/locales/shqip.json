@@ -78,6 +78,7 @@
   "chooseHowToPay":"Zgjidhni mënyrën e pagesës",
   "amount":"Shuma",
   "delete":"Fshi",
+  "edit":"Edito",
   "proceed":"Vashdo",
   "enterIdentificationCode":"Vendos kodin identifikues",
   "cash":"CASH",
@@ -195,5 +196,8 @@
   "finalPrice":"Cmimi Final",
   "billDate":"Data e Fatures",
   "fiscalizedBill":"Faturat e fiskalizuara",
-  "noFiscalizedBill":"Faturat e Pa Fiskalizuara"
+  "noFiscalizedBill":"Faturat e Pa Fiskalizuara",
+  "logout":"Dil",
+  "scanBarcode":"Skano barkod",
+  "addCart":"Shto ne shporte"
 }
