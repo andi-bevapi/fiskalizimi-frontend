@@ -135,7 +135,7 @@
   "productPrice":"Please insert the price",
   "productBarcodeLength":"Barcode must have more then 8 characters",
   "productBarcodeMax":"Barcode must not have more then 13 characters",
-  "productBarcodeValidation":"Barcode must be betweeb 9-13 characters",
+  "productBarcodeValidation":"Barcode must be between 9-13 characters",
   "productBarcode":"Please insert the barcode",
   "productNameLength":"Name must have more than 2 characters",
   "productName":"Please insert the name",
