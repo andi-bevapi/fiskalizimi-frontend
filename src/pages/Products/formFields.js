@@ -5,12 +5,12 @@ export const formFields = [
     {
         name: 'name',
         component: 'Text',
-        label: i18n.t("name")
+        label: i18n.t("Name")
     },
     {
         name: 'description',
         component: 'Text',
-        label: i18n.t("description")
+        label: i18n.t("descriptionField")
     },
     {
         name: 'price',

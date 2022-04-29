@@ -32,6 +32,7 @@
   "editData":"Edit Data",
   "editProfile":"Edit profile",
   "Actions":"Actions",
+  "descriptionField":"Description",
   "codeIdentifierLength":"Identifier Code mus be more than 2 characters",
   "codeIdentifier":"Please insert Identifier Code",
   "identifierCode":"Identifier Code",
