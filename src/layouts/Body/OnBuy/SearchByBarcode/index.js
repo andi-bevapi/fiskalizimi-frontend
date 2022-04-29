@@ -3,13 +3,12 @@ import IconButtonComponent from '../../../../components/Button/IconButton';
 import BootstrapInputField from '../../../../components/InputFields/BootstrapTextField';
 import Grid from '@mui/material/Grid';
 import { React, useState, useEffect } from 'react';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-// import BottomContainer from './../../../../components/BottomContainer';
-// import Drawer from "react-bottom-drawer";
 import { useInvoiceContext } from '../../../../Context/InvoiceContext';
 import { useContextProduct } from '../../../../Context/ProductContext';
 import { SwalModal } from '../../../../components/Modal/SwalModal';
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles(() => ({
   searchInput: { display: 'block' },
@@ -19,6 +18,8 @@ const useStyles = makeStyles(() => ({
 
 const SearchByBarcode = (props) => {
   const styles = useStyles();
+  const { t } = useTranslation();
+
   const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
   const { getProductByBarcode } = useContextProduct();
   const [barcode, setBarcode] = useState('');
@@ -100,10 +101,10 @@ const SearchByBarcode = (props) => {
 
   const handleSwal = async () => {
     return SwalModal(
-      "Nuk u gjet asnjë produkt me këtë barkod!",
+      t("noProductWithThisBarcode"),
       "",
       "warning",
-      "Mbyll",
+      t("close"),
       "",
       () => { },
       () => { },
@@ -112,10 +113,10 @@ const SearchByBarcode = (props) => {
 
   const handleSwalNoStock = async () => {
     return SwalModal(
-      "Ky produkt nuk ka stok",
+      t("productNoStock"),
       "",
       "warning",
-      "Mbyll",
+      t("close"),
       "",
       () => { },
       () => { },
@@ -127,7 +128,7 @@ const SearchByBarcode = (props) => {
       <Grid container columns={12} marginBottom={1} spacing={0}>
         <Grid item={true} xs={10} md={10} style={{ textAlign: 'left', width: '90% !important' }}>
           <BootstrapInputField
-            placeholder="Skano barkod"
+            placeholder={t("scanBarcode")}
             style={{ margin: 0 }}
             value={barcode}
             onChange={handleChange}
