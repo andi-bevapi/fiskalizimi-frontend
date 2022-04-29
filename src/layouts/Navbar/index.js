@@ -120,7 +120,7 @@ const Navbar = () => {
             onClick={handleShiftButton}
             variant="contained"
           >
-            Mbyll Turnin
+           {t('endShift')}
           </Button>
         )}
         <IconButtonComponent
