@@ -8,14 +8,17 @@ const ItemLine = (props) => {
   const [stopAdding, setStopAdding] = useState(false);
 
   useEffect(() => {
-    // const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
-    // (arrayProduct[0]?.stockCheck ? (
-    //   ((arrayProduct[0]?.quantity >= Number(product.stock).toFixed(0) || Number(product.stock) == 0) ? (setStopAdding(true)) : (setStopAdding(false)))
-    // ) : (
-    //   (Number(product.stock).toFixed(0) == 0 ? (() => { setStopAdding(true) }) : (setStopAdding(false)))
-    // ));
+    const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
+    
+    (arrayProduct[0]?.stockCheck ? (
+      (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
+    ) : (
+      (product.stockCheck ? (
+            Number(product.stock).toFixed(0) == 0 ? (setStopAdding(true)) : (setStopAdding(false))
+        ): setStopAdding(false) )
+    ));
     // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
-  }, [props.invoiceList]);
+  }, [props.invoiceList],props.item);
 
   const handleCardClick = () => {
     if (!stopAdding) {

@@ -5,12 +5,12 @@ export const formFields = [
     {
         name: 'name',
         component: 'Text',
-        label: i18n.t("name")
+        label: i18n.t("Name")
     },
     {
         name: 'description',
         component: 'Text',
-        label: i18n.t("description")
+        label: i18n.t("descriptionField")
     },
     {
         name: 'price',
@@ -93,9 +93,10 @@ export const formFields = [
 
 export const validationSchema = yup.object({
     name: yup.string().min(2, i18n.t("productNameLength")).required(i18n.t("productName")),
-    description:  yup.string().min(2, i18n.t("productDescription")).required(i18n.t("productDescription")),
+    description:  yup.string().min(2, i18n.t("productDescription")),
     price: yup.number().required(i18n.t("productPrice")),
-    barcode:  yup.number().min(2, i18n.t("productBarcodeLength")).required(i18n.t("productBarcode")),
+    barcode:yup.string().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
+    .required(i18n.t("productBarcode")),
     vat: yup.number().required(i18n.t("insertVat")),
     stock: yup.number().required(i18n.t("insertAmount")),
     branchId:  yup.number().required(i18n.t("insertBranch")),
