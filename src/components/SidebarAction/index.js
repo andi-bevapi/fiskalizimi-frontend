@@ -91,7 +91,6 @@ const SidebarAction = (props) => {
 
   const generateInitialValues = () => {
     let initialValues = {};
-
     if (props.editItem) {
       fields.forEach((field) => {
         initialValues[field.name] = props.editItem[field.name];
@@ -254,7 +253,7 @@ const SidebarAction = (props) => {
           {({ errors, touched ,isValid }) => {
             return (
               <Form className={classes.formContainer}>
-                <FormRender formFields={fields} />
+                <FormRender formFields={fields} editProduct={props.editItem ? true : false} />
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {
