@@ -10,7 +10,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
 import { useModel } from 'umi';
-import {useConfigProvider} from "../../Context/ConfigurationsContext";
+import { useConfigProvider } from '../../Context/ConfigurationsContext';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -23,9 +23,9 @@ const useStyles = makeStyles(() => ({
 
 const SidebarAction = (props) => {
   const { initialState, refresh } = useModel('@@initialState');
-  const {config} = useConfigProvider();
+  const { config } = useConfigProvider();
   const classes = useStyles();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
@@ -157,8 +157,8 @@ const SidebarAction = (props) => {
 
     let response = {};
     if (props.product && values.price === 0 && config.allowSellsWithZero === false) {
-      setOpenSnackBar({ status: true, message: t("zeroPrice"), success: false });
-      return
+      setOpenSnackBar({ status: true, message: t('zeroPrice'), success: false });
+      return;
     }
     if (props.user) {
       if (props.editItem) {
@@ -190,8 +190,6 @@ const SidebarAction = (props) => {
       });
     }
 
-    console.log("response-----",response);
-    
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
@@ -214,7 +212,7 @@ const SidebarAction = (props) => {
     props.setPermissions((prev) => {
       let index = prev.findIndex((item) => item.id === id);
       let entity = prev[index].name.split('.')[1];
-      if (prev[index].label != 'Shiko') {
+      if (prev[index].label != t('view')) {
         if (prev[index].checked == false) {
           let indexView = prev.findIndex((item) => item.name === `permission.${entity}.view`);
           if (prev[indexView].checked == false) prev[indexView].checked = true;
@@ -223,11 +221,11 @@ const SidebarAction = (props) => {
         if (prev[index].checked == true) {
           let entityPermissions = prev.filter((item) => item.name.includes(`permission.${entity}`));
           entityPermissions.map((el) => {
-            if (el.label != "Shiko") {
+            if (el.label != t('view')) {
               let indexPermission = prev.findIndex((item) => item.id === el.id);
               prev[indexPermission].checked = false;
             }
-          })
+          });
         }
       }
       prev[index].checked = !prev[index].checked;
@@ -253,33 +251,37 @@ const SidebarAction = (props) => {
             handleSubmit(values);
           }}
         >
-          <Form className={classes.formContainer}>
-            <FormRender formFields={fields} />
-            {props.user && (
-              <>
-                {Object.keys(props.permissions).map((key, idx) => {
-                  return (
-                    <>
-                      <p>{key.toUpperCase()}</p>
-                      {props.permissions[key].permissions.map((permission) => {
-                        return (
-                          <BootstrapCheckbox
-                            key={permission.id}
-                            label={permission.label}
-                            checked={permission.checked}
-                            handleCheck={() => handleCheck(permission.id)}
-                          />
-                        );
-                      })}
-                    </>
-                  );
-                })}
-              </>
-            )}
-            <Button variant="contained" type="submit">
-              <SaveIcon style={{ marginRight: 10 }} /> Ruaj
-            </Button>
-          </Form>
+          {({ errors, touched ,isValid }) => {
+            return (
+              <Form className={classes.formContainer}>
+                <FormRender formFields={fields} />
+                {props.user && (
+                  <>
+                    {Object.keys(props.permissions).map((key, idx) => {
+                      return (
+                        <>
+                          <p>{key.toUpperCase()}</p>
+                          {props.permissions[key].permissions.map((permission) => {
+                            return (
+                              <BootstrapCheckbox
+                                key={permission.id}
+                                label={permission.label}
+                                checked={permission.checked}
+                                handleCheck={() => handleCheck(permission.id)}
+                              />
+                            );
+                          })}
+                        </>
+                      );
+                    })}
+                  </>
+                )}
+                <Button variant="contained" type="submit" disabled={!isValid}>
+                  <SaveIcon style={{ marginRight: 10 }} /> {t('save')}
+                </Button>
+              </Form>
+            );
+          }}
         </Formik>
       </Drawer>
     </>

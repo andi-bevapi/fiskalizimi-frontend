@@ -3,8 +3,10 @@ import { Typography } from "@mui/material";
 import styles from "./PriceInformations.module.css";
 import { makeStyles } from "@mui/styles";
 import { useInvoiceContext } from "../../../../../Context/InvoiceContext";
+import { useTranslation } from 'react-i18next';
 
 const PriceInformations = (props) => {
+  const { t } = useTranslation();
   const { totalPriceVAT, getTotalPriceWithVAT, listedInvoiceProducts, totalAmountNoVAT, getTotalPriceWithoutVAT } = useInvoiceContext();
   const buyingList = [...props.invoiceList];
   const totalPrice = 0;
@@ -18,7 +20,7 @@ const PriceInformations = (props) => {
     <div className={styles.mainHolder}>
       <div className={styles.itemsHolder}>
         <Typography variant="body2" className={styles.text}>
-         produkte:
+         {t("products")}
         </Typography>
         <div className={styles.text}>
            <b>{buyingList.length}</b>
@@ -27,7 +29,7 @@ const PriceInformations = (props) => {
       </div>
       <div className={styles.noVatPriceHolder}>
         <Typography variant="body2" className={styles.text}>
-           Vlera pa TVSH:
+          {t("priceWithoutVat")}
         </Typography>
         <div>
           {buyingList.length === 0 ? (
@@ -46,7 +48,7 @@ const PriceInformations = (props) => {
           variant="body2"
           className={styles.text}
         >
-          Vlera me TVSH:
+          {t("priceWithVat")}
         </Typography>
         <div>
           {buyingList.length === 0 ? (

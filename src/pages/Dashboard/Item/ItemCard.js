@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import cardBackground from './../../../assets/images/cardBackground.png';
 import styles from './ItemLine.module.css';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -52,16 +53,20 @@ const ItemCard = (props) => {
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
+  const {t} = useTranslation();
 
   useEffect(() => {
-    // const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
-    // (arrayProduct[0]?.stockCheck ? (
-    //   (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
-    // ) : (
-    //   (Number(product.stock).toFixed(0) == 0 ? (() => { setStopAdding(true) }) : (setStopAdding(false)))
-    // ));
-    // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(true));
-  }, [props.invoiceList]);
+    const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
+    
+    (arrayProduct[0]?.stockCheck ? (
+      (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
+    ) : (
+      (product.stockCheck ? (
+            Number(product.stock).toFixed(0) == 0 ? (setStopAdding(true)) : (setStopAdding(false))
+        ): setStopAdding(false) )
+    ));
+    // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
+  }, [props.invoiceList],props.item);
 
 
   const handleCardClick = () => {
@@ -70,12 +75,12 @@ const ItemCard = (props) => {
       const isExisting = (productFromArray.length >= 1 ? true : false);
       if (product.stockCheck) {
         if (isExisting) {
-          // if (productFromArray[0].quantity >= Number(product.stock).toFixed(0)) {
-          //   setStopAdding(true);
-          // } else {
+          if (productFromArray[0].quantity >= Number(product.stock).toFixed(0)) {
+            setStopAdding(true);
+          } else {
             setProductQuantity(productFromArray[0].quantity + 1);
             props.addToInvoiceList(product, productFromArray[0].quantity + 1);
-          // }
+          }
         } else {
           setProductQuantity(1);
           props.addToInvoiceList(product, 1);
@@ -97,7 +102,7 @@ const ItemCard = (props) => {
 
   return (
     <Card className={stopAdding ? classes.cardDisabled : classes.card}
-      onClick={() => handleCardClick()}
+      onClick={handleCardClick}
     >
       <CardMedia
         component="img"
@@ -131,14 +136,14 @@ const ItemCard = (props) => {
           color="text.secondary"
           className={styles.stockText}
         >
-          Barkodi: {Number(props.item.barcode)}
+          {t("Barcode")}: {Number(props.item.barcode)}
         </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
           className={styles.stockText}
         >
-          Stoku: {Number(props.item.stock)}
+          {t("Stock")}: {Number(props.item.stock)}
         </Typography>
 
         <Typography
@@ -149,7 +154,7 @@ const ItemCard = (props) => {
             fontWeight: "700",
           }}
         >
-          LEK {Number(props.item.price).toFixed(2)}
+          {t("price")} {Number(props.item.price).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

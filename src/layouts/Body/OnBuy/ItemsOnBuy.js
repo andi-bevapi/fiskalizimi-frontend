@@ -21,8 +21,11 @@ import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
 import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
+import { useTranslation } from 'react-i18next';
 
 const ItemsOnBuy = () => {
+  const { t } = useTranslation();
+
   const {
     listedInvoiceProducts,
     addToInvoiceList,
@@ -170,7 +173,7 @@ const ItemsOnBuy = () => {
                 activeInvoice == 'active' ? styles.tabTitleActive : styles.tabTitleDeactive
               }
             >
-              Fatura Aktive
+              {t("activeInvoice")}
             </span>
           </button>
         </Grid>
@@ -186,7 +189,7 @@ const ItemsOnBuy = () => {
                 activeInvoice == 'pending' ? styles.tabTitleActive : styles.tabTitleDeactive
               }
             >
-              Fatura te ruajtura
+              {t("pendingInvoice")}
             </span>
           </button>
         </Grid>
@@ -212,16 +215,16 @@ const ItemsOnBuy = () => {
                         Nr.
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['name']}>
-                        Produkti
+                        {t("product")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['quantity']}>
-                        Sasia
+                        {t("quantity")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['price']}>
-                        Çmimi
+                        {t("price")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['price']}>
-                        Totali
+                        {t("total")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['delete']}>
                         &nbsp;
@@ -292,10 +295,10 @@ const ItemsOnBuy = () => {
                 <TableRow>
                   <TableCell className={styles.tableHead} id={styles['invoiceKode']}>Kodi</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
-                    Produkte
+                    {t("product")}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['price']}>
-                    Çmimi
+                    {t("totalPrice")}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['delete']}>
                     &nbsp;
@@ -371,8 +374,8 @@ const ItemsOnBuy = () => {
             </Table>
           </TableContainer>
           <ReactPaginate
-                previousLabel={'Previous'}
-                nextLabel={'Next'}
+                previousLabel={t('previous')}
+                nextLabel={t('next')}
                 pageCount={pageCount}
                 onPageChange={changePage}
                 containerClassName={styles.paginationButtons}
@@ -395,8 +398,7 @@ const ItemsOnBuy = () => {
       )}
       <ModalComponent open={open} handleClose={handleClose} title="Kujdes">
         <div className={styles.tabTitleDeactive}>
-          Fatura aktive permban produkte. <br></br>Nese deshironi te vazhdoni ju duhet te fshini
-          produktet e fatures aktive.
+         {t("activeInvoiceHasProuct")} <br></br>{t("ifYouWantYouCanDelete")}
         </div>
       </ModalComponent>
     </div>

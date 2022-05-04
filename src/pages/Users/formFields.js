@@ -1,63 +1,65 @@
+import i18n, { t } from "i18next";
 import * as yup from 'yup';
+
 
 export const formFields = [
   {
     name: 'branchId',
     component: 'Select',
-    label: 'Dega',
+    label: t("branch"),
     options: [],
     identifier: 'branchList'
   },
   {
     name: 'username',
     component: 'Text',
-    label: 'Username',
+    label: t("username"),
   },
   {
     name: 'firstName',
     component: 'Text',
-    label: 'Emri',
+    label: t("Firstname"),
   },
   {
     name: 'lastName',
     component: 'Text',
-    label: 'Mbiemri',
+    label: t("Lastname"),
   },
   {
     name: 'operatorCode',
     component: 'Text',
-    label: 'Kodi operatorit',
+    label: t("operatorCode"),
   },
   {
     name: 'position',
     component: 'Text',
-    label: 'Pozicioni',
+    label: t("position"),
   },
   {
     name: 'email',
     component: 'Text',
-    label: 'Email',
+    label: t("Email"),
   },
   {
     name: 'phone',
     component: 'Text',
-    label: 'Celulari',
+    label: t("phone"),
   },
   {
     name: 'password',
     component: 'Text',
-    label: 'Fjalekalimi',
+    label: i18n.t("password"),
   }
 ];
 
 export const validationSchema = yup.object({
-  branchId: yup.number().required("Ju lutem zgjidhni degen"),
-  username: yup.string().min(2, "Emri i perdoruesit duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin e perdoruesit"),
-  firstName: yup.string().min(2, "Emri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin"),
-  lastName: yup.string().min(2, "Mbiemri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni mbiemrin"),
-  operatorCode: yup.string().required("Ju lutem vendosni kodin e operatorit"),
+  branchId: yup.number().required(i18n.t("insertBranch")),
+  username: yup.string().min(2, i18n.t("usernameLength")).required(i18n.t("insertUsername")),
+  firstName: yup.string().min(2, i18n.t("usernameLength")).required(i18n.t("insertUsername")),
+  lastName: yup.string().min(2, t("lastnameLength")).required(t("lastname")),
+  operatorCode: yup.string().required(t("insertOperatorCode")),
   position: yup.string(),
   phone: yup.string(),
   email: yup.string(),
-  password: yup.string().min(6, "Fjalekalimi duhet te kete me shume se 6 karaktere").required("Ju lutem vendosni fjalekalimin")
+  password: yup.string().min(6, i18n.t("editProfilePass")).required(i18n.t("insertPass"))
 });

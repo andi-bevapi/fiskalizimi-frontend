@@ -1,105 +1,107 @@
 import * as yup from 'yup';
+import i18n from "i18next";
 
 export const formFields = [
     {
         name: 'name',
         component: 'Text',
-        label: 'Emri'
+        label: i18n.t("Name")
     },
     {
         name: 'description',
         component: 'Text',
-        label: 'Pershkrimi'
+        label: i18n.t("descriptionField")
     },
     {
         name: 'price',
         component: 'Number',
-        label: 'Cmimi meTVSH'
+        label: i18n.t("priceWithVat")
     },
     {
         name: 'barcode',
         component: 'Text',
-        label: 'Barkodi'
+        label: i18n.t("barcode")
     },
     {
         name: 'vat',
         component: 'Select',
-        label: 'Klasifikimi i TVSH-se',
+        label: i18n.t("vatClassification"),
         defaultValue: 2,
         options: [
             {
                 value: 0,
-                label: 'Perjashtuar nga TVSH-ja'
+                label: i18n.t("excludedFromVat")
             },
             {
                 value: 1,
-                label: 'TVSH 6%'
+                label: i18n.t("vat_6")
             },
             {
                 value: 2,
-                label: 'TVSH 20%'
+                label: i18n.t("vat_20")
             },
             {
                 value: 3,
-                label: 'Pa TVSH'
+                label: i18n.t("no_vat")
             }
         ]
     },
     {
         name: 'stock',
         component: 'Number',
-        label: 'Sasia'
+        label: i18n.t("quantity")
     },
     {
         name: 'categoryId',
         component: 'Select',
-        label: 'Kategoria',
+        label: i18n.t("category"),
         options: [],
         identifier: 'categoryList'
     },
     {
         name: 'supplierId',
         component: 'Select',
-        label: 'Furnitoret',
+        label: i18n.t("supplier"),
         options: [],
         identifier: 'suppliersList'
     },
     {
         name: 'sellingUnitId',
         component: 'Select',
-        label: 'Njesia Matese',
+        label: i18n.t("measureUnit"),
         options: [],
         identifier: 'sellingUnitList'
     },
     {
         name: 'branchId',
         component: 'Select',
-        label: 'Dega',
+        label: i18n.t("branch"),
         options: [],
         identifier: 'branchList'
     },
     {
         name: 'imageVirtualPath',
         component: 'Upload',
-        label: 'Ngarko Imazh'
+        label: i18n.t("uploadImage")
     },
     {
         name: 'stockCheck',
         component: 'Checkbox',
-        label: 'Kontrollo Sasine'
+        label: i18n.t("checkQuantity") 
     }
 ];
 
 export const validationSchema = yup.object({
-    name: yup.string().min(2, "Emri duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni emrin"),
-    description:  yup.string().min(2, "Pershkrimin duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni pershkrimin"),
-    price: yup.number().required("Ju lutem vendosni cmimi"),
-    barcode:  yup.number().min(2, "Barkodi duhet te kete me shume se 2 karaktere").required("Ju lutem vendosni barkodin"),
-    vat: yup.number().required("Ju lutem vendosni TVSH"),
-    stock: yup.number().required("Ju lutem vendosni sasine"),
-    branchId:  yup.number().required("Ju lutem zgjidhni degen"),
-    categoryId:  yup.number().required("Ju lutem zgjidhni kategorine"),
-    sellingUnitId: yup.number().required("Ju lutem zgjidhni njesine matese"),
-    supplierId: yup.number().required("Ju lutem zgjidhni Furnitoret"),
+    name: yup.string().min(2, i18n.t("productNameLength")).required(i18n.t("productName")),
+    description:  yup.string().min(2, i18n.t("productDescription")),
+    price: yup.number().required(i18n.t("productPrice")),
+    barcode:yup.string().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
+    .required(i18n.t("productBarcode")),
+    vat: yup.number().required(i18n.t("insertVat")),
+    stock: yup.number().required(i18n.t("insertAmount")),
+    branchId:  yup.number().required(i18n.t("insertBranch")),
+    categoryId:  yup.number().required(i18n.t("insertCategory")),
+    sellingUnitId: yup.number().required(i18n.t("insertMeasureUnit")),
+    supplierId: yup.number().required(i18n.t("chooseSupplier")),
     imageVirtualPath: yup.string().nullable(true)
 });

@@ -2,16 +2,17 @@ import TableComponent from '../../components/Table';
 import { useCategoryContext } from "../../Context/CategoryContext";
 import { listFormat } from "../../helpers/listFormater";
 import { formFields, validationSchema } from './formFields';
-
+import { useTranslation } from "react-i18next";
 const tableHeaders = ['Id', 'Name', 'Actions'];
 
 const Categories = () => {
   const { setCategoryList, categoryToCreate, categoryList, categoryToUpdate, categoryToDelete, isLoading } = useCategoryContext();
   const formatedCategory = listFormat(categoryList, tableHeaders);
+  const {t} = useTranslation();
 
   return (
     <TableComponent
-      title="Lista e Kategorive"
+      title={t("categoryList")}
       tableHeaders={tableHeaders}
       fullList={categoryList}
       data={formatedCategory}

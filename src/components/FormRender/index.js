@@ -9,6 +9,7 @@ import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
 
+
 const useStyles = makeStyles(() => ({
   inputContainer: {
     marginBottom: 30
@@ -21,7 +22,6 @@ const Input = styled('input')({
 
 const FormRender = ({ formFields }) => {
   const classes = useStyles();
-
   return formFields.map((formField) => {
     switch (formField.component) {
       case 'Text':
@@ -29,6 +29,7 @@ const FormRender = ({ formFields }) => {
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
               {({ field, meta }) => (
+                
                 <TextField
                   label={formField.label}
                   error={meta.touched && meta.error}
@@ -87,38 +88,42 @@ const FormRender = ({ formFields }) => {
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
               {({  field, form: {setFieldValue}, meta }) => (
-                <TextField
-                  select
-                  label={formField.label}
-                  error={meta.touched && meta.error}
-                  helperText={meta.error}
-                  style={{
-                    width: '100%',
-                    ...formField.style
-                  }}
-                  InputProps={{
-                    style: {
-                      fontFamily: 'Poppins',
-                      width: '100%',
-                      textAlign: 'left'
-                    },
-                  }}
-                  InputLabelProps={{
-                    style: {
-                      fontFamily: 'Poppins',
-                    },
-                  }}
-                  defaultValue={formField.defaultValue}
-                  onChange={(event) => {
-                    setFieldValue(formField.name, event.target.value)}}
-                >
-                  {formField.options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
+                
+                  <TextField
+              select
+              label={formField.label}
+              error={meta.touched && meta.error}
+              helperText={meta.error}
+              style={{
+                width: '100%',
+                ...formField.style
+              }}
+              InputProps={{
+                style: {
+                  fontFamily: 'Poppins',
+                  width: '100%',
+                  textAlign: 'left'
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  fontFamily: 'Poppins',
+                },
+              }}
+              // {...field}
+              
+              defaultValue={formField.defaultValue ? 2: field.value}
+              onChange={(event) => {
+                setFieldValue(formField.name, event.target.value)}}
+            >
+              {formField.options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+                  </TextField>
+              )
+              }
             </Field>
           </div>
         );
@@ -141,6 +146,7 @@ const FormRender = ({ formFields }) => {
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, form: { setFieldValue }, meta }) => (
+              
               <label htmlFor={formField.name}>
                 <Input
                   accept="image/*"
@@ -153,13 +159,13 @@ const FormRender = ({ formFields }) => {
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>
-                {isFile(field.value) && (
+                {field.value && isFile(field.value) ? (
                   <>
                     <br />
                     <br />
                     <Thumbnail file={field.value} />
                   </>
-                )}
+                ) : field.value && <img src={field.value}  width="80px" height="80px"/>}
               </label>
             )}
           </Field>
