@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { SwalModal } from '../../components/Modal/SwalModal';
 import { updateShift } from '../../services/shiftHistory';
 import { useContextShift } from '../../Context/ShiftContext';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
   const { initialState, refresh } = useModel('@@initialState');
@@ -28,15 +29,26 @@ const Navbar = () => {
 
   const onLogoutHandler = () => {
     if (shiftIsOpen) {
-      return SwalModal(
-        'Deshironi te mbyllni dhe turnin apo doni vetem te dilni?',
-        '',
-        'warning',
-        'Vetem Logout',
-        'Mbyll Turnin',
-        () => logout(),
-        () => closeShiftAndLogout(),
-      );
+      Swal.fire({
+        title:
+          "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+          'Deshironi te mbyllni dhe turnin apo doni vetem te dilni?' +
+          '</h5>',
+        text: '',
+        icon: 'warning',
+        showDenyButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#3085d6',
+        denyButtonColor: '#d33',
+        denyButtonText: "<span style='font-family: Poppins;'>" + 'Vetem Logout' + '</span>',
+        confirmButtonText: 'Mbyll Turnin',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          closeShiftAndLogout();
+        } else if (result.isDenied) {
+          logout();
+        }
+      });
     } else {
       logout();
     }
@@ -45,7 +57,7 @@ const Navbar = () => {
   const closeShiftAndLogout = () => {
     closeShift();
     logout();
-  }
+  };
 
   const logout = () => {
     localStorage.removeItem('poslaToken');
