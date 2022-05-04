@@ -93,7 +93,7 @@ export const formFields = [
 
 export const validationSchema = yup.object({
     name: yup.string().min(2, i18n.t("productNameLength")).required(i18n.t("productName")),
-    description:  yup.string().max(20,i18n.t("productDescription")),
+    description:  yup.string().max(100,i18n.t("productDescription")),
     price: yup.number().required(i18n.t("productPrice")),
     barcode:yup.string().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
     .required(i18n.t("productBarcode")),

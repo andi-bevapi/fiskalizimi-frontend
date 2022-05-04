@@ -156,7 +156,7 @@
   "productNameLength":"Emri duhet te kete me shume se 2 karaktere",
   "productName":"Ju lutem vendosni emrin",
   "productDescriptionLength":"Pershkrimin duhet te kete me shume se 2 karaktere",
-  "productDescription":"Ju lutem vendosni pershkrimin",
+  "productDescription":"Pershkrimin nuk duhet te kete me shume se 100 karaktere",
   "productPrice":"Ju lutem vendosni cmimi",
   "productBarcodeLength":"Barkodi duhet te kete me shume se 8 karaktere",
   "productBarcodeMax":"Barkodi nuk duhet te kete me shume se 13 karaktere",
