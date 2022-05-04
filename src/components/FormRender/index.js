@@ -20,8 +20,9 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields }) => {
+const FormRender = ({ formFields, editProduct }) => {
   const classes = useStyles();
+
   return formFields.map((formField) => {
     switch (formField.component) {
       case 'Text':
@@ -87,42 +88,41 @@ const FormRender = ({ formFields }) => {
         return (
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
-              {({  field, form: {setFieldValue}, meta }) => (
-                
+              {({  field, form: {setFieldValue}, meta }) => {
+                return(
                   <TextField
-              select
-              label={formField.label}
-              error={meta.touched && meta.error}
-              helperText={meta.error}
-              style={{
-                width: '100%',
-                ...formField.style
-              }}
-              InputProps={{
-                style: {
-                  fontFamily: 'Poppins',
-                  width: '100%',
-                  textAlign: 'left'
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  fontFamily: 'Poppins',
-                },
-              }}
-              // {...field}
-              
-              defaultValue={formField.defaultValue ? 2: field.value}
-              onChange={(event) => {
-                setFieldValue(formField.name, event.target.value)}}
-            >
-              {formField.options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
+                  select
+                  label={formField.label}
+                  error={meta.touched && meta.error}
+                  helperText={meta.error}
+                  style={{
+                    width: '100%',
+                    ...formField.style
+                  }}
+                  InputProps={{
+                    style: {
+                      fontFamily: 'Poppins',
+                      width: '100%',
+                      textAlign: 'left'
+                    },
+                  }}
+                  InputLabelProps={{
+                    style: {
+                      fontFamily: 'Poppins',
+                    },
+                  }}
+                  // {...field}
+                  defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
+                  onChange={(event) => {
+                    setFieldValue(formField.name, event.target.value)}}
+                >
+                  {formField.options.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
                   </TextField>
-              )
+              )}
               }
             </Field>
           </div>
