@@ -33,7 +33,7 @@
   "editProfile":"Edit profile",
   "Actions":"Actions",
   "descriptionField":"Description",
-  "codeIdentifierLength":"Identifier Code mus be more than 2 characters",
+  "codeIdentifierLength":"Identifier Code must be more than 2 characters and less than 20 characters",
   "endShift":"End shift",
   "codeIdentifier":"Please insert Identifier Code",
   "identifierCode":"Identifier Code",

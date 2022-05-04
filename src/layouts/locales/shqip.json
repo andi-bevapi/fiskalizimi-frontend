@@ -33,7 +33,7 @@
   "editProfile":"Edito Profilin",
   "Actions":"Veprimet",
   "descriptionField":"Pershkrimi",
-  "codeIdentifierLength":"Kodi Identifikues duhet te kete me shume se 2 karaktere",
+  "codeIdentifierLength":"Kodi Identifikues duhet te kete me shume se 2 karaktere dhe me pak se 20 karaktere",
   "endShift":"Mbyll turnin",
   "codeIdentifier":"Ju lutem vendosni Kodin Identifikues",
   "identifierCode":"Kodi Identifikues",
