@@ -106,10 +106,9 @@ const ActionButtons = (props) => {
   }
 
   const savePendingInvoice = async (values) => {
-    console.log("jereeee");
-    // setFreeze(true);
-    // setOpenForFreeze(false);
-    // await returnInvoiceObject(false, values.idCode);
+    setFreeze(true);
+    setOpenForFreeze(false);
+    await returnInvoiceObject(false, values.idCode);
   }
 
   return (
