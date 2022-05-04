@@ -65,7 +65,7 @@ const ActionButtons = (props) => {
   }
 
   const toggleModalFreeze = () => {
-    setOpenForFreeze(!openForFreeze);
+    if (listedInvoiceProducts.length > 0) setOpenForFreeze(!openForFreeze);
   }
 
   const goToGeneratedInvoice = async (values) => {
@@ -106,9 +106,10 @@ const ActionButtons = (props) => {
   }
 
   const savePendingInvoice = async (values) => {
-    setFreeze(true);
-    setOpenForFreeze(false);
-    await returnInvoiceObject(false, values.idCode);
+    console.log("jereeee");
+    // setFreeze(true);
+    // setOpenForFreeze(false);
+    // await returnInvoiceObject(false, values.idCode);
   }
 
   return (
