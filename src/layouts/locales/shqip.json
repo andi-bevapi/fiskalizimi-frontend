@@ -67,7 +67,6 @@
   "noProductWithThisBarcode": "Nuk u gjet asnjë produkt me këtë barkod!",
   "close": "Mbyll",
   "productNoStock": "Ky produkt nuk ka stok!",
-  "scanBarcode": "Skano barkodin",
   "activeInvoiceEmpty": "Lista e produkteve eshte bosh!",
   "products": "Produkte",
   "priceWithoutVat": "Vlera pa TVSH",
@@ -104,6 +103,7 @@
   "valueWithVat":"Vat with value",
   "money":"LEK",
   "chooseHowToPay":"Zgjidhni mënyrën e pagesës",
+  "edit":"Edito",
   "proceed":"Vashdo",
   "enterIdentificationCode":"Vendos kodin identifikues",
   "banke":"BANKE",
@@ -219,5 +219,9 @@
   "finalPrice":"Cmimi Final",
   "billDate":"Data e Fatures",
   "fiscalizedBill":"Faturat e fiskalizuara",
-  "noFiscalizedBill":"Faturat e Pa Fiskalizuara"
+  "noFiscalizedBill":"Faturat e Pa Fiskalizuara",
+  "logout":"Dil",
+  "scanBarcode":"Skano barkodin",
+  "addCart":"Shto ne shporte",
+  "no":"Nr"
 }

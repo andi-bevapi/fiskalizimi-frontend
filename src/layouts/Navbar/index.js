@@ -5,7 +5,7 @@ import SideDrawer from './components/SideDrawer';
 import styles from './Navbar.module.css';
 import Logout from '@mui/icons-material/Logout';
 import IconButtonComponent from '../../components/Button/IconButton';
-import { t } from 'i18next';
+import { useTranslation } from "react-i18next";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,6 +20,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { shiftIsOpen, setShiftIsOpen } = useContextShift();
   const open = Boolean(anchorEl);
+  const {t} = useTranslation();
 
   const history = useHistory();
 
@@ -139,6 +140,7 @@ const Navbar = () => {
           style={{ backgroundColor: '#FF7A00', width: '45px', height: '45px', boxShadow: 'none' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
+          text={t("logout")}
           onClick={onLogoutHandler}
         />
       </div>
