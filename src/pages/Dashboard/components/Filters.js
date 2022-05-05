@@ -27,7 +27,7 @@ const ClearValues = () => {
         formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' });
         formik.submitForm(); 
     }
-    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: 70}}>Fshi</Button>
+    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: window.innerWidth < 800 ? 0 : 70, marginTop: 8, marginBottom: window.innerWidth < 800 ? 10 : 0}}>Fshi</Button>
 }
 
 const Filters = () => {
@@ -44,7 +44,7 @@ const Filters = () => {
                 getProductsList(values);
             }}
         >
-            <Form style={{ display: 'flex' }}>
+            <Form style={{ display: 'flex', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
                 <FormRender
                     formFields={[
                         {
@@ -67,7 +67,7 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: 20
+                                marginLeft: window.innerWidth < 800 ? 0 : 20
                             }
                         },
                         {
@@ -85,7 +85,7 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: 40
+                                marginLeft: window.innerWidth < 800 ? 0 : 40
                             }
                         },
                         {
@@ -103,7 +103,7 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: 60
+                                marginLeft: window.innerWidth < 800 ? 0 : 60
                             }
                         }
                     ]}
