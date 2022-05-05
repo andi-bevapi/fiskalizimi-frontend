@@ -33,7 +33,7 @@ const Navbar = () => {
       Swal.fire({
         title:
           "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
-          'Deshironi te mbyllni dhe turnin apo doni vetem te dilni?' +
+          `${t("endShiftModal")}` +
           '</h5>',
         text: '',
         icon: 'warning',
@@ -41,8 +41,8 @@ const Navbar = () => {
         showConfirmButton: true,
         confirmButtonColor: '#3085d6',
         denyButtonColor: '#d33',
-        denyButtonText: "<span style='font-family: Poppins;'>" + 'Vetem Logout' + '</span>',
-        confirmButtonText: 'Mbyll Turnin',
+        denyButtonText: "<span style='font-family: Poppins;'>" + `${t("justLogin")}` + '</span>',
+        confirmButtonText: `${t("endShift")}`,
       }).then((result) => {
         if (result.isConfirmed) {
           closeShiftAndLogout();
@@ -75,11 +75,11 @@ const Navbar = () => {
 
   const handleShiftButton = () => {
     return SwalModal(
-      'Deshironi te mbyllni turnin?',
+      `${t("endShiftOnly")}`,
       '',
       'warning',
-      'JO',
-      'PO',
+      `${t("no_")}`,
+      `${t("yes")}`,
       () => {},
       () => closeShift(),
     );

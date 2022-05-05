@@ -13,7 +13,7 @@ export const formFields = [
   {
     name: 'username',
     component: 'Text',
-    label: t("username"),
+    label: t("Username"),
   },
   {
     name: 'firstName',

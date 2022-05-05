@@ -11,7 +11,7 @@
   "BusinessUnitCode" : "Kodi i Njesise",
   "MaintainerCode" :"Kodi i Mirembajtjes",
   "Code":"Kodi",
-  "Username": "Emri i Perdoruesit",
+  "Username": "Emri i Përdoruesit",
   "Firstname": "Emri",
   "Lastname": "Mbiemri",
   "Phone": "Numri i Telefonit",
@@ -35,6 +35,7 @@
   "descriptionField":"Pershkrimi",
   "codeIdentifierLength":"Kodi Identifikues duhet te kete me shume se 2 karaktere dhe me pak se 20 karaktere",
   "endShift":"Mbyll turnin",
+  "justLogin":"Vetem Logohu",
   "codeIdentifier":"Ju lutem vendosni Kodin Identifikues",
   "identifierCode":"Kodi Identifikues",
   "codeIdentifierText":"Vendos kodin identifikues",
@@ -124,7 +125,7 @@
   "sellingUnitList":"Lista e Njesive Matese",
   "branchList":"Lista e Pikave",
   "usersList":"Lista e Perdoruesve",
-  "supplierList":"Lista e Furnitreve",
+  "supplierList":"Lista e Furnitoreve",
   "branchNameLength":"Emri duhet te kete me shume se 2 karaktere",
   "branchName":"Ju lutem vendosni emrin",
   "branchAdressLength":"Adresa duhet te kete me shume se 2 karaktere",
@@ -223,5 +224,10 @@
   "logout":"Dil",
   "scanBarcode":"Skano barkodin",
   "addCart":"Shto ne shporte",
-  "no":"Nr"
+  "no":"Nr",
+  "endShiftModal":"Deshironi te mbyllni dhe turnin apo doni vetem te dilni?",
+  "currency":"LEK",
+  "endShiftOnly":"Deshironi te mbyllni turnin?",
+  "yes":"Po",
+  "no_":"Jo"
 }

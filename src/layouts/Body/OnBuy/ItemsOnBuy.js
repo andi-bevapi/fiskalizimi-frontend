@@ -212,7 +212,7 @@ const ItemsOnBuy = () => {
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
                       <TableCell className={styles.tableHead} id={styles['number']}>
-                        Nr.
+                        {t("no")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['name']}>
                         {t("product")}
@@ -286,7 +286,7 @@ const ItemsOnBuy = () => {
       ) : (
         <>
           <BootstrapInputField
-            placeholder="kerko..."
+            placeholder={t("search")}
             style={{ marginTop: 20, marginBottom: 20 }}
             onChange={handleChange}
           />
