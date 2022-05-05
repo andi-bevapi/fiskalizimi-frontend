@@ -35,6 +35,7 @@
   "descriptionField":"Description",
   "codeIdentifierLength":"Identifier Code must be more than 2 characters and less than 20 characters",
   "endShift":"End shift",
+  "justLogin":"Just Login",
   "codeIdentifier":"Please insert Identifier Code",
   "identifierCode":"Identifier Code",
   "codeIdentifierText":"Insert Identifier Code",
@@ -221,5 +222,10 @@
   "logout":"Logout",
   "scanBarcode":"Scan Barcode",
   "addCart":"Add to cart",
-  "no":"No"
+  "no":"No",
+  "endShiftModal":"Do you want to close the shift or do you just want to leave?",
+  "currency":"All",
+  "endShiftOnly":"Do you want to close the shift",
+  "yes":"Yes",
+  "no_":"No"
 }
