@@ -5,6 +5,7 @@ import { useContextProduct } from '../../../Context/ProductContext';
 import { useCategoryContext } from '../../../Context/CategoryContext';
 import { useSellingUnitContext } from '../../../Context/SellingUnitContext';
 import { useSupplierContext } from '../../../Context/SuppliersContext';
+import Button from '@mui/material/Button';
 import { useTranslation } from "react-i18next";
 
 const SubmitListener = () => {
@@ -19,6 +20,16 @@ const SubmitListener = () => {
     return null;
 }
 
+const ClearValues = () => {
+    const formik = useFormikContext();
+
+    const clearValues = () => {
+        formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' });
+        formik.submitForm(); 
+    }
+    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: 70}}>Fshi</Button>
+}
+
 const Filters = () => {
     const { getProductsList } = useContextProduct();
     const { categoryList } = useCategoryContext();
@@ -28,7 +39,7 @@ const Filters = () => {
 
     return (
         <Formik
-            initialValues={{ searchText: '', categoryId: '' }}
+            initialValues={{ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' }}
             onSubmit={(values) => {
                 getProductsList(values);
             }}
@@ -43,7 +54,7 @@ const Filters = () => {
                         },
                         {
                             name: 'categoryId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("category"),
                             options: [
                                 {
@@ -61,7 +72,7 @@ const Filters = () => {
                         },
                         {
                             name: 'sellingUnitId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("measureUnits"),
                             options: [
                                 {
@@ -79,7 +90,7 @@ const Filters = () => {
                         },
                         {
                             name: 'supplierId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("supplier"),
                             options: [
                                 {
@@ -99,6 +110,7 @@ const Filters = () => {
                 />
 
                 <SubmitListener />
+                <ClearValues/>
             </Form>
         </Formik>
     );
