@@ -54,7 +54,7 @@ const Filters = () => {
                         },
                         {
                             name: 'categoryId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("category"),
                             options: [
                                 {
@@ -72,7 +72,7 @@ const Filters = () => {
                         },
                         {
                             name: 'sellingUnitId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("measureUnits"),
                             options: [
                                 {
@@ -90,7 +90,7 @@ const Filters = () => {
                         },
                         {
                             name: 'supplierId',
-                            component: 'Select',
+                            component: 'SelectNoDefault',
                             label: t("supplier"),
                             options: [
                                 {

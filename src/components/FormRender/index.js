@@ -127,7 +127,47 @@ const FormRender = ({ formFields, editProduct }) => {
             </Field>
           </div>
         );
-      case 'Checkbox':
+        case 'SelectNoDefault':
+          return (
+            <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
+              <Field name={formField.name}>
+                {({  field, form: {setFieldValue}, meta }) => {
+                  return(
+                    <TextField
+                    select
+                    label={formField.label}
+                    error={meta.touched && meta.error}
+                    helperText={meta.error}
+                    style={{
+                      width: '100%',
+                      ...formField.style
+                    }}
+                    InputProps={{
+                      style: {
+                        fontFamily: 'Poppins',
+                        width: '100%',
+                        textAlign: 'left'
+                      },
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        fontFamily: 'Poppins',
+                      },
+                    }}
+                    {...field}
+                  >
+                    {formField.options.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                    </TextField>
+                )}
+                }
+              </Field>
+            </div>
+          );
+        case 'Checkbox':
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, meta }) => (
