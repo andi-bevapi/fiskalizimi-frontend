@@ -5,7 +5,7 @@ import SideDrawer from './components/SideDrawer';
 import styles from './Navbar.module.css';
 import Logout from '@mui/icons-material/Logout';
 import IconButtonComponent from '../../components/Button/IconButton';
-import { t } from 'i18next';
+import { useTranslation } from "react-i18next";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,6 +20,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { shiftIsOpen, setShiftIsOpen } = useContextShift();
   const open = Boolean(anchorEl);
+  const {t} = useTranslation();
 
   const history = useHistory();
 
@@ -32,7 +33,7 @@ const Navbar = () => {
       Swal.fire({
         title:
           "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
-          'Deshironi te mbyllni dhe turnin apo doni vetem te dilni?' +
+          `${t("endShiftModal")}` +
           '</h5>',
         text: '',
         icon: 'warning',
@@ -40,8 +41,8 @@ const Navbar = () => {
         showConfirmButton: true,
         confirmButtonColor: '#3085d6',
         denyButtonColor: '#d33',
-        denyButtonText: "<span style='font-family: Poppins;'>" + 'Vetem Logout' + '</span>',
-        confirmButtonText: 'Mbyll Turnin',
+        denyButtonText: "<span style='font-family: Poppins;'>" + `${t("justLogin")}` + '</span>',
+        confirmButtonText: `${t("endShift")}`,
       }).then((result) => {
         if (result.isConfirmed) {
           closeShiftAndLogout();
@@ -74,11 +75,11 @@ const Navbar = () => {
 
   const handleShiftButton = () => {
     return SwalModal(
-      'Deshironi te mbyllni turnin?',
+      `${t("endShiftOnly")}`,
       '',
       'warning',
-      'JO',
-      'PO',
+      `${t("no_")}`,
+      `${t("yes")}`,
       () => {},
       () => closeShift(),
     );
@@ -94,8 +95,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className={styles.navContainer}>
-      <div>
+    <div className={styles.navContainer} style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row' }}>
+      <div style={{ margin: window.innerWidth < 800 ? '11px 0px' : 0 }}>
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
@@ -128,7 +129,7 @@ const Navbar = () => {
         </div>
         {shiftIsOpen && (
           <Button
-            style={{ backgroundColor: '#74A19E', marginRight: '10px' }}
+            style={{ backgroundColor: '#74A19E', marginRight: window.innerWidth < 800 ? '14px' : '10px', fontSize: '12px', padding:  window.innerWidth < 800 ? '3px 4px' : '6px 16px' }}
             onClick={handleShiftButton}
             variant="contained"
           >
@@ -139,6 +140,7 @@ const Navbar = () => {
           style={{ backgroundColor: '#FF7A00', width: '45px', height: '45px', boxShadow: 'none' }}
           icon={<Logout />}
           iconColor={{ color: 'white' }}
+          text={t("logout")}
           onClick={onLogoutHandler}
         />
       </div>

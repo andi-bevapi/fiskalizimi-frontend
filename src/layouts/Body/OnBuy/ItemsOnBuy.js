@@ -21,10 +21,9 @@ import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
 import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const ItemsOnBuy = () => {
-  const { t } = useTranslation();
 
   const {
     listedInvoiceProducts,
@@ -52,6 +51,7 @@ const ItemsOnBuy = () => {
   const [open, setOpen] = useState(false);
   const [filteredInvoice, setFilteredInvoice] = useState([]);
   const [filteredInAllPages, setFilteredInAllPages] = useState([]);
+  const {t} = useTranslation();
 
   //---------------------paginate
   const [pageNumber, setPageNumber] = useState(0);
@@ -212,7 +212,7 @@ const ItemsOnBuy = () => {
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
                       <TableCell className={styles.tableHead} id={styles['number']}>
-                        Nr.
+                        {t("no")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['name']}>
                         {t("product")}
@@ -223,7 +223,7 @@ const ItemsOnBuy = () => {
                       <TableCell className={styles.tableHead} id={styles['price']}>
                         {t("price")}
                       </TableCell>
-                      <TableCell className={styles.tableHead} id={styles['price']}>
+                      <TableCell className={styles.tableHead} id={styles['total']}>
                         {t("total")}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['delete']}>
@@ -257,7 +257,7 @@ const ItemsOnBuy = () => {
                           </button>
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
-                          &nbsp; {Number(item.price).toFixed(2)}
+                          {Number(item.price).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
                           &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
@@ -270,6 +270,7 @@ const ItemsOnBuy = () => {
                             onClick={() => {
                               removeProductFromInvoiceList(item);
                             }}
+                            text={t("delete")}
                           />
                         </TableCell>
                       </TableRow>
@@ -285,7 +286,7 @@ const ItemsOnBuy = () => {
       ) : (
         <>
           <BootstrapInputField
-            placeholder="kerko..."
+            placeholder={t("search")}
             style={{ marginTop: 20, marginBottom: 20 }}
             onChange={handleChange}
           />
@@ -293,7 +294,7 @@ const ItemsOnBuy = () => {
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>Kodi</TableCell>
+                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>{t("code")}</TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
                     {t("product")}
                   </TableCell>
@@ -355,6 +356,7 @@ const ItemsOnBuy = () => {
                           onClick={() => {
                             activateInvoice(el);
                           }}
+                          text={t("addCart")}
                         />
                       </TableCell>
                       <TableCell className={styles.tableBodyCell}>
@@ -365,6 +367,7 @@ const ItemsOnBuy = () => {
                           onClick={() => {
                             handleDelete(el.id);
                           }}
+                          text={t("delete")}
                         />
                       </TableCell>
                     </TableRow>
