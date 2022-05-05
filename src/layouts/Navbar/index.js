@@ -95,8 +95,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className={styles.navContainer}>
-      <div>
+    <div className={styles.navContainer} style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row' }}>
+      <div style={{ margin: window.innerWidth < 800 ? '11px 0px' : 0 }}>
         <SideDrawer navLinks={navItems} />
       </div>
       <div className={styles.rightBtns}>
@@ -129,7 +129,7 @@ const Navbar = () => {
         </div>
         {shiftIsOpen && (
           <Button
-            style={{ backgroundColor: '#74A19E', marginRight: '10px' }}
+            style={{ backgroundColor: '#74A19E', marginRight: window.innerWidth < 800 ? '14px' : '10px', fontSize: '12px', padding:  window.innerWidth < 800 ? '3px 4px' : '6px 16px' }}
             onClick={handleShiftButton}
             variant="contained"
           >
