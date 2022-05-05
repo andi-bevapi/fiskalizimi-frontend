@@ -1,10 +1,10 @@
 import EditProfile from "./EditProfile";
-import {UserProvider} from "../../context/UserContext";
+import {UsersListProvider} from "../../Context/UsersListContext";
 
 export default () => {
     return (
-      <UserProvider>
+      <UsersListProvider>
           <EditProfile />
-      </UserProvider>
+      </UsersListProvider>
     );
   };

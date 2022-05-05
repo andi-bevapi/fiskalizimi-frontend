@@ -4,7 +4,7 @@ import FormRender from '../../../../components/FormRender';
 import { useCategoryContext } from '../../../../Context/CategoryContext';
 import { useSellingUnitContext } from '../../../../Context/SellingUnitContext';
 import { useSupplierContext } from '../../../../Context/SuppliersContext';
-import { useContextUser } from '../../../../Context/UserContext';
+import { useUsersListContext } from '../../../../Context/UsersListContext';
 import { useTranslation } from "react-i18next";
 
 const SubmitListener = () => {
@@ -20,7 +20,7 @@ const SubmitListener = () => {
 }
 
 const Filters = ({ getData }) => {
-    const { users } = useContextUser();
+    const { usersList } = useUsersListContext();
     const { categoryList } = useCategoryContext();
     const { sellingUnitList } = useSellingUnitContext();
     const { suppliersList } = useSupplierContext();
@@ -45,7 +45,7 @@ const Filters = ({ getData }) => {
                                     value: null,
                                     label: t("all")
                                 },
-                                ...users?.map(user => ({
+                                ...usersList?.map(user => ({
                                     value: user.id,
                                     label: user.username
                                 }))

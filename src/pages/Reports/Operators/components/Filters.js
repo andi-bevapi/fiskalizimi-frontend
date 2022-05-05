@@ -2,7 +2,7 @@ import { Form, Formik, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import FormRender from '../../../../components/FormRender';
-import { useContextUser } from '../../../../Context/UserContext';
+import { useUsersListContext } from '../../../../Context/UsersListContext';
 
 const SubmitListener = () => {
     const formik = useFormikContext();
@@ -17,7 +17,7 @@ const SubmitListener = () => {
 }
 
 const Filters = ({ getData }) => {
-    const { users } = useContextUser();
+    const { usersList } = useUsersListContext();
     const {t} = useTranslation();
 
     return (
@@ -39,7 +39,7 @@ const Filters = ({ getData }) => {
                                     value: null,
                                     label: t("all")
                                 },
-                                ...users?.map(user => ({
+                                ...usersList?.map(user => ({
                                     value: user.id,
                                     label: user.username
                                 }))

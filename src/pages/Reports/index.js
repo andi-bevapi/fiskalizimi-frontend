@@ -12,7 +12,7 @@ import i18n from "i18next";
 import { CategoryProvider } from '../../Context/CategoryContext';
 import { SellingUnitProvider } from '../../Context/SellingUnitContext';
 import { SupplierProvider } from '../../Context/SuppliersContext';
-import { UserProvider } from '../../Context/UserContext';
+import { UsersListProvider } from '../../Context/UsersListContext';
 import Compose from '../../components/Compose';
 import Operators from './Operators';
 import DailyTurnover from './DailyTurnover';
@@ -53,7 +53,7 @@ const Reports = () => {
   };
 
   return (
-    <Compose components={[UserProvider, CategoryProvider, SellingUnitProvider, SupplierProvider]}>
+    <Compose components={[UsersListProvider, CategoryProvider, SellingUnitProvider, SupplierProvider]}>
       <Box
         sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
       >
