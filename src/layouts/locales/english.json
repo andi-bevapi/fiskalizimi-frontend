@@ -227,5 +227,7 @@
   "currency":"All",
   "endShiftOnly":"Do you want to close the shift",
   "yes":"Yes",
-  "no_":"No"
+  "no_":"No",
+  "stockProductValidation":"Stock must be a positive number",
+  "imageMessage":"Please upload an image smaller then previous"
 }
