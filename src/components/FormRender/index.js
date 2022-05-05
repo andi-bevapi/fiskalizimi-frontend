@@ -20,7 +20,7 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields, editProduct }) => {
+const FormRender = ({ formFields, editProduct, disableField }) => {
   const classes = useStyles();
 
   return formFields.map((formField) => {
@@ -49,6 +49,7 @@ const FormRender = ({ formFields, editProduct }) => {
                       fontFamily: 'Poppins',
                     },
                   }}
+                  disabled={!formField.disabled ? false : true}
                   {...field}
                 />
               )}
@@ -112,6 +113,7 @@ const FormRender = ({ formFields, editProduct }) => {
                     },
                   }}
                   // {...field}
+                  disabled={!formField.disabled ? false: true}
                   defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
                   onChange={(event) => {
                     setFieldValue(formField.name, event.target.value)}}

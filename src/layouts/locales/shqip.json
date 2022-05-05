@@ -219,5 +219,16 @@
   "finalPrice":"Cmimi Final",
   "billDate":"Data e Fatures",
   "fiscalizedBill":"Faturat e fiskalizuara",
-  "noFiscalizedBill":"Faturat e Pa Fiskalizuara"
+  "noFiscalizedBill":"Faturat e Pa Fiskalizuara",
+  "startingAmount": "Gjendja Fillestare",
+  "addMoneyDeposit": "Shto në Arkë",
+  "removeMoneyDeposit": "Zbrit nga Arka",
+  "arkaList": "Lista e Arkave",
+  "arkaEmriLength":"Emri nuk duhet të përmbaj më pak se 2 dhe më shumë se 20 karaktere",
+  "arkaEmriRequired":"Emri është i detyrueshem",
+  "arkaSerialNrRequired":"Numri serial është i detyruesëem",
+  "arkaDateRequired":"Data eshte e detyrueshme",
+  "SerialNumber":"Numri Serial ",
+  "ValidFrom":"Nga Data",
+  "ValidTo":"Deri Në"
 }

@@ -39,6 +39,11 @@ export const navItems = [
     access: 'canViewReports'
   },
   {
+    title: "Arkat",
+    path: "/arka-list",
+    access: 'canViewArka'
+  },
+  {
     title: "Konfigurime",
     path: "/konfigurime",
   },

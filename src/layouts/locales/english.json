@@ -217,5 +217,16 @@
   "finalPrice":"Fianl Price",
   "billDate":"Bill Date",
   "fiscalizedBill":"Fiscalized invoices",
-  "noFiscalizedBill":"Not Fiscalized Invoices"
+  "noFiscalizedBill":"Not Fiscalized Invoices",
+  "startingAmount": "Starting Amount",
+  "addMoneyDeposit": "Add to Money Deposit",
+  "removeMoneyDeposit": "Remove from Money Deposit",
+  "arkaList": "Lists of Money Deposit",
+  "arkaEmriLength":"Name must have at least 2 characters and a max of 20 characters",
+  "arkaEmriRequired":"Name is required",
+  "arkaSerialNrRequired":"Date is required",
+  "arkaDateRequired":"Date is required",
+  "SerialNumber":"Serial Number",
+  "ValidFrom":"Valid From",
+  "ValidTo":"Valid To"
 }

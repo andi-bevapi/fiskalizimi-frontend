@@ -253,7 +253,7 @@ const SidebarAction = (props) => {
           {({ errors, touched ,isValid }) => {
             return (
               <Form className={classes.formContainer}>
-                <FormRender formFields={fields} editProduct={props.editItem ? true : false} />
+                <FormRender formFields={fields} editProduct={props.editItem ? true : false} disableField={props.editItem && props.arka ? true: false} />
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {

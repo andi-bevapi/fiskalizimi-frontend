@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import HistoryIcon from '@mui/icons-material/History';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -12,6 +13,7 @@ import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
 import { Access, useAccess } from 'umi';
 import { useTranslation } from "react-i18next";
+import Moment from 'moment';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -99,13 +101,14 @@ const TableComponent = (props) => {
         permissions={props.permissions}
         setPermissions={props.setPermissions}
         contexts={props.contexts}
+        arka={props.arka}
       />
 
       <div className={classes.headerContainer}>
         <h1>{props.title}</h1>
-        <Access accessible={access[props.acceses['create']]}>
+        {/* <Access accessible={access[props.acceses['create']]}> */}
           <Button variant="contained" onClick={handleCreate}>{t("add")} <AddIcon /></Button>
-        </Access>
+        {/* </Access> */}
       </div>
 
       {props.isLoading ? (
@@ -138,12 +141,24 @@ const TableComponent = (props) => {
                 >
                   <TableCell className={classes.tableCell}>{index + 1}</TableCell>
                   {Object.keys(item).map((key, idx) => {
+                    if (key.toLowerCase().includes('valid')) return <TableCell key={idx}>{Moment(new Date(item[key])).format("DD/MM/YYYY")}</TableCell>
                     if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>
                   })}
 
                   <TableCell className={classes.tableCell}>
                     <div className={classes.btnContainer}>
-                      <Access accessible={access[props.acceses['update']]}>
+                      {props.arka &&
+                        <IconButtonComponent
+                          style={{
+                            backgroundColor: '#ffa500',
+                            marginRight: '10px',
+                          }}
+                          icon={<HistoryIcon />}
+                          iconColor={{ color: 'white' }}
+                          onClick={(e) => handleEditButton(item.id)}
+                        />
+                      }
+                      {/* <Access accessible={access[props.acceses['update']]}> */}
                         <IconButtonComponent
                           style={{
                             backgroundColor: '#ffa500',
@@ -153,9 +168,9 @@ const TableComponent = (props) => {
                           iconColor={{ color: 'white' }}
                           onClick={(e) => handleEditButton(item.id)}
                         />
-                      </Access>
+                      {/* </Access> */}
 
-                      <Access accessible={access[props.acceses['delete']]}>
+                      {/* <Access accessible={access[props.acceses['delete']]}> */}
                         <IconButtonComponent
                           style={{
                             backgroundColor: '#f05050',
@@ -165,7 +180,7 @@ const TableComponent = (props) => {
                           iconColor={{ color: 'white' }}
                           onClick={(e) => handleDelete(item.id)}
                         />
-                      </Access>
+                      {/* </Access> */}
                     </div>
                   </TableCell>
                 </TableRow>

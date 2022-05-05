@@ -55,7 +55,7 @@ const MoneyDeposit = () => {
                 <Grid item xs={12} md={12} className={styles.stateGrid}>
                     <Grid item xs={12} md={3} lg={3}>
                         <DepositButtonComponent
-                            title="Ndrysho Gjendjen"
+                            title={t("startingAmount")}
                             lightColor="#12ac7a"
                             addIcon={false}
                             className={styles.changeAmountBtn}
@@ -66,7 +66,7 @@ const MoneyDeposit = () => {
                     </Grid>
                     <Grid item xs={12} md={3} lg={3}>
                         <DepositButtonComponent
-                            title="Shto në Arkë"
+                            title={t("addMoneyDeposit")}
                             lightColor="#74a19e"
                             addIcon={false}
                             className={styles.addAmountBtn}
@@ -75,7 +75,7 @@ const MoneyDeposit = () => {
                     </Grid>
                     <Grid item xs={12} md={3} lg={3}>
                         <DepositButtonComponent
-                            title="Zbrit nga Arka"
+                            title={t("removeMoneyDeposit")}
                             lightColor="#f05050"
                             addIcon={false}
                             className={styles.reduceAmountBtn}
