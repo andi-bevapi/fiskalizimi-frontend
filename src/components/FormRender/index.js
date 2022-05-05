@@ -8,7 +8,8 @@ import { makeStyles } from '@mui/styles';
 import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
-
+import { useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   inputContainer: {
@@ -20,8 +21,10 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields, editProduct }) => {
+const FormRender = ({ formFields, editProduct , vatDefault }) => {
   const classes = useStyles();
+  const [uploadMessage,setUploadMessage] = useState(null);
+  const {t} = useTranslation();
 
   return formFields.map((formField) => {
     switch (formField.component) {
@@ -111,10 +114,10 @@ const FormRender = ({ formFields, editProduct }) => {
                       fontFamily: 'Poppins',
                     },
                   }}
-                  // {...field}
-                  defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
-                  onChange={(event) => {
-                    setFieldValue(formField.name, event.target.value)}}
+                  {...field}
+                  // defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
+                  // onChange={(event) => {
+                  //   setFieldValue(formField.name, event.target.value)}}
                 >
                   {formField.options.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -193,9 +196,10 @@ const FormRender = ({ formFields, editProduct }) => {
                   id={formField.name}
                   type="file"
                   onChange={(event) => {
-                    setFieldValue(formField.name, event.target.files[0]);
+                      {event.target.files[0].size > 5000000 ? setUploadMessage("not uploaded") : setFieldValue(formField.name, event.target.files[0]);}
                   }}
                 />
+                {uploadMessage && t("imageMessage")}
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>

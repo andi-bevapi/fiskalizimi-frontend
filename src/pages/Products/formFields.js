@@ -98,7 +98,7 @@ export const validationSchema = yup.object({
     barcode:yup.string().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
     .required(i18n.t("productBarcode")),
     vat: yup.number().required(i18n.t("insertVat")),
-    stock: yup.number().required(i18n.t("insertAmount")),
+    stock: yup.number().min(1).positive(i18n.t("stockProductValidation")).required(i18n.t("insertAmount")),
     branchId:  yup.number().required(i18n.t("insertBranch")),
     categoryId:  yup.number().required(i18n.t("insertCategory")),
     sellingUnitId: yup.number().required(i18n.t("insertMeasureUnit")),

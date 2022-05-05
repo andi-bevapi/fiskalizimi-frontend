@@ -229,5 +229,7 @@
   "currency":"LEK",
   "endShiftOnly":"Deshironi te mbyllni turnin?",
   "yes":"Po",
-  "no_":"Jo"
+  "no_":"Jo",
+  "stockProductValidation":"Stoku duhet te jet numer pozitiv",
+  "imageMessage":"Ju lutem ngarkoni nje imazh me madhesi me te vogel"
 }
