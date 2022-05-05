@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Button } from '@mui/material';
 import ButtonComponent from '../../../../../components/Button/InvoiceButton';
@@ -13,8 +13,11 @@ import { Form, Formik, Field } from 'formik';
 import TextField from '@mui/material/TextField';
 import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
 import {validationSchema} from "./validationSchema";
+import { useReactToPrint } from "react-to-print";
+import InvoiceToPrint from '../../InvoiceCoupon/InvoiceToPrint';
 
 const ActionButtons = (props) => {
+  const { t } = useTranslation();
   const {
     deleteInvoice,
     invoiceFinalObject,
@@ -23,6 +26,8 @@ const ActionButtons = (props) => {
     createPendingInvoice,
     couponObject
   } = useInvoiceContext();
+  
+  let componentRef = useRef();
   const [isOpen, setisOpen] = useState(false);
   const [freeze, setFreeze] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
@@ -30,7 +35,9 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
-  const {t} = useTranslation();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current
+  });
 
   useEffect(() => {
     (!returnChange ? (setReturnChange(-Number(invoiceFinalObject?.totalAmount))) : null);
@@ -58,13 +65,14 @@ const ActionButtons = (props) => {
   }
 
   const toggleModalFreeze = () => {
-    setOpenForFreeze(!openForFreeze);
+    if (listedInvoiceProducts.length > 0) setOpenForFreeze(!openForFreeze);
   }
 
   const goToGeneratedInvoice = async (values) => {
     await returnInvoiceObject(true, values.description, values.message);
     setisOpen(false);
-    setIsOpenStep2(true);
+    deleteInvoice();
+    handlePrint();
   }
 
   const calculateMoney = (value) => {
@@ -121,7 +129,7 @@ const ActionButtons = (props) => {
         >
           <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
-              title="FSHI"
+              title={t("delete")}
               lightColor="rgb(240, 80, 80)"
               addIcon={false}
               onClick={deleteInvoice}
@@ -130,7 +138,7 @@ const ActionButtons = (props) => {
           </Grid>
           <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
-              title="RUAJ"
+              title={t("savePending")}
               lightColor="#74a19e"
               addIcon={false}
               onClick={toggleModalFreeze}
@@ -139,7 +147,7 @@ const ActionButtons = (props) => {
           </Grid>
           <Grid item xs={12} sm={4} md={4} style={{ display: 'block', alignItems: 'center' }}>
             <ButtonComponent
-              title="PAGUAJ"
+              title={t("pay")}
               lightColor="#0d4d47"
               addIcon={false}
               onClick={goToPaymentMethod}
@@ -157,7 +165,7 @@ const ActionButtons = (props) => {
               }}
             >
               <Form>
-                <span className={styles.payTitle}>Paguaj Faturën</span>
+                <span className={styles.payTitle}>{t("payInvoice")}</span>
                 <Divider style={{ marginTop: 10, marginBottom: 20 }} />
 
                 {/* containeri i madh */}
@@ -173,19 +181,19 @@ const ActionButtons = (props) => {
                         <div className={styles.paymentMethodsDiv}>
 
                           <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <span className={styles.totalPrice}>Zgjidhni mënyrën e pagesës: </span> <br /><br />
+                            <span className={styles.totalPrice}>{t("chooseWayOfPayment")} </span> <br /><br />
                           </Grid>
 
                           <Grid container display={'flex'}>
                             <Grid item xs={12} sm={12} md={12} lg={12}>
                               <Button className={styles.cashPayment}>
-                                CASH
+                                {t("cash")}
                               </Button><br />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={12} lg={12}>
                               <Button className={styles.bankPayment} disabled={true}>
-                                BANKË
+                                {t("creditCard")}
                               </Button>
                             </Grid>
                           </Grid>
@@ -197,14 +205,14 @@ const ActionButtons = (props) => {
 
                       <Grid item xs={12} sm={12} md={12} lg={12}>
                         <div className={styles.subMainHolder}>
-                          <span className={styles.totalPrice}>Totali për tu paguar: {Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
+                          <span className={styles.totalPrice}>{t("totalToPay")}{Number(invoiceFinalObject?.totalAmount).toFixed(2)} LEK</span>
                         </div>
                       </Grid>
 
                       <div className={styles.subMainHolder}>
                         <Grid item xs={12} sm={6} md={6} lg={6}>
                           <div className={styles.amountEntered}>
-                            <span className={styles.describeInvoice}><b>Shuma: </b> &nbsp; {Number(amount)} LEK</span>
+                            <span className={styles.describeInvoice}><b>{t("amount")}</b> &nbsp; {Number(amount)} LEK</span>
                           </div>
                         </Grid>
                         <br />
@@ -264,11 +272,11 @@ const ActionButtons = (props) => {
 
                   <Grid container xs={12} sm={12} md={12} lg={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div className={styles.subMainHolder}>
-                      <span className={styles.describeInvoice}><b>Kusuri: </b> &nbsp; {Number(returnChange).toFixed(2)} LEK</span>
+                      <span className={styles.describeInvoice}><b>{t("theRest")} </b> &nbsp; {Number(returnChange).toFixed(2)} LEK</span>
                     </div>
                     <div className={styles.subMainHolder}>
                       <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={disabledSubmit}>
-                        Vazhdo
+                        {t("continue")}
                       </Button>
                     </div>
                   </Grid>
@@ -320,12 +328,13 @@ const ActionButtons = (props) => {
                 </Field>
                 <br></br>
                 <Button variant="contained" style={{ marginTop: 16}}  type="submit">
-                  Ruaj
+                  {("save")}
                 </Button>
               </Form>
             </Formik>
         </ModalComponent>
       </div>
+      {Object.keys(couponObject).length > 0 && <InvoiceToPrint data={couponObject} ref={componentRef}/>}
     </div>
   );
 };

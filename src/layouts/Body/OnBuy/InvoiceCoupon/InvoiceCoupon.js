@@ -5,8 +5,10 @@ import ReactToPrint from "react-to-print";
 import QRCode from "react-qr-code";
 import { useConfigProvider } from "../../../../Context/ConfigurationsContext";
 import { display, grid } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 const InvoiceCoupon = (props) => {
+    const { t }  = useTranslation();
     let componentRef = useRef();
 
     const [value, setValue] = useState("");
@@ -27,11 +29,11 @@ const InvoiceCoupon = (props) => {
         <>
             <div className={styles.headerInvoice}>
                 <Grid item xs={6} md={6}>
-                    <span className={styles.payTitle}>Fatura Tatimore:</span>
+                    <span className={styles.payTitle}>{t("taxBill")}</span>
                 </Grid>
                 <Grid item xs={4} md={2}>
                     <ReactToPrint
-                        trigger={() => <Button variant="contained" type="submit" className={styles.buttonStyle}> Printo Faturën </Button>}
+                        trigger={() => <Button variant="contained" type="submit" className={styles.buttonStyle}> {t("printBill")} </Button>}
                         content={() => componentRef}
                     />
                 </Grid>

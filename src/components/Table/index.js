@@ -121,7 +121,7 @@ const TableComponent = (props) => {
                   'th': { padding: '16px 6px', fontFamily: 'Poppins' },
                 }}
               >
-                <TableCell className={classes.tableCell}>Nr</TableCell>
+                <TableCell className={classes.tableCell}>{t("no")}</TableCell>
                 {props.tableHeaders.map((header, index) => {
                   if (header !== 'Id') return <TableCell key={index} className={classes.tableCell} style={index === props.tableHeaders.length - 1 ? { textAlign: 'right', paddingRight: 20 } : {}}>{t(header)}</TableCell>;
                 })}

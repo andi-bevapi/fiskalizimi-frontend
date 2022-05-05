@@ -20,7 +20,7 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields }) => {
+const FormRender = ({ formFields, editProduct }) => {
   const classes = useStyles();
 
   return formFields.map((formField) => {
@@ -30,6 +30,7 @@ const FormRender = ({ formFields }) => {
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
               {({ field, meta }) => (
+                
                 <TextField
                   label={formField.label}
                   error={meta.touched && meta.error}
@@ -87,8 +88,9 @@ const FormRender = ({ formFields }) => {
         return (
           <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
             <Field name={formField.name}>
-              {({  field, form: {setFieldValue}, meta }) => (
-                <TextField
+              {({  field, form: {setFieldValue}, meta }) => {
+                return(
+                  <TextField
                   select
                   label={formField.label}
                   error={meta.touched && meta.error}
@@ -109,7 +111,8 @@ const FormRender = ({ formFields }) => {
                       fontFamily: 'Poppins',
                     },
                   }}
-                  defaultValue={formField.defaultValue}
+                  // {...field}
+                  defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
                   onChange={(event) => {
                     setFieldValue(formField.name, event.target.value)}}
                 >
@@ -118,8 +121,9 @@ const FormRender = ({ formFields }) => {
                       {option.label}
                     </MenuItem>
                   ))}
-                </TextField>
+                  </TextField>
               )}
+              }
             </Field>
           </div>
         );
@@ -142,6 +146,7 @@ const FormRender = ({ formFields }) => {
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, form: { setFieldValue }, meta }) => (
+              
               <label htmlFor={formField.name}>
                 <Input
                   accept="image/*"
@@ -154,13 +159,13 @@ const FormRender = ({ formFields }) => {
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>
-                {isFile(field.value) && (
+                {field.value && isFile(field.value) ? (
                   <>
                     <br />
                     <br />
                     <Thumbnail file={field.value} />
                   </>
-                )}
+                ) : field.value && <img src={field.value}  width="80px" height="80px"/>}
               </label>
             )}
           </Field>
