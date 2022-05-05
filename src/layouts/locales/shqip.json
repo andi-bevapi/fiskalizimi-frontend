@@ -219,5 +219,6 @@
   "finalPrice":"Cmimi Final",
   "billDate":"Data e Fatures",
   "fiscalizedBill":"Faturat e fiskalizuara",
-  "noFiscalizedBill":"Faturat e Pa Fiskalizuara"
+  "noFiscalizedBill":"Faturat e Pa Fiskalizuara",
+  "actions":"Veprimet"
 }

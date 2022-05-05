@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
 import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
-import { getAllBranch } from '../services/branchList';
 
 import { useModel } from 'umi';
 import { useContextProduct } from './ProductContext';
@@ -24,11 +23,6 @@ const InvoiceProvider = (props) => {
     const [filteredBarcodeProduct, setFilteredBarcodeProduct] = useState({});
     const [pendingInvoices, setPendingInvoices] = useState([]);
     const [couponObject, setCouponObject] = useState({});
-
-
-    useEffect(() => {
-        // console.log("initialState?.currentUser?", initialState?.currentUser);
-    }, [initialState?.currentUser]);
 
     useEffect(() => {
         if (activeInvoice == "pending") getListOfInvoices("pending");
@@ -187,7 +181,7 @@ const InvoiceProvider = (props) => {
         data.status = "pending";
         data.quantity = listedInvoiceProducts?.length;
         try {
-            const response = await createInvoice(data);
+            await createInvoice(data, initialState?.currentUser?.id);
             getListOfInvoices("pending");
         } catch (error) {
             console.log(error);
@@ -202,7 +196,7 @@ const InvoiceProvider = (props) => {
         invoice.invoiceItems = items;
         invoice.status = "active";
         try {
-            const response = await createInvoice(invoice);
+            await createInvoice(invoice, initialState?.currentUser?.id);
             getListOfInvoices("pending");
         } catch (error) {
             console.log(error);
@@ -211,7 +205,7 @@ const InvoiceProvider = (props) => {
 
     const deletePendingInvoice = async (id) => {
         try {
-            const response = await deleteInvoiceById(id);
+            await deleteInvoiceById(id);
             setPendingInvoices((prevState) => {
                 let newState = prevState.filter(item => item.id !== id);
                 return [...newState];
@@ -263,7 +257,7 @@ const InvoiceProvider = (props) => {
     //POST method to register Invoice DB
     const postInvoice = async (invoiceObject) => {
         //Add post method for invoice
-        const response = await createInvoice(invoiceObject);
+        const response = await createInvoice(invoiceObject, initialState?.currentUser?.id);
         const invoiceData = response.data;
 
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());

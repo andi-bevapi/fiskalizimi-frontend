@@ -9,13 +9,16 @@ const getInvoices = async (branchId, status) => {
     })
 }
 
-const createInvoice = async (data) => {
+const createInvoice = async (data, userId) => {
     return request('/invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        data
+        data: {
+            ...data,
+            userId
+        }
     });
 }
 

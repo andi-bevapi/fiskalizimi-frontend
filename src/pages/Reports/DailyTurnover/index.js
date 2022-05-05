@@ -7,26 +7,23 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { useModel } from 'umi';
-import { getSoldProducts } from '../../../services/reports';
+import { getDailyTurnoverReport } from '../../../services/reports';
 import { formatDate } from '../../../helpers/formatDate';
-import Filters from './components/Filters';
 
 const columns = [
-    { field: 'name', headerName: 'Name', width: 120 },
-    { field: 'barcode', headerName: 'Barcode', width: 150 },
-    { field: 'stock', headerName: 'Stock', width: 80 },
-    { field: 'vat', headerName: 'TVSH', width: 80 },
-    { field: 'totalAmountNoVAT', headerName: 'Vlera pa TVSH', width: 120 },
-    { field: 'totalAmount', headerName: 'Vlera me TVSH', width: 120 },
-    { field: 'categoryName', headerName: 'Category', width: 150 },
-    { field: 'supplierName', headerName: 'Supplier', width: 150 },
-    { field: 'sellingUnitName', headerName: 'Selling Unit', width: 150 }
+    { field: 'shiftStart', headerName: 'Shift Start', width: 200, renderCell: (params) => {
+        return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(params.row.shiftStart));
+    } },
+    { field: 'shiftEnd', headerName: 'Shift End', width: 200 },
+    { field: 'username', headerName: 'Username', width: 120 },
+    { field: 'totalAmountNoVAT', headerName: 'Total Amount No VAT', width: 150 },
+    { field: 'totalAmount', headerName: 'Total Amount', width: 100 }
 ];
 
-const SoldProducts = () => {
+const DailyTurnover = () => {
     const { initialState } = useModel('@@initialState');
     const [filters, setFilters] = useState({});
-    const [products, setProducts] = useState([]);
+    const [data, setData] = useState([]);
     const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
     const { t } = useTranslation();
 
@@ -35,24 +32,24 @@ const SoldProducts = () => {
     }, [initialState?.currentUser, dateRange]);
 
     const getData = async (values = {}) => {
-        if(Object.keys(values).length > 0) setFilters(values);
-    
+        if (Object.keys(values).length > 0) setFilters(values);
+
         const startDate = formatDate(dateRange[0]);
         const endDate = formatDate(dateRange[1]);
 
         let query = values;
 
-        if(Object.keys(query).length === 0) {
+        if (Object.keys(query).length === 0) {
             query = filters;
-        } 
+        }
 
         try {
-            const response = await getSoldProducts(initialState?.currentUser?.clientId, {
+            const response = await getDailyTurnoverReport({
                 startDate,
                 endDate,
                 ...query
             });
-            setProducts(response.data);
+            setData(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -78,20 +75,17 @@ const SoldProducts = () => {
 
             <br />
 
-            <Filters getData={getData} />
-
-            <br />
-
             <div style={{ height: '60vh', width: '100%' }}>
                 <DataGrid
-                    rows={products}
+                    rows={data}
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
+                    getRowId={(row) => row.username}
                 />
             </div>
         </>
     );
 };
 
-export default SoldProducts;
+export default DailyTurnover;

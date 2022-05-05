@@ -217,5 +217,6 @@
   "finalPrice":"Fianl Price",
   "billDate":"Bill Date",
   "fiscalizedBill":"Fiscalized invoices",
-  "noFiscalizedBill":"Not Fiscalized Invoices"
+  "noFiscalizedBill":"Not Fiscalized Invoices",
+  "actions":"Actions"
 }

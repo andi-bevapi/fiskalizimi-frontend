@@ -1,4 +1,5 @@
 export const formatDate = (date) => {
-    let formatedDate = new Date(date).toISOString().replace('-', '-').split('T')[0].replace('-', '-');
+    if(!date) return;
+    let formatedDate = new Date(date.toString().split(/\+|-/)[0]).toISOString().split('T')[0];
     return formatedDate;
 }
