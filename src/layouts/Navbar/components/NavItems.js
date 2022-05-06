@@ -54,6 +54,9 @@ const NavItems = () => {
       case "Raportet":
         return <>
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("reports")}</span> </>;
+      case "Arkat":
+        return <>
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{t("configurations")}</span> </>;

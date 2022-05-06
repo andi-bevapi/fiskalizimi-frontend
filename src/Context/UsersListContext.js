@@ -28,6 +28,7 @@ const UsersListProvider = (props) => {
   const getPermissionsList = async () => {
     try {
       const response = await getPermissions();
+      console.log(response);
       if (response.statusCode === 200) {
         setPermissions(
           response.data.map((el) => {

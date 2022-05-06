@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import HistoryIcon from '@mui/icons-material/History';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,70 +12,91 @@ import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
 import SnackbarComponent from '../Snackbar';
 import { Access, useAccess } from 'umi';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import Moment from 'moment';
+import ModalComponent from '../Modal/Modal';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   tableCell: {
     padding: '5px 4px',
   },
   btnContainer: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   spinContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 40
-  }
+    marginTop: 40,
+  },
 }));
 
 const TableComponent = (props) => {
   const classes = useStyles();
   const [openSideBar, setOpenSideBar] = useState(false);
-  const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
+  const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '' });
   const [editItem, setEditItem] = useState(null);
-  const {t} = useTranslation();
+  const [openHistoryModal, setOpenHistoryModal] = useState(false);
+  const [arkaHistoryData, setArkaHistoryData] = useState([]);
+  const { t } = useTranslation();
   const access = useAccess();
 
   const handleEditButton = (id) => {
     setOpenSideBar(true);
-    const foundItem = props.fullList.find(item => item.id === id);
+    const foundItem = props.fullList.find((item) => item.id === id);
     setEditItem(foundItem);
   };
 
   const handleSnackBarClose = () => {
-    setOpenSnackBar({ status: false });
-  }
+    setOpenSnackBar({ status: false, severity: 'success' });
+  };
 
   const confirmDelete = async (id) => {
     const response = await props.delete(id);
-    setOpenSnackBar({ status: true, message: response.message });
-  }
+    setOpenSnackBar({ status: true, message: response.message, severity: 'success' });
+  };
 
   const handleDelete = async (id) => {
     return SwalModal(
-      "Deshironi ta fshini?",
-      "",
-      "warning",
-      "JO",
-      "PO",
-      () => { },
+      'Deshironi ta fshini?',
+      '',
+      'warning',
+      'JO',
+      'PO',
+      () => {},
       () => confirmDelete(id),
-      id
+      id,
     );
   };
 
   const handleCreate = () => {
     setOpenSideBar(true);
-  }
+  };
+
+  const handleHistoryButton = async (id) => {
+    const response = await props.history(id);
+    if (response.statusCode === 200) {
+      setArkaHistoryData(response.data);
+      setOpenHistoryModal(true);
+    } else
+      setOpenSnackBar({
+        status: true,
+        message: 'A problem occurred while trying to get arka history',
+        severity: 'error',
+      });
+  };
+
+  const toggleModal = () => {
+    setOpenHistoryModal(!openHistoryModal);
+  };
 
   return (
     <>
@@ -82,7 +104,7 @@ const TableComponent = (props) => {
         message={openSnackBar.message}
         open={openSnackBar.status}
         handleSnackBarClose={handleSnackBarClose}
-        severity={"success"}
+        severity={openSnackBar.severity}
       />
 
       <SidebarAction
@@ -99,12 +121,61 @@ const TableComponent = (props) => {
         permissions={props.permissions}
         setPermissions={props.setPermissions}
         contexts={props.contexts}
+        arka={props.arka}
       />
+
+      <ModalComponent
+        open={openHistoryModal}
+        handleClose={toggleModal}
+        title="Arka History For Today"
+      >
+        <TableContainer sx={{ fontSize: '14px' }}>
+          <Table stickyHeader aria-label="simple table">
+            <TableHead>
+              <TableRow
+                sx={{
+                  th: { padding: '16px 6px', fontFamily: 'Poppins' },
+                }}
+              >
+                <TableCell className={classes.tableCell}>{t('Amount')}</TableCell>
+                <TableCell className={classes.tableCell}>{t('action')}</TableCell>
+                <TableCell className={classes.tableCell}>{t('actionTime')}</TableCell>
+                <TableCell className={classes.tableCell}>{t('Username')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {arkaHistoryData.map((item, index) => (
+                <TableRow
+                  key={item.id}
+                  sx={{
+                    td: { padding: '16px 6px', fontFamily: 'Poppins' },
+                  }}
+                  id={item.id}
+                >
+                  {Object.keys(item).map((key, idx) => {
+                    if (key.toLowerCase().includes('time'))
+                      return (
+                        <TableCell key={idx}>
+                          {Moment(new Date(item[key])).format('DD/MM/YYYY')}
+                        </TableCell>
+                      );
+                    if (key === 'user')
+                      return <TableCell key={idx}>{item[key].username}</TableCell>;
+                    if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>;
+                  })}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </ModalComponent>
 
       <div className={classes.headerContainer}>
         <h1>{props.title}</h1>
         <Access accessible={access[props.acceses['create']]}>
-          <Button variant="contained" onClick={handleCreate}>{t("add")} <AddIcon /></Button>
+          <Button variant="contained" onClick={handleCreate}>
+            {t('add')} <AddIcon />
+          </Button>
         </Access>
       </div>
 
@@ -118,12 +189,25 @@ const TableComponent = (props) => {
             <TableHead>
               <TableRow
                 sx={{
-                  'th': { padding: '16px 6px', fontFamily: 'Poppins' },
+                  th: { padding: '16px 6px', fontFamily: 'Poppins' },
                 }}
               >
                 <TableCell className={classes.tableCell}>{t("no")}</TableCell>
                 {props.tableHeaders.map((header, index) => {
-                  if (header !== 'Id') return <TableCell key={index} className={classes.tableCell} style={index === props.tableHeaders.length - 1 ? { textAlign: 'right', paddingRight: 20 } : {}}>{t(header)}</TableCell>;
+                  if (header !== 'Id')
+                    return (
+                      <TableCell
+                        key={index}
+                        className={classes.tableCell}
+                        style={
+                          index === props.tableHeaders.length - 1
+                            ? { textAlign: 'right', paddingRight: 20 }
+                            : {}
+                        }
+                      >
+                        {t(header)}
+                      </TableCell>
+                    );
                 })}
               </TableRow>
             </TableHead>
@@ -132,17 +216,34 @@ const TableComponent = (props) => {
                 <TableRow
                   key={item.id}
                   sx={{
-                    'td': { padding: '16px 6px',  fontFamily: 'Poppins' },
+                    td: { padding: '16px 6px', fontFamily: 'Poppins' },
                   }}
                   id={item.id}
                 >
                   <TableCell className={classes.tableCell}>{index + 1}</TableCell>
                   {Object.keys(item).map((key, idx) => {
-                    if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>
+                    if (key.toLowerCase().includes('valid'))
+                      return (
+                        <TableCell key={idx}>
+                          {Moment(new Date(item[key])).format('DD/MM/YYYY')}
+                        </TableCell>
+                      );
+                    if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>;
                   })}
 
                   <TableCell className={classes.tableCell}>
                     <div className={classes.btnContainer}>
+                      {props.arka && (
+                        <IconButtonComponent
+                          style={{
+                            backgroundColor: '#ffa500',
+                            marginRight: '10px',
+                          }}
+                          icon={<HistoryIcon />}
+                          iconColor={{ color: 'white' }}
+                          onClick={(e) => handleHistoryButton(item.id)}
+                        />
+                      )}
                       <Access accessible={access[props.acceses['update']]}>
                         <IconButtonComponent
                           style={{

@@ -240,6 +240,7 @@ const InvoiceProvider = (props) => {
         const invoiceObject = {
             clientId: initialState?.currentUser.clientId,
             branchId: initialState?.currentUser.branchId,
+            userId: initialState?.currentUser.id,
             totalAmount: totalPriceVAT,
             totalVat: Number(getTotalVAT()),
             totalAmountNoVAT: totalAmountNoVAT,

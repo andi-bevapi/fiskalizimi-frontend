@@ -104,6 +104,7 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
+        if (field.component === 'Date') initialValues[field.name] = new Date();
         if (field.name == 'vat') {
           let option = field.options.filter((el) => el.value == field.defaultValue)
           initialValues[field.name] = option[0].value;
@@ -255,7 +256,7 @@ const SidebarAction = (props) => {
             {errors.vat && props.product ? setVatValue(2) : setVatValue(0)}
             return (
               <Form className={classes.formContainer}>
-                <FormRender formFields={fields} vatDefault={vatValue} editProduct={props.editItem ? true : false} />
+                <FormRender formFields={fields} vatDefault={vatValue} editProduct={props.editItem ? true : false} disableField={!props.editItem && props.arka ? false: true} />
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {
