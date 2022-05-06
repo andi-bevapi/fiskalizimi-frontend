@@ -56,7 +56,7 @@ const NavItems = () => {
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("reports")}</span> </>;
       case "Arkat":
         return <>
-          <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>Arkat</span> </>;
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{t("configurations")}</span> </>;
@@ -69,7 +69,7 @@ const NavItems = () => {
     <>
       {navItems.map((item, i) => {
         return (
-          // <Access key={i} accessible={item.access ? access[item.access] : true}>
+          <Access key={i} accessible={item.access ? access[item.access] : true}>
             <Button
               fullWidth={true}
               className={styles.menuLink}
@@ -78,7 +78,7 @@ const NavItems = () => {
             >
               {renderNavItems(item.title)}
             </Button>
-          // </Access>
+          </Access>
         )
       })}
       <span className={styles.companyName}><span className={styles.orange}>Ovla</span> Systems</span>

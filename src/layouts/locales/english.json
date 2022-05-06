@@ -228,5 +228,8 @@
   "arkaDateRequired":"Date is required",
   "SerialNumber":"Serial Number",
   "ValidFrom":"Valid From",
-  "ValidTo":"Valid To"
+  "ValidTo":"Valid To",
+  "action" :"Action",
+  "actionTime" :"Action Time",
+  "Amount" : "Amount"
 }

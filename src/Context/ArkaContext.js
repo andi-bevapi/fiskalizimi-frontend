@@ -1,6 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { getAllArka, createNewArka, deleteArka, updateArka } from '../services/arka';
+import {
+  getAllArka,
+  createNewArka,
+  deleteArka,
+  updateArka,
+  getArkaHistory,
+} from '../services/arka';
 
 const ArkaContext = createContext({});
 
@@ -36,9 +42,14 @@ const ArkaProvider = (props) => {
 
   const arkaToUpdate = async (data) => {
     try {
-      console.log(data);
       const response = await updateArka(data);
-      console.log(response);
+      if (response.statusCode === 200) {
+        setArkaList((prevState) => {
+          const index = prevState.findIndex((item) => item.id === data.id);
+          prevState[index] = data;
+          return [...prevState];
+        });
+      }
       return response;
     } catch (error) {
       return error;
@@ -59,6 +70,15 @@ const ArkaProvider = (props) => {
     }
   };
 
+  const viewArkaHistory = async (id) => {
+    try {
+      const response = await getArkaHistory(id);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
+
   useEffect(() => {
     getArka();
   }, [initialState?.currentUser]);
@@ -70,6 +90,7 @@ const ArkaProvider = (props) => {
     createArka,
     arkaToUpdate,
     arkaToDelete,
+    viewArkaHistory,
   };
 
   return <ArkaContext.Provider value={values}>{props.children}</ArkaContext.Provider>;

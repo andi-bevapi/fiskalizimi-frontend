@@ -6,6 +6,7 @@ export const formFields = [
     name: 'name',
     component: 'Text',
     label: i18n.t('Name'),
+    disabled: false
   },
   {
     name: 'serialNumber',
@@ -15,15 +16,15 @@ export const formFields = [
   },
   {
     name: 'validFrom',
-    component: 'Text',
+    component: 'Date',
     label: 'Valid From',
-    disabled: true
+    disabled: true,
   },
   {
     name: 'validTo',
-    component: 'Text',
+    component: 'Date',
     label: 'Valid To',
-    disabled: true
+    disabled: true,
   },
   {
     name: 'branchId',

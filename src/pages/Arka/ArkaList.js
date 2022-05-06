@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const tableHeaders = ['Id', 'Name', 'SerialNumber', 'ValidFrom', 'ValidTo', 'Actions'];
 
 const ArkaList = () => {
-  const { arkaList, setArkaList, isLoading, createArka, arkaToUpdate, arkaToDelete } = useContextArka();
+  const { arkaList, setArkaList, isLoading, createArka, arkaToUpdate, arkaToDelete, viewArkaHistory } = useContextArka();
   const formatedArkaList = listFormat(arkaList, tableHeaders);
   const { branchList } = useBranchListContext();
   const { t } = useTranslation();
@@ -24,6 +24,7 @@ const ArkaList = () => {
       create={createArka}
       update={arkaToUpdate}
       delete={arkaToDelete}
+      history={viewArkaHistory}
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}

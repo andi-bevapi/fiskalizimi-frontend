@@ -10,7 +10,6 @@ const getAllArka = async (branchId) => {
 };
 
 const createNewArka = async (data) => {
-  console.log("====", data);
   return request(`/arkat/create`, {
     method: 'POST',
     headers: {
@@ -58,4 +57,14 @@ const updateSavedAmount = async (data) => {
   });
 };
 
-export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka};
+const getArkaHistory = async (id) => {
+  return request(`/arka-history/todays/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+}
+
+export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka, getArkaHistory};

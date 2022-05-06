@@ -4,16 +4,18 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import { makeStyles } from '@mui/styles';
 import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
 
-
 const useStyles = makeStyles(() => ({
   inputContainer: {
-    marginBottom: 30
-  }
+    marginBottom: 30,
+  },
 }));
 
 const Input = styled('input')({
@@ -27,21 +29,24 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
     switch (formField.component) {
       case 'Text':
         return (
-          <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
+          <div
+            className={classes.inputContainer}
+            key={formField.name}
+            style={{ width: '100%', minWidth: 200 }}
+          >
             <Field name={formField.name}>
               {({ field, meta }) => (
-                
                 <TextField
                   label={formField.label}
                   error={meta.touched && meta.error}
                   helperText={meta.error}
                   style={{
-                    width: '100%'
+                    width: '100%',
                   }}
                   InputProps={{
                     style: {
                       fontFamily: 'Poppins',
-                      width: '100%'
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -49,7 +54,9 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                       fontFamily: 'Poppins',
                     },
                   }}
-                  disabled={!formField.disabled ? false : true}
+                  disabled={
+                    !disableField ? false : !formField.disabled ? false : formField.disabled
+                  }
                   {...field}
                 />
               )}
@@ -67,11 +74,11 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                   error={meta.touched && meta.error}
                   helperText={meta.error}
                   style={{
-                    width: '100%'
+                    width: '100%',
                   }}
                   InputProps={{
                     style: {
-                      fontFamily: 'Poppins'
+                      fontFamily: 'Poppins',
                     },
                   }}
                   InputLabelProps={{
@@ -87,68 +94,79 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
         );
       case 'Select':
         return (
-          <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
+          <div
+            className={classes.inputContainer}
+            key={formField.name}
+            style={{ width: '100%', minWidth: 200 }}
+          >
             <Field name={formField.name}>
-              {({  field, form: {setFieldValue}, meta }) => {
-                return(
+              {({ field, form: { setFieldValue }, meta }) => {
+                return (
                   <TextField
-                  select
-                  label={formField.label}
-                  error={meta.touched && meta.error}
-                  helperText={meta.error}
-                  style={{
-                    width: '100%',
-                    ...formField.style
-                  }}
-                  InputProps={{
-                    style: {
-                      fontFamily: 'Poppins',
-                      width: '100%',
-                      textAlign: 'left'
-                    },
-                  }}
-                  InputLabelProps={{
-                    style: {
-                      fontFamily: 'Poppins',
-                    },
-                  }}
-                  // {...field}
-                  disabled={!formField.disabled ? false: true}
-                  defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
-                  onChange={(event) => {
-                    setFieldValue(formField.name, event.target.value)}}
-                >
-                  {formField.options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                  </TextField>
-              )}
-              }
-            </Field>
-          </div>
-        );
-        case 'SelectNoDefault':
-          return (
-            <div className={classes.inputContainer} key={formField.name} style={{ width: '100%', minWidth: 200 }}>
-              <Field name={formField.name}>
-                {({  field, form: {setFieldValue}, meta }) => {
-                  return(
-                    <TextField
                     select
                     label={formField.label}
                     error={meta.touched && meta.error}
                     helperText={meta.error}
                     style={{
                       width: '100%',
-                      ...formField.style
+                      ...formField.style,
                     }}
                     InputProps={{
                       style: {
                         fontFamily: 'Poppins',
                         width: '100%',
-                        textAlign: 'left'
+                        textAlign: 'left',
+                      },
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        fontFamily: 'Poppins',
+                      },
+                    }}
+                    // {...field}
+                    disabled={
+                      !disableField ? false : !formField.disabled ? false : formField.disabled
+                    }
+                    defaultValue={formField.defaultValue && editProduct === false ? 2 : field.value}
+                    onChange={(event) => {
+                      setFieldValue(formField.name, event.target.value);
+                    }}
+                  >
+                    {formField.options.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                );
+              }}
+            </Field>
+          </div>
+        );
+      case 'SelectNoDefault':
+        return (
+          <div
+            className={classes.inputContainer}
+            key={formField.name}
+            style={{ width: '100%', minWidth: 200 }}
+          >
+            <Field name={formField.name}>
+              {({ field, form: { setFieldValue }, meta }) => {
+                return (
+                  <TextField
+                    select
+                    label={formField.label}
+                    error={meta.touched && meta.error}
+                    helperText={meta.error}
+                    style={{
+                      width: '100%',
+                      ...formField.style,
+                    }}
+                    InputProps={{
+                      style: {
+                        fontFamily: 'Poppins',
+                        width: '100%',
+                        textAlign: 'left',
                       },
                     }}
                     InputLabelProps={{
@@ -163,13 +181,13 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                         {option.label}
                       </MenuItem>
                     ))}
-                    </TextField>
-                )}
-                }
-              </Field>
-            </div>
-          );
-        case 'Checkbox':
+                  </TextField>
+                );
+              }}
+            </Field>
+          </div>
+        );
+      case 'Checkbox':
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, meta }) => (
@@ -188,7 +206,6 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
         return (
           <Field name={formField.name} key={formField.name}>
             {({ field, form: { setFieldValue }, meta }) => (
-              
               <label htmlFor={formField.name}>
                 <Input
                   accept="image/*"
@@ -207,8 +224,28 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                     <br />
                     <Thumbnail file={field.value} />
                   </>
-                ) : field.value && <img src={field.value}  width="80px" height="80px"/>}
+                ) : (
+                  field.value && <img src={field.value} width="80px" height="80px" />
+                )}
               </label>
+            )}
+          </Field>
+        );
+      case 'Date':
+        return (
+          <Field name={formField.name} key={formField.name}>
+            {({ field, form: { setFieldValue }, meta }) => (
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label={formField.label}
+                  id={formField.name}
+                  name={formField.name}
+                  {...field}
+                  onChange={val =>
+                  setFieldValue(formField.name, val)}
+                  renderInput={(params) => <TextField {...params}  sx={{ marginBottom: '30px' }}/>}
+                />
+              </LocalizationProvider>
             )}
           </Field>
         );

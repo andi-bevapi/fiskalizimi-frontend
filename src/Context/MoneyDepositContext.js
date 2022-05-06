@@ -33,7 +33,7 @@ const MoneyDepositProvider = (props) => {
                 totalAmount: newAmount,
                 arkaId: 1, // !!get arkaId  !!!
                 userId: initialState?.currentUser?.id,
-                action: "gjendje re",
+                action: "Gjendje Fillestare",
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
@@ -46,10 +46,10 @@ const MoneyDepositProvider = (props) => {
     const addAmountToDeposit = async (value) => {
         try {
             const data = {
-                totalAmount: depositAmount + value,
+                totalAmount: value,
                 arkaId: 1, // !!get arkaId  !!!
                 userId: initialState?.currentUser?.id,
-                action: `+${value}`,
+                action: 'Shtim',
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
@@ -62,10 +62,10 @@ const MoneyDepositProvider = (props) => {
     const reduceAmountFromDeposit = async (value) => {
         try {
             const data = {
-                totalAmount: depositAmount - value,
+                totalAmount: value,
                 arkaId: 1, // !!get arkaId  !!!
                 userId: initialState?.currentUser?.id,
-                action: `-${value}`,
+                action: 'Heqje',
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);

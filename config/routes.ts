@@ -31,6 +31,7 @@ export default [
       { exact: true, path: '/konfigurime', component: './Configurations' },
       { exact: true, path: '/edit-profile', component: './EditProfile' },
       { exact: true, path: '/arka', component: './MoneyDeposit' },
+      { exact: true, path: '/arka-list', component: './Arka' },
     ],
   },
 ];
