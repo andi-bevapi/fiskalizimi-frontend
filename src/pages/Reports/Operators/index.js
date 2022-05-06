@@ -18,9 +18,7 @@ const columns = [
     { field: 'totalAmount', headerName: 'Total Amount', width: 100 },
     { field: 'totalVat', headerName: 'VAT', width: 120 },
     { field: 'totalVat6', headerName: 'VAT 6%', width: 120 },
-    { field: 'totalVat20', headerName: 'VAT 20%', width: 120 },
-    { field: 'startDate', headerName: 'Start Date', width: 200 },
-    { field: 'endDate', headerName: 'End Date', width: 200 },
+    { field: 'totalVat20', headerName: 'VAT 20%', width: 120 }
 ];
 
 const Operators = () => {
