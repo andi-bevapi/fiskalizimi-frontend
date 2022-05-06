@@ -7,6 +7,7 @@ import { makeStyles } from "@mui/styles";
 import cardBackground from './../../../assets/images/cardBackground.png';
 import styles from './ItemLine.module.css';
 import { useTranslation } from "react-i18next";
+import { SwalModal } from '../../../components/Modal/SwalModal';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -54,6 +55,11 @@ const ItemCard = (props) => {
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
   const {t} = useTranslation();
+  const [arka, setArka] = useState(null);
+
+  React.useEffect(() => {
+    setArka(JSON.parse(localStorage.getItem('arkaConnected')))
+  }, [])
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
@@ -70,6 +76,17 @@ const ItemCard = (props) => {
 
 
   const handleCardClick = () => {
+    if (!arka) {
+      return SwalModal(
+        t("noConnectedArka"),
+        "",
+        "warning",
+        t("close"),
+        "",
+        () => { },
+        () => { },
+      );
+    }
     if (!stopAdding) {
       const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
       const isExisting = (productFromArray.length >= 1 ? true : false);

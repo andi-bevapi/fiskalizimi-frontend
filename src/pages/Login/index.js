@@ -35,7 +35,8 @@ const Login = () => {
         try {
             const response = await login(values);
             if (response.statusCode === 200) {
-                localStorage.setItem('poslaToken', response.data);
+                localStorage.setItem('poslaToken', response.data.token);
+                localStorage.setItem('arkaConnected', JSON.stringify(response.data.arka));
                 await fetchUserInfo();
                 history.push('/');
                 return;
