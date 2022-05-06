@@ -36,7 +36,7 @@
   "descriptionField":"Description",
   "codeIdentifierLength":"Identifier Code must be more than 2 characters and less than 20 characters",
   "endShift":"End shift",
-  "justLogin":"Just Login",
+  "justLogout":"Just Logout",
   "codeIdentifier":"Please insert Identifier Code",
   "identifierCode":"Identifier Code",
   "codeIdentifierText":"Insert Identifier Code",
