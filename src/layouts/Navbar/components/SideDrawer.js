@@ -9,6 +9,7 @@ import { history } from 'umi';
 import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';//home
 import { useTranslation } from "react-i18next";
+import { useModel } from 'umi';
 
 const useStyles = makeStyles({
   fab: {
@@ -19,14 +20,10 @@ const useStyles = makeStyles({
 
 const SideDrawer = () => {
   const classes = useStyles();
+  const { initialState } = useModel('@@initialState');
   const {t} = useTranslation();
 
-  const [arka, setArka] = useState(null);
   const [state, setState] = useState({ right: false });
-
-  React.useEffect(() => {
-    setArka(JSON.parse(localStorage.getItem('arkaConnected')))
-  }, [])
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -60,7 +57,7 @@ const SideDrawer = () => {
         {sideDrawerList('left')}
       </Drawer>
       <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}><HomeIcon /></Button>
-      {arka && <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>{arka.name}</Button>}
+      {initialState?.currentUser?.arka && <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>{initialState?.currentUser?.arka.name}</Button>}
     </React.Fragment>
   );
 };

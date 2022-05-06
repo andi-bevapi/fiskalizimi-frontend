@@ -8,6 +8,7 @@ import cardBackground from './../../../assets/images/cardBackground.png';
 import styles from './ItemLine.module.css';
 import { useTranslation } from "react-i18next";
 import { SwalModal } from '../../../components/Modal/SwalModal';
+import { useModel } from 'umi';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -50,16 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ItemCard = (props) => {
+  const { initialState } = useModel('@@initialState');
+
   const classes = useStyles();
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
   const {t} = useTranslation();
-  const [arka, setArka] = useState(null);
-
-  React.useEffect(() => {
-    setArka(JSON.parse(localStorage.getItem('arkaConnected')))
-  }, [])
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
@@ -76,7 +74,7 @@ const ItemCard = (props) => {
 
 
   const handleCardClick = () => {
-    if (!arka) {
+    if (!initialState?.currentUser?.arka) {
       return SwalModal(
         t("noConnectedArka"),
         "",

@@ -3,17 +3,15 @@ import { Typography } from "@mui/material/";
 import styles from "./ItemLine.module.css";
 import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useTranslation } from "react-i18next";
+import { useModel } from 'umi';
 
 const ItemLine = (props) => {
+  const { initialState } = useModel('@@initialState');
+
   const {t} = useTranslation();
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
-  const [arka, setArka] = useState(null);
-
-  React.useEffect(() => {
-    setArka(JSON.parse(localStorage.getItem('arkaConnected')))
-  }, [])
 
   useEffect(() => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
@@ -29,7 +27,7 @@ const ItemLine = (props) => {
   }, [props.invoiceList],props.item);
 
   const handleCardClick = () => {
-    if (!arka) {
+    if (!initialState?.currentUser?.arka) {
       return SwalModal(
         t("noConnectedArka"),
         "",
