@@ -36,7 +36,7 @@
   "descriptionField":"Pershkrimi",
   "codeIdentifierLength":"Kodi Identifikues duhet te kete me shume se 2 karaktere dhe me pak se 20 karaktere",
   "endShift":"Mbyll turnin",
-  "justLogin":"Vetem Logohu",
+  "justLogout":"Vetem Dil",
   "codeIdentifier":"Ju lutem vendosni Kodin Identifikues",
   "identifierCode":"Kodi Identifikues",
   "codeIdentifierText":"Vendos kodin identifikues",

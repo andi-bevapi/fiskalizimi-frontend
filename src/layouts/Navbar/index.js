@@ -58,7 +58,7 @@ const Navbar = () => {
         showConfirmButton: true,
         confirmButtonColor: '#3085d6',
         denyButtonColor: '#d33',
-        denyButtonText: "<span style='font-family: Poppins;'>" + `${t("justLogin")}` + '</span>',
+        denyButtonText: "<span style='font-family: Poppins;'>" + `${t("justLogout")}` + '</span>',
         confirmButtonText: `${t("endShift")}`,
       }).then((result) => {
         if (result.isConfirmed) {
