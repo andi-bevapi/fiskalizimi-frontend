@@ -11,6 +11,8 @@ import { makeStyles } from '@mui/styles';
 import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
+import { useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   inputContainer: {
@@ -22,8 +24,10 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields, editProduct, disableField }) => {
+const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
   const classes = useStyles();
+  const [uploadMessage,setUploadMessage] = useState(null);
+  const {t} = useTranslation();
 
   return formFields.map((formField) => {
     switch (formField.component) {
@@ -123,15 +127,13 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                         fontFamily: 'Poppins',
                       },
                     }}
-                    // {...field}
                     disabled={
                       !disableField ? false : !formField.disabled ? false : formField.disabled
                     }
-                    defaultValue={formField.defaultValue && editProduct === false ? 2 : field.value}
-                    onChange={(event) => {
-                      setFieldValue(formField.name, event.target.value);
-                    }}
-                  >
+                    {...field}
+                    // defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
+                    // onChange={(event) => {
+                    >
                     {formField.options.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
@@ -212,9 +214,10 @@ const FormRender = ({ formFields, editProduct, disableField }) => {
                   id={formField.name}
                   type="file"
                   onChange={(event) => {
-                    setFieldValue(formField.name, event.target.files[0]);
+                      {event.target.files[0].size > 5000000 ? setUploadMessage("not uploaded") : setFieldValue(formField.name, event.target.files[0]);}
                   }}
                 />
+                {uploadMessage && t("imageMessage")}
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>

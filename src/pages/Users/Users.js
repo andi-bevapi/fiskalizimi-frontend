@@ -1,6 +1,6 @@
 import TableComponent from '../../components/Table';
 import { listFormat, permissionFormat } from '../../helpers/listFormater';
-import { useContextUser } from '../../context/UserContext';
+import { useUsersListContext } from '../../Context/UsersListContext';
 import { useBranchListContext } from '../../Context/BranchListContext';
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
@@ -9,18 +9,18 @@ const tableHeaders = ['Id', 'Username', 'Firstname', 'Lastname', 'Phone', 'Email
 
 const Users = () => {
   const {
-    users,
-    setUsers,
+    usersList,
+    setUsersList,
     userToCreate,
     userToUpdate,
     userToDelete,
     isLoading,
     permissions,
     setPermissions,
-  } = useContextUser();
+  } = useUsersListContext();
   const { branchList } = useBranchListContext();
 
-  const formatedUsers = listFormat(users, tableHeaders);
+  const formatedUsers = listFormat(usersList, tableHeaders);
   const formatedPermissions = permissionFormat(permissions);
   const {t} = useTranslation();
 
@@ -28,9 +28,9 @@ const Users = () => {
     <TableComponent
       title={t("usersList")}
       tableHeaders={tableHeaders}
-      fullList={users}
+      fullList={usersList}
       data={formatedUsers}
-      setData={setUsers}
+      setData={setUsersList}
       create={userToCreate}
       update={userToUpdate}
       delete={userToDelete}

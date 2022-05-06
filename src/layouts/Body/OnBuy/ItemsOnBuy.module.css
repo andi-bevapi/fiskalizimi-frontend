@@ -41,6 +41,12 @@ table {
   font-family: "Poppins",sans-serif !important;
 }
 
+#total {
+  width: 90px;
+  max-width: 90px;
+  font-family: "Poppins",sans-serif !important;
+}
+
 #delete{
   width: 70px;
 }

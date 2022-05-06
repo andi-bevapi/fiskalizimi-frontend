@@ -7,8 +7,7 @@ import { useInvoiceContext } from '../../../../Context/InvoiceContext';
 import { useContextProduct } from '../../../../Context/ProductContext';
 import { SwalModal } from '../../../../components/Modal/SwalModal';
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   searchInput: { display: 'block' },
@@ -18,11 +17,11 @@ const useStyles = makeStyles(() => ({
 
 const SearchByBarcode = (props) => {
   const styles = useStyles();
-  const { t } = useTranslation();
 
   const { listedInvoiceProducts, addToInvoiceList } = useInvoiceContext();
   const { getProductByBarcode } = useContextProduct();
   const [barcode, setBarcode] = useState('');
+  const {t} = useTranslation();
   // const [isVisible, setIsVisible] = useState(false);
   // const [searchedProducts, setSearchedProducts] = useState({});
 
@@ -140,6 +139,7 @@ const SearchByBarcode = (props) => {
             style={{ backgroundColor: '#12AC7A', height: 40, width: 40, cursor: 'default'}}
             icon={<CenterFocusStrongIcon />}
             iconColor={{ color: '#fff' }}
+            text={t("scanBarcode")}
           />
         </Grid>
       </Grid>

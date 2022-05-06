@@ -1,8 +1,10 @@
 import request from "../../utils/request";
 import { buildUrl } from '../../helpers/buildUrl';
 
-const getDashboardReports = async (clientId, option = 'daily') => {
-    return request(`/reports/${clientId}?option=${option}`, {
+const getDashboardReports = async (clientId, query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/${clientId}${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -41,8 +43,10 @@ const getSingleInvoiceAnalytics = async (clientId, invoiceId) => {
     });
 }
 
-const getSoldProductsByCategory = async (clientId) => {
-    return request(`/reports/sold-products/category/${clientId}`, {
+const getSoldProducts = async (clientId, query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/sold-products/${clientId}${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -50,8 +54,10 @@ const getSoldProductsByCategory = async (clientId) => {
     });
 }
 
-const getSoldProductsBySupplier = async (clientId) => {
-    return request(`/reports/sold-products/supplier/${clientId}`, {
+const getOperatorsReport = async (clientId, query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/operators/${clientId}${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -59,4 +65,24 @@ const getSoldProductsBySupplier = async (clientId) => {
     });
 }
 
-export { getDashboardReports, getChartsReports, getAnalyticsData, getSingleInvoiceAnalytics, getSoldProductsByCategory, getSoldProductsBySupplier }
+const getDailyTurnoverReport = async (query) => {
+    const url = buildUrl(query);
+
+    return request(`/reports/daily/turnover${url}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
+const getDailySummaryReport = async (userId) => {
+    return request(`/reports/daily-summary/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
+export { getDashboardReports, getChartsReports, getAnalyticsData, getSingleInvoiceAnalytics, getSoldProducts, getOperatorsReport, getDailyTurnoverReport, getDailySummaryReport }

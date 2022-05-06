@@ -9,10 +9,16 @@ import Invoices from './Invoices';
 import SoldProducts from './SoldProducts';
 import styles from './reportsStyle.css'
 import i18n from "i18next";
+import { CategoryProvider } from '../../Context/CategoryContext';
+import { SellingUnitProvider } from '../../Context/SellingUnitContext';
+import { SupplierProvider } from '../../Context/SuppliersContext';
+import { UsersListProvider } from '../../Context/UsersListContext';
+import Compose from '../../components/Compose';
+import Operators from './Operators';
+import DailyTurnover from './DailyTurnover';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
 
   return (
     <div
@@ -47,34 +53,44 @@ const Reports = () => {
   };
 
   return (
-    <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
-    >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        sx={{ borderRight: 1, borderColor: 'divider' }}
+    <Compose components={[UsersListProvider, CategoryProvider, SellingUnitProvider, SupplierProvider]}>
+      <Box
+        sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
       >
-        <Tab label="Dashboard" {...a11yProps(0)} className={styles.tabFonts}/>
-        <Tab label= {i18n.t("analyticalRegister")} {...a11yProps(1)} className={styles.tabFonts}/>
-        <Tab label={i18n.t("bill")} {...a11yProps(2)} className={styles.tabFonts}/>
-        <Tab label={i18n.t("soldProducts")} {...a11yProps(3)} className={styles.tabFonts}/>
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <Dashboard />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Analytics />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Invoices />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <SoldProducts />
-      </TabPanel>
-    </Box>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          sx={{ borderRight: 1, borderColor: 'divider' }}
+        >
+          <Tab label="Dashboard" {...a11yProps(0)} className={styles.tabFonts} />
+          <Tab label={i18n.t("analyticalRegister")} {...a11yProps(1)} className={styles.tabFonts} />
+          <Tab label={i18n.t("bill")} {...a11yProps(2)} className={styles.tabFonts} />
+          <Tab label={i18n.t("soldProducts")} {...a11yProps(3)} className={styles.tabFonts} />
+          <Tab label="Operatoret" {...a11yProps(4)} className={styles.tabFonts} />
+          <Tab label="Xhiro ditore sipas turneve" {...a11yProps(5)} className={styles.tabFonts} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <Dashboard />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Analytics />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Invoices />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <SoldProducts />
+        </TabPanel>     
+        <TabPanel value={value} index={4}>
+          <Operators />
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+          <DailyTurnover />
+        </TabPanel>
+      </Box>
+    </Compose>
   );
 };
 

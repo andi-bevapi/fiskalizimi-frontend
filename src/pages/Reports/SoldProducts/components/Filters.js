@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { Form, Formik, useFormikContext } from 'formik';
-import FormRender from '../../../components/FormRender';
-import { useContextProduct } from '../../../Context/ProductContext';
-import { useCategoryContext } from '../../../Context/CategoryContext';
-import { useSellingUnitContext } from '../../../Context/SellingUnitContext';
-import { useSupplierContext } from '../../../Context/SuppliersContext';
-import Button from '@mui/material/Button';
+import FormRender from '../../../../components/FormRender';
+import { useCategoryContext } from '../../../../Context/CategoryContext';
+import { useSellingUnitContext } from '../../../../Context/SellingUnitContext';
+import { useSupplierContext } from '../../../../Context/SuppliersContext';
+import { useUsersListContext } from '../../../../Context/UsersListContext';
 import { useTranslation } from "react-i18next";
 
 const SubmitListener = () => {
@@ -20,18 +19,8 @@ const SubmitListener = () => {
     return null;
 }
 
-const ClearValues = () => {
-    const formik = useFormikContext();
-
-    const clearValues = () => {
-        formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' });
-        formik.submitForm(); 
-    }
-    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: window.innerWidth < 800 ? 0 : 70, marginTop: 8, marginBottom: window.innerWidth < 800 ? 10 : 0}}>Fshi</Button>
-}
-
-const Filters = () => {
-    const { getProductsList } = useContextProduct();
+const Filters = ({ getData }) => {
+    const { usersList } = useUsersListContext();
     const { categoryList } = useCategoryContext();
     const { sellingUnitList } = useSellingUnitContext();
     const { suppliersList } = useSupplierContext();
@@ -39,22 +28,32 @@ const Filters = () => {
 
     return (
         <Formik
-            initialValues={{ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' }}
+            initialValues={{ categoryId: '' }}
             onSubmit={(values) => {
-                getProductsList(values);
+                getData(values);
             }}
         >
-            <Form style={{ display: 'flex', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
+            <Form style={{ display: 'flex' }}>
                 <FormRender
                     formFields={[
                         {
-                            name: 'searchText',
-                            component: 'Text',
-                            label: t("search"),
+                            name: 'operatorId',
+                            component: 'Select',
+                            label: "Operator",
+                            options: [
+                                {
+                                    value: null,
+                                    label: t("all")
+                                },
+                                ...usersList?.map(user => ({
+                                    value: user.id,
+                                    label: user.username
+                                }))
+                            ]
                         },
                         {
                             name: 'categoryId',
-                            component: 'SelectNoDefault',
+                            component: 'Select',
                             label: t("category"),
                             options: [
                                 {
@@ -67,12 +66,12 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 20
+                                marginLeft: 20
                             }
                         },
                         {
                             name: 'sellingUnitId',
-                            component: 'SelectNoDefault',
+                            component: 'Select',
                             label: t("measureUnits"),
                             options: [
                                 {
@@ -85,12 +84,12 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 40
+                                marginLeft: 40
                             }
                         },
                         {
                             name: 'supplierId',
-                            component: 'SelectNoDefault',
+                            component: 'Select',
                             label: t("supplier"),
                             options: [
                                 {
@@ -103,14 +102,13 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 60
+                                marginLeft: 60
                             }
                         }
                     ]}
                 />
 
                 <SubmitListener />
-                <ClearValues/>
             </Form>
         </Formik>
     );

@@ -23,7 +23,7 @@ const DashboardHeader = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.headContainer}>
+            <div className={styles.headContainer} style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
                 <Filters />
                 <div className={styles.iconsContainer}>
                     <IconButton onClick={() => setDisplay('cards')}>

@@ -3,12 +3,12 @@ import { getUsers, createUser, updateUser, deleteUser } from '../services/user/i
 import { getPermissions } from '../services/permission';
 import { useModel } from 'umi';
 
-const UserContext = createContext({});
+const UsersListContext = createContext({});
 
-const UserProvider = (props) => {
+const UsersListProvider = (props) => {
   const { initialState } = useModel('@@initialState');
 
-  const [users, setUsers] = useState([]);
+  const [usersList, setUsersList] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -17,7 +17,7 @@ const UserProvider = (props) => {
     try {
       const response = await getUsers(initialState?.currentUser?.branchId);
       if (response.statusCode === 200) {
-        setUsers(response.data);
+        setUsersList(response.data);
       }
     } catch (error) {
       return error;
@@ -64,7 +64,7 @@ const UserProvider = (props) => {
   const userToDelete = async (id) => {
     try {
       const response = await deleteUser(id);
-      setUsers((prevState) => {
+      setUsersList((prevState) => {
         const list = prevState.filter((el) => el.id !== id);
         return [...list];
       });
@@ -80,8 +80,8 @@ const UserProvider = (props) => {
   }, [initialState?.currentUser]);
 
   const values = {
-    users,
-    setUsers,
+    usersList,
+    setUsersList,
     userToCreate,
     userToUpdate,
     userToDelete,
@@ -90,11 +90,11 @@ const UserProvider = (props) => {
     setPermissions,
   };
 
-  return <UserContext.Provider value={values}>{props.children}</UserContext.Provider>;
+  return <UsersListContext.Provider value={values}>{props.children}</UsersListContext.Provider>;
 };
 
-const useContextUser = () => {
-  return useContext(UserContext);
+const useUsersListContext = () => {
+  return useContext(UsersListContext);
 };
 
-export { UserProvider, useContextUser };
+export { UsersListProvider, useUsersListContext };

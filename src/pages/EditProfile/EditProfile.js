@@ -5,7 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import TextField from '@mui/material/TextField';
 import { useHistory, useModel } from 'umi';
 import { useState, useEffect } from 'react';
-import { useContextUser } from "../../context/UserContext";
+import { useUsersListContext } from "../../Context/UsersListContext";
 import SnackbarComponent from "../../components/Snackbar";
 import { validationSchema } from "./validationSchema";
 import { makeStyles } from '@mui/styles';
@@ -30,7 +30,7 @@ const EditProfile = () => {
   const { initialState, refresh } = useModel('@@initialState');
   const { t } = useTranslation();
   const [userValue, setUserValue] = useState(initialState.currentUser);
-  const { userToUpdate } = useContextUser();
+  const { userToUpdate } = useUsersListContext();
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const classes = useStyles();
 

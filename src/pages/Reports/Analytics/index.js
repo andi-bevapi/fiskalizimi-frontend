@@ -18,38 +18,64 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
-const columns = [
-    { field: 'invoiceCode', headerName: i18n.t('billCode'), width: 150 },
-    { field: 'totalAmount', headerName: i18n.t('totalValue'), width: 200 },
-    { field: 'totalAmountNoVAT', headerName: i18n.t('totalValueNoVat') , width: 200 },
-    { field: 'totalVat', headerName: i18n.t('totalValueWithVat'), width: 200 },
-    { field: 'totalVat6', headerName: i18n.t('totalValueVat_6'), width: 200 },
-    { field: 'totalVat20', headerName: i18n.t('totalValueVat_20'), width: 200 },
-    { field: 'description', headerName: i18n.t('descriptionLabel'), width: 200 },
-    { field: 'paymentMethod', headerName: i18n.t('paymentMethod'), width: 200 },
-    { field: 'dateTime', headerName: i18n.t("billDate"), width: 200 }
-];
+import IconButtonComponent from '../../../components/Button/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import InvoicePreview from '../../../components/InvoicePreview';
+import Export from './components/Export';
+import Grid from '@mui/material/Grid';
 
 const Analytics = () => {
     const { initialState } = useModel('@@initialState');
     const [data, setData] = useState([]);
-    const [value, setValue] = useState([null, null]);
+    const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
     const [open, setOpen] = useState(false);
+    const [viewInvoice, setViewInvoice] = useState(null);
     const [rows, setRows] = useState(null);
-    const {t} = useTranslation();
+    const [selectedRow, setSelectedRow] = useState(null);
+    const { t } = useTranslation();
+
+    const columns = [
+        { field: 'invoiceCode', headerName: i18n.t('billCode'), width: 120 },
+        { field: 'totalAmount', headerName: i18n.t('totalValue'), width: 100 },
+        { field: 'totalAmountNoVAT', headerName: i18n.t('totalValueNoVat'), width: 180 },
+        { field: 'totalVat', headerName: i18n.t('totalValueWithVat'), width: 150 },
+        { field: 'totalVat6', headerName: i18n.t('totalValueVat_6'), width: 180 },
+        { field: 'totalVat20', headerName: i18n.t('totalValueVat_20'), width: 180 },
+        { field: 'description', headerName: i18n.t('descriptionLabel'), width: 120 },
+        { field: 'paymentMethod', headerName: i18n.t('paymentMethod'), width: 150 },
+        { field: 'dateTime', headerName: i18n.t("billDate"), width: 200 },
+        {
+            field: "actions",
+            headerName: i18n.t("actions"),
+            width: 80,
+            sortable: false,
+            align: 'center',
+            renderCell: (params) => {
+                const onClick = (e) => {
+                    e.stopPropagation();
+                    setViewInvoice(true);
+                    setSelectedRow(params.row);
+                };
+
+                return <IconButtonComponent
+                    style={{
+                        backgroundColor: '#0D4D47'
+                    }}
+                    icon={<VisibilityIcon />}
+                    iconColor={{ color: 'white' }}
+                    onClick={onClick}
+                />
+            }
+        },
+    ];
 
     useEffect(() => {
         getData();
-    }, [initialState?.currentUser]);
+    }, [initialState?.currentUser, dateRange]);
 
-    const getData = async (value) => {
-        let startDate = "";
-        let endDate = "";
-
-        if (value) {
-            startDate = formatDate(value[0]);
-            endDate = formatDate(value[1]);
-        }
+    const getData = async () => {
+        const startDate = formatDate(dateRange[0]);
+        const endDate = formatDate(dateRange[1]);
 
         try {
             const response = await getAnalyticsData(initialState?.currentUser?.clientId, {
@@ -78,29 +104,33 @@ const Analytics = () => {
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
         boxShadow: 24,
-        p: 4,
+        p: 4
     };
 
     return (
         <>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateRangePicker
-                    startText= {t("beginingDate")}
-                    endText={t("endingngDate")}
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(newValue);
-                        getData(newValue);
-                    }}
-                    renderInput={(startProps, endProps) => (
-                        <>
-                            <TextField {...startProps} />
-                            <Box sx={{ mx: 2 }}> {t("until")} </Box>
-                            <TextField {...endProps} />
-                        </>
-                    )}
-                />
-            </LocalizationProvider>
+            <Grid container spacing={2}>
+                <Grid item xs={8}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateRangePicker
+                            startText={t("beginingDate")}
+                            endText={t("endingngDate")}
+                            value={dateRange}
+                            onChange={setDateRange}
+                            renderInput={(startProps, endProps) => (
+                                <>
+                                    <TextField {...startProps} />
+                                    <Box sx={{ mx: 2 }}> {t("until")} </Box>
+                                    <TextField {...endProps} />
+                                </>
+                            )}
+                        />
+                    </LocalizationProvider>
+                </Grid>
+                <Grid item xs={4} textAlign="right">
+                    {data.length > 0 && <Export data={data} />}
+                </Grid>
+            </Grid>
 
             <br />
 
@@ -125,6 +155,7 @@ const Analytics = () => {
                 }}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                style={{ width: '80%' }}
             >
                 <Box sx={style}>
                     <TableContainer component={Paper}>
@@ -168,6 +199,20 @@ const Analytics = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                </Box>
+            </Modal>
+
+            <Modal
+                open={viewInvoice}
+                onClose={() => {
+                    setViewInvoice(false);
+                    setSelectedRow(null);
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <InvoicePreview data={selectedRow} />
                 </Box>
             </Modal>
         </>

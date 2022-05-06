@@ -192,7 +192,7 @@ const TableComponent = (props) => {
                   th: { padding: '16px 6px', fontFamily: 'Poppins' },
                 }}
               >
-                <TableCell className={classes.tableCell}>Nr</TableCell>
+                <TableCell className={classes.tableCell}>{t("no")}</TableCell>
                 {props.tableHeaders.map((header, index) => {
                   if (header !== 'Id')
                     return (
@@ -253,6 +253,7 @@ const TableComponent = (props) => {
                           icon={<EditIcon />}
                           iconColor={{ color: 'white' }}
                           onClick={(e) => handleEditButton(item.id)}
+                          text={t("edit")}
                         />
                       </Access>
 
@@ -265,6 +266,7 @@ const TableComponent = (props) => {
                           icon={<DeleteForeverIcon />}
                           iconColor={{ color: 'white' }}
                           onClick={(e) => handleDelete(item.id)}
+                          text={t("delete")}
                         />
                       </Access>
                     </div>
