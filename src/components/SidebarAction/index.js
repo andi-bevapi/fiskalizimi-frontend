@@ -193,6 +193,7 @@ const SidebarAction = (props) => {
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
+      props.setEditItem(null);
       if (props.user) {
         refresh();
         Object.keys(props.permissions).map((key, idx) => {
