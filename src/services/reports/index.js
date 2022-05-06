@@ -76,4 +76,13 @@ const getDailyTurnoverReport = async (query) => {
     });
 }
 
-export { getDashboardReports, getChartsReports, getAnalyticsData, getSingleInvoiceAnalytics, getSoldProducts, getOperatorsReport, getDailyTurnoverReport }
+const getDailySummaryReport = async (userId) => {
+    return request(`/reports/daily-summary/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
+export { getDashboardReports, getChartsReports, getAnalyticsData, getSingleInvoiceAnalytics, getSoldProducts, getOperatorsReport, getDailyTurnoverReport, getDailySummaryReport }

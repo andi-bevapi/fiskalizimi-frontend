@@ -14,13 +14,30 @@ import { SwalModal } from '../../components/Modal/SwalModal';
 import { updateShift } from '../../services/shiftHistory';
 import { useContextShift } from '../../Context/ShiftContext';
 import Swal from 'sweetalert2';
+import { getDailySummaryReport } from '../../services/reports';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
 const Navbar = () => {
   const { initialState, refresh } = useModel('@@initialState');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showSummary, setShowSummary] = useState(false);
+  const [summaryData, setSummaryData] = useState({});
   const { shiftIsOpen, setShiftIsOpen } = useContextShift();
   const open = Boolean(anchorEl);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const history = useHistory();
 
@@ -80,14 +97,19 @@ const Navbar = () => {
       'warning',
       `${t("no_")}`,
       `${t("yes")}`,
-      () => {},
+      () => { },
       () => closeShift(),
     );
   };
 
   const closeShift = async () => {
     const response = await updateShift(initialState?.currentUser?.id);
-    if (response.statusCode === 200) setShiftIsOpen(false);
+    if (response.statusCode === 200) {
+      setShiftIsOpen(false);
+      setShowSummary(true);
+      const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
+      setSummaryData(summaryData.data[0]);
+    }
   };
 
   const handleCloseMenu = () => {
@@ -129,11 +151,11 @@ const Navbar = () => {
         </div>
         {shiftIsOpen && (
           <Button
-            style={{ backgroundColor: '#74A19E', marginRight: window.innerWidth < 800 ? '14px' : '10px', fontSize: '12px', padding:  window.innerWidth < 800 ? '3px 4px' : '6px 16px' }}
+            style={{ backgroundColor: '#74A19E', marginRight: window.innerWidth < 800 ? '14px' : '10px', fontSize: '12px', padding: window.innerWidth < 800 ? '3px 4px' : '6px 16px' }}
             onClick={handleShiftButton}
             variant="contained"
           >
-           {t('endShift')}
+            {t('endShift')}
           </Button>
         )}
         <IconButtonComponent
@@ -144,6 +166,26 @@ const Navbar = () => {
           onClick={onLogoutHandler}
         />
       </div>
+
+      <Modal
+        open={showSummary}
+        onClose={() => {
+          setShowSummary(false);
+          setSummaryData({});
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Permbledhja Ditore:
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale: {summaryData?.totalAmount}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale pa TVSH: {summaryData?.totalAmountNoVAT}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 6%: {summaryData?.totalVat6}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 20%: {summaryData?.totalVat20}</Typography>
+        </Box>
+      </Modal>
     </div>
   );
 };
