@@ -10,12 +10,14 @@ import SnackbarComponent from "../../components/Snackbar";
 import { validationSchema } from "./validationSchema";
 import { makeStyles } from '@mui/styles';
 import { Grid } from '@mui/material';
+import { padding } from '@mui/system';
 
 const useStyles = makeStyles(() => ({
   fieldContainer: {
-    margin: "10px auto",
+    margin: "10px 0px",
     width: "250px",
-    float: "left"
+    float: "left",
+    padding: "0px"
   },
   container: {
     width: "600px",
@@ -77,8 +79,8 @@ const EditProfile = () => {
         }}
       >
         <Form>
-          <Grid container direction="row">
-            <div className={classes.container}>
+        <Grid container direction="row" display='flex' justifyContent='space-between'>
+              <div className={classes.container}>
               <div className={classes.fieldContainer}>
                 {Object.keys(initialState.currentUser).map((el, index) => {
                   if (
@@ -91,7 +93,7 @@ const EditProfile = () => {
                   ) {
                     return (
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <div style={{ margin: '10px auto' }}>
+                        <div style={{ margin: '15px auto' }}>
                           <Field name={el}>
                             {({ field, meta
                             }) => (
@@ -101,6 +103,17 @@ const EditProfile = () => {
                                 helperText={meta.error}
                                 key={index}
                                 value={userValue[el]}
+                                InputProps={{
+                                  style: {
+                                    fontFamily: 'Poppins',
+                                     width: 'auto',
+                                  },
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontFamily: 'Poppins',
+                                  },
+                                }}
                                 {...field}
                               />
                             )}
@@ -136,6 +149,17 @@ const EditProfile = () => {
                           type="password"
                           error={meta.touched && meta.error}
                           helperText={meta.error}
+                          InputProps={{
+                            style: {
+                              fontFamily: 'Poppins',
+                               width: 'auto',
+                            },
+                          }}
+                          InputLabelProps={{
+                            style: {
+                              fontFamily: 'Poppins',
+                            },
+                          }}
                           {...field}
                         />
                       )}
@@ -150,6 +174,17 @@ const EditProfile = () => {
                           type="password"
                           error={meta.touched && meta.error}
                           helperText={meta.error}
+                          InputProps={{
+                            style: {
+                              fontFamily: 'Poppins',
+                               width: 'auto',
+                            },
+                          }}
+                          InputLabelProps={{
+                            style: {
+                              fontFamily: 'Poppins',
+                            },
+                          }}
                           {...field}
                         />
                       )}

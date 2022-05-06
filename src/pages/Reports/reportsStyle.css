@@ -10,8 +10,17 @@
 .tabFonts {
     font-family: 'Poppins' !important;
     font-weight: 700 !important;
+    padding: 12px 6px !important;
 }
 
 .activeInvoiceTab {
     color: '#69dfb9'
+}
+
+@media (max-width: 425px){
+  .tabFonts{ 
+    font-weight: 300px !important;
+    padding: 12px 6px 12px 0px !important;
+  }
+  
 }

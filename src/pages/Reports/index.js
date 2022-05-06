@@ -9,10 +9,12 @@ import Invoices from './Invoices';
 import SoldProducts from './SoldProducts';
 import styles from './reportsStyle.css'
 import i18n from "i18next";
+import { Grid } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  const matches = useMediaQuery('(max-width:600px)');
 
   return (
     <div
@@ -41,6 +43,8 @@ function a11yProps(index) {
 
 const Reports = () => {
   const [value, setValue] = useState(0);
+  const matches = useMediaQuery('(max-width:600px)');
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -50,30 +54,47 @@ const Reports = () => {
     <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        sx={{ borderRight: 1, borderColor: 'divider' }}
-      >
-        <Tab label="Dashboard" {...a11yProps(0)} className={styles.tabFonts}/>
-        <Tab label= {i18n.t("analyticalRegister")} {...a11yProps(1)} className={styles.tabFonts}/>
-        <Tab label={i18n.t("bill")} {...a11yProps(2)} className={styles.tabFonts}/>
-        <Tab label={i18n.t("soldProducts")} {...a11yProps(3)} className={styles.tabFonts}/>
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <Dashboard />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Analytics />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Invoices />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <SoldProducts />
-      </TabPanel>
+      <Grid container xs={12} sm={12} md={12} lg={12}> 
+      <Grid item xs={matches ? 12 : 4} sm={4} md={3} lg={3}>
+        <Tabs
+          orientation={matches ? 'horizontal' : 'vertical'}
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          sx={{ borderRight: 1, borderColor: 'divider' }}
+        >
+          <Tab label="Dashboard" {...a11yProps(0)} className={styles.tabFonts} />
+          <Tab label={i18n.t("analyticalRegister")} {...a11yProps(1)} className={styles.tabFonts} />
+          <Tab label={i18n.t("bill")} {...a11yProps(2)} className={styles.tabFonts} />
+          <Tab label={i18n.t("soldProducts")} {...a11yProps(3)} className={styles.tabFonts} />
+        </Tabs>
+        </Grid>
+
+        <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}>
+          <TabPanel value={value} index={0}>
+            <Dashboard />
+          </TabPanel>
+        </Grid>
+
+        {/* <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}> */}
+          <TabPanel value={value} index={1}>
+            <Analytics />
+          </TabPanel>
+        {/* </Grid> */}
+
+        {/* <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}> */}
+          <TabPanel value={value} index={2}>
+            <Invoices />
+          </TabPanel>
+        {/* </Grid> */}
+
+        {/* <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}> */}
+          <TabPanel value={value} index={3}>
+            <SoldProducts />
+          </TabPanel>
+        {/* </Grid> */}
+      </Grid>
+
     </Box>
   );
 };

@@ -24,6 +24,7 @@ import { validationSchema } from './validationSchema';
 import { configure } from '../../services/configurations';
 import { useModel } from 'umi';
 import { useConfigProvider } from '../../Context/ConfigurationsContext';
+import style from "./Config.css";
 
 const useStyles = makeStyles(() => ({
   rightFormContainer: { marginTop: '50px !important', display: 'block' },
@@ -117,6 +118,7 @@ const Configurations = () => {
           <Grid container display='flex' justifyContent='space-between'>
             <Grid xs={12} sm={6} md={5}>
               <Grid item className={classes.fieldContainer}>
+              <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
                   <Field name="printer">
                     {({ field, meta }) => (
@@ -128,7 +130,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '230px',
+                            width: '250px',
                             textAlign: 'left',
                           },
                         }}
@@ -152,10 +154,12 @@ const Configurations = () => {
                     )}
                   </Field>
                 </Box>
+                </div>
               </Grid>
               <Grid item>
+              <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
-                  <Field name="billMessage"  InputProps={{style: {maxWidth: '220px'}}}>
+                  <Field name="billMessage"  InputProps={{style: {maxWidth: '350px'}}}>
                     {({ field, meta }) => (
                       <TextField
                         label={t('billMessage')}
@@ -164,7 +168,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '230px',
+                            width: '250px',
                           },
                         }}
                         InputLabelProps={{
@@ -177,10 +181,12 @@ const Configurations = () => {
                     )}
                   </Field>
                 </Box>
+                </div>
               </Grid>
             </Grid>
             <Grid xs={12} sm={6} md={5}>
               <Grid item className={classes.fieldContainer}>
+              <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
                   <Field name="language">
                     {({ field, meta }) => (
@@ -192,7 +198,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '230px',
+                            width: '250px',
                             textAlign: 'left',
                           },
                         }}
@@ -214,10 +220,12 @@ const Configurations = () => {
                     )}
                   </Field>
                 </Box>
+                </div>
               </Grid>
               <Grid item>
+              <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
-                  <Field name="billDescription" InputProps={{style: {maxWidth: '220px'}}}>
+                  <Field name="billDescription" InputProps={{style: {maxWidth: '350px'}}}>
                     {({ field, meta }) => (
                       <TextField
                         label={t('billDescription')}
@@ -226,7 +234,7 @@ const Configurations = () => {
                         InputProps={{
                           style: {
                             fontFamily: 'Poppins',
-                            width: '230px',
+                            width: '250px',
                           },
                         }}
                         InputLabelProps={{
@@ -239,6 +247,7 @@ const Configurations = () => {
                     )}
                   </Field>
                 </Box>
+                </div>
               </Grid>
             </Grid>
           </Grid>
