@@ -29,6 +29,7 @@ const SidebarAction = (props) => {
 
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
+  const [vatValue , setVatValue] = useState(0);
 
   useEffect(() => {
     fillSelectOptions();
@@ -103,10 +104,11 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
-        // if (field.name == 'vat') {
-        //   let option = field.options.filter((el) => el.label == "TVSH 20%")
-        //   initialValues[field.name] = option[0].value;
-        // }
+        if (field.component === 'Date') initialValues[field.name] = new Date();
+        if (field.name == 'vat') {
+          let option = field.options.filter((el) => el.value == field.defaultValue)
+          initialValues[field.name] = option[0].value;
+        }
       });
     }
     return initialValues;
@@ -192,6 +194,7 @@ const SidebarAction = (props) => {
     if (response?.statusCode === 200) {
       setOpenSnackBar({ status: true, message: response.message, success: true });
       props.setOpenSideBar(false);
+      props.setEditItem(null);
       if (props.user) {
         refresh();
         Object.keys(props.permissions).map((key, idx) => {
@@ -251,9 +254,10 @@ const SidebarAction = (props) => {
           }}
         >
           {({ errors, touched ,isValid }) => {
+            {errors.vat && props.product ? setVatValue(2) : setVatValue(0)}
             return (
               <Form className={classes.formContainer}>
-                <FormRender formFields={fields} editProduct={props.editItem ? true : false} />
+                <FormRender formFields={fields} vatDefault={vatValue} editProduct={props.editItem ? true : false} disableField={!props.editItem && props.arka ? false: true} />
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {

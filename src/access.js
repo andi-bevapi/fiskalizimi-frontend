@@ -26,6 +26,10 @@ export default function (initialState) {
         canCreateUser: permissions.includes('permission.user.create'),
         canUpdateUser: permissions.includes('permission.user.update'),
         canDeleteUser: permissions.includes('permission.user.delete'),
+        canViewArka: permissions.includes('permission.arka.view'),
+        canCreateArka: permissions.includes('permission.arka.create'),
+        canUpdateArka: permissions.includes('permission.arka.update'),
+        canDeleteArka: permissions.includes('permission.arka.delete'),
         canViewReports: permissions.includes('permission.reports.view'),
     };
 }

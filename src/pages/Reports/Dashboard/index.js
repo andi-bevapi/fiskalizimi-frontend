@@ -28,7 +28,7 @@ import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
-  const [dateRange, setDateRange] = useState([null, null]);
+  const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
   const [selectedOption, setSelectedOption] = useState('daily');
@@ -37,16 +37,17 @@ const Dashboard = () => {
   useEffect(() => {
     getTotals();
     getTotalsCharts();
-  }, [initialState?.currentUser, dateRange, selectedOption]);
+  }, [initialState?.currentUser, dateRange]);
 
   const getTotals = async () => {
-
-    let startDate = formatDate(dateRange[0]);
-    let endDate = dateRange[1] ? formatDate(dateRange[1])
-      : formatDate(new Date());
+    const startDate = formatDate(dateRange[0]);
+    const endDate = formatDate(dateRange[1]);
 
     try {
-      const response = await getDashboardReports(initialState?.currentUser?.clientId, selectedOption);
+      const response = await getDashboardReports(initialState?.currentUser?.clientId, {
+        startDate,
+        endDate
+      });
       const formatted = [];
 
       if (response.data.length > 0) {
@@ -80,43 +81,23 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateRangePicker
-              startText="Data e Fillimit"
-              endText="Data e Mbarimit"
-              value={dateRange}
-              onChange={setDateRange}
-              renderInput={(startProps, endProps) => (
-                  <>
-                      <TextField {...startProps} />
-                      <Box sx={{ mx: 2 }}> deri ne </Box>
-                      <TextField {...endProps} />
-                  </>
-              )}
-          />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateRangePicker
+          startText={t("beginingDate")}
+          endText={t("endingngDate")}
+          value={dateRange}
+          onChange={setDateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} />
+              <Box sx={{ mx: 2 }}> {t("until")} </Box>
+              <TextField {...endProps} />
+            </>
+          )}
+        />
       </LocalizationProvider>
-      
+
       <br />
-       */}
-      <Box style={{ paddingTop: '30px' }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label"> {t("timePeriod")} </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedOption}
-            label="Zgjidh Periudhen Kohore"
-            onChange={(e) => setSelectedOption(e.target.value)}
-          >
-            <MenuItem value="daily"> {t("actualDay")} </MenuItem>
-            <MenuItem value="monthly">{t("actualMonth")} </MenuItem>
-            <MenuItem value="yearly">{t("actualYear")}</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
-
-      <br /><br />
 
       <Grid container spacing={2}>
         {totals?.map(item => (
@@ -176,7 +157,7 @@ const Dashboard = () => {
               argumentField="dateCreated"
               color="#ff7a00"
             />
-            <Title text={t("totallBillValue")} />
+            <Title text={t("totalNumberBill")} />
             <Animation />
           </Chart>
         </Grid>
