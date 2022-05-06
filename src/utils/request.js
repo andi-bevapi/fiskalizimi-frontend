@@ -27,7 +27,7 @@ const errorHandler = (error) => {
 };
 
 const request = extend({
-    prefix: 'http://fiskalizimi-dev-api.herokuapp.com/api',
+    prefix: 'https://fiskalizimi-dev-api.herokuapp.com/api',
     errorHandler
 });
 
