@@ -10,6 +10,7 @@ class User {
     branchId;
     clientId;
     permissions;
+    arka;
 
     constructor(user = {}) {
         this.id = user.id || '';
@@ -23,6 +24,8 @@ class User {
         this.branchId = user.branchId || '';
         this.clientId = user.clientId || '';
         this.permissions = user.permissions || [];
+        this.arka = user.arka || null;
+
     }
 
     isLoggedIn() {

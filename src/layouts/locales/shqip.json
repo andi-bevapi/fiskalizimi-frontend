@@ -246,5 +246,6 @@
   "yes":"Po",
   "no_":"Jo",
   "stockProductValidation":"Stoku duhet te jet numer pozitiv",
-  "imageMessage":"Ju lutem ngarkoni nje imazh me madhesi me te vogel"
+  "imageMessage":"Ju lutem ngarkoni nje imazh me madhesi me te vogel",
+  "noConnectedArka": "Nuk u gjet asnje arke e lidhur"
 }

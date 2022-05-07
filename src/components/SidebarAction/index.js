@@ -29,7 +29,7 @@ const SidebarAction = (props) => {
 
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
-  const [vatValue , setVatValue] = useState(0);
+  const [vatValue, setVatValue] = useState(0);
 
   useEffect(() => {
     fillSelectOptions();
@@ -105,8 +105,11 @@ const SidebarAction = (props) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
         if (field.component === 'Date') initialValues[field.name] = new Date();
+        if (field.component === 'Select') {
+          if (field.options.length === 1) initialValues[field.name] = field.options[0].value;
+        }
         if (field.name == 'vat') {
-          let option = field.options.filter((el) => el.value == field.defaultValue)
+          let option = field.options.filter((el) => el.value == field.defaultValue);
           initialValues[field.name] = option[0].value;
         }
       });
@@ -253,11 +256,18 @@ const SidebarAction = (props) => {
             handleSubmit(values);
           }}
         >
-          {({ errors, touched ,isValid }) => {
-            {errors.vat && props.product ? setVatValue(2) : setVatValue(0)}
+          {({ errors, touched, isValid }) => {
+            {
+              errors.vat && props.product ? setVatValue(2) : setVatValue(0);
+            }
             return (
               <Form className={classes.formContainer}>
-                <FormRender formFields={fields} vatDefault={vatValue} editProduct={props.editItem ? true : false} disableField={!props.editItem && props.arka ? false: true} />
+                <FormRender
+                  formFields={fields}
+                  vatDefault={vatValue}
+                  editProduct={props.editItem ? true : false}
+                  disableField={!props.editItem && props.arka ? false : true}
+                />
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {

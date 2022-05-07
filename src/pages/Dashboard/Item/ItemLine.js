@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from "@mui/material/";
 import styles from "./ItemLine.module.css";
+import { SwalModal } from '../../../components/Modal/SwalModal';
+import { useTranslation } from "react-i18next";
+import { useModel } from 'umi';
 
 const ItemLine = (props) => {
+  const { initialState } = useModel('@@initialState');
+
+  const {t} = useTranslation();
   const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
@@ -21,6 +27,17 @@ const ItemLine = (props) => {
   }, [props.invoiceList],props.item);
 
   const handleCardClick = () => {
+    if (!initialState?.currentUser?.arka) {
+      return SwalModal(
+        t("noConnectedArka"),
+        "",
+        "warning",
+        t("close"),
+        "",
+        () => { },
+        () => { },
+      );
+    }
     if (!stopAdding) {
       const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
       const isExisting = (productFromArray.length >= 1 ? true : false);
