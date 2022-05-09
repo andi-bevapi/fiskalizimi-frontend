@@ -3,10 +3,11 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import HistoryIcon from '@mui/icons-material/History';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { makeStyles } from '@mui/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
@@ -15,6 +16,7 @@ import { Access, useAccess } from 'umi';
 import { useTranslation } from 'react-i18next';
 import Moment from 'moment';
 import ModalComponent from '../Modal/Modal';
+import i18n from 'i18next';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -49,32 +51,15 @@ const TableComponent = (props) => {
   const { t } = useTranslation();
   const access = useAccess();
 
-  const handleEditButton = (id) => {
-    setOpenSideBar(true);
-    const foundItem = props.fullList.find((item) => item.id === id);
-    setEditItem(foundItem);
-  };
+  const [tableHeader, setTableHeader] = useState([]);
+
+  useEffect(() => {
+    const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id');
+    setTableHeader(filteredTableHeader);
+  }, []);
 
   const handleSnackBarClose = () => {
     setOpenSnackBar({ status: false, severity: 'success' });
-  };
-
-  const confirmDelete = async (id) => {
-    const response = await props.delete(id);
-    setOpenSnackBar({ status: true, message: response.message, severity: 'success' });
-  };
-
-  const handleDelete = async (id) => {
-    return SwalModal(
-      'Deshironi ta fshini?',
-      '',
-      'warning',
-      'JO',
-      'PO',
-      () => {},
-      () => confirmDelete(id),
-      id,
-    );
   };
 
   const handleCreate = () => {
@@ -97,6 +82,96 @@ const TableComponent = (props) => {
   const toggleModal = () => {
     setOpenHistoryModal(!openHistoryModal);
   };
+
+  const columns = [
+    tableHeader.map((el) => {
+      return {
+        field: el,
+        headerName: i18n.t(el),
+        width: 120,
+      };
+    }),
+    {
+      field: 'actions',
+      headerName: i18n.t('actions'),
+      width: 120,
+      sortable: false,
+      renderCell: (params) => {
+        const onClick = (e) => {
+          e.stopPropagation();
+          setViewInvoice(true);
+          setSelectedRow(params.row);
+        };
+
+        const handleEditButton = () => {
+          setOpenSideBar(true);
+          const foundItem = props.fullList.find((item) => item.id === params.id);
+          setEditItem(foundItem);
+        };
+
+        const confirmDelete = async () => {
+          const response = await props.delete(params.id);
+          setOpenSnackBar({ status: true, message: response.message, severity: 'success' });
+        };
+      
+        const handleDelete = async () => {
+          return SwalModal(
+            'Deshironi ta fshini?',
+            '',
+            'warning',
+            'JO',
+            'PO',
+            () => {},
+            () => confirmDelete(params.id),
+            params.id,
+          );
+        };
+
+        return (
+          <div className={classes.btnContainer}>
+            {props.arka && (
+              <IconButtonComponent
+                style={{
+                  backgroundColor: '#ffa500',
+                  marginRight: '10px',
+                }}
+                icon={<HistoryIcon />}
+                iconColor={{ color: 'white' }}
+                onClick={ handleHistoryButton}
+              />
+            )}
+            <Access accessible={access[props.acceses['update']]}>
+              <IconButtonComponent
+                style={{
+                  backgroundColor: '#ffa500',
+                  marginRight: '10px',
+                }}
+                icon={<EditIcon />}
+                iconColor={{ color: 'white' }}
+                onClick={handleEditButton}
+                text={t('edit')}
+              />
+            </Access>
+
+            <Access accessible={access[props.acceses['delete']]}>
+              <IconButtonComponent
+                style={{
+                  backgroundColor: '#f05050',
+                  marginRight: '10px',
+                }}
+                icon={<DeleteForeverIcon />}
+                iconColor={{ color: 'white' }}
+                onClick={handleDelete}
+                text={t('delete')}
+              />
+            </Access>
+          </div>
+        );
+      },
+    },
+  ];
+
+  console.log(columns);
 
   return (
     <>
@@ -184,98 +259,107 @@ const TableComponent = (props) => {
           <CircularProgress />
         </div>
       ) : (
-        <TableContainer sx={{ fontSize: '14px' }}>
-          <Table stickyHeader aria-label="simple table">
-            <TableHead>
-              <TableRow
-                sx={{
-                  th: { padding: '16px 6px', fontFamily: 'Poppins' },
-                }}
-              >
-                <TableCell className={classes.tableCell}>{t("no")}</TableCell>
-                {props.tableHeaders.map((header, index) => {
-                  if (header !== 'Id')
-                    return (
-                      <TableCell
-                        key={index}
-                        className={classes.tableCell}
-                        style={
-                          index === props.tableHeaders.length - 1
-                            ? { textAlign: 'right', paddingRight: 20 }
-                            : {}
-                        }
-                      >
-                        {t(header)}
-                      </TableCell>
-                    );
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {props.data.map((item, index) => (
-                <TableRow
-                  key={item.id}
-                  sx={{
-                    td: { padding: '16px 6px', fontFamily: 'Poppins' },
-                  }}
-                  id={item.id}
-                >
-                  <TableCell className={classes.tableCell}>{index + 1}</TableCell>
-                  {Object.keys(item).map((key, idx) => {
-                    if (key.toLowerCase().includes('valid'))
-                      return (
-                        <TableCell key={idx}>
-                          {Moment(new Date(item[key])).format('DD/MM/YYYY')}
-                        </TableCell>
-                      );
-                    if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>;
-                  })}
+        // <TableContainer sx={{ fontSize: '14px' }}>
+        //   <Table stickyHeader aria-label="simple table">
+        //     <TableHead>
+        //       <TableRow
+        //         sx={{
+        //           th: { padding: '16px 6px', fontFamily: 'Poppins' },
+        //         }}
+        //       >
+        //         <TableCell className={classes.tableCell}>{t("no")}</TableCell>
+        //         {props.tableHeaders.map((header, index) => {
+        //           if (header !== 'Id')
+        //             return (
+        //               <TableCell
+        //                 key={index}
+        //                 className={classes.tableCell}
+        //                 style={
+        //                   index === props.tableHeaders.length - 1
+        //                     ? { textAlign: 'right', paddingRight: 20 }
+        //                     : {}
+        //                 }
+        //               >
+        //                 {t(header)}
+        //               </TableCell>
+        //             );
+        //         })}
+        //       </TableRow>
+        //     </TableHead>
+        //     <TableBody>
+        //       {props.data.map((item, index) => (
+        //         <TableRow
+        //           key={item.id}
+        //           sx={{
+        //             td: { padding: '16px 6px', fontFamily: 'Poppins' },
+        //           }}
+        //           id={item.id}
+        //         >
+        //           <TableCell className={classes.tableCell}>{index + 1}</TableCell>
+        //           {Object.keys(item).map((key, idx) => {
+        //             if (key.toLowerCase().includes('valid'))
+        //               return (
+        //                 <TableCell key={idx}>
+        //                   {Moment(new Date(item[key])).format('DD/MM/YYYY')}
+        //                 </TableCell>
+        //               );
+        //             if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>;
+        //           })}
 
-                  <TableCell className={classes.tableCell}>
-                    <div className={classes.btnContainer}>
-                      {props.arka && (
-                        <IconButtonComponent
-                          style={{
-                            backgroundColor: '#ffa500',
-                            marginRight: '10px',
-                          }}
-                          icon={<HistoryIcon />}
-                          iconColor={{ color: 'white' }}
-                          onClick={(e) => handleHistoryButton(item.id)}
-                        />
-                      )}
-                      <Access accessible={access[props.acceses['update']]}>
-                        <IconButtonComponent
-                          style={{
-                            backgroundColor: '#ffa500',
-                            marginRight: '10px',
-                          }}
-                          icon={<EditIcon />}
-                          iconColor={{ color: 'white' }}
-                          onClick={(e) => handleEditButton(item.id)}
-                          text={t("edit")}
-                        />
-                      </Access>
+        //           <TableCell className={classes.tableCell}>
+        //             <div className={classes.btnContainer}>
+        //               {props.arka && (
+        //                 <IconButtonComponent
+        //                   style={{
+        //                     backgroundColor: '#ffa500',
+        //                     marginRight: '10px',
+        //                   }}
+        //                   icon={<HistoryIcon />}
+        //                   iconColor={{ color: 'white' }}
+        //                   onClick={(e) => handleHistoryButton(item.id)}
+        //                 />
+        //               )}
+        //               <Access accessible={access[props.acceses['update']]}>
+        //                 <IconButtonComponent
+        //                   style={{
+        //                     backgroundColor: '#ffa500',
+        //                     marginRight: '10px',
+        //                   }}
+        //                   icon={<EditIcon />}
+        //                   iconColor={{ color: 'white' }}
+        //                   onClick={(e) => handleEditButton(item.id)}
+        //                   text={t("edit")}
+        //                 />
+        //               </Access>
 
-                      <Access accessible={access[props.acceses['delete']]}>
-                        <IconButtonComponent
-                          style={{
-                            backgroundColor: '#f05050',
-                            marginRight: '10px',
-                          }}
-                          icon={<DeleteForeverIcon />}
-                          iconColor={{ color: 'white' }}
-                          onClick={(e) => handleDelete(item.id)}
-                          text={t("delete")}
-                        />
-                      </Access>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        //               <Access accessible={access[props.acceses['delete']]}>
+        //                 <IconButtonComponent
+        //                   style={{
+        //                     backgroundColor: '#f05050',
+        //                     marginRight: '10px',
+        //                   }}
+        //                   icon={<DeleteForeverIcon />}
+        //                   iconColor={{ color: 'white' }}
+        //                   onClick={(e) => handleDelete(item.id)}
+        //                   text={t("delete")}
+        //                 />
+        //               </Access>
+        //             </div>
+        //           </TableCell>
+        //         </TableRow>
+        //       ))}
+        //     </TableBody>
+        //   </Table>
+        // </TableContainer>
+
+        <div style={{ height: '60vh', width: '100%' }}>
+          <DataGrid
+            rows={props.data}
+            columns={[...columns[0], columns[1]]}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+          />
+        </div>
       )}
     </>
   );
