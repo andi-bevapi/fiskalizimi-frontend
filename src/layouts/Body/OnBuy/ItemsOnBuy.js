@@ -22,6 +22,7 @@ import { useContextProduct } from '../../../Context/ProductContext';
 import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
 import { useTranslation } from "react-i18next";
+import { useModel } from 'umi';
 
 const ItemsOnBuy = () => {
 
@@ -42,6 +43,7 @@ const ItemsOnBuy = () => {
     deletePendingInvoice
   } = useInvoiceContext();
   const { productList } = useContextProduct();
+  const { initialState } = useModel('@@initialState');
   // const [invoiceProducts, setInvoiceProducts] = useState(listedInvoiceProducts); //Keeps the products in the invoice list TEMP: change with listedInvoiceProducts
   const [heldProducts, setHeldProducts] = useState(); //Keeps the products that will be in the current Hold Invoice
   const [savedInvoices, setSavedInvoices] = useState(); //Array with objects where objects will be all the invoices that are being held
@@ -107,6 +109,17 @@ const ItemsOnBuy = () => {
   };
 
   const activateInvoice = (invoice) => {
+    if (!initialState?.currentUser?.arka) {
+      return SwalModal(
+        t("noConnectedArka"),
+        "",
+        "warning",
+        t("close"),
+        "",
+        () => { },
+        () => { },
+      );
+    }
     if (listedInvoiceProducts.length !== 0) setOpen(true);
     else {
       invoice.items.map((item) => {
