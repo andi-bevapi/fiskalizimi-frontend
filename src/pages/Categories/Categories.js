@@ -3,7 +3,7 @@ import { useCategoryContext } from "../../Context/CategoryContext";
 import { listFormat } from "../../helpers/listFormater";
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
-const tableHeaders = ['Id', 'Name', 'Actions'];
+const tableHeaders = ['id', 'name'];
 
 const Categories = () => {
   const { setCategoryList, categoryToCreate, categoryList, categoryToUpdate, categoryToDelete, isLoading } = useCategoryContext();

@@ -4,7 +4,7 @@ import { useSellingUnitContext } from '../../Context/SellingUnitContext';
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
 
-const tableHeaders = ['Id', 'Name', 'Actions'];
+const tableHeaders = ['id', 'name'];
 
 const SellingUnits = () => {
   const {

@@ -171,8 +171,6 @@ const TableComponent = (props) => {
     },
   ];
 
-  console.log(columns);
-
   return (
     <>
       <SnackbarComponent
