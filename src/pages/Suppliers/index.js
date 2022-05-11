@@ -1,10 +1,13 @@
-import { SupplierProvider } from "../../Context/SuppliersContext"
-import Suppliers from "./Suppliers";
+import { SupplierProvider } from '../../Context/SuppliersContext';
+import { BranchListProvider } from '../../Context/BranchListContext';
+import Suppliers from './Suppliers';
 
 export default () => {
   return (
-    <SupplierProvider>
-      <Suppliers />
-    </SupplierProvider>
+    <BranchListProvider>
+      <SupplierProvider>
+        <Suppliers />
+      </SupplierProvider>
+    </BranchListProvider>
   );
 };

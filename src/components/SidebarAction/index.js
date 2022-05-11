@@ -71,6 +71,9 @@ const SidebarAction = (props) => {
 
       formattedFields = formattedFields.map((field) => {
         if (field?.options?.length === 0 && field.identifier === context) field.options = options;
+        if (initialState?.currentUser?.branchId !== 0 && field.name === 'branchId') {
+          field.disabled = true;
+        }
         return field;
       });
 
@@ -107,6 +110,9 @@ const SidebarAction = (props) => {
         if (field.component === 'Date') initialValues[field.name] = new Date();
         if (field.component === 'Select') {
           if (field.options.length === 1) initialValues[field.name] = field.options[0].value;
+        }
+        if (initialState?.currentUser?.branchId !== 0 && field.name === 'branchId') {
+          initialValues['branchId'] = initialState?.currentUser?.branchId;
         }
         if (field.name == 'vat') {
           let option = field.options.filter((el) => el.value == field.defaultValue);
@@ -150,6 +156,7 @@ const SidebarAction = (props) => {
 
   const postData = async (values) => {
     const permissions = [];
+    console.log(values);
     if (props.user) {
       Object.keys(props.permissions).map((key, idx) => {
         const tmp = props.permissions[key].permissions.filter((el) => el.checked == true);
