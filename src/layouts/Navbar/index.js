@@ -108,6 +108,7 @@ const Navbar = () => {
       setShiftIsOpen(false);
       setShowSummary(true);
       const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
+      console.log("summaryData------",summaryData);
       setSummaryData(summaryData.data[0]);
     }
   };
@@ -180,10 +181,10 @@ const Navbar = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Permbledhja Ditore:
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale: {summaryData?.totalAmount}</Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale pa TVSH: {summaryData?.totalAmountNoVAT}</Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 6%: {summaryData?.totalVat6}</Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 20%: {summaryData?.totalVat20}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale: {summaryData?.totalAmount ? summaryData?.totalAmount.toFixed(2) : 0}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale pa TVSH: {summaryData?.totalAmountNoVAT ? summaryData?.totalAmountNoVAT.toFixed(2) : 0 }</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 6%: {summaryData?.totalVat6 ? summaryData?.totalVat6.toFixed(2) : 0}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>Vlera Totale TVSH 20%: {summaryData?.totalVat20 ? summaryData?.totalVat20.toFixed(2) : 0}</Typography>
         </Box>
       </Modal>
     </div>
