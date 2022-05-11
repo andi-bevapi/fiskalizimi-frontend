@@ -108,7 +108,6 @@ const Navbar = () => {
       setShiftIsOpen(false);
       setShowSummary(true);
       const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
-      console.log("summaryData------",summaryData);
       setSummaryData(summaryData.data[0]);
     }
   };
