@@ -87,7 +87,7 @@ const Reports = () => {
             </Tabs>
           </Grid>
 
-          <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}>
+          <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9} style={{marginTop: 20}}>
             <TabPanel value={value} index={0}>
               <Dashboard />
             </TabPanel>
