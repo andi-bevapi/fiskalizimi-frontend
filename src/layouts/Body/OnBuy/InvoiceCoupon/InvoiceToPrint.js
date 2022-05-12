@@ -40,46 +40,61 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
     <div style={{ display: 'none' }}>
       <div id="couponToPrint" className={styles.couponBG} ref={ref}>
         <p className={styles.couponBigTitle}>FATURË TATIMORE</p>
-        <p className={styles.couponText} style={{marginTop: "-20px"}}>Kodi: {props.data.invoiceCode}</p>
         <span className={styles.couponBusinessName}>{props.data.clientName}</span>
         <br />
-        <p className={styles.couponText}>NUIS: {props.data.clientNUIS}</p>
-        <p className={styles.couponText} style={{marginTop: "-15px"}}>{props.data.clientAddress}</p>
+        <p className={styles.couponText}>{props.data.clientAddress}</p>
         <div className={styles.leftText}>
           <p className={styles.couponText}>
-            Data dhe ora: {props.data.dateTime}
-            <b></b>
+            Nr. Fature: <b>{props.data.invoiceCode}</b>
           </p>
-          <p className={styles.couponText} style={{marginTop: "-17px"}}>
-            Kodi i Biznesit: <b>{props.data.branchCode}</b>
+          <p className={styles.couponText} style={{marginTop: "-15px"}}>
+            Data dhe ora: <b>{props.data.dateTime}</b>
           </p>
-          <p className={styles.couponText} style={{marginTop: "-17px"}}>
-            Kodi i Operatorit: <b>{props.data.operatorCode}</b>
+          <p className={styles.couponText} style={{marginTop: "-15px"}}>
+            NUIS: <b>{props.data.clientNUIS}</b>
           </p>
-          <p className={styles.couponText} style={{marginTop: "-17px"}}>
+          <p className={styles.couponText} style={{marginTop: "-15px"}}>
+            Kodi i Biznesit: <b style={{textTransform: 'lowercase'}}>{props.data.branchCode}</b>
+          </p>
+          <p className={styles.couponText} style={{marginTop: "-15px"}}>
+            Kodi i Operatorit: <b style={{textTransform: 'lowercase'}}>{props.data.operatorCode}</b>
+          </p>
+          <p className={styles.couponText} style={{marginTop: "-15px"}}>
             Mënyra e pagesës: <b>{props.data.paymentMethod}</b>
           </p>
         </div>
         <span className={styles.couponTitleCapital}>ARTIKUJT</span> <br />
         <table>
           <tr>
-            <th className={styles.couponText}>Nr.</th>
             <th className={styles.couponText}>Artikulli</th>
-            <th className={styles.couponText}>Sasia</th>
-            <th className={styles.couponText}>Çmimi</th>
-            <th className={styles.productPriceRow}>Totali</th>
+            <th className={styles.productPriceRow}></th>
+            <th className={styles.productPriceRow}></th>
+            <th className={styles.productPriceRow}></th>
+            <th className={styles.productPriceRow}>Vl meTVSH</th>
           </tr>
+          <tr style={{borderBottom: '1px solid #dbdbdb' }}>
+            <th className={styles.couponTitleText}>Sasia</th>
+            <th className={styles.couponTitleText}>Çmimi</th>
+            <th className={styles.couponTitleText}></th>
+            <th className={styles.couponTitleText} style={{textAlign: 'end'}}>Vl paTvsh</th>
+            <th className={styles.couponTitleText}></th>
+         </tr>
           {props.data.productList?.map((item, index) => {
             return (
               <>
-                <tr style={{ textAlign: 'left', marginBottom: "-5px" }}>
-                  <td className={styles.productDataRow}>{index + 1}</td>
-                  <td className={styles.productDataRow}>{item.productName}</td>
+                 <tr style={{ textAlign: "left"}}>
+                    <td className={styles.productDataRow} style={{textTransform: 'uppercase'}}>{item.productName}</td>
+                    <td className={styles.productDataRow}></td>
+                    <td className={styles.productDataRow}></td>
+                    <td className={styles.productDataRownoVAT}></td>
+                    <td className={styles.productPriceRow}>{Number(item.finalPrice * item.quantity).toFixed(2)}</td>
+                </tr>
+                <tr style={{ textAlign: "left" }}>
                   <td className={styles.productDataRow}>{item.quantity}</td>
                   <td className={styles.productDataRow}>{item.finalPrice.toFixed(2)}</td>
-                  <td className={styles.productPriceRow}>
-                    {Number(item.finalPrice * item.quantity).toFixed(2)}
-                  </td>
+                  <td className={styles.productDataRow}></td>
+                  <td className={styles.productDataRownoVAT}>{(item.originalPrice.toFixed(2) * item.quantity).toFixed(2)}</td>
+                  <td className={styles.productPriceRow}></td>
                 </tr>
               </>
             );
@@ -88,7 +103,7 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
         <hr />
         <hr />
         <div className={styles.couponAmounts} style={{marginTop: "-10px"}}>
-          <span className={styles.couponText}>Vlera</span> <span className={styles.rightText}>{props.data.totalAmountNoVAT}</span>
+          <span className={styles.couponText}>Total paTVSH</span> <span className={styles.rightText}>{props.data.totalAmountNoVAT}</span>
           <br />
           <span className={styles.couponText}>Total TVSH 6%</span>{' '}
           <span className={styles.rightText}>{props.data.totalVat6}</span>
@@ -104,16 +119,18 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
           </span>
           <br />
         </div>
-        <div style={{ background: 'white', padding: '16px' }}>
-          <QRCode value={value} size={150} />
+        <div style={{ background: 'white', padding: '14px', paddingBottom: '6px' }}>
+          <QRCode value={value} size={110} />
         </div>
         <p className={styles.nslfText}>NIVF: {props.data.nivf}</p>
         <p className={styles.nslfText} style={{marginTop: "-10px"}}>NSLF: {props.data.nslf}</p>
         <p className={styles.couponText}>{config?.billMessage}</p>
-        <span className={styles.couponText}>Gjeneruar nga Ovla Systems</span> <br />
-        <span className={styles.couponText}>
+        <div className={styles.leftText}>
+        <span className={styles.couponText}>Gjeneruar nga Ovla Systems</span>
+        <span className={styles.couponText} style={{ float: 'right'}}>
           <b>posla.al</b>
         </span>
+        </div>
       </div>
     </div>
   );
