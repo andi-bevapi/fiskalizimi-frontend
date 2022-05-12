@@ -30,13 +30,19 @@ const SidebarAction = (props) => {
   const [fields, setFields] = useState(props.formFields);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '', success: false });
   const [vatValue, setVatValue] = useState(0);
+  const [branchValue, setBranchValue] = useState(0);
 
   useEffect(() => {
     fillSelectOptions();
     if (props.user) {
       fillPermissions();
     }
+    setBranchValue(0);
   }, [props.formFields, props.open]);
+
+  useEffect(() => {
+    if (props.product) fillSelectOptions();
+  }, [branchValue]);
 
   const fillPermissions = () => {
     if (props.editItem) {
@@ -60,20 +66,69 @@ const SidebarAction = (props) => {
     if (!props.contexts) return;
 
     Object.keys(props.contexts).map((context) => {
-      const options = props.contexts[context].map((el) => {
-        return {
-          value: el.id,
-          label: el.name,
-        };
-      });
+      let options = [];
+
+      //check if entity is editing and the select options its not branch
+      if (
+        (props.editItem && !props.contexts[context][0].branchId) ||
+        (!props.editItem && branchValue === 0)
+      ) {
+        options = props.contexts[context].map((el) => {
+          return {
+            value: el.id,
+            label: el.name,
+          };
+        }); //check if entity is creating and branch option selected
+      } else if (!props.editItem && branchValue !== 0) {
+        if (!props.contexts[context][0].branchId)
+          //check if its branches options
+          options = props.contexts[context].map((el) => {
+            return {
+              value: el.id,
+              label: el.name,
+            };
+          });
+        //if its not branch option displays options that have branchid same with branch option selected (branchValue)
+        else
+          options = props.contexts[context]
+            .filter((el) => el.branchId === branchValue)
+            .map((el) => {
+              return {
+                value: el.id,
+                label: el.name,
+              };
+            });
+      } //Fill options based on branch id when editing an entity, diplay only the options that has the branch id as the entity editing
+      else
+        options = props.contexts[context]
+          .filter((el) => el.branchId === props.editItem.branchId)
+          .map((el) => {
+            return {
+              value: el.id,
+              label: el.name,
+            };
+          });
 
       let formattedFields = [...fields];
 
       formattedFields = formattedFields.map((field) => {
-        if (field?.options?.length === 0 && field.identifier === context) field.options = options;
-        if (initialState?.currentUser?.branchId !== 0 && field.name === 'branchId') {
+        if (field.identifier === context) field.options = options;
+        if (field.name === 'branchId' && props.editItem) {
+          //branch option disabled on editing entity
           field.disabled = true;
+        } else field.disabled = false;
+        if (
+          props.product &&
+          !props.editItem &&
+          (field.name === 'categoryId' ||
+            field.name === 'supplierId' ||
+            field.name === 'sellingUnitId')
+        ) {
+          //if product is editing, if branch option is not selected other select option that have branchId are disabled
+          if (branchValue === 0) field.disabled = true;
+          else field.disabled = false;
         }
+
         return field;
       });
 
@@ -113,6 +168,9 @@ const SidebarAction = (props) => {
         }
         if (initialState?.currentUser?.branchId !== 0 && field.name === 'branchId') {
           initialValues['branchId'] = initialState?.currentUser?.branchId;
+        }
+        if (props.product && field.name === 'branchId' && !props.editItem && branchValue !== 0) {
+          initialValues['branchId'] = branchValue;
         }
         if (field.name == 'vat') {
           let option = field.options.filter((el) => el.value == field.defaultValue);
@@ -156,7 +214,6 @@ const SidebarAction = (props) => {
 
   const postData = async (values) => {
     const permissions = [];
-    console.log(values);
     if (props.user) {
       Object.keys(props.permissions).map((key, idx) => {
         const tmp = props.permissions[key].permissions.filter((el) => el.checked == true);
@@ -274,6 +331,7 @@ const SidebarAction = (props) => {
                   vatDefault={vatValue}
                   editProduct={props.editItem ? true : false}
                   disableField={!props.editItem && props.arka ? false : true}
+                  setBranchValue={setBranchValue}
                 />
                 {props.user && (
                   <>

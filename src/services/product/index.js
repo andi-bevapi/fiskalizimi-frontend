@@ -35,11 +35,14 @@ const createProduct = async (clientId, data) => {
     })
 }
 
-const updateProduct = async (data) => {
+const updateProduct = async (clientId, data) => {
     return request(`/product/update/${data.id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
-        data
+        data: {
+            clientId,
+            ...data
+        }
     })
 }
 

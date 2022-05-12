@@ -42,7 +42,7 @@ const ProductProvider = (props) => {
 
     const productToUpdate = async (data) => {
         try {
-            const result = await updateProduct(data);
+            const result = await updateProduct(initialState?.currentUser?.clientId, data);
             getProductsList();
             return result;
         } catch (error) {

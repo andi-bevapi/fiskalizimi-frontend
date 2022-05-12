@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { Form, Formik, useFormikContext } from 'formik';
 import FormRender from '../../../components/FormRender';
 import { useContextProduct } from '../../../Context/ProductContext';
+import { useBranchListContext } from '../../../Context/BranchListContext';
 import { useCategoryContext } from '../../../Context/CategoryContext';
 import { useSellingUnitContext } from '../../../Context/SellingUnitContext';
 import { useSupplierContext } from '../../../Context/SuppliersContext';
 import Button from '@mui/material/Button';
 import { useTranslation } from "react-i18next";
+import { useModel } from 'umi';
 
 const SubmitListener = () => {
     const formik = useFormikContext();
@@ -24,22 +26,24 @@ const ClearValues = () => {
     const formik = useFormikContext();
 
     const clearValues = () => {
-        formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' });
+        formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '', branchId: '' });
         formik.submitForm(); 
     }
     return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: window.innerWidth < 800 ? 0 : 70, marginTop: 8, marginBottom: window.innerWidth < 800 ? 10 : 0}}>Fshi</Button>
 }
 
 const Filters = () => {
+    const { initialState } = useModel('@@initialState');
     const { getProductsList } = useContextProduct();
     const { categoryList } = useCategoryContext();
     const { sellingUnitList } = useSellingUnitContext();
     const { suppliersList } = useSupplierContext();
+    const { branchList } = useBranchListContext();
     const {t} = useTranslation();
 
     return (
         <Formik
-            initialValues={{ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '' }}
+            initialValues={{ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '', branchId: '' }}
             onSubmit={(values) => {
                 getProductsList(values);
             }}
@@ -67,7 +71,7 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 20
+                                marginLeft: window.innerWidth < 800 ? 0 : 10
                             }
                         },
                         {
@@ -85,7 +89,7 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 40
+                                marginLeft: window.innerWidth < 800 ? 0 : 20
                             }
                         },
                         {
@@ -103,7 +107,26 @@ const Filters = () => {
                                 }))
                             ],
                             style: {
-                                marginLeft: window.innerWidth < 800 ? 0 : 60
+                                marginLeft: window.innerWidth < 800 ? 0 : 30
+                            }
+                        },
+                        initialState.currentUser?.branchId === 0 && 
+                        {
+                            name: 'branchId',
+                            component: 'SelectNoDefault',
+                            label: t("branch"),
+                            options: [
+                                {
+                                    value: null,
+                                    label: t("all")
+                                },
+                                ...branchList?.map(branch => ({
+                                    value: branch.id,
+                                    label: branch.name
+                                }))
+                            ],
+                            style: {
+                                marginLeft: window.innerWidth < 800 ? 0 : 40
                             }
                         }
                     ]}

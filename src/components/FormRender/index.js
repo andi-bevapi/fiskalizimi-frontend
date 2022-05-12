@@ -24,7 +24,7 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
+const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBranchValue}) => {
   const classes = useStyles();
   const [uploadMessage,setUploadMessage] = useState(null);
   const {t} = useTranslation();
@@ -132,7 +132,10 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
                     }
                     {...field}
                     // defaultValue={formField.defaultValue && editProduct === false ? 2: field.value}
-                    // onChange={(event) => {
+                    onChange={(event) => {
+                      setFieldValue(formField.name, event.target.value)
+                      if (formField.name === 'branchId') setBranchValue(event.target.value);
+                    }}
                     >
                     {formField.options.map((option) => (
                       <MenuItem key={option.value} value={option.value}>

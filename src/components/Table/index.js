@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { makeStyles } from '@mui/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SidebarAction from '../../components/SidebarAction';
 import IconButtonComponent from '../Button/IconButton';
 import { SwalModal } from '../Modal/SwalModal';
@@ -49,6 +49,8 @@ const TableComponent = (props) => {
   const { t } = useTranslation();
   const access = useAccess();
 
+  useEffect(() => {}, [openSideBar]);
+  
   const handleEditButton = (id) => {
     setOpenSideBar(true);
     const foundItem = props.fullList.find((item) => item.id === id);

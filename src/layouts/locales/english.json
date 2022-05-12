@@ -245,5 +245,6 @@
   "no_":"No",
   "stockProductValidation":"Stock must be a positive number",
   "imageMessage":"Please upload an image smaller then previous",
-  "noConnectedArka": "No connected money deposit found"
+  "noConnectedArka": "No connected money deposit found",
+  "Vat": "Vat"
 }
