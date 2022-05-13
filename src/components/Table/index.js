@@ -48,8 +48,6 @@ const TableComponent = (props) => {
   const [arkaHistoryData, setArkaHistoryData] = useState([]);
   const { t } = useTranslation();
   const access = useAccess();
-
-  useEffect(() => {}, [openSideBar]);
   
   const handleEditButton = (id) => {
     setOpenSideBar(true);
