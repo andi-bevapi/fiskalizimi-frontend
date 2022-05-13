@@ -32,7 +32,7 @@ const EditProfile = () => {
   const { initialState, refresh } = useModel('@@initialState');
   const { t } = useTranslation();
   const [userValue, setUserValue] = useState(initialState.currentUser);
-  const { userToUpdate } = useUsersListContext();
+  const { userToUpdate, permissions } = useUsersListContext();
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: "" });
   const classes = useStyles();
 
@@ -47,18 +47,23 @@ const EditProfile = () => {
     values.branchId = userValue.branchId;
     values.clientId = userValue.clientId;
     delete values["passwordConfirm"];
-    const permissions = userValue.permissions;
-    const userData = { user: values, permissions }
+    const permissionsArray = permissions.map((item) => item.id);
+    const userData = { user: values, permissions: permissionsArray }
     const result = await userToUpdate(id, userData);
     setOpenSnackBar({ status: true, message: result.message });
     refresh();
   };
+
+  const handleSnackBarClose = () => {
+    setOpenSnackBar({ status: false});
+  }
 
   return (
     <>
       <SnackbarComponent
         message={openSnackBar.message}
         open={openSnackBar.status}
+        handleSnackBarClose={handleSnackBarClose}
         severity={"success"}
       />
       <h1 align="center">{t("editData")}</h1>
