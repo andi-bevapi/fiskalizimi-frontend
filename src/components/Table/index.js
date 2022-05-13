@@ -61,7 +61,6 @@ const TableComponent = (props) => {
   }, [startDate, endDate]);
 
   const handleEditButton = (id) => {
-    console.log("edit func")
     setOpenSideBar(true);
     const foundItem = props.fullList.find((item) => item.id === id);
     setEditItem(foundItem);

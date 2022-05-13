@@ -58,7 +58,7 @@ const updateSavedAmount = async (data) => {
 };
 
 const getArkaHistory = async (id, startDate, endDate) => {
-  return request(`/arka-history/todays/${id}/?startDate=${startDate}&endDate=${endDate}`, {
+  return request(`/arka-history/todays/${id}?startDate=${startDate}&endDate=${endDate}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
