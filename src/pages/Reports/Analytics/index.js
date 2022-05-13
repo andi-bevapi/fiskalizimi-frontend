@@ -37,7 +37,9 @@ const Analytics = () => {
     const columns = [
         { field: 'invoiceCode', headerName: i18n.t('billCode'), width: 120 },
         { field: 'totalAmount', headerName: i18n.t('totalValue'), width: 100 },
-        { field: 'totalAmountNoVAT', headerName: i18n.t('totalValueNoVat'), width: 180 },
+        { field: 'totalAmountNoVAT', headerName: i18n.t('totalValueNoVat'), width: 180, renderCell: (params) => {
+            return params.row.totalAmountNoVAT.toFixed(2);
+        } },
         { field: 'totalVat', headerName: i18n.t('totalValueWithVat'), width: 150 },
         { field: 'totalVat6', headerName: i18n.t('totalValueVat_6'), width: 180 },
         { field: 'totalVat20', headerName: i18n.t('totalValueVat_20'), width: 180 },
