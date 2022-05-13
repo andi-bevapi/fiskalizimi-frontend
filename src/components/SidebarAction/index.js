@@ -116,6 +116,12 @@ const SidebarAction = (props) => {
         if (field.name === 'branchId' && props.editItem) {
           //branch option disabled on editing entity
           field.disabled = true;
+        } else if (
+          field.name === 'branchId' &&
+          !props.editItem &&
+          initialState.currentUser?.branchId !== 0
+        ) {
+          field.disabled = true;
         } else field.disabled = false;
         if (
           props.product &&
@@ -125,7 +131,7 @@ const SidebarAction = (props) => {
             field.name === 'sellingUnitId')
         ) {
           //if product is editing, if branch option is not selected other select option that have branchId are disabled
-          if (branchValue === 0) field.disabled = true;
+          if (branchValue === 0 && initialState.currentUser?.branchId === 0) field.disabled = true;
           else field.disabled = false;
         }
 
