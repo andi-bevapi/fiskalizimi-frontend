@@ -84,6 +84,7 @@ const SoldProducts = () => {
 
             <div style={{ height: '60vh', width: '100%' }}>
                 <DataGrid
+                    getRowId={(row) => row.name}
                     rows={products}
                     columns={columns}
                     pageSize={10}
