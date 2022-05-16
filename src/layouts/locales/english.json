@@ -246,6 +246,7 @@
   "stockProductValidation":"Stock must be a positive number",
   "imageMessage":"Please upload an image smaller then previous",
   "noConnectedArka": "No connected money deposit found",
+  "Vat": "Vat",
   "endDateGreater" : "End date should be after start date",
   "arkaHistoryTable" : "Arka History Table"
 }

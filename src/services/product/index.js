@@ -9,6 +9,14 @@ const getProducts = async (branchId, query) => {
     })
 }
 
+const getProductsByClientId = async (clientId, query) => {
+    const url = buildUrl(query);
+    return request(`/product/clientId/${clientId}${url}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" }
+    })
+}
+
 const getProductByBarcode = async(barcode, branchId) => {
     return request(`/product/${branchId}?barcode=${barcode}`, {
         method: 'GET',
@@ -16,19 +24,25 @@ const getProductByBarcode = async(barcode, branchId) => {
     })
 }
 
-const createProduct = async (data) => {
+const createProduct = async (clientId, data) => {
     return request("/product/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        data
+        data: {
+            clientId,
+            ...data
+        }
     })
 }
 
-const updateProduct = async (data) => {
+const updateProduct = async (clientId, data) => {
     return request(`/product/update/${data.id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
-        data
+        data: {
+            clientId,
+            ...data
+        }
     })
 }
 
@@ -47,4 +61,4 @@ const returnProductWithBarcode = (barcode) => {
 }
 
 
-export { getProducts, getProductByBarcode, createProduct, updateProduct, deleteProduct, returnProductWithBarcode };
+export { getProducts, getProductByBarcode, createProduct, updateProduct, deleteProduct, returnProductWithBarcode, getProductsByClientId };

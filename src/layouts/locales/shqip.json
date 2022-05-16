@@ -245,6 +245,7 @@
   "endShiftOnly":"Deshironi te mbyllni turnin?",
   "yes":"Po",
   "no_":"Jo",
+  "Vat": "TVSH",
   "stockProductValidation":"Stoku duhet të jetë numër pozitiv",
   "imageMessage":"Ju lutem ngarkoni një imazh me madhësi më të vogël",
   "noConnectedArka": "Nuk u gjet asnjë arkë e lidhur",

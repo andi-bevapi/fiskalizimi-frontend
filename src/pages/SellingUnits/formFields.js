@@ -6,7 +6,14 @@ export const formFields = [
       name: 'name',
       component: 'Text',
       label: i18n.t("Name")
-  }
+  },
+  {
+    name: 'branchId',
+    component: 'Select',
+    label: i18n.t("branch"),
+    options: [],
+    identifier: 'branchList',
+  },    
 ]
 
 export const validationSchema = yup.object({

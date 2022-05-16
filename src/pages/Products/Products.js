@@ -8,7 +8,7 @@ import { useSellingUnitContext } from "../../Context/SellingUnitContext";
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
 
-const tableHeaders = ['Id', 'Name', 'Price', 'Barcode','VAT' ,'Stock', 'Category','SellingUnit','Supplier','Actions'];
+const tableHeaders = ['Id', 'Name', 'Price', 'Barcode','Vat' ,'Stock', 'Category','SellingUnit','Supplier','Actions'];
 
 const Products = () => {
   const { productList, setProductList, productToCreate, productToUpdate, productToDelete, isLoading } = useContextProduct();
