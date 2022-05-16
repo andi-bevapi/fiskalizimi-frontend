@@ -43,6 +43,6 @@ export const validationSchema = yup.object({
     .max(20, i18n.t('arkaEmriLength'))
     .required(i18n.t('arkaEmriRequired')),
   serialNumber: yup.string().required(i18n.t('arkaSerialNrRequired')),
-  validFrom: yup.string().required(i18n.t('arkaDateRequired')),
-  validTo: yup.string().required(i18n.t('arkaDateRequired')),
+  validFrom: yup.date().required(i18n.t('arkaDateRequired')),
+  validTo: yup.date().when("validFrom", (validFrom, yup) => validFrom && yup.min(validFrom, i18n.t("endDateGreater"))).required(i18n.t('arkaDateRequired')),
 });

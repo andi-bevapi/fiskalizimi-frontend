@@ -7,11 +7,13 @@ import styles from '../components/navigationStyles.css'
 import HomeIcon from '@mui/icons-material/Home';//home
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; // users
 import StorefrontIcon from '@mui/icons-material/Storefront';; //furnitoret
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //njesite e shitjes
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //arkat
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
 import CategoryIcon from '@mui/icons-material/Category'; //category
 import SettingsIcon from '@mui/icons-material/Settings';//settings
+import SquareFootIcon from '@mui/icons-material/SquareFoot'; //njesite e shitjes
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';//produktet
+import BarChartIcon from '@mui/icons-material/BarChart'; //reports
 import Box from '@mui/material/Box';
 import { useTranslation } from "react-i18next";
 
@@ -41,22 +43,22 @@ const NavItems = () => {
           <> <Box m={1} pt={1}> <CategoryIcon /> </Box> </> <span>{t("category")}</span> </>;
       case "Njesite matese":
         return <>
-          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>{t("measureUnits")}</span> </>;
+          <> <Box m={1} pt={1}> <SquareFootIcon /> </Box> </> <span>{t("measureUnits")}</span> </>;
       case "Pikat e shitjes":
         return <>
           <> <Box m={1} pt={1}> <StoreMallDirectoryIcon /> </Box> </> <span>{t("pointOfSales")}</span> </>;
       case "Furnitoret":
         return <>
           <> <Box m={1} pt={1}> <StorefrontIcon /> </Box> </> <span>{t("suppliers")}</span> </>;
+      case "Arkat":
+        return <>
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
       case "Perdoruesit":
         return <>
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("users")}</span> </>;
       case "Raportet":
         return <>
-          <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("reports")}</span> </>;
-      case "Arkat":
-        return <>
-          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
+          <> <Box m={1} pt={1}> <BarChartIcon /> </Box> </> <span>{t("reports")}</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{t("configurations")}</span> </>;

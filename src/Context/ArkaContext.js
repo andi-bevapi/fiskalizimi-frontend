@@ -74,9 +74,9 @@ const ArkaProvider = (props) => {
     }
   };
 
-  const viewArkaHistory = async (id) => {
+  const viewArkaHistory = async (id, startDate, endDate) => {
     try {
-      const response = await getArkaHistory(id);
+      const response = await getArkaHistory(id, startDate, endDate);
       return response;
     } catch (error) {
       return error;

@@ -232,7 +232,7 @@
   "ValidFrom":"Valid From",
   "ValidTo":"Valid To",
   "action" :"Action",
-  "actionTime" :"Action Time",
+  "actionTime" :"Action Date",
   "Amount" : "Amount",
   "logout":"Logout",
   "scanBarcode":"Scan Barcode",
@@ -246,5 +246,7 @@
   "stockProductValidation":"Stock must be a positive number",
   "imageMessage":"Please upload an image smaller then previous",
   "noConnectedArka": "No connected money deposit found",
-  "Vat": "Vat"
+  "Vat": "Vat",
+  "endDateGreater" : "End date should be after start date",
+  "arkaHistoryTable" : "Arka History Table"
 }

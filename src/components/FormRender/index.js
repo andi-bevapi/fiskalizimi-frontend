@@ -12,7 +12,7 @@ import { Field } from 'formik';
 import Thumbnail from './Thumbnail';
 import { isFile } from '../../helpers/isFile';
 import { useState } from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() => ({
   inputContainer: {
@@ -26,8 +26,8 @@ const Input = styled('input')({
 
 const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBranchValue}) => {
   const classes = useStyles();
-  const [uploadMessage,setUploadMessage] = useState(null);
-  const {t} = useTranslation();
+  const [uploadMessage, setUploadMessage] = useState(null);
+  const { t } = useTranslation();
 
   return formFields.map((formField) => {
     switch (formField.component) {
@@ -217,10 +217,14 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
                   id={formField.name}
                   type="file"
                   onChange={(event) => {
-                      {event.target.files[0].size > 5000000 ? setUploadMessage("not uploaded") : setFieldValue(formField.name, event.target.files[0]);}
+                    {
+                      event.target.files[0].size > 5000000
+                        ? setUploadMessage('not uploaded')
+                        : setFieldValue(formField.name, event.target.files[0]);
+                    }
                   }}
                 />
-                {uploadMessage && t("imageMessage")}
+                {uploadMessage && t('imageMessage')}
                 <Button variant="contained" component="span">
                   {formField.label}
                 </Button>
@@ -243,13 +247,14 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
             {({ field, form: { setFieldValue }, meta }) => (
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
+                  inputFormat="dd/MM/yyyy"
                   label={formField.label}
                   id={formField.name}
                   name={formField.name}
                   {...field}
-                  onChange={val =>
-                  setFieldValue(formField.name, val)}
-                  renderInput={(params) => <TextField {...params}  sx={{ marginBottom: '30px' }}/>}
+                  onChange={(val) => setFieldValue(formField.name, val)}
+                  renderInput={(params) => <TextField {...params} error={meta.touched && meta.error}
+                  helperText={meta.error} sx={{ marginBottom: '30px' }} />}
                 />
               </LocalizationProvider>
             )}
