@@ -104,7 +104,8 @@ const SidebarAction = (props) => {
       fields.forEach((field) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
-        if (field.component === 'Date') initialValues[field.name] = new Date();
+        if (field.name === 'validFrom') initialValues[field.name] = new Date();
+        if (field.name === 'validTo') initialValues[field.name] = new Date(new Date().setDate(new Date().getDate() + 1));
         if (field.component === 'Select') {
           if (field.options.length === 1) initialValues[field.name] = field.options[0].value;
         }
