@@ -27,7 +27,7 @@ const Filters = ({ getData }) => {
                 getData(values);
             }}
         >
-            <Form style={{ display: 'flex' }}>
+            <Form>
                 <FormRender
                     formFields={[
                         {
