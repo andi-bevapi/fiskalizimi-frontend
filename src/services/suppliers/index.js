@@ -8,12 +8,20 @@ const getSuppliersList = (branchId) => {
   });
 };
 
-const createSupplier = async (branchId, data) => {
+const getSuppliersListByClientId = (clientId) => {
+  return request(`/supplier/clientId/${clientId}`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('poslaToken'),
+    },
+  });
+};
+
+const createSupplier = async (clientId, data) => {
   return request('/supplier/create', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: {
-      branchId,
+      clientId,
       ...data
     },
   });
@@ -37,4 +45,4 @@ const deleteSupplier = async (id) => {
   });
 };
 
-export { getSuppliersList, createSupplier, updateSupplier, deleteSupplier };
+export { getSuppliersList, createSupplier, updateSupplier, deleteSupplier, getSuppliersListByClientId };

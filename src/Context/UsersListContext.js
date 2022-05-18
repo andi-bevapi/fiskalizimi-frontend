@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getUsers, createUser, updateUser, deleteUser } from '../services/user/index';
+import { getUsers, createUser, updateUser, deleteUser, getUsersByClientId } from '../services/user/index';
 import { getPermissions } from '../services/permission';
 import { useModel } from 'umi';
 
@@ -15,7 +15,10 @@ const UsersListProvider = (props) => {
   const getUsersList = async () => {
     setIsLoading(true);
     try {
-      const response = await getUsers(initialState?.currentUser?.branchId);
+      let response = [];
+      if (initialState.currentUser?.branchId !== 0)
+        response = await getUsers(initialState?.currentUser?.branchId);
+      else response = await getUsersByClientId(initialState.currentUser?.clientId)
       if (response.statusCode === 200) {
         setUsersList(response.data);
       }
@@ -74,7 +77,7 @@ const UsersListProvider = (props) => {
   };
 
   useEffect(() => {
-    if(initialState?.currentUser?.branchId) getUsersList();
+    if(initialState?.currentUser?.clientId) getUsersList();
     getPermissionsList();
   }, [initialState?.currentUser]);
 

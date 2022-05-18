@@ -90,11 +90,14 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleShiftButton = () => {
+  const handleShiftButton = async () => {
+    const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
+    setSummaryData(summaryData.data[0]);
+
     return SwalModal(
       `${t("endShiftOnly")}`,
-      '',
-      'warning',
+      `Vlera Totale: ${summaryData.data[0]?.totalAmount}`,
+      'question',
       `${t("no_")}`,
       `${t("yes")}`,
       () => { },
@@ -107,8 +110,6 @@ const Navbar = () => {
     if (response.statusCode === 200) {
       setShiftIsOpen(false);
       setShowSummary(true);
-      const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
-      setSummaryData(summaryData.data[0]);
     }
   };
 
@@ -149,7 +150,7 @@ const Navbar = () => {
             </MenuItem>
           </Menu>
         </div>
-        {shiftIsOpen && (
+        {initialState.currentUser?.branchId !== 0 && shiftIsOpen && (
           <Button
             style={{ backgroundColor: '#74A19E', marginRight: window.innerWidth < 800 ? '14px' : '10px', fontSize: '12px', padding: window.innerWidth < 800 ? '3px 4px' : '6px 16px' }}
             onClick={handleShiftButton}

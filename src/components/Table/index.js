@@ -17,6 +17,10 @@ import { useTranslation } from 'react-i18next';
 import Moment from 'moment';
 import ModalComponent from '../Modal/Modal';
 import i18n from 'i18next';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -50,6 +54,13 @@ const TableComponent = (props) => {
   const [arkaHistoryData, setArkaHistoryData] = useState([]);
   const { t } = useTranslation();
   const access = useAccess();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [arkaId, setArkaId] = useState(0);
+
+  useEffect(() => {
+    if (props.arka) handleHistoryData();
+  }, [startDate, endDate]);
 
   const [tableHeader, setTableHeader] = useState([]);
 
@@ -67,10 +78,11 @@ const TableComponent = (props) => {
   };
 
   const handleHistoryButton = async (id) => {
-    const response = await props.history(id);
+    const response = await props.history(id, startDate, endDate);
     if (response.statusCode === 200) {
       setArkaHistoryData(response.data);
       setOpenHistoryModal(true);
+      setArkaId(id);
     } else
       setOpenSnackBar({
         status: true,
@@ -79,8 +91,14 @@ const TableComponent = (props) => {
       });
   };
 
+  const handleHistoryData = async () => {
+    const response = await props.history(arkaId, startDate, endDate);
+    if (response.statusCode === 200) setArkaHistoryData(response.data);
+  }
+
   const toggleModal = () => {
     setOpenHistoryModal(!openHistoryModal);
+    setArkaId(0);
   };
 
   const columns = [
@@ -200,9 +218,37 @@ const TableComponent = (props) => {
       <ModalComponent
         open={openHistoryModal}
         handleClose={toggleModal}
-        title="Arka History For Today"
+        title={t('arkaHistoryTable')}
       >
-        <TableContainer sx={{ fontSize: '14px' }}>
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              inputFormat="dd/MM/yyyy"
+              label={t('ValidFrom')}
+              id={'startDate'}
+              name={t('ValidFrom')}
+              value={startDate}
+              onChange={(val) => setStartDate(val)}
+              renderInput={(params) => (
+                <TextField {...params} sx={{ marginRight: '20px', width: '150px' }} />
+              )}
+            />
+          </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              inputFormat="dd/MM/yyyy"
+              label={t('ValidTo')}
+              id={'endDate'}
+              name={t('ValidTo')}
+              value={endDate}
+              onChange={(val) => setEndDate(val)}
+              renderInput={(params) => (
+                <TextField {...params} sx={{ marginBottom: '20px', width: '150px' }} />
+              )}
+            />
+          </LocalizationProvider>
+        </div>
+        <TableContainer sx={{ fontSize: '14px', width: "600px" }}>
           <Table stickyHeader aria-label="simple table">
             <TableHead>
               <TableRow
@@ -210,9 +256,9 @@ const TableComponent = (props) => {
                   th: { padding: '16px 6px', fontFamily: 'Poppins' },
                 }}
               >
+                <TableCell className={classes.tableCell}>{t('actionTime')}</TableCell>
                 <TableCell className={classes.tableCell}>{t('Amount')}</TableCell>
                 <TableCell className={classes.tableCell}>{t('action')}</TableCell>
-                <TableCell className={classes.tableCell}>{t('actionTime')}</TableCell>
                 <TableCell className={classes.tableCell}>{t('Username')}</TableCell>
               </TableRow>
             </TableHead>
@@ -225,17 +271,10 @@ const TableComponent = (props) => {
                   }}
                   id={item.id}
                 >
-                  {Object.keys(item).map((key, idx) => {
-                    if (key.toLowerCase().includes('time'))
-                      return (
-                        <TableCell key={idx}>
-                          {Moment(new Date(item[key])).format('DD/MM/YYYY')}
-                        </TableCell>
-                      );
-                    if (key === 'user')
-                      return <TableCell key={idx}>{item[key].username}</TableCell>;
-                    if (key !== 'id') return <TableCell key={idx}>{item[key]}</TableCell>;
-                  })}
+                  <TableCell>{Moment(new Date(item['actionTime'])).format('DD/MM/YYYY')}</TableCell>
+                  <TableCell>{item['totalAmount']}</TableCell>
+                  <TableCell>{item['action']}</TableCell>
+                  <TableCell>{item['user'].username}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

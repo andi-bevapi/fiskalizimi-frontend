@@ -74,9 +74,11 @@ const ItemLine = (props) => {
     >
       <div className={stopAdding ? styles.lineContainerDisabled : styles.lineContainer}>
         <Typography className={styles.productName}>{props.item.name}</Typography>
-        <Typography className={styles.productBarcode}>Barkodi: {props.item.barcode}</Typography>
+        <Typography className={styles.productBarcode}>{t('Barcode')}: {props.item.barcode}</Typography>
         <Typography className={styles.productPrice}> {props.item.price} LEK</Typography>
-        <Typography className={styles.productStock}> Stoku: {props.item.stock}
+        <Typography className={styles.productStock}> {t('Stock')}: {props.item.stock}
+        {initialState?.currentUser?.branchId === 0 &&
+          <Typography className={styles.productBarcode}>{t('branch')}: {props.item.branch.name}</Typography>}
         </Typography>
       </div>
     </div>
