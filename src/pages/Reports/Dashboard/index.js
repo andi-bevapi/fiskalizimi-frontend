@@ -31,6 +31,7 @@ const Dashboard = () => {
   const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
   const [totals, setTotals] = useState([]);
   const [totalsCharts, setTotalsCharts] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('daily');
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -100,14 +101,19 @@ const Dashboard = () => {
 
       <Grid container spacing={2}>
         {totals?.map(item => (
-          <Grid item xs={4}>
-            <Card sx={{ minWidth: 275, textAlign: 'left' }}>
+          <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+            {/* minWidth: 275, */}
+            <Card sx={{ textAlign: 'left' }}>
               <CardHeader
                 title={item?.label}
                 titleTypographyProps={{ variant: 'h6', fontFamily: 'Poppins' }}
                 style={{
                   background: '#74a19e',
                   color: '#fff',
+                  minHeight: '80px',
+                  maxHeight: '120px',
+                  fontSize: '18px !important',
+
                 }}
               />
               <CardContent>

@@ -8,12 +8,20 @@ const getSellingUnits = (branchId) => {
   });
 };
 
-const createSellingUnit = async (branchId, data) => {
+const getSellingUnitsByClientId = (clientId) => {
+  return request(`/selling-units/clientId/${clientId}`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('poslaToken'),
+    },
+  });
+};
+
+const createSellingUnit = async (clientId, data) => {
   return request('/selling-units/create', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: {
-      branchId,
+      clientId,
       ...data
     },
   });
@@ -37,4 +45,4 @@ const deleteSellingUnit = async (id) => {
     });
   };
   
-export { getSellingUnits, createSellingUnit, updateSellingUnit, deleteSellingUnit };
+export { getSellingUnits, createSellingUnit, updateSellingUnit, deleteSellingUnit, getSellingUnitsByClientId };

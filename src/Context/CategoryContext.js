@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { createCategory, getAllCategory, updateCategory, deleteCategory } from "../services/category";
+import { createCategory, getAllCategory, updateCategory, deleteCategory, getAllCategoryByClientId } from "../services/category";
 import { useModel } from 'umi';
 
 const CategoryContext = createContext({});
@@ -11,13 +11,16 @@ const CategoryProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(async () => {
-        if(initialState?.currentUser?.branchId) getCategoryList();
+        if (initialState?.currentUser?.clientId) getCategoryList();
     }, [initialState?.currentUser]);
 
     const getCategoryList = async () => {
         setIsLoading(true);
         try {
-            const category = await getAllCategory(initialState?.currentUser?.branchId);
+            let category = [];
+            if (initialState?.currentUser?.branchId !== 0)
+                category = await getAllCategory(initialState?.currentUser?.branchId);
+            else category = await getAllCategoryByClientId(initialState?.currentUser?.clientId);
             if (category.statusCode === 200) {
                 setCategoryList(category.data);
             }
@@ -29,7 +32,7 @@ const CategoryProvider = (props) => {
 
     const categoryToCreate = async (data) => {
         try {
-            const result = await createCategory(initialState?.currentUser?.branchId, data);
+            const result = await createCategory(initialState?.currentUser?.clientId, data);
             getCategoryList();
             return result;
         } catch (error) {

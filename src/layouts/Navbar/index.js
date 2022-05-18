@@ -94,14 +94,17 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleShiftButton = () => {
+  const handleShiftButton = async () => {
+    const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
+    setSummaryData(summaryData.data[0]);
+
     return SwalModal(
-      `${t('endShiftOnly')}`,
-      '',
-      'warning',
-      `${t('no_')}`,
-      `${t('yes')}`,
-      () => {},
+      `${t("endShiftOnly")}`,
+      `Vlera Totale: ${summaryData.data[0]?.totalAmount}`,
+      'question',
+      `${t("no_")}`,
+      `${t("yes")}`,
+      () => { },
       () => closeShift(),
     );
   };
@@ -112,8 +115,6 @@ const Navbar = () => {
     if (response.statusCode === 200) {
       setShiftIsOpen(false);
       setShowSummary(true);
-      const summaryData = await getDailySummaryReport(initialState?.currentUser?.id);
-      setSummaryData(summaryData.data[0]);
     }
   };
 
@@ -157,7 +158,7 @@ const Navbar = () => {
             </MenuItem>
           </Menu>
         </div>
-        {shiftIsOpen && (
+        {initialState.currentUser?.branchId !== 0 && shiftIsOpen && (
           <Button
             style={{
               backgroundColor: '#74A19E',

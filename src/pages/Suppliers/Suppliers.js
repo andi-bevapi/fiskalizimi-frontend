@@ -1,6 +1,7 @@
 import TableComponent from '../../components/Table';
 import { listFormat } from "../../helpers/listFormater";
 import { useSupplierContext } from "../../Context/SuppliersContext";
+import { useBranchListContext } from "../../Context/BranchListContext";
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
 
@@ -15,6 +16,7 @@ const Suppliers = () => {
     isLoading, } = useSupplierContext();
 
   const formatedProducts = listFormat(suppliersList, tableHeaders);
+  const { branchList } = useBranchListContext();
   const {t} = useTranslation();
 
   return (
@@ -30,6 +32,9 @@ const Suppliers = () => {
       formFields={formFields}
       validationSchema={validationSchema}
       isLoading={isLoading}
+      contexts={{
+        branchList,
+      }}
       acceses={{
         create: 'canCreateSupplier',
         update: 'canUpdateSupplier',

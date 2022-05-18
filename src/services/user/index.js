@@ -17,6 +17,15 @@ export const getUsers = async (branchId) => {
     });
 }
 
+export const getUsersByClientId = async (clientId) => {
+    return request(`/user/clientId/${clientId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
 export const login = async (data) => {
     return request("/user/login", {
         method: 'POST',
