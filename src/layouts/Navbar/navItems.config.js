@@ -44,11 +44,15 @@ export const navItems = [
     access: 'canViewArka'
   },
   {
+    title: "Faturat",
+    path: "/faturat",
+  },
+  {
     title: "Konfigurime",
     path: "/konfigurime",
   },
   {
     title: "Arka",
     path: "/arka",
-  },
+  }
 ];

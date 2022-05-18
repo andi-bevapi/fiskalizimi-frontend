@@ -12,6 +12,7 @@ import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //p
 import CategoryIcon from '@mui/icons-material/Category'; //category
 import SettingsIcon from '@mui/icons-material/Settings';//settings
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';//produktet
+import ReceiptIcon from '@mui/icons-material/Receipt'; //invoices
 import Box from '@mui/material/Box';
 import { useTranslation } from "react-i18next";
 
@@ -57,6 +58,9 @@ const NavItems = () => {
       case "Arkat":
         return <>
           <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
+       case 'Faturat':
+        return <>
+          <> <Box m={1} pt={1}> <ReceiptIcon /> </Box> </> <span>{t("invoices")}</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{t("configurations")}</span> </>;

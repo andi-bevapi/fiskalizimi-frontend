@@ -74,17 +74,17 @@ const ItemCard = (props) => {
 
 
   const handleCardClick = () => {
-    if (!initialState?.currentUser?.arka) {
-      return SwalModal(
-        t("noConnectedArka"),
-        "",
-        "warning",
-        t("close"),
-        "",
-        () => { },
-        () => { },
-      );
-    }
+    // if (!initialState?.currentUser?.arka) {
+    //   return SwalModal(
+    //     t("noConnectedArka"),
+    //     "",
+    //     "warning",
+    //     t("close"),
+    //     "",
+    //     () => { },
+    //     () => { },
+    //   );
+    // }
     if (!stopAdding) {
       const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
       const isExisting = (productFromArray.length >= 1 ? true : false);
