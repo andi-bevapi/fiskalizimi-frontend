@@ -53,6 +53,7 @@
   "messageBill" :"Please insert the message",
   "descriptionLength":"The description must have more then 2 characters",
   "description":"Please insert the description",
+  "descriptionNsfl":"description",
   "zeroPrice":"Product with 0 price are not allowed",
   "activeInvoice": "Active Invoice",
   "pendingInvoice": "Pending Invoices",
@@ -136,6 +137,8 @@
   "branchCity":"Please insert name of the citty",
   "branchCodeLength":"Code must have more than 5 characters",
   "branchCode":"Please insert the code",
+  "branchCodeReport":"Branch Code",
+  "branchNameReport" : "Branch Name",
   "branchMaintainerLength":"Maintainer code must have more than 5 characters",
   "branchMaintainer":"Please insert the maintainer code",
   "categoryNameLength":"Name must have more than 4 characters",
@@ -218,6 +221,8 @@
   "originalPrice":"Original Price",
   "finalPrice":"Fianl Price",
   "billDate":"Bill Date",
+  "nslf":"NSLF",
+  "fic":"FIC",
   "fiscalizedBill":"Fiscalized invoices",
   "noFiscalizedBill":"Not Fiscalized Invoices",
   "startingAmount": "Starting Amount",
@@ -248,5 +253,6 @@
   "noConnectedArka": "No connected money deposit found",
   "Vat": "Vat",
   "endDateGreater" : "End date should be after start date",
-  "arkaHistoryTable" : "Arka History Table"
+  "arkaHistoryTable" : "Arka History Table",
+  "invoices":"Invoices"
 }

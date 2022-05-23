@@ -53,6 +53,7 @@
   "messageBill":"Ju lutem vendosni mesazhin",
   "descriptionLength":"Pershkrimin duhet te kete me shume se 2 karaktere",
   "description":"Ju lutem vendosni pershkrimin",
+  "descriptionNsfl":"pershkrimi",
   "zeroPrice":"Nuk lejohen produkte me cmim 0",
   "activeInvoice": "Fatura Aktive",
   "pendingInvoice": "Fatura te ruajtura",
@@ -137,6 +138,8 @@
   "branchCityLength":"Qyteti duhet te kete me shume se 2 karaktere",
   "branchCity":"Ju lutem vendosni emrin e qytetit",
   "branchCodeLength":"Kodi duhet te kete me shume se 5 karaktere",
+  "branchCodeReport":"Kodi i branch",
+  "branchNameReport" : "Emri i branch",
   "branchCode":"Ju lutem vendosni emrin e kodin",
   "branchMaintainerLength":"Kodi i mirembajtjes duhet te kete me shume se 5 karaktere",
   "branchMaintainer":"Ju lutem vendosni kodi i mirembajtjes",
@@ -220,6 +223,8 @@
   "originalPrice":"Cmimi origjinal",
   "finalPrice":"Cmimi Final",
   "billDate":"Data e Fatures",
+  "nslf":"NSLF",
+  "fic":"FIC",
   "fiscalizedBill":"Faturat e fiskalizuara",
   "noFiscalizedBill":"Faturat e Pa Fiskalizuara",
   "startingAmount": "Gjendja Fillestare",
@@ -250,5 +255,6 @@
   "imageMessage":"Ju lutem ngarkoni një imazh me madhësi më të vogël",
   "noConnectedArka": "Nuk u gjet asnjë arkë e lidhur",
   "endDateGreater" : "Data e mbarimit duhet të jetë më e madhe se data e fillimit",
-  "arkaHistoryTable" : "Tabela e Historisë së Arkës"
+  "arkaHistoryTable" : "Tabela e Historisë së Arkës",
+  "invoices":"Faturat"
 }

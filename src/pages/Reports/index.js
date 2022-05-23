@@ -76,7 +76,6 @@ const Reports = () => {
                 {...a11yProps(1)}
                 className={styles.tabFonts}
               />
-              <Tab label={i18n.t('bill')} {...a11yProps(2)} className={styles.tabFonts} />
               <Tab label={i18n.t('soldProducts')} {...a11yProps(3)} className={styles.tabFonts} />
               <Tab label='Operatoret' {...a11yProps(4)} className={styles.tabFonts} />
               <Tab

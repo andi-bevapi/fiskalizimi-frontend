@@ -13,6 +13,7 @@ import CategoryIcon from '@mui/icons-material/Category'; //category
 import SettingsIcon from '@mui/icons-material/Settings';//settings
 import SquareFootIcon from '@mui/icons-material/SquareFoot'; //njesite e shitjes
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';//produktet
+import ReceiptIcon from '@mui/icons-material/Receipt'; //invoices
 import BarChartIcon from '@mui/icons-material/BarChart'; //reports
 import Box from '@mui/material/Box';
 import { useTranslation } from "react-i18next";
@@ -58,7 +59,13 @@ const NavItems = () => {
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("users")}</span> </>;
       case "Raportet":
         return <>
-          <> <Box m={1} pt={1}> <BarChartIcon /> </Box> </> <span>{t("reports")}</span> </>;
+          <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("reports")}</span> </>;
+      case "Arkat":
+        return <>
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
+       case 'Faturat':
+        return <>
+          <> <Box m={1} pt={1}> <ReceiptIcon /> </Box> </> <span>{t("invoices")}</span> </>;
       case 'Konfigurime':
         return <>
           <> <Box m={1} pt={1}> <SettingsIcon /> </Box> </> <span>{t("configurations")}</span> </>;
