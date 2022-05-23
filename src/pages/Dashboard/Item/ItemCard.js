@@ -78,19 +78,6 @@ const ItemCard = (props) => {
   );
 
   const handleCardClick = () => {
-<<<<<<< HEAD
-    // if (!initialState?.currentUser?.arka) {
-    //   return SwalModal(
-    //     t("noConnectedArka"),
-    //     "",
-    //     "warning",
-    //     t("close"),
-    //     "",
-    //     () => { },
-    //     () => { },
-    //   );
-    // }
-=======
     if (!initialState?.currentUser?.arka) {
       return SwalModal(
         t('noConnectedArka'),
@@ -102,7 +89,6 @@ const ItemCard = (props) => {
         () => {},
       );
     }
->>>>>>> 475d55533b94c19899e397a61484adcc45655d4c
     if (!stopAdding) {
       const productFromArray = props.invoiceList?.filter((item) => item.id === props.item.id);
       const isExisting = productFromArray.length >= 1 ? true : false;
