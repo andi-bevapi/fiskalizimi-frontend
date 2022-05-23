@@ -5,7 +5,7 @@ import { useBranchListContext } from '../../Context/BranchListContext';
 import { formFields, validationSchema } from './formFields';
 import { useTranslation } from "react-i18next";
 
-const tableHeaders = ['Id', 'Username', 'Firstname', 'Lastname', 'Phone', 'Email', 'Actions'];
+const tableHeaders = ['id', 'username', 'firstName', 'lastName', 'phone', 'email'];
 
 const Users = () => {
   const {

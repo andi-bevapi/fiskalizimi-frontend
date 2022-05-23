@@ -29,6 +29,11 @@ export const navItems = [
     access: 'canViewBranch'
   },
   {
+    title: "Arkat",
+    path: "/arka-list",
+    access: 'canViewArka'
+  },
+  {
     title: "Perdoruesit",
     path: "/perdoruesit",
     access: 'canViewUser'

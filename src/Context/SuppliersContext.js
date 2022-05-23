@@ -4,6 +4,7 @@ import {
   createSupplier,
   updateSupplier,
   deleteSupplier,
+  getSuppliersListByClientId
 } from '../services/suppliers';
 import { useModel } from 'umi';
 
@@ -16,13 +17,16 @@ const SupplierProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    if(initialState?.currentUser?.branchId) getSuppliers();
+    if(initialState?.currentUser?.clientId) getSuppliers();
   }, [initialState?.currentUser]);
 
   const getSuppliers = async () => {
     setIsLoading(true);
     try {
-      const response = await getSuppliersList(initialState?.currentUser?.branchId);
+      let response = [];
+      if (initialState?.currentUser?.branchId !== 0)
+        response = await getSuppliersList(initialState?.currentUser?.branchId);
+      else response = await getSuppliersListByClientId(initialState?.currentUser?.clientId);
       if (response.statusCode === 200) {
         setSuppliersList(response.data);
       }
@@ -34,7 +38,7 @@ const SupplierProvider = (props) => {
 
   const supplierToCreate = async (data) => {
     try {
-      const response = await createSupplier(initialState?.currentUser?.branchId, data);
+      const response = await createSupplier(initialState?.currentUser?.clientId, data);
       getSuppliers();
       return response;
     } catch (error) {

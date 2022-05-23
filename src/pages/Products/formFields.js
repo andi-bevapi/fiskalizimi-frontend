@@ -3,6 +3,13 @@ import i18n from "i18next";
 
 export const formFields = [
     {
+        name: 'branchId',
+        component: 'Select',
+        label: i18n.t("branch"),
+        options: [],
+        identifier: 'branchList'
+    },
+    {
         name: 'name',
         component: 'Text',
         label: i18n.t("Name")
@@ -71,13 +78,6 @@ export const formFields = [
         label: i18n.t("measureUnit"),
         options: [],
         identifier: 'sellingUnitList'
-    },
-    {
-        name: 'branchId',
-        component: 'Select',
-        label: i18n.t("branch"),
-        options: [],
-        identifier: 'branchList'
     },
     {
         name: 'imageVirtualPath',

@@ -2,6 +2,7 @@ import styles from './index.css';
 import Navbar from './Navbar';
 import Body from './Body';
 import { I18nextProvider } from 'react-i18next';
+import { BranchListProvider } from '../Context/BranchListContext';
 import i18n from './i18n';
 import { Suspense } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -20,7 +21,9 @@ const BasicLayout = (props) => {
       <div className={styles.layout}>
         <Suspense fallback="Loading...">
           <I18nextProvider i18n={i18n}>
+            <BranchListProvider>
             <Navbar />
+            </BranchListProvider>
               <Body children={props.children} />
           </I18nextProvider>
         </Suspense>
