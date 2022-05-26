@@ -1,4 +1,4 @@
-import request from "../../utils/request";
+import request from '../../utils/request';
 
 const getAllClients = async () => {
   return request(`/client/`, {
@@ -9,4 +9,33 @@ const getAllClients = async () => {
   });
 };
 
-export { getAllClients };
+const createClient = async (data) => {
+  return request('/client/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+const deleteClient = async (id) => {
+  return request(`/client/delete/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+const updateClient = async (data) => {
+  return request(`/client/update/${data.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export { getAllClients, createClient, updateClient, deleteClient };

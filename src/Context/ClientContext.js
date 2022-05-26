@@ -1,6 +1,6 @@
 import { useContext, useEffect, createContext, useState } from 'react';
 import { useModel } from 'umi';
-import { getAllClients } from '../services/client';
+import { getAllClients, createClient, updateClient, deleteClient } from '../services/client';
 
 const ClientContext = createContext({});
 
@@ -29,9 +29,8 @@ const ClientProvider = (props) => {
 
   const clientToUpdate = async (data) => {
     try {
-    //   const result = await updateBranchList(initialState?.currentUser?.clientId, data);
-    //   getBranchList();
-    //   return result;
+      const response = await updateClient(data);
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -39,12 +38,13 @@ const ClientProvider = (props) => {
 
   const clientToDelete = async (id) => {
     try {
-    //   setBranchList((prevState) => {
-    //     const newState = prevState.filter((el) => el.id !== id);
-    //     return [...newState];
-    //   });
-    //   const result = await deleteBranchList(id);
-    //   return result;
+      const response = await deleteClient(id);
+      if (response.statusCode === 200)
+        setClients((prev) => {
+          const newState = prev.filter((el) => el.id !== id);
+          return [...newState];
+        });
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -52,9 +52,12 @@ const ClientProvider = (props) => {
 
   const clientToCreate = async (data) => {
     try {
-    //   const result = await createBranchList(initialState?.currentUser?.clientId, data);
-    //   getBranchList();
-    //   return result;
+      const response = await createClient(data);
+      if (response.statusCode === 200)
+        setClients((prev) => {
+          return [...prev, response.data];
+        });
+      return response;
     } catch (error) {
       console.log(error);
     }

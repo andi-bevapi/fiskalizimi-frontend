@@ -7,7 +7,6 @@ import { listFormat } from '../../helpers/listFormater';
 const tableHeaders = ['id', 'name', "address", "email", "phoneNumber", "NUIS"];
 
 const SuperAdmin = () => {
-  console.log(clients);
   const { clients, setClients, isLoading, clientToCreate, clientToUpdate, clientToDelete } = useClientContext();
   const formatedClientList = listFormat(clients, tableHeaders);
 

@@ -222,6 +222,7 @@ const SidebarAction = (props) => {
   };
 
   const postData = async (values) => {
+    console.log(values);
     const permissions = [];
     if (props.user) {
       Object.keys(props.permissions).map((key, idx) => {
