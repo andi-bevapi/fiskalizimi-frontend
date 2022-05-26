@@ -22,7 +22,7 @@ class User {
         this.firstName = user.firstName || '';
         this.lastName = user.lastName || '';
         this.branchId = user.branchId || 0;
-        this.clientId = user.clientId || '';
+        this.clientId = user.clientId || 0;
         this.permissions = user.permissions || [];
         this.arka = user.arka || null;
 

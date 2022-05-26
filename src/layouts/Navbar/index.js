@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useModel } from 'umi';
 import { navItems } from './navItems.config';
 import SideDrawer from './components/SideDrawer';
@@ -18,8 +18,8 @@ import { getDailySummaryReport } from '../../services/reports';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import PrintShiftDetails from "../../../src/components/PrintShiftDefails"
-import ReactToPrint from "react-to-print";
+import PrintShiftDetails from '../../../src/components/PrintShiftDefails';
+import ReactToPrint from 'react-to-print';
 
 const style = {
   position: 'absolute',
@@ -48,7 +48,6 @@ const Navbar = () => {
     refresh();
   }, []);
 
- 
   const onLogoutHandler = () => {
     if (shiftIsOpen) {
       Swal.fire({
@@ -76,6 +75,28 @@ const Navbar = () => {
     }
   };
 
+  const onLogoutHandlerAdmin = () => {
+    Swal.fire({
+      title:
+        "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+        `Deshironi te dilni?` +
+        '</h5>',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: "<span style='font-family: Poppins;'>" + `Jo` + '</span>',
+      confirmButtonText: `Po`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+      } else if (result.isDismissed) {
+      }
+    });
+  };
+
   const closeShiftAndLogout = () => {
     closeShift();
     logout();
@@ -83,6 +104,7 @@ const Navbar = () => {
 
   const logout = () => {
     localStorage.removeItem('poslaToken');
+    localStorage.removeItem('clientId');
     history.replace('/');
   };
 
@@ -99,16 +121,15 @@ const Navbar = () => {
     setSummaryData(summaryData.data[0]);
 
     return SwalModal(
-      `${t("endShiftOnly")}`,
+      `${t('endShiftOnly')}`,
       `Vlera Totale: ${summaryData.data[0]?.totalAmount}`,
       'question',
-      `${t("no_")}`,
-      `${t("yes")}`,
-      () => { },
+      `${t('no_')}`,
+      `${t('yes')}`,
+      () => {},
       () => closeShift(),
     );
   };
-
 
   const closeShift = async () => {
     const response = await updateShift(initialState?.currentUser?.id);
@@ -122,15 +143,37 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleRemoveClient = () => {
+    localStorage.removeItem('clientId');
+    refresh();
+  };
+
   return (
     <div
       className={styles.navContainer}
       style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row' }}
     >
       <div style={{ margin: window.innerWidth < 800 ? '11px 0px' : 0 }}>
-        <SideDrawer navLinks={navItems} />
+        {(initialState.currentUser?.clientId !== 0 || localStorage.getItem('clientId')) && (
+          <SideDrawer navLinks={navItems} />
+        )}
       </div>
       <div className={styles.rightBtns}>
+        {localStorage.getItem('clientId') && (
+          <Button
+            style={{
+              backgroundColor: '#74A19E',
+              marginRight: window.innerWidth < 800 ? '14px' : '10px',
+              fontSize: '12px',
+              padding: window.innerWidth < 800 ? '3px 4px' : '6px 16px',
+            }}
+            onClick={handleRemoveClient}
+            variant="contained"
+          >
+            Ndrysho Klientin
+          </Button>
+        )}
+
         <div className={styles.menuContainer}>
           <Button
             onClick={handleClickButton}
@@ -177,7 +220,9 @@ const Navbar = () => {
           icon={<Logout />}
           iconColor={{ color: 'white' }}
           text={t('logout')}
-          onClick={onLogoutHandler}
+          onClick={
+            initialState.currentUser?.branchId !== 0 ? onLogoutHandler : onLogoutHandlerAdmin
+          }
         />
       </div>
 
@@ -210,12 +255,15 @@ const Navbar = () => {
           </Typography>
           <div className={styles.buttonContainer}>
             <ReactToPrint
-                trigger={(e) =>
-                    <Button variant="contained" type="submit" className={styles.buttonStyle}> {t("printBill")} </Button>
-                  }
-                content={() => componentRef.current}
+              trigger={(e) => (
+                <Button variant="contained" type="submit" className={styles.buttonStyle}>
+                  {' '}
+                  {t('printBill')}{' '}
+                </Button>
+              )}
+              content={() => componentRef.current}
             />
-            <div style={{ display: "none" }}>
+            <div style={{ display: 'none' }}>
               <PrintShiftDetails summaryData={summaryData} ref={componentRef} />
             </div>
           </div>

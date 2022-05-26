@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import HistoryIcon from '@mui/icons-material/History';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -21,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { useModel } from 'umi';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const TableComponent = (props) => {
+  const { refresh } = useModel('@@initialState');
   const classes = useStyles();
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '' });
@@ -127,6 +130,11 @@ const TableComponent = (props) => {
           setEditItem(foundItem);
         };
 
+        const handleClient = () => {
+          localStorage.setItem('clientId', params.id);
+          refresh();
+        };
+
         const confirmDelete = async () => {
           const response = await props.delete(params.id);
           setOpenSnackBar({ status: true, message: response.message, severity: 'success' });
@@ -147,6 +155,17 @@ const TableComponent = (props) => {
 
         return (
           <div className={classes.btnContainer}>
+            {props.client && (
+              <IconButtonComponent
+                style={{
+                  backgroundColor: '#ffa500',
+                  marginRight: '10px',
+                }}
+                icon={<ManageAccountsIcon />}
+                iconColor={{ color: 'white' }}
+                onClick={ handleClient}
+              />
+            )}
             {props.arka && (
               <IconButtonComponent
                 style={{

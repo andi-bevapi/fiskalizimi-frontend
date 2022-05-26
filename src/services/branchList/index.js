@@ -10,6 +10,7 @@ const getAllBranch = async (clientId) => {
 }
 
 const createBranchList = async(clientId, data) =>{
+    console.log(clientId);
     return request("/branch/create",{
         method: "POST",
         headers: {

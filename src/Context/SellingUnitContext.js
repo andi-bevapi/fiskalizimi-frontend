@@ -7,6 +7,7 @@ import {
   getSellingUnitsByClientId,
 } from '../services/sellingUnit';
 import { useModel } from 'umi';
+import { getClientId } from '../helpers/getClientId';
 
 const SellingUnitContext = createContext({});
 
@@ -17,7 +18,7 @@ const SellingUnitProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    if (initialState?.currentUser?.clientId) getSellingUnitList();
+    getSellingUnitList();
   }, [initialState?.currentUser]);
 
   const getSellingUnitList = async () => {
@@ -26,7 +27,7 @@ const SellingUnitProvider = (props) => {
       let response = [];
       if (initialState?.currentUser?.branchId !== 0)
         response = await getSellingUnits(initialState?.currentUser?.branchId);
-      else response = await getSellingUnitsByClientId(initialState?.currentUser?.clientId);
+      else response = await getSellingUnitsByClientId(getClientId(initialState?.currentUser));
       if (response.statusCode === 200) {
         setSellingUnitList(response.data);
       }
@@ -38,7 +39,7 @@ const SellingUnitProvider = (props) => {
 
   const sellingUnitToCreate = async (data) => {
     try {
-      const response = await createSellingUnit(initialState?.currentUser?.clientId, data);
+      const response = await createSellingUnit(getClientId(initialState?.currentUser), data);
       getSellingUnitList();
       return response;
     } catch (error) {

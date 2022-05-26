@@ -11,6 +11,7 @@ import BootstrapCheckbox from '../InputFields/BootsrapCheckbox';
 import { isFile } from '../../helpers/isFile';
 import { useModel } from 'umi';
 import { useConfigProvider } from '../../Context/ConfigurationsContext';
+import { getClientId } from '../../helpers/getClientId';
 
 const useStyles = makeStyles(() => ({
   formContainer: {
@@ -169,8 +170,9 @@ const SidebarAction = (props) => {
         initialValues[field.name] = '';
         if (field.component === 'Checkbox') initialValues[field.name] = false;
         if (field.name === 'validFrom') initialValues[field.name] = new Date();
-        if (field.name === 'validTo') initialValues[field.name] = new Date(new Date().setDate(new Date().getDate() + 1));
-        if (field.component === 'Select') {
+        if (field.name === 'validTo')
+          initialValues[field.name] = new Date(new Date().setDate(new Date().getDate() + 1));
+        if (field.component === 'Select' && field.name !== 'branchId') {
           if (field.options.length === 1) initialValues[field.name] = field.options[0].value;
         }
         if (initialState?.currentUser?.branchId !== 0 && field.name === 'branchId') {
@@ -242,7 +244,7 @@ const SidebarAction = (props) => {
         response = await action(id, {
           user: {
             ...values,
-            clientId: initialState?.currentUser?.clientId,
+            clientId: getClientId(initialState?.currentUser),
             isFirstTimeLogin: !props.editItem,
           },
           permissions: permissions,
@@ -252,7 +254,7 @@ const SidebarAction = (props) => {
         response = await action({
           user: {
             ...values,
-            clientId: initialState?.currentUser?.clientId,
+            clientId: getClientId(initialState?.currentUser),
             isFirstTimeLogin: !props.editItem,
           },
           permissions: permissions,
