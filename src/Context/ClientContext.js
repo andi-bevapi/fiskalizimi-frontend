@@ -30,6 +30,7 @@ const ClientProvider = (props) => {
   const clientToUpdate = async (data) => {
     try {
       const response = await updateClient(data);
+      getClientsList();
       return response;
     } catch (error) {
       console.log(error);

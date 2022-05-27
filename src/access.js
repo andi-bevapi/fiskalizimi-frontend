@@ -31,9 +31,5 @@ export default function (initialState) {
         canUpdateArka: permissions.includes('permission.arka.update'),
         canDeleteArka: permissions.includes('permission.arka.delete'),
         canViewReports: permissions.includes('permission.reports.view'),
-        canViewClient: permissions.includes('permission.client.view'),
-        canCreateClient: permissions.includes('permission.client.create'),
-        canUpdateClient: permissions.includes('permission.client.update'),
-        canDeleteClient: permissions.includes('permission.client.delete'),
     };
 }
