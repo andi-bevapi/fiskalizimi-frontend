@@ -256,5 +256,6 @@
   "noConnectedArka": "Nuk u gjet asnjë arkë e lidhur",
   "endDateGreater" : "Data e mbarimit duhet të jetë më e madhe se data e fillimit",
   "arkaHistoryTable" : "Tabela e Historisë së Arkës",
-  "invoices":"Faturat"
+  "invoices":"Faturat",
+  "correctiveInvoice": "Faturë korrigjuese"
 }

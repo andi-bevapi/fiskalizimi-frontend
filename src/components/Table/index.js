@@ -106,7 +106,7 @@ const TableComponent = (props) => {
       return {
         field: el,
         headerName: i18n.t(el),
-        width: 120,
+        width: 200,
       };
     }),
     {
@@ -162,7 +162,7 @@ const TableComponent = (props) => {
               <IconButtonComponent
                 style={{
                   backgroundColor: '#ffa500',
-                  marginRight: '10px',
+                  marginRight: '20px',
                 }}
                 icon={<EditIcon />}
                 iconColor={{ color: 'white' }}
@@ -389,12 +389,12 @@ const TableComponent = (props) => {
         //   </Table>
         // </TableContainer>
 
-        <div style={{ height: '60vh', width: '100%' }}>
+        <div style={{ height: '90%', width: '100%' }}>
           <DataGrid
             rows={props.data}
             columns={[...columns[0], columns[1]]}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            pageSize={15}
+            rowsPerPageOptions={[15]}
           />
         </div>
       )}
