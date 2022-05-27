@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+/*/////////////////////////////////////*/
+/*///////////  Table Styles  //////////*/
+
+.box {
+    position: 'absolute';
+    top: 50%;
+    left: 50%;
+    box-shadow: 24;
+}
+
+.tableHead{
+    background: #74a19e;
+}
+
+.tableHeadCell{
+    color: white !important;
+    font-family: 'Poppins' !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+.tableRowCell{
+    font-size: 15px;
+    font-family: 'Poppins' !important;
+    text-align: left;
+}
+.tableRowCellQuantity{
+    font-size: 15px;
+    font-family: 'Poppins' !important;
+    text-align: center !important;
+}
+
+.title{
+    font-size: 20px;
+    font-weight:800;
+    font-family: 'Poppins';
+}
+
+.centerDiv{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.infoText{
+    color: #545454;
+    font-style: italic;
+}
+
+.tableFooter{
+    border: 3px solid #74a19e;
+}
+
+.tableFootCell{
+    color: #404040 !important;
+    font-family: 'Poppins' !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+}
+
+.buttonDiv{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.valueButton{
+    background-color: rgb(240 80 80);
+    border: none;
+    color: rgb(255 255 255);
+    font-weight: 900;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.addButton{
+    background-color: #12ac7a;
+    border: none;
+    color: rgb(255 255 255);
+    font-weight: 900;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+
+.emptyButton{
+    margin: 0 5px;
+    visibility: hidden;
+}
