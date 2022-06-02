@@ -12,6 +12,9 @@ import User from '../../models/User';
 import SnackbarComponent from '../../components/Snackbar';
 import styles from "./index.css";
 import LoginIcon from '@mui/icons-material/Login';
+import poslaLogo from '../../assets/images/poslamark.png';
+import Box from '@mui/material/Box';
+
 
 const Login = () => {
     const { initialState, setInitialState } = useModel('@@initialState');
@@ -63,12 +66,16 @@ const Login = () => {
                 <Form>
                     <div className={styles.subMainHolder}>
                         <div className={styles.lockerHolder}>
-                            <LockIcon
-                                style={{
-                                    transform: "scale(1.8)",
-                                    color: "transparent"
-                                }}
-                            />
+                             <Box
+                                    component="img"
+                                    sx={{
+                                    width: 170,
+                                    marginBottom: 5,
+                                    maxWidth: { xs: 350, md: 250 },
+                                    }}
+                                    alt="The house from the offer."
+                                    src={poslaLogo}
+                                />
                             <Typography
                                 style={{
                                     fontSize: "35px",
