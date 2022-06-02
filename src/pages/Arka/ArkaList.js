@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableComponent from '../../components/Table';
 import { listFormat } from '../../helpers/listFormater';
 import { formFields, validationSchema } from './formFields';
@@ -13,6 +13,9 @@ const ArkaList = () => {
   const formatedArkaList = listFormat(arkaList, tableHeaders);
   const { branchList } = useBranchListContext();
   const { t } = useTranslation();
+
+  useEffect(() => {
+  }, [arkaList]);
 
   return (
     <TableComponent

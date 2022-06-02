@@ -16,6 +16,10 @@ const ArkaProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [arkaList, setArkaList] = useState([]);
 
+  useEffect(() => {
+    getArka();
+  }, [initialState?.currentUser]);
+
   const getArka = async () => {
     setIsLoading(true);
     try {
@@ -82,10 +86,6 @@ const ArkaProvider = (props) => {
       return error;
     }
   };
-
-  useEffect(() => {
-    getArka();
-  }, [initialState?.currentUser]);
 
   const values = {
     arkaList,
