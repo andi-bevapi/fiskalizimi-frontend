@@ -3,6 +3,7 @@ import ItemCard from './Item/ItemCard';
 import ItemLine from './Item/ItemLine';
 import NoData from '../../components/NoData';
 import Grid from '@mui/material/Grid';
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const useStyles = makeStyles(() => ({
   body: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles(() => ({
 
 const BodyDashboard = (props) => {
   const classes = useStyles();
+  const matches = useMediaQuery('(max-width:450px)')
   return (
     <div className={classes.body}>
       {props.data?.length > 0 ? (
@@ -35,13 +37,13 @@ const BodyDashboard = (props) => {
                 {props.data?.map((item, index) => {
                   if (props.data?.length === index + 1) {
                     return (
-                      <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                      <Grid item xs={matches? 12 :6} sm={4} md={4} lg={3} xl={2} key={index}>
                         <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} />
                       </Grid>
                     );
                   } else {
                     return (
-                      <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                      <Grid item xs={matches? 12 :6} sm={4} md={4} lg={3} xl={2} key={index}>
                         <ItemCard key={index} item={item} addToInvoiceList={props.addToInvoiceFunc} invoiceList={props.invoiceList} />
                       </Grid>
                     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CardMedia, Divider } from "@mui/material";
+import { CardMedia, Divider, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -146,13 +146,16 @@ const ItemCard = (props) => {
           </Typography>
         </div>
         <Divider className={styles.divider} />
+        <div>
         <Typography
           variant="body2"
           color="text.secondary"
           className={styles.stockText}
+          width="max-content"
         >
           {t("Barcode")}: {Number(props.item.barcode)}
         </Typography>
+        </div>
         <Typography
           variant="body2"
           color="text.secondary"

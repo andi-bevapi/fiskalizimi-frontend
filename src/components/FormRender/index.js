@@ -36,7 +36,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: '100%', minWidth: 178 }}
           >
             <Field name={formField.name}>
               {({ field, meta }) => (
@@ -101,7 +101,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: '100%', minWidth: 178 }}
           >
             <Field name={formField.name}>
               {({ field, form: { setFieldValue }, meta }) => {
@@ -150,7 +150,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault }) => {
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: '100%', minWidth: 178 }}
           >
             <Field name={formField.name}>
               {({ field, form: { setFieldValue }, meta }) => {

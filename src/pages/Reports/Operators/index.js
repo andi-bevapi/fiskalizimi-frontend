@@ -28,7 +28,7 @@ const Operators = () => {
     const [data, setData] = useState([]);
     const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
     const { t } = useTranslation();
-    const matches = useMediaQuery('(min-width:900px)')
+    // const matches = useMediaQuery('(min-width:900px)')
 
     useEffect(() => {
         getData();
@@ -60,8 +60,8 @@ const Operators = () => {
 
     return (
         <>
-            <Grid container spacing={2}> 
-                <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+            <Grid container spacing={2} paddingTop={3}>
+                <Grid item xs={12} sm={12} md={12} lg={9} xl={8}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateRangePicker
                             startText={t("beginingDate")}
@@ -73,17 +73,16 @@ const Operators = () => {
                                     <Grid container
                                         display={"flex"}
                                         alignItems="center"
-                                        paddingTop={3}
                                         spacing={1}
                                     >
-                                        <Grid item xs={12} sm={5} md={5} lg={5}>
-                                            <TextField {...startProps} style ={{width: '100%'}}/>
+                                        <Grid item xs={12} sm={5} md={5} lg={5} xl={3}>
+                                            <TextField {...startProps} style ={{width: '100%', minWidth: '178px'}}/>
                                         </Grid>
-                                        <Grid item xs={12} sm={2} md={2} lg={2}>
+                                        <Grid item xs={12} sm={2} md={2} lg={2} xl={3}>
                                             <Box sx={{ mx: 2 }}> {t("until")} </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={5} md={5} lg={5}>
-                                            <TextField {...endProps} style ={{width: '100%'}}/>
+                                        <Grid item xs={12} sm={5} md={5} lg={5} xl={3}>
+                                            <TextField {...endProps} style ={{width: '100%', minWidth: '178px'}}/>
                                         </Grid>
 
                                     </Grid>
@@ -92,9 +91,9 @@ const Operators = () => {
                         />
                     </LocalizationProvider>
                 </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={4} xl={4}> 
+                <Grid item xs={12} sm={12} md={12} lg={3} xl={3}> 
                 {/* paddingTop={(matches ? 24 : 0)} */}
-                    <Filters getData={getData}/>
+                    <Filters getData={getData} style={{minWidth: '178px !important'}}/>
                 </Grid>
             </Grid>
 

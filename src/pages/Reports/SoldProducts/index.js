@@ -30,6 +30,7 @@ const SoldProducts = () => {
     const [products, setProducts] = useState([]);
     const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
     const { t } = useTranslation();
+    // const matches = useMediaQuery('(min-width:900px)')
 
     useEffect(() => {
         getData();
@@ -75,14 +76,14 @@ const SoldProducts = () => {
                                 paddingTop={3}
                                 spacing={1}
                             >
-                                <Grid item xs={12} sm={5} md={5} lg={5}>
-                                    <TextField {...startProps} style ={{width: '100%'}}/>
+                                <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
+                                    <TextField {...startProps} style ={{width: '100%', minWidth: '178px'}}/>
                                 </Grid>
-                                <Grid item xs={12} sm={2} md={2} lg={2}>
+                                <Grid item xs={12} sm={2} md={2} lg={2} xl={2}>
                                     <Box sx={{ mx: 2 }}> {t("until")} </Box>
                                 </Grid>
-                                <Grid item xs={12} sm={5} md={5} lg={5}>
-                                    <TextField {...endProps} style ={{width: '100%'}}/>
+                                <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
+                                    <TextField {...endProps} style ={{width: '100%', minWidth: '178px'}}/>
                                 </Grid>
                             </Grid>
                         </>
@@ -91,9 +92,9 @@ const SoldProducts = () => {
             </LocalizationProvider>
 
             <br />
-
+            <Grid container xs={12} sm={6} md={6} lg={6}>
             <Filters getData={getData} />
-
+            </Grid>
             <br />
 
             <div style={{ height: '60vh', width: '100%' }}>

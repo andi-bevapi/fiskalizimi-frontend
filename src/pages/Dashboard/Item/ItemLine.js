@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from "@mui/material/";
+import { Grid, Typography } from "@mui/material/";
 import styles from "./ItemLine.module.css";
 import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useTranslation } from "react-i18next";
@@ -72,13 +72,21 @@ const ItemLine = (props) => {
     <div className={styles.container}
       onClick={() => handleCardClick()}
     >
-      <div className={stopAdding ? styles.lineContainerDisabled : styles.lineContainer}>
-        <Typography className={styles.productName}>{props.item.name}</Typography>
-        <Typography className={styles.productBarcode}>Barkodi: {props.item.barcode}</Typography>
-        <Typography className={styles.productPrice}> {props.item.price} LEK</Typography>
-        <Typography className={styles.productStock}> Stoku: {props.item.stock}
+      <Grid className={stopAdding ? styles.lineContainerDisabled : styles.lineContainer}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Typography className={styles.productName} align={'left'}>{props.item.name}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Typography className={styles.productBarcode} align={'right'}>Barkodi: {props.item.barcode}</Typography>
+        </Grid>
+        <Grid item xs={8} sm={8} md={8} lg={8}>
+        <Typography className={styles.productPrice} align={'right'}> {props.item.price} LEK</Typography>
+        </Grid>
+        <Grid item xs={8} sm={8} md={8} lg={8}>
+        <Typography className={styles.productStock} align={'left'}> Stoku: {props.item.stock}
         </Typography>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

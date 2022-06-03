@@ -70,7 +70,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
-                                        marginLeft: 20
+                                        // marginLeft: 20
                                     }
                                 },
                                 {
@@ -88,7 +88,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
-                                        marginLeft: 40
+                                        // marginLeft: 40
                                     }
                                 },
                                 {
@@ -106,7 +106,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
-                                        marginLeft: 60
+                                        // marginLeft: 60
                                     }
                                 }
                             ]}
