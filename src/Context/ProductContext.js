@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProducts, createProduct, updateProduct, deleteProduct, returnProductWithBarcode, getProductsByClientId } from "../services/product";
 import { useModel } from 'umi';
+import { getClientId } from "../helpers/getClientId";
 
 const ProductContext = createContext({});
 
@@ -11,7 +12,7 @@ const ProductProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (initialState?.currentUser?.clientId) getProductsList();
+        getProductsList();
     }, [initialState?.currentUser])
 
     const getProductsList = async (query = {}) => {
@@ -20,7 +21,7 @@ const ProductProvider = (props) => {
             let products = [];
             if (initialState?.currentUser?.branchId !== 0)
                 products = await getProducts(initialState?.currentUser?.branchId, query);
-            else products = await getProductsByClientId(initialState?.currentUser?.clientId, query);
+            else products = await getProductsByClientId(getClientId(initialState?.currentUser), query);
             if (products.statusCode === 200) {
                 setProductList(products.data);
             }
@@ -32,7 +33,7 @@ const ProductProvider = (props) => {
 
     const productToCreate = async (data) => {
         try {
-            const result = await createProduct(initialState?.currentUser?.clientId, data);
+            const result = await createProduct(getClientId(initialState?.currentUser), data);
             getProductsList();
             return result;
         } catch (error) {
@@ -42,7 +43,7 @@ const ProductProvider = (props) => {
 
     const productToUpdate = async (data) => {
         try {
-            const result = await updateProduct(initialState?.currentUser?.clientId, data);
+            const result = await updateProduct(getClientId(initialState?.currentUser), data);
             getProductsList();
             return result;
         } catch (error) {

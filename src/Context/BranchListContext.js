@@ -1,6 +1,7 @@
 import { useContext, useEffect, createContext, useState } from "react";
 import { useModel } from 'umi';
 import { getAllBranch, createBranchList, updateBranchList, deleteBranchList } from "../services/branchList/";
+import { getClientId } from "../helpers/getClientId";
 
 const BranchListContext = createContext({});
 
@@ -11,13 +12,13 @@ const BranchListProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if(initialState?.currentUser?.clientId) getBranchList();
+        getBranchList();
     }, [initialState?.currentUser]);
 
     const getBranchList = async () => {
         setIsLoading(true);
         try {
-            const result = await getAllBranch(initialState?.currentUser?.clientId);
+            const result = await getAllBranch(getClientId(initialState?.currentUser));
             if (result.statusCode === 200) {
                 setBranchList(result.data);
             }
@@ -29,7 +30,7 @@ const BranchListProvider = (props) => {
 
     const branchListToUpdate = async (data) => {
         try {
-            const result = await updateBranchList(initialState?.currentUser?.clientId, data);
+            const result = await updateBranchList(getClientId(initialState?.currentUser), data);
             getBranchList()
             return result;
         } catch (error) {
@@ -52,7 +53,8 @@ const BranchListProvider = (props) => {
 
     const branchListToCreate = async (data) => {
         try {
-            const result = await createBranchList(initialState?.currentUser?.clientId, data);
+            const result = await createBranchList(getClientId(initialState?.currentUser), data);
+            console.log(result);
             getBranchList();
             return result;
         } catch (error) {

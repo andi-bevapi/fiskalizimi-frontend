@@ -149,7 +149,13 @@ const ItemCard = (props) => {
             width: '100%',
           }}
         >
-          <Typography variant="body2" color="text.secondary" className={styles.textName}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{
+              textAlign: 'end',
+            }}
+          >
             {props.item.name}
           </Typography>
         </div>
