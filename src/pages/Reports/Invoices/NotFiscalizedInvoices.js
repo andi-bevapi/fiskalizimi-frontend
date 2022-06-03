@@ -17,6 +17,7 @@ import { getAnalyticsData } from '../../../services/reports'
 import { formatDate } from '../../../helpers/formatDate'
 import CorrectiveInvoicePreview from '../../../components/InvoicePreview/correctiveInvoice'
 import { useReactToPrint } from "react-to-print";
+import { getClientId } from '../../../helpers/getClientId'
 
 const NotFiskalizedInvoices = () => {
   const { initialState } = useModel('@@initialState')
@@ -42,7 +43,7 @@ const getInvoices =  async() =>{
   const startDate = formatDate(dateRange[0]);
   const endDate = formatDate(dateRange[1]);
   try{
-      const id = (initialState?.currentUser?.clientId | initialState?.currentUser?.branchId);
+      const id = (getClientId(initialState?.currentUser) | initialState?.currentUser?.branchId);
       const result = await getAnalyticsData(id,{startDate,endDate});
       const noFicData = result.data.filter((el) => {
           if(!el.FIC){

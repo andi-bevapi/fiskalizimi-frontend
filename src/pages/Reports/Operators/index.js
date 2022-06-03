@@ -11,6 +11,7 @@ import { getOperatorsReport } from '../../../services/reports';
 import { formatDate } from '../../../helpers/formatDate';
 import Filters from './components/Filters';
 import Grid from '@mui/material/Grid';
+import {getClientId} from "../../../helpers/getClientId";
 
 const columns = [
     { field: 'username', headerName: 'Username', width: 120 },
@@ -45,7 +46,7 @@ const Operators = () => {
         }
 
         try {
-            const response = await getOperatorsReport(initialState?.currentUser?.clientId, {
+            const response = await getOperatorsReport(getClientId(initialState?.currentUser), {
                 startDate,
                 endDate,
                 ...query
