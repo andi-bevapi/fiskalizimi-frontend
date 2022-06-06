@@ -10,6 +10,7 @@ import { useModel } from 'umi';
 import { getSoldProducts } from '../../../services/reports';
 import { formatDate } from '../../../helpers/formatDate';
 import Filters from './components/Filters';
+import { getClientId } from '../../../helpers/getClientId';
 
 const columns = [
     { field: 'name', headerName: 'Name', width: 120 },
@@ -47,7 +48,7 @@ const SoldProducts = () => {
         } 
 
         try {
-            const response = await getSoldProducts(initialState?.currentUser?.clientId, {
+            const response = await getSoldProducts(getClientId(initialState?.currentUser), {
                 startDate,
                 endDate,
                 ...query
