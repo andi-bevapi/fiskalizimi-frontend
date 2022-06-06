@@ -116,3 +116,68 @@ table th{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/****** LARGE LETTER STYLES ******/
+
+.largeCouponBG{
+  /* border: 1px solid #cbcbcb; */
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding-left: 8px;
+  width: 750px;
+}
+
+.centerTextOvla{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.largecouponBigTitle{
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.largecouponText{
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.largenslfText{
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.largerightText{
+  float: right;
+  text-align: end;
+  font-size: 15px;
+}
+
+.largeproductDataRow{
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  padding: 0px;
+}
+
+.largeproductDataRownoVAT{
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: end;
+  padding: 0px;
+  padding-right: 6px;
+}
+
+.largeproductPriceRow{
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}

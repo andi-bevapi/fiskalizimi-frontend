@@ -8,7 +8,7 @@ import {
   getArkaHistory,
   getAllArkabyClientId
 } from '../services/arka';
-
+import { getClientId } from '../helpers/getClientId';
 const ArkaContext = createContext({});
 
 const ArkaProvider = (props) => {
@@ -25,10 +25,9 @@ const ArkaProvider = (props) => {
     setIsLoading(true);
     try {
       let response = [];
-      if (initialState?.currentUser?.branchId !== 0){
-        response = await getAllArka(initialState?.currentUser?.branchId);
-      }
-      else response = await getAllArkabyClientId(initialState?.currentUser?.clientId)
+      if (initialState?.currentUser?.branchId !== 0)
+         response = await getAllArka(initialState?.currentUser?.branchId);
+      else response = await getAllArkabyClientId(getClientId(initialState?.currentUser))
       if (response.statusCode === 200) setArkaList(response.data);
     } catch (error) {
       return error;
@@ -38,7 +37,7 @@ const ArkaProvider = (props) => {
 
   const createArka = async (body) => {
     try {
-      const response = await createNewArka(initialState?.currentUser?.clientId, body);
+      const response = await createNewArka(getClientId(initialState?.currentUser), body);
       if (response.statusCode === 200) {
         setArkaList((prevState) => {
           return [...prevState, response.data];

@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import HistoryIcon from '@mui/icons-material/History';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -21,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { useModel } from 'umi';
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const TableComponent = (props) => {
+  const { refresh } = useModel('@@initialState');
   const classes = useStyles();
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState({ status: false, message: '' });
@@ -65,9 +68,10 @@ const TableComponent = (props) => {
   const [tableHeader, setTableHeader] = useState([]);
 
   useEffect(() => {
-    const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id');
+    console.log("PROPS", props)
+    const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id' && el !== 'Id');
     setTableHeader(filteredTableHeader);
-  }, []);
+  }, [arkaHistoryData]);
 
   const handleSnackBarClose = () => {
     setOpenSnackBar({ status: false, severity: 'success' });
@@ -93,7 +97,10 @@ const TableComponent = (props) => {
 
   const handleHistoryData = async () => {
     const response = await props.history(arkaId, startDate, endDate);
-    if (response.statusCode === 200) setArkaHistoryData(response.data);
+    if (response.statusCode === 200){
+      console.log("RESP", response.data)
+      setArkaHistoryData(response.data);
+    }
   }
 
   const toggleModal = () => {
@@ -112,7 +119,7 @@ const TableComponent = (props) => {
     {
       field: 'actions',
       headerName: i18n.t('actions'),
-      width: 120,
+      width: 140,
       sortable: false,
       renderCell: (params) => {
         const onClick = (e) => {
@@ -125,6 +132,11 @@ const TableComponent = (props) => {
           setOpenSideBar(true);
           const foundItem = props.fullList.find((item) => item.id === params.id);
           setEditItem(foundItem);
+        };
+
+        const handleClient = () => {
+          localStorage.setItem('clientId', params.id);
+          refresh();
         };
 
         const confirmDelete = async () => {
@@ -147,6 +159,17 @@ const TableComponent = (props) => {
 
         return (
           <div className={classes.btnContainer}>
+            {props.client && (
+              <IconButtonComponent
+                style={{
+                  backgroundColor: '#ffa500',
+                  marginRight: '10px',
+                }}
+                icon={<ManageAccountsIcon />}
+                iconColor={{ color: 'white' }}
+                onClick={ handleClient}
+              />
+            )}
             {props.arka && (
               <IconButtonComponent
                 style={{
@@ -162,7 +185,7 @@ const TableComponent = (props) => {
               <IconButtonComponent
                 style={{
                   backgroundColor: '#ffa500',
-                  marginRight: '20px',
+                  marginRight: '10px',
                 }}
                 icon={<EditIcon />}
                 iconColor={{ color: 'white' }}

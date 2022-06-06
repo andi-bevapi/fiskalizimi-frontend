@@ -15,6 +15,7 @@ import { useContextArka } from "../../Context/ArkaContext";
 import { makeStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import Swal from 'sweetalert2'
 
 const MoneyDeposit = () => {
     const { arkaList, selectedADeposit } = useContextArka();
@@ -68,7 +69,26 @@ const MoneyDeposit = () => {
                     reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
                     break;
             }
+
+            Swal.fire({
+                title:
+                  "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+                  `Deklarimi u regjistrua` +
+                  '</h5>',
+                text: '',
+                icon: 'success',
+                iconColor: '#a5dc86',
+                showDenyButton: false,
+                showConfirmButton: true,
+                confirmButtonColor: '#58a8b3',
+                confirmButtonText: `Mbyll`,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  history.push('/')
+                } 
+              });
         }else return;
+
     }
 
     const useStyles = makeStyles(() => ({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useModel } from 'umi';
 import { navItems } from './navItems.config';
 import SideDrawer from './components/SideDrawer';
@@ -49,7 +49,6 @@ const Navbar = () => {
     refresh();
   }, []);
 
- 
   const onLogoutHandler = () => {
     if (shiftIsOpen) {
       Swal.fire({
@@ -77,6 +76,28 @@ const Navbar = () => {
     }
   };
 
+  const onLogoutHandlerAdmin = () => {
+    Swal.fire({
+      title:
+        "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+        `Deshironi te dilni?` +
+        '</h5>',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: "<span style='font-family: Poppins;'>" + `Jo` + '</span>',
+      confirmButtonText: `Po`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+      } else if (result.isDismissed) {
+      }
+    });
+  };
+
   const closeShiftAndLogout = () => {
     closeShift();
     logout();
@@ -84,6 +105,7 @@ const Navbar = () => {
 
   const logout = () => {
     localStorage.removeItem('poslaToken');
+    localStorage.removeItem('clientId');
     history.replace('/');
   };
 
@@ -100,16 +122,15 @@ const Navbar = () => {
     setSummaryData(summaryData.data[0]);
 
     return SwalModal(
-      `${t("endShiftOnly")}`,
+      `${t('endShiftOnly')}`,
       `Vlera Totale: ${summaryData.data[0]?.totalAmount}`,
       'question',
-      `${t("no_")}`,
-      `${t("yes")}`,
-      () => { },
+      `${t('no_')}`,
+      `${t('yes')}`,
+      () => {},
       () => closeShift(),
     );
   };
-
 
   const closeShift = async () => {
     const response = await updateShift(initialState?.currentUser?.id);
@@ -122,6 +143,11 @@ const Navbar = () => {
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleRemoveClient = () => {
+    localStorage.removeItem('clientId');
+    refresh();
   };
 
   return (

@@ -260,7 +260,7 @@ const InvoiceProvider = (props) => {
     const postInvoice = async (invoiceObject) => {
         //Add post method for invoice
         const response = await createInvoice(invoiceObject, initialState?.currentUser?.id);
-        const invoiceData = response.data;
+        const invoiceData = response?.data;
 
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
         let paymentMethodType = "";
