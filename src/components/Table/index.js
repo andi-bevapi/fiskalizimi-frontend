@@ -56,7 +56,7 @@ const TableComponent = (props) => {
   const access = useAccess();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [arkaId, setArkaId] = useState(0);
+  const [arkaId, setArkaId] = useState(1);
 
   useEffect(() => {
     if (props.arka) handleHistoryData();

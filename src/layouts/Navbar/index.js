@@ -20,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PrintShiftDetails from "../../../src/components/PrintShiftDefails"
 import ReactToPrint from "react-to-print";
+import { ArkaProvider } from '../../Context/ArkaContext';
 
 const style = {
   position: 'absolute',
@@ -116,6 +117,7 @@ const Navbar = () => {
       setShiftIsOpen(false);
       setShowSummary(true);
     }
+    localStorage.removeItem('deposit');
   };
 
   const handleCloseMenu = () => {
@@ -123,105 +125,107 @@ const Navbar = () => {
   };
 
   return (
-    <div
-      className={styles.navContainer}
-      style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row' }}
-    >
-      <div style={{ margin: window.innerWidth < 800 ? '11px 0px' : 0 }}>
-        <SideDrawer navLinks={navItems} />
-      </div>
-      <div className={styles.rightBtns}>
-        <div className={styles.menuContainer}>
-          <Button
-            onClick={handleClickButton}
-            id="demo-positioned-button"
-            aria-controls={open ? 'demo-positioned-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            variant="contained"
-          >
-            {initialState.currentUser.username}
-          </Button>
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleCloseMenu}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={handleEditProfile}>
-              <EditIcon style={{ marginRight: '10px' }} />
-              {t('editProfile')}
-            </MenuItem>
-          </Menu>
-        </div>
-        {initialState.currentUser?.branchId !== 0 && shiftIsOpen && (
-          <Button
-            style={{
-              backgroundColor: '#74A19E',
-              marginRight: window.innerWidth < 800 ? '14px' : '10px',
-              fontSize: '12px',
-              padding: window.innerWidth < 800 ? '3px 4px' : '6px 16px',
-            }}
-            onClick={handleShiftButton}
-            variant="contained"
-          >
-            {t('endShift')}
-          </Button>
-        )}
-        <IconButtonComponent
-          style={{ backgroundColor: '#FF7A00', width: '45px', height: '45px', boxShadow: 'none' }}
-          icon={<Logout />}
-          iconColor={{ color: 'white' }}
-          text={t('logout')}
-          onClick={onLogoutHandler}
-        />
-      </div>
-
-      <Modal
-        open={showSummary}
-        onClose={() => {
-          setShowSummary(false);
-          setSummaryData({});
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    <ArkaProvider>
+        <div
+        className={styles.navContainer}
+        style={{ flexDirection: window.innerWidth < 800 ? 'column' : 'row' }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Permbledhja Ditore:
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Vlera Totale: {summaryData?.totalAmount ? summaryData?.totalAmount.toFixed(2) : 0}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Vlera Totale pa TVSH:{' '}
-            {summaryData?.totalAmountNoVAT ? summaryData?.totalAmountNoVAT.toFixed(2) : 0}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Vlera Totale TVSH 6%: {summaryData?.totalVat6 ? summaryData?.totalVat6.toFixed(2) : 0}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Vlera Totale TVSH 20%:{' '}
-            {summaryData?.totalVat20 ? summaryData?.totalVat20.toFixed(2) : 0}
-          </Typography>
-          <div className={styles.buttonContainer}>
-            <ReactToPrint
-                trigger={(e) =>
-                    <Button variant="contained" type="submit" className={styles.buttonStyle}> {t("printBill")} </Button>
-                  }
-                content={() => componentRef.current}
-            />
-            <div style={{ display: "none" }}>
-              <PrintShiftDetails summaryData={summaryData} ref={componentRef} />
-            </div>
+        <div style={{ margin: window.innerWidth < 800 ? '11px 0px' : 0 }}>
+          <SideDrawer navLinks={navItems} />
+        </div>
+        <div className={styles.rightBtns}>
+          <div className={styles.menuContainer}>
+            <Button
+              onClick={handleClickButton}
+              id="demo-positioned-button"
+              aria-controls={open ? 'demo-positioned-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              variant="contained"
+            >
+              {initialState.currentUser.username}
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleCloseMenu}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleEditProfile}>
+                <EditIcon style={{ marginRight: '10px' }} />
+                {t('editProfile')}
+              </MenuItem>
+            </Menu>
           </div>
-        </Box>
-      </Modal>
-    </div>
+          {initialState.currentUser?.branchId !== 0 && shiftIsOpen && (
+            <Button
+              style={{
+                backgroundColor: '#74A19E',
+                marginRight: window.innerWidth < 800 ? '14px' : '10px',
+                fontSize: '12px',
+                padding: window.innerWidth < 800 ? '3px 4px' : '6px 16px',
+              }}
+              onClick={handleShiftButton}
+              variant="contained"
+            >
+              {t('endShift')}
+            </Button>
+          )}
+          <IconButtonComponent
+            style={{ backgroundColor: '#FF7A00', width: '45px', height: '45px', boxShadow: 'none' }}
+            icon={<Logout />}
+            iconColor={{ color: 'white' }}
+            text={t('logout')}
+            onClick={onLogoutHandler}
+          />
+        </div>
+
+        <Modal
+          open={showSummary}
+          onClose={() => {
+            setShowSummary(false);
+            setSummaryData({});
+          }}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Permbledhja Ditore:
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Vlera Totale: {summaryData?.totalAmount ? summaryData?.totalAmount.toFixed(2) : 0}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Vlera Totale pa TVSH:{' '}
+              {summaryData?.totalAmountNoVAT ? summaryData?.totalAmountNoVAT.toFixed(2) : 0}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Vlera Totale TVSH 6%: {summaryData?.totalVat6 ? summaryData?.totalVat6.toFixed(2) : 0}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Vlera Totale TVSH 20%:{' '}
+              {summaryData?.totalVat20 ? summaryData?.totalVat20.toFixed(2) : 0}
+            </Typography>
+            <div className={styles.buttonContainer}>
+              <ReactToPrint
+                  trigger={(e) =>
+                      <Button variant="contained" type="submit" className={styles.buttonStyle}> {t("printBill")} </Button>
+                    }
+                  content={() => componentRef.current}
+              />
+              <div style={{ display: "none" }}>
+                <PrintShiftDetails summaryData={summaryData} ref={componentRef} />
+              </div>
+            </div>
+          </Box>
+        </Modal>
+      </div>
+    </ArkaProvider>
   );
 };
 

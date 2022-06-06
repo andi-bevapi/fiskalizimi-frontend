@@ -27,7 +27,7 @@ const ItemLine = (props) => {
   }, [props.invoiceList],props.item);
 
   const handleCardClick = () => {
-    if (!initialState?.currentUser?.arka) {
+    if (!localStorage.getItem('deposit')) {
       return SwalModal(
         t("noConnectedArka"),
         "",

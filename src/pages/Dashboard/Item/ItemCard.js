@@ -78,7 +78,7 @@ const ItemCard = (props) => {
   );
 
   const handleCardClick = () => {
-    if (!initialState?.currentUser?.arka) {
+    if (!localStorage.getItem('deposit')) {
       return SwalModal(
         t('noConnectedArka'),
         '',

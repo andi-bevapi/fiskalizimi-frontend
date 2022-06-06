@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { history, useModel } from 'umi';
 import Grid from '@mui/material/Grid';
-import { Divider, Button } from '@mui/material';
+import { Divider, CardMedia, Button } from '@mui/material';
 import styles from './index.css';
 import TextField from "@mui/material/TextField";
 import DepositButtonComponent from "../../components/Button/DepositButton";
@@ -8,212 +9,235 @@ import ModalComponent from "../../components/Modal/Modal";
 import { Form, Formik, Field } from 'formik';
 import { useMoneyDepositContext } from "../../Context/MoneyDepositContext";
 import { useTranslation } from "react-i18next";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { useContextArka } from "../../Context/ArkaContext";
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
 
 const MoneyDeposit = () => {
+    const { arkaList, selectedADeposit } = useContextArka();
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    const [isReduceModalOpen, setIsReduceModalOpen] = useState(false);
-    const [isValidAmount, setIsValidAmount] = useState(true);
+    const [depositEvent, setDepositEvent] = useState();
+    const [amount, setAmount] = useState('');
+    const [selectedDeposit, setSelectedDeposit] = useState();
+
     const {
-        depositAmount,
         updateAmount,
         addAmountToDeposit,
         reduceAmountFromDeposit
     } = useMoneyDepositContext();
+
     const {t} = useTranslation();
 
+    useEffect(() => {
+        if(localStorage.getItem('deposit')){
+           setSelectedDeposit(JSON.parse(localStorage.getItem('deposit')))
+        }
+    }, [arkaList])
 
     const toggleUpdateModal = () => {
         setIsUpdateModalOpen(!isUpdateModalOpen);
     }
 
-    const toggleAddModal = () => {
-        setIsAddModalOpen(!isAddModalOpen);
+    const noChange = () => {
+        history.push('/');
     }
 
-    const toggleReduceModal = () => {
-        setIsReduceModalOpen(!isReduceModalOpen);
+    const checkAmount = (val) => {
+        setAmount(val.value)
     }
 
-    const checkReducedAmount = (value) => {
-        (value > depositAmount ? setIsValidAmount(false) : setIsValidAmount(true))
+    const selectDeposit = (item) => {
+      selectedADeposit(item)
+      localStorage.setItem('deposit', JSON.stringify(item));
+      setIsUpdateModalOpen(true);
     }
+
+    const submitDepositForm = (values) => {
+        if(values.amount != '' && values.amount){
+            switch(depositEvent){
+                case "initial":
+                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    break;
+                case "add":
+                    addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    break;
+                case "remove":
+                    reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    break;
+            }
+        }else return;
+    }
+
+    const useStyles = makeStyles(() => ({
+        card: {
+          height: 'auto',
+          width: '90%',
+          padding: '10px 5px 0 3px',
+          backgroundColor: "#f7f7f7 !important",
+          boxShadow: 'none',
+          borderRadius: '5',
+          marginLeft: 0,
+          marginBottom: 10,
+          '&:hover': {
+            transition: 'transform 0.2s ease-in-out',
+            transform: 'scale(1.05)',
+            cursor: 'pointer',
+          },
+        },
+
+        activeCard: {
+            height: 'auto',
+          width: '90%',
+          padding: '10px 5px 0 3px',
+          backgroundColor: '#ffffff !important',
+          border: '3px solid #12ac7a !important',
+          boxShadow: 'none',
+          borderRadius: '5',
+          marginLeft: 0,
+          marginBottom: 10,
+          '&:hover': {
+            transition: 'transform 0.2s ease-in-out',
+            transform: 'scale(1.05)',
+            cursor: 'pointer',
+          },
+        }
+    }));
+
+    const classes = useStyles();
 
     return (
         <>
             <Grid container>
                 <Grid item xs={12} md={12}>
-                    <span className={styles.title}>{t("ark")}</span>
+                    <span className={styles.title}>Zgjidhni arkën</span>
                 </Grid>
             </Grid>
+            <Divider />
             <Grid container className={styles.mt20}>
-                <Grid item xs={12} md={12}>
-                    <span className={styles.subTitle}> {t("cashCondition")} <b>{depositAmount.toFixed(2)} ALL</b> </span>
+                <Grid item xs={12} md={12} style={{display: "flex"}}>
+                   {arkaList?.map((item, index) => {
+                       return(
+                        <>
+                        <Grid item xs={12} md={3} lg={3} onClick={() => selectDeposit(item)}>
+                            <Card className={selectedDeposit?.name == item.name ? classes.activeCard : classes.card}>
+                                <CardContent
+                                    style={{
+                                    padding: '5px',
+                                    textAlign: 'center',
+                                    marginTop: 2,
+                                    }}
+                                >
+                                    <div
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    >
+                                      <Typography className={styles.subTitle}> {item.name} </Typography>
+                                    </div>
+                                    <br />
+                                    <Typography className={styles.serialNumber}>
+                                        {t('SerialNumber')}: {item.serialNumber}
+                                    </Typography>
+                                    <br />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        </>
+                       );
+                   })}
                 </Grid>
             </Grid>
-            <Grid container className={styles.mt50}>
-                <Grid item xs={12} md={12} className={styles.stateGrid}>
-                    <Grid item xs={12} md={3} lg={3}>
-                        <DepositButtonComponent
-                            title={t("startingAmount")}
-                            lightColor="#12ac7a"
-                            addIcon={false}
-                            className={styles.changeAmountBtn}
-                            onClick={toggleUpdateModal}
-                        />
-                    </Grid>
-                    <Grid item md={3}>
-                    </Grid>
-                    <Grid item xs={12} md={3} lg={3}>
-                        <DepositButtonComponent
-                            title={t("addMoneyDeposit")}
-                            lightColor="#74a19e"
-                            addIcon={false}
-                            className={styles.addAmountBtn}
-                            onClick={toggleAddModal}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={3} lg={3}>
-                        <DepositButtonComponent
-                            title={t("removeMoneyDeposit")}
-                            lightColor="#f05050"
-                            addIcon={false}
-                            className={styles.reduceAmountBtn}
-                            onClick={toggleReduceModal}
-                        />
-                    </Grid>
-                </Grid>
-            </Grid>
-
 
             <ModalComponent open={isUpdateModalOpen} handleClose={toggleUpdateModal} title="">
                 <Formik
-                    initialValues={{ amount: depositAmount }}
+                    initialValues={{ }}
                     onSubmit={(values) => {
-                        updateAmount(values.amount);
-                        toggleUpdateModal()
+                        submitDepositForm(values)
                     }}
                 >
                     <Form>
-                        <span className={styles.payTitle}>{t("insertCashStatus")}</span>
-                        <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-                        <Field name="amount">
-                            {({ field }) => (
-                                <TextField
-                                    type='number'
-                                    label="Shuma"
-                                    InputProps={{
+                     <Grid container>
+                        <Grid item xs={12} md={12} className={styles.stateGrid}>
+                            <Grid item xs={12} md={12}>
+                               <span className={styles.payTitle}>Shtoni një deklarim</span>
+                               <Divider style={{ marginTop: 10, marginBottom: 20 }} />
+                            </Grid>
+                            <Grid item xs={12} md={12} style={{display: "flex", marginBottom: 20}}>
+                                <Grid item xs={12} sm={4} md={4}>
+                                    <TextField
+                                        select
+                                        label="Veprimi"
+                                        style={{
+                                            width: '100%',
+                                            }}
+                                        InputProps={{
                                         style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    InputLabelProps={{
+                                            fontFamily: 'Poppins',
+                                            width: '100%',
+                                            textAlign: 'left',
+                                        },
+                                        }}
+                                        InputLabelProps={{
                                         style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    className={styles.amountInput}
-                                    {...field}
+                                            fontFamily: 'Poppins',
+                                        },
+                                        }}
+                                        onChange={(event) => { setDepositEvent(event.target.value) }}
+                                        >
+                                            <MenuItem key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
+                                            <MenuItem key="add" value="add"><span>Shtim</span></MenuItem>
+                                            <MenuItem key="remove" value="remove"><span>Tërheqje</span></MenuItem>
+                                    </TextField>
+                                </Grid>
+                                <Grid item sm={1} md={1}></Grid>
+                                <Grid item xs={12} sm={4} md={4} lg={4}>
+                                    <Field name="amount">
+                                        {({ field }) => (
+                                            <TextField
+                                                type='number'
+                                                label="Shuma"
+                                                onChange={checkAmount(field)}
+                                                InputProps={{
+                                                    style: {
+                                                        fontFamily: "Poppins"
+                                                    }
+                                                }}
+                                                InputLabelProps={{
+                                                    style: {
+                                                        fontFamily: "Poppins"
+                                                    }
+                                                }}
+                                                className={styles.amountInput}
+                                                {...field}
+                                            />
+                                        )}
+
+                                    </Field>
+                                </Grid>
+                           </Grid>
+                        </Grid>
+                        <br/>
+                        <Grid item xs={12} md={12} className={styles.stateGrid}>
+                           <Grid xs={12} sm={6} md={6}></Grid>
+                           <Grid xs={12} sm={3} md={3}>
+                                <DepositButtonComponent
+                                    title="Asnjë deklarim"
+                                    lightColor="#f05050"
+                                    addIcon={false}
+                                    className={styles.reduceAmountBtn}
+                                    onClick={noChange}
                                 />
-                            )}
-
-                        </Field>
-                        <span className={styles.currency}> (ALL)</span>
-                        <div className={styles.subMainHolder}>
-                            <Button variant="contained" type="submit" className={styles.buttonStyle}>
-                                {t("changeAmount")}
-                            </Button>
-                        </div>
-                    </Form>
-                </Formik>
-            </ModalComponent>
-
-            <ModalComponent open={isAddModalOpen} handleClose={toggleAddModal} title="">
-                <Formik
-                    initialValues={{ amount: '' }}
-                    onSubmit={(values) => {
-                        addAmountToDeposit(values.amount);
-                        toggleAddModal()
-                    }}
-                >
-                    <Form>
-                        <span className={styles.payTitle}>{t("writeCashToAddAmount")}</span>
-                        <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-                        <Field name="amount">
-                            {({ field }) => (
-                                <TextField
-                                    type='number'
-                                    label="Shuma"
-                                    InputProps={{
-                                        style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    className={styles.amountInput}
-                                    {...field}
-                                />
-                            )}
-
-                        </Field>
-                        <span className={styles.currency}> (ALL)</span>
-                        <div className={styles.subMainHolder}>
-                            <Button variant="contained" type="submit" className={styles.buttonStyle}>
-                                {t("add")}
-                            </Button>
-                        </div>
-                    </Form>
-                </Formik>
-            </ModalComponent>
-
-            <ModalComponent open={isReduceModalOpen} handleClose={toggleReduceModal} title="">
-                <Formik
-                    initialValues={{ amount: '' }}
-                    onSubmit={(values) => {
-                        reduceAmountFromDeposit(values.amount);
-                        toggleReduceModal()
-                    }}
-                >
-                    <Form>
-                        <span className={styles.payTitle}>{t("writeCashToWithdrow")}</span>
-                        <Divider style={{ marginTop: 10, marginBottom: 20 }} />
-                        <Field name="amount">
-                            {({ field }) => (
-                                <TextField
-                                    type='number'
-                                    label="Shuma"
-                                    InputProps={{
-                                        style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }}
-                                    onChange={checkReducedAmount(field.value)}
-                                    className={styles.amountInput}
-                                    {...field}
-                                />
-                            )}
-
-                        </Field>
-                        <span className={styles.currency}> (ALL)</span>
-                        <br />
-                        {!isValidAmount ? (
-                            <span className={styles.warning}>{t("noValueGreater")}</span>
-                        ) : null}
-                        <br />
-                        <div className={styles.subMainHolder}>
-                            <Button variant="contained" type="submit" className={styles.buttonStyle} disabled={!isValidAmount}>
-                                {t("substract")}
-                            </Button>
-                        </div>
+                           </Grid>
+                           <Grid xs={12} sm={3} md={3}>
+                            <Button type="submit" className={styles.changeAmountBtn}>
+                                    <span>Ruaj</span>
+                                </Button>
+                           </Grid>
+                        </Grid>
+                     </Grid>
                     </Form>
                 </Formik>
             </ModalComponent>
