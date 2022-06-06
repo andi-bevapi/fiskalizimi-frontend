@@ -7,7 +7,14 @@
 }
 
 .subTitle{
-    font: normal 1.5em 'Poppins';
+    font: 800 1.5em 'Poppins' !important;
+    color: #ff7a00;
+    margin: 0;
+    line-height: 3;
+    margin-right: 20px;
+}
+.serialNumber{
+    font: 600 1em 'Poppins' !important;
     color: rgb(0, 0, 0);
     margin: 0;
     line-height: 3;
@@ -16,6 +23,7 @@
 
 .stateGrid{
     display: contents;
+    margin-top: 20px;
 }
 
 .mt20{
@@ -33,7 +41,16 @@
 }
 
 .changeAmountBtn{
-    margin-top: 5px !important;
+    background: #4caf50 !important;
+    margin: 4px 0 0 0 !important;
+    width: 240px;
+    font: 700 16px "Poppins" !important;
+    text-align: center;
+    line-height: 1rem!important;
+    text-transform: unset!important;
+    box-shadow: unset !important;
+    padding: 18px 5px !important;
+    color: white !important;
 }
 
 .addAmountBtn{

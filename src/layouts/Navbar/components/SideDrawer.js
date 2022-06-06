@@ -2,7 +2,7 @@ import { Drawer, Fab } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Menu } from '@mui/icons-material';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavItems from './NavItems';
 import styles from '../components/navigationStyles.css'
 import { history } from 'umi';
@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';//home
 import { useTranslation } from "react-i18next";
 import { useModel } from 'umi';
+import { useContextArka } from '../../../Context/ArkaContext';
 
 const useStyles = makeStyles({
   fab: {
@@ -18,12 +19,18 @@ const useStyles = makeStyles({
   },
 });
 
-const SideDrawer = () => {
-  const classes = useStyles();
-  const { initialState } = useModel('@@initialState');
-  const {t} = useTranslation();
 
+const SideDrawer = () => {
+  const { selectedDeposit } = useContextArka();
+  const classes = useStyles();
+  const { initialState, refresh } = useModel('@@initialState');
+  const {t} = useTranslation();
   const [state, setState] = useState({ right: false });
+
+  useEffect(() => {
+  }, [selectedDeposit, initialState]);
+
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -57,7 +64,8 @@ const SideDrawer = () => {
         {sideDrawerList('left')}
       </Drawer>
       <Button className={styles.mainPageLink} onClick={() => {history.push('/')}}><HomeIcon /></Button>
-      {initialState?.currentUser?.arka && <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>{initialState?.currentUser?.arka.name}</Button>}
+      <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>{t("ark")}</Button>
+      {/* {localStorage.getItem('deposit') && <Button className={styles.cashPageLink} onClick={() => {history.push('/arka')}}>{initialState?.currentUser?.arka.name}</Button>} */}
     </React.Fragment>
   );
 };

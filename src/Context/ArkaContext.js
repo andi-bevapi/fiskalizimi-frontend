@@ -15,10 +15,11 @@ const ArkaProvider = (props) => {
   const { initialState } = useModel('@@initialState');
   const [isLoading, setIsLoading] = useState(false);
   const [arkaList, setArkaList] = useState([]);
+  const [selectedDeposit, setSelectedDeposit] = useState(JSON.parse(localStorage.getItem('deposit')));
 
   useEffect(() => {
     getArka();
-  }, [initialState?.currentUser]);
+  }, [initialState?.currentUser, selectedDeposit]);
 
   const getArka = async () => {
     setIsLoading(true);
@@ -63,6 +64,7 @@ const ArkaProvider = (props) => {
       return error;
     }
   };
+
   const arkaToDelete = async (id) => {
     try {
       const response = await deleteArka(id);
@@ -87,6 +89,10 @@ const ArkaProvider = (props) => {
     }
   };
 
+  const selectedADeposit = (deposit) => {
+     setSelectedDeposit(deposit);
+  }
+
   const values = {
     arkaList,
     setArkaList,
@@ -95,6 +101,8 @@ const ArkaProvider = (props) => {
     arkaToUpdate,
     arkaToDelete,
     viewArkaHistory,
+    selectedDeposit,
+    selectedADeposit
   };
 
   return <ArkaContext.Provider value={values}>{props.children}</ArkaContext.Provider>;

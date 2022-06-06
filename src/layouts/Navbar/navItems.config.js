@@ -43,11 +43,11 @@ export const navItems = [
     path: "/raportet",
     access: 'canViewReports'
   },
-  {
-    title: "Arkat",
-    path: "/arka-list",
-    access: 'canViewArka'
-  },
+  // {
+  //   title: "Arkat",
+  //   path: "/arka-list",
+  //   access: 'canViewArka'
+  // },
   {
     title: "Faturat",
     path: "/faturat",

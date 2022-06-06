@@ -109,7 +109,7 @@ const ItemsOnBuy = () => {
   };
 
   const activateInvoice = (invoice) => {
-    if (!initialState?.currentUser?.arka) {
+    if (!localStorage.getItem('deposit')) {
       return SwalModal(
         t("noConnectedArka"),
         "",

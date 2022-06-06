@@ -40,7 +40,7 @@ const Login = () => {
             if (response.statusCode === 200) {
                 localStorage.setItem('poslaToken', response.data);
                 await fetchUserInfo();
-                history.push('/');
+                history.push('/arka');
                 return;
             }
 
