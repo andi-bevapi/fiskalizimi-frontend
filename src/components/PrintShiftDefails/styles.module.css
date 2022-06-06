@@ -1,0 +1,18 @@
+.container{
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+}
+.container > h4 {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.container > p {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}

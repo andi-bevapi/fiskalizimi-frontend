@@ -9,13 +9,26 @@ const getAllArka = async (branchId) => {
   });
 };
 
-const createNewArka = async (data) => {
+const getAllArkabyClientId = async (clientId) => {
+  return request(`/arkat/clientId/${clientId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+
+const createNewArka = async (clientId, data) => {
   return request(`/arkat/create`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data
+    data: {
+      clientId,
+      ...data
+    }
   });
 };
 
@@ -57,8 +70,8 @@ const updateSavedAmount = async (data) => {
   });
 };
 
-const getArkaHistory = async (id) => {
-  return request(`/arka-history/todays/${id}`, {
+const getArkaHistory = async (id, startDate, endDate) => {
+  return request(`/arka-history/todays/${id}?startDate=${startDate}&endDate=${endDate}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -67,4 +80,4 @@ const getArkaHistory = async (id) => {
 
 }
 
-export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka, getArkaHistory};
+export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka, getArkaHistory, getAllArkabyClientId};

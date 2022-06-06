@@ -77,13 +77,15 @@ const ItemLine = (props) => {
         <Typography className={styles.productName} align={'left'}>{props.item.name}</Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-        <Typography className={styles.productBarcode} align={'right'}>Barkodi: {props.item.barcode}</Typography>
+        <Typography className={styles.productBarcode} align={'right'}>{t('Barcode')}: {props.item.barcode}</Typography>
         </Grid>
         <Grid item xs={8} sm={8} md={8} lg={8}>
         <Typography className={styles.productPrice} align={'right'}> {props.item.price} LEK</Typography>
         </Grid>
         <Grid item xs={8} sm={8} md={8} lg={8}>
-        <Typography className={styles.productStock} align={'left'}> Stoku: {props.item.stock}
+        <Typography className={styles.productStock} align={'left'}> {t('Stock')}: {props.item.stock}
+        {initialState?.currentUser?.branchId === 0 &&
+          <Typography className={styles.productBarcode}>{t('branch')}: {props.item.branch.name}</Typography>}
         </Typography>
         </Grid>
       </Grid>

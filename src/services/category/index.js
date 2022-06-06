@@ -9,14 +9,23 @@ const getAllCategory = async (branchId) => {
     });
 }
 
-const createCategory = async(branchId, data) =>{
+const getAllCategoryByClientId = async (clientId) => {
+    return request(`/categories/clientId/${clientId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
+const createCategory = async(clientId, data) =>{
     return request("/categories/create",{
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
         data: {
-            branchId,
+            clientId,
             ...data
         }
     })
@@ -44,4 +53,4 @@ const deleteCategory = async(id) => {
     })
 }
 
-export {createCategory,getAllCategory,updateCategory,deleteCategory}
+export {createCategory,getAllCategory,updateCategory,deleteCategory, getAllCategoryByClientId}

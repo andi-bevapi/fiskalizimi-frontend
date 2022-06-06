@@ -76,7 +76,6 @@ const Reports = () => {
                 {...a11yProps(1)}
                 className={styles.tabFonts}
               />
-              <Tab label={i18n.t('bill')} {...a11yProps(2)} className={styles.tabFonts} />
               <Tab label={i18n.t('soldProducts')} {...a11yProps(3)} className={styles.tabFonts} />
               <Tab label='Operatoret' {...a11yProps(4)} className={styles.tabFonts} />
               <Tab
@@ -87,23 +86,20 @@ const Reports = () => {
             </Tabs>
           </Grid>
 
-          <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9}>
+          <Grid item xs={matches ? 12 : 8} sm={8} md={9} lg={9} style={{marginTop: 20}}>
             <TabPanel value={value} index={0}>
-              <Dashboard />
+              {/* <Dashboard /> */}
             </TabPanel>
           <TabPanel value={value} index={1}>
             <Analytics />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <Invoices />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
             <SoldProducts />
           </TabPanel>
-          <TabPanel value={value} index={4}>
+          <TabPanel value={value} index={3}>
             <Operators />
           </TabPanel>
-          <TabPanel value={value} index={5}>
+          <TabPanel value={value} index={4}>
             <DailyTurnover />
           </TabPanel>
           </Grid>

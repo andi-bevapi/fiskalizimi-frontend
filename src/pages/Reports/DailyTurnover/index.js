@@ -19,8 +19,12 @@ const columns = [
     },
     { field: 'shiftEnd', headerName: 'Shift End', width: 200 },
     { field: 'username', headerName: 'Username', width: 120 },
-    { field: 'totalAmountNoVAT', headerName: 'Total Amount No VAT', width: 150 },
-    { field: 'totalAmount', headerName: 'Total Amount', width: 100 }
+    { field: 'totalAmountNoVAT', headerName: 'Total Amount No VAT', width: 150, renderCell: (params) => {
+        return params.row.totalAmountNoVAT.toFixed(2);
+    } },
+    { field: 'totalAmount', headerName: 'Total Amount', width: 100, renderCell: (params) => {
+        return params.row.totalAmount.toFixed(2);
+    } }
 ];
 
 const DailyTurnover = () => {
@@ -100,7 +104,7 @@ const DailyTurnover = () => {
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
-                    getRowId={(row) => row.username}
+                    getRowId={(row) => row.id}
                 />
             </div>
         </>

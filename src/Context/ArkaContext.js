@@ -6,8 +6,9 @@ import {
   deleteArka,
   updateArka,
   getArkaHistory,
+  getAllArkabyClientId
 } from '../services/arka';
-
+import { getClientId } from '../helpers/getClientId';
 const ArkaContext = createContext({});
 
 const ArkaProvider = (props) => {
@@ -15,10 +16,17 @@ const ArkaProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [arkaList, setArkaList] = useState([]);
 
+  useEffect(() => {
+    getArka();
+  }, [initialState?.currentUser]);
+
   const getArka = async () => {
     setIsLoading(true);
     try {
-      const response = await getAllArka(initialState?.currentUser?.branchId);
+      let response = [];
+      if (initialState?.currentUser?.branchId !== 0)
+         response = await getAllArka(initialState?.currentUser?.branchId);
+      else response = await getAllArkabyClientId(getClientId(initialState?.currentUser))
       if (response.statusCode === 200) setArkaList(response.data);
     } catch (error) {
       return error;
@@ -28,7 +36,7 @@ const ArkaProvider = (props) => {
 
   const createArka = async (body) => {
     try {
-      const response = await createNewArka(body);
+      const response = await createNewArka(getClientId(initialState?.currentUser), body);
       if (response.statusCode === 200) {
         setArkaList((prevState) => {
           return [...prevState, response.data];
@@ -70,18 +78,14 @@ const ArkaProvider = (props) => {
     }
   };
 
-  const viewArkaHistory = async (id) => {
+  const viewArkaHistory = async (id, startDate, endDate) => {
     try {
-      const response = await getArkaHistory(id);
+      const response = await getArkaHistory(id, startDate, endDate);
       return response;
     } catch (error) {
       return error;
     }
   };
-
-  useEffect(() => {
-    getArka();
-  }, [initialState?.currentUser]);
 
   const values = {
     arkaList,

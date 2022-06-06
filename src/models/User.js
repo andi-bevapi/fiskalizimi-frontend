@@ -21,8 +21,8 @@ class User {
         this.phone = user.phone || '';
         this.firstName = user.firstName || '';
         this.lastName = user.lastName || '';
-        this.branchId = user.branchId || '';
-        this.clientId = user.clientId || '';
+        this.branchId = user.branchId || 0;
+        this.clientId = user.clientId || 0;
         this.permissions = user.permissions || [];
         this.arka = user.arka || null;
 

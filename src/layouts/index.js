@@ -21,7 +21,7 @@ const BasicLayout = (props) => {
         <Suspense fallback="Loading...">
           <I18nextProvider i18n={i18n}>
             <Navbar />
-              <Body children={props.children} />
+            <Body children={props.children} />
           </I18nextProvider>
         </Suspense>
       </div>

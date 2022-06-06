@@ -249,7 +249,8 @@ const InvoiceProvider = (props) => {
             paymentMethod: 1,
             description: String(invoiceDescription),
             message: invoiceMessage,
-            invoiceItems: [...invoiceItemsArray]
+            invoiceItems: [...invoiceItemsArray],
+            NSLF: "", //will be generated
         }
         setInvoiceFinalObject(invoiceObject);
         if (shouldPost) await postInvoice(invoiceObject);
@@ -326,9 +327,20 @@ const InvoiceProvider = (props) => {
         }))
     }
 
+    //Method that handles corrective invoice
+    const handleCorrectiveInvoice = async (invoice) =>{
+       try{
+            const response = await createInvoice(invoice, initialState?.currentUser?.id);
+       }catch(error){
+            console.log("ERROR", error)
+       }
+
+    }
+
     const values = { isLoading, addToInvoiceList, listedInvoiceProducts, removeProductFromInvoiceList, deleteInvoice, totalPriceVAT, 
         getTotalPriceWithVAT, totalAmountNoVAT, getTotalPriceWithoutVAT, filteredBarcodeProduct, getProductBarcode, invoiceFinalObject, 
-        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, setPendingInvoices, updateInvoiceToActive, deleteInvoice, couponObject, deletePendingInvoice }
+        returnInvoiceObject, activeInvoice, setActiveInvoice, createPendingInvoice, pendingInvoices, setPendingInvoices, updateInvoiceToActive, deleteInvoice,
+        couponObject, deletePendingInvoice, handleCorrectiveInvoice }
 
     return (
         <InvoiceContext.Provider value={values}>

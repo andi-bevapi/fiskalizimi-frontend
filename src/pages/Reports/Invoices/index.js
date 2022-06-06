@@ -1,10 +1,16 @@
-import { useState } from 'react';
-import styles from './../reportsStyle.css'
+import { getAnalyticsData, getSingleInvoiceAnalytics } from '../../../services/reports';
+import { formatDate } from '../../../helpers/formatDate';
+import { useState , useEffect } from 'react';
+import { useModel } from 'umi';
+import FiscalizedInvoice from "./FiskalizedInvoices";
+import NotFiskalizedInvoices from "./NotFiscalizedInvoices";
+import styles from './../reportsStyle.css';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import i18n from "i18next";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -34,9 +40,10 @@ function a11yProps(index) {
     };
 }
 
-
 const Invoices = () => {
     const [value, setValue] = useState(0);
+
+    useEffect(()=>{},[]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -53,11 +60,13 @@ const Invoices = () => {
                 <Tab {...a11yProps(1)}  label=  {i18n.t("noFiscalizedBill")} {...a11yProps(1)} className={styles.tabFonts}/>
             </Tabs>
             <TabPanel value={value} index={0}>
-               
+               <FiscalizedInvoice/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-               
+                <NotFiskalizedInvoices/>
             </TabPanel>
+
+            
         </>
     );
 };
