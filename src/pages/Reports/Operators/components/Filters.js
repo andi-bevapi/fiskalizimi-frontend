@@ -27,7 +27,7 @@ const Filters = ({ getData }) => {
                 getData(values);
             }}
         >
-            <Form>
+            <Form style={{minwidth:'100%', display: 'flex', flexWrap: window.innerWidth < 800 ? 'wrap' : 'nowrap', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
                 <FormRender
                     formFields={[
                         {
@@ -43,7 +43,11 @@ const Filters = ({ getData }) => {
                                     value: user.id,
                                     label: user.username
                                 }))
-                            ]
+                            ],
+                            style: {
+                                marginTop: 20
+                                // marginLeft: 20
+                            }
                         }
                     ]}
                 />

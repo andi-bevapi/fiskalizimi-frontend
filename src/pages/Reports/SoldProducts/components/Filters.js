@@ -34,10 +34,9 @@ const Filters = ({ getData }) => {
                 getData(values);
             }}
         >
-            <Grid container>
-                {/* Nuk behet grida per filters pasi eshte array me objekte, i njejti problem si ne homepage dashboard*/}
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                    <Form>
+            {/* <Grid container> */}
+                {/* <Grid item xs={12} sm={12} md={3} lg={3} xl={3}> */}
+                    <Form style={{ display: 'flex', flexWrap: window.innerWidth < 800 ? 'wrap' : 'nowrap', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
                         <FormRender
                             formFields={[
                                 {
@@ -70,6 +69,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
+                                        marginLeft: window.innerWidth < 800 ? 0 : 10
                                         // marginLeft: 20
                                     }
                                 },
@@ -88,6 +88,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
+                                        marginLeft: window.innerWidth < 800 ? 0 : 20
                                         // marginLeft: 40
                                     }
                                 },
@@ -106,6 +107,7 @@ const Filters = ({ getData }) => {
                                         }))
                                     ],
                                     style: {
+                                        marginLeft: window.innerWidth < 800 ? 0 : 30
                                         // marginLeft: 60
                                     }
                                 }
@@ -114,8 +116,8 @@ const Filters = ({ getData }) => {
 
                         <SubmitListener />
                     </Form>
-                </Grid>
-            </Grid>
+                {/* </Grid> */}
+             {/* </Grid> */}
         </Formik>
     );
 };

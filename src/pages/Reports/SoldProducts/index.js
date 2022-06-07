@@ -92,9 +92,7 @@ const SoldProducts = () => {
             </LocalizationProvider>
 
             <br />
-            <Grid container xs={12} sm={6} md={6} lg={6}>
             <Filters getData={getData} />
-            </Grid>
             <br />
 
             <div style={{ height: '60vh', width: '100%' }}>

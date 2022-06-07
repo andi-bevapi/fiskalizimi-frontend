@@ -60,8 +60,8 @@ const Operators = () => {
 
     return (
         <>
-            <Grid container spacing={2} paddingTop={3}>
-                <Grid item xs={12} sm={12} md={12} lg={9} xl={8}>
+            {/* <Grid container spacing={2} paddingTop={3}> */}
+                {/* <Grid item xs={12} sm={12} md={8} lg={9} xl={8}> */}
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateRangePicker
                             startText={t("beginingDate")}
@@ -90,12 +90,16 @@ const Operators = () => {
                             )}
                         />
                     </LocalizationProvider>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={3} xl={3}> 
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={12} md={5} lg={3} xl={3}>  */}
                 {/* paddingTop={(matches ? 24 : 0)} */}
-                    <Filters getData={getData} style={{minWidth: '178px !important'}}/>
-                </Grid>
-            </Grid>
+                    <Filters getData={getData} 
+                    // style={{ width: window.innerWidth < 800 ? '100%' : '10%'}}
+
+                    /> 
+                    {/* style={{minWidth: '178px !important'}} */}
+                {/* </Grid> */}
+             {/* </Grid>  */}
 
             <br />
 
