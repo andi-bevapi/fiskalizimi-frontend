@@ -34,24 +34,24 @@ export const navItems = [
     access: 'canViewArka'
   },
   {
-    title: "Perdoruesit",
-    path: "/perdoruesit",
-    access: 'canViewUser'
+    title: "Faturat",
+    path: "/faturat",
   },
   {
     title: "Raportet",
     path: "/raportet",
     access: 'canViewReports'
   },
+  {
+    title: "Perdoruesit",
+    path: "/perdoruesit",
+    access: 'canViewUser'
+  },
   // {
   //   title: "Arkat",
   //   path: "/arka-list",
   //   access: 'canViewArka'
   // },
-  {
-    title: "Faturat",
-    path: "/faturat",
-  },
   {
     title: "Konfigurime",
     path: "/konfigurime",
