@@ -6,7 +6,7 @@ import { useContextArka } from '../../Context/ArkaContext';
 import { useBranchListContext } from "../../Context/BranchListContext";
 import { useTranslation } from 'react-i18next';
 
-const tableHeaders = ['Id', 'Name', 'SerialNumber', 'ValidFrom', 'ValidTo'];
+const tableHeaders = ['Id','ArkaHistories','name', 'serialNumber', 'validFrom', 'validTo'];
 
 const ArkaList = () => {
   const { arkaList, setArkaList, isLoading, createArka, arkaToUpdate, arkaToDelete, viewArkaHistory } = useContextArka();

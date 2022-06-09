@@ -348,7 +348,7 @@ const SidebarAction = (props) => {
                     {Object.keys(props.permissions).map((key, idx) => {
                       return (
                         <>
-                          <p>{key.toUpperCase()}</p>
+                          <p>{t(key.toUpperCase())}</p>
                           {props.permissions[key].permissions.map((permission) => {
                             return (
                               <BootstrapCheckbox

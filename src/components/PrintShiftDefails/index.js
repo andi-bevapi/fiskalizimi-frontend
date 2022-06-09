@@ -29,10 +29,10 @@ const PrintShiftDetails = React.forwardRef((props, ref) =>{
              <Divider style={{ marginTop: 10, marginBottom: 20 }} />
 
              <div>
-                 <p>Totali <span>{props.summaryData?.totalAmount ? props.summaryData?.totalAmount.toFixed(2) : 0}</span></p>
-                 <p>Totali pa TVSH<span>{props.summaryData?.totalAmountNoVAT ? props.summaryData?.totalAmountNoVAT.toFixed(2) : 0}</span></p>
-                 <p>Totali TVSH 6%<span>{props.summaryData?.totalVat6 ? props.summaryData?.totalVat6.toFixed(2) : 0}</span></p>
-                 <p>Totali TVSH 20 %<span>{props.summaryData?.totalVat20 ? props.summaryData?.totalVat20.toFixed(2) : 0}</span></p>
+                 <p>Totali <span>{props.summaryData?.totalAmount ? Number(props.summaryData?.totalAmount).toFixed(2) : 0}</span></p>
+                 <p>Totali pa TVSH<span>{props.summaryData?.totalAmountNoVAT ? Number(props.summaryData?.totalAmountNoVAT).toFixed(2) : 0}</span></p>
+                 <p>Totali TVSH 6%<span>{props.summaryData?.totalVat6 ? Number(props.summaryData?.totalVat6).toFixed(2) : 0}</span></p>
+                 <p>Totali TVSH 20 %<span>{props.summaryData?.totalVat20 ? Number(props.summaryData?.totalVat20).toFixed(2) : 0}</span></p>
              </div>
             </div>
         </div>

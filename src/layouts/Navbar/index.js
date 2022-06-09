@@ -224,18 +224,18 @@ const Navbar = () => {
               Permbledhja Ditore:
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Vlera Totale: {summaryData?.totalAmount ? summaryData?.totalAmount.toFixed(2) : 0}
+              Vlera Totale: {summaryData?.totalAmount ? Number(summaryData?.totalAmount).toFixed(2) : 0}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Vlera Totale pa TVSH:{' '}
-              {summaryData?.totalAmountNoVAT ? summaryData?.totalAmountNoVAT.toFixed(2) : 0}
+              {summaryData?.totalAmountNoVAT ? Number(summaryData?.totalAmountNoVAT).toFixed(2) : 0}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Vlera Totale TVSH 6%: {summaryData?.totalVat6 ? summaryData?.totalVat6.toFixed(2) : 0}
+              Vlera Totale TVSH 6%: {summaryData?.totalVat6 ? Number(summaryData?.totalVat6).toFixed(2) : 0}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Vlera Totale TVSH 20%:{' '}
-              {summaryData?.totalVat20 ? summaryData?.totalVat20.toFixed(2) : 0}
+              {summaryData?.totalVat20 ? Number(summaryData?.totalVat20).toFixed(2) : 0}
             </Typography>
             <div className={styles.buttonContainer}>
               <ReactToPrint
