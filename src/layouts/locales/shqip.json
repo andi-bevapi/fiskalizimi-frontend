@@ -58,7 +58,7 @@
   "activeInvoice": "Fatura Aktive",
   "pendingInvoice": "Fatura te ruajtura",
   "previous": "Para",
-  "next": "Tjetër",
+  "next": "Pas",
   "product": "Produkti",
   "quantity": "Sasia",
   "price": "Çmimi",
@@ -170,6 +170,7 @@
   "productBarcode":"Ju lutem vendosni barkodin",
   "insertVat":"Ju lutem vendosni TVSH",
   "insertAmount":"Ju lutem vendosni sasine",
+  "maxAmount":"Numri i sasise tejkalon limitin,",
   "insertBranch":"Ju lutem zgjidhni degen",
   "insertCategory":"Ju lutem zgjidhni kategorine",
   "insertMeasureUnit":"Ju lutem zgjidhni njesine matese",
@@ -266,5 +267,13 @@
   "SELLINGUNIT":"Njesite e shitjes",
   "USER":"Perdoruesit",
   "ARKA":"Arka",
-  "REPORTS":"Raportet"
+  "REPORTS":"Raportet",
+  "Barcode":"Barkodi",
+  "Name":"Emri",
+  "Stock":"Stoku",
+  "City":"Qyteti",
+  "MaintainerCode":"Kodi mirembajtjes",
+  "Address":"Adresa",
+  "BusinessUnitCode":"Kodi i njesise se biznesit",
+  "removeImage":"Fshi imazhin"
 }

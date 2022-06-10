@@ -168,6 +168,7 @@
   "productName":"Please insert the name",
   "insertVat":"Please insert the VAT",
   "insertAmount":"Please insert the quantity",
+  "maxAmount":"Amoun number is greater then allowed",
   "insertBranch":"Please select the Branch",
   "insertCategory":"Please select the Category",
   "insertMeasureUnit":"Please choose the Measure Unit",
@@ -264,5 +265,12 @@
   "SELLINGUNIT":"Selling Unit",
   "USER":"Users",
   "ARKA":"Money Deposit",
-  "REPORTS":"Raports"
+  "REPORTS":"Raports",
+  "Barcode":"Barcode",
+  "Stock":"Stock",
+  "City":"City",
+  "MaintainerCode":"MaintainerCode",
+  "Address":"Address",
+  "BusinessUnitCode":"BusinessUnitCode",
+  "removeImage":"Remove Image"
 }

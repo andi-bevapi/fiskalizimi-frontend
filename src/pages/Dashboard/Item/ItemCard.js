@@ -61,9 +61,8 @@ const ItemCard = (props) => {
   useEffect(
     () => {
       const arrayProduct = props.invoiceList?.filter((item) => item.id === props.item.id);
-
       arrayProduct[0]?.stockCheck
-        ? arrayProduct[0].quantity >= Number(product.stock).toFixed(0)
+        ? arrayProduct[0].quantity >= Number(arrayProduct[0].stock).toFixed(0)
           ? setStopAdding(true)
           : setStopAdding(false)
         : product.stockCheck
@@ -89,21 +88,25 @@ const ItemCard = (props) => {
         () => {},
       );
     }
+
     if (!stopAdding) {
       const productFromArray = props.invoiceList?.filter((item) => item.id === props.item.id);
+      
       const isExisting = productFromArray.length >= 1 ? true : false;
       if (product.stockCheck) {
         if (isExisting) {
-          if (productFromArray[0].quantity >= Number(product.stock).toFixed(0)) {
+          //futet kur gjen produkte qe kan stock check tek lista e faturave
+          if (productFromArray[0].quantity >= Number(productFromArray[0].stock).toFixed(0)) {
             setStopAdding(true);
           } else {
             setProductQuantity(productFromArray[0].quantity + 1);
             props.addToInvoiceList(product, productFromArray[0].quantity + 1);
           }
         } else {
+          //futet kur nuk gjen produkte qe kan stock check tek lista e faturave
           setProductQuantity(1);
           props.addToInvoiceList(product, 1);
-          Number(product.stock) == 1 ? setStopAdding(true) : setStopAdding(false);
+          Number(product.stock) == 0 ? setStopAdding(true) : setStopAdding(false);
         }
       } else {
         if (isExisting) {
