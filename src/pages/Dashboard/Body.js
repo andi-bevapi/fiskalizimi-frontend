@@ -32,7 +32,7 @@ const BodyDashboard = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 18;
   const pagesVisited = pageNumber * itemsPerPage;
   const pageCount = Math.ceil(props.data?.length / itemsPerPage);
   const matches = useMediaQuery('(max-width:450px)')
