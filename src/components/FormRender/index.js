@@ -36,7 +36,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: window.innerWidth < 800 ? '100%' : '25%'}}
           >
             <Field name={formField.name}>
               {({ field, meta }) => (
@@ -101,7 +101,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: window.innerWidth < 800 ? '100%' : '25%'}}
           >
             <Field name={formField.name}>
               {({ field, form: { setFieldValue }, meta }) => {
@@ -153,7 +153,7 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
           <div
             className={classes.inputContainer}
             key={formField.name}
-            style={{ width: '100%', minWidth: 200 }}
+            style={{ width: window.innerWidth < 800 ? '100%' : '25%'}}
           >
             <Field name={formField.name}>
               {({ field, form: { setFieldValue }, meta }) => {

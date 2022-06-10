@@ -9,11 +9,14 @@ import { useTranslation } from "react-i18next";
 import { useModel } from 'umi';
 import { getDailyTurnoverReport } from '../../../services/reports';
 import { formatDate } from '../../../helpers/formatDate';
+import { Grid } from '@mui/material';
 
 const columns = [
-    { field: 'shiftStart', headerName: 'Shift Start', width: 200, renderCell: (params) => {
-        return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(params.row.shiftStart));
-    } },
+    {
+        field: 'shiftStart', headerName: 'Shift Start', width: 200, renderCell: (params) => {
+            return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(params.row.shiftStart));
+        }
+    },
     { field: 'shiftEnd', headerName: 'Shift End', width: 200 },
     { field: 'username', headerName: 'Username', width: 120 },
     { field: 'totalAmountNoVAT', headerName: 'Total Amount No VAT', width: 150, renderCell: (params) => {
@@ -61,6 +64,7 @@ const DailyTurnover = () => {
 
     return (
         <>
+
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateRangePicker
                     startText={t("beginingDate")}
@@ -69,13 +73,28 @@ const DailyTurnover = () => {
                     onChange={setDateRange}
                     renderInput={(startProps, endProps) => (
                         <>
-                            <TextField {...startProps} />
-                            <Box sx={{ mx: 2 }}> {t("until")} </Box>
-                            <TextField {...endProps} />
+                            <Grid container
+                                display={"flex"}
+                                alignItems="center"
+                                paddingTop={3}
+                                spacing={1}
+                            >
+                                <Grid item xs={12} sm={5} md={5} lg={5}>
+                                <TextField {...startProps} style ={{width: '100%'}}/>
+                                </Grid>
+                                <Grid item xs={12} sm={2} md={2} lg={2}>
+                                <Box sx={{ mx: 2 }}> {t("until")} </Box>
+                                </Grid>
+                                <Grid item xs={12} sm={5} md={5} lg={5}>
+                                <TextField {...endProps} style ={{width: '100%'}}/>
+                                </Grid>
+
+                            </Grid>
                         </>
                     )}
                 />
             </LocalizationProvider>
+
 
             <br />
 

@@ -94,15 +94,12 @@ const Reports = () => {
             <Analytics />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <Invoices />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
             <SoldProducts />
           </TabPanel>
-          <TabPanel value={value} index={4}>
+          <TabPanel value={value} index={3}>
             <Operators />
           </TabPanel>
-          <TabPanel value={value} index={5}>
+          <TabPanel value={value} index={4}>
             <DailyTurnover />
           </TabPanel>
           </Grid>
