@@ -20,6 +20,13 @@
   -webkit-box-orient: vertical;
 }
 
+.productNameCard{
+  font-family: 'POPPINS' !important;
+  text-align: end;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
 .priceText{
   font-size: 12px !important;
   font-family: 'POPPINS' !important;

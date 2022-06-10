@@ -23,6 +23,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import InvoicePreview from '../../../components/InvoicePreview';
 import Export from './components/Export';
 import Grid from '@mui/material/Grid';
+import { getClientId } from "../../../helpers/getClientId";
 
 const Analytics = () => {
     const { initialState } = useModel('@@initialState');
@@ -80,7 +81,7 @@ const Analytics = () => {
         const endDate = formatDate(dateRange[1]);
 
         try {
-            const response = await getAnalyticsData(initialState?.currentUser?.clientId, {
+            const response = await getAnalyticsData(getClientId(initialState?.currentUser), {
                 startDate,
                 endDate
             });
@@ -92,7 +93,7 @@ const Analytics = () => {
 
     const getSelectedInvoice = async (row) => {
         try {
-            const response = await getSingleInvoiceAnalytics(initialState?.currentUser?.clientId, row.id);
+            const response = await getSingleInvoiceAnalytics(getClientId(initialState?.currentUser), row.id);
             setRows(response.data);
         } catch (error) {
             console.log(error);

@@ -11,6 +11,7 @@ import { getOperatorsReport } from '../../../services/reports';
 import { formatDate } from '../../../helpers/formatDate';
 import Filters from './components/Filters';
 import Grid from '@mui/material/Grid';
+import {getClientId} from "../../../helpers/getClientId";
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 const columns = [
@@ -47,7 +48,7 @@ const Operators = () => {
         }
 
         try {
-            const response = await getOperatorsReport(initialState?.currentUser?.clientId, {
+            const response = await getOperatorsReport(getClientId(initialState?.currentUser), {
                 startDate,
                 endDate,
                 ...query

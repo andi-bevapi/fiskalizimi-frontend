@@ -78,7 +78,7 @@ const ItemCard = (props) => {
   );
 
   const handleCardClick = () => {
-    if (!initialState?.currentUser?.arka) {
+    if (!localStorage.getItem('deposit')) {
       return SwalModal(
         t('noConnectedArka'),
         '',
@@ -152,9 +152,7 @@ const ItemCard = (props) => {
           <Typography
             variant="body2"
             color="text.secondary"
-            style={{
-              textAlign: 'end',
-            }}
+            className={styles.productNameCard}
           >
             {props.item.name}
           </Typography>

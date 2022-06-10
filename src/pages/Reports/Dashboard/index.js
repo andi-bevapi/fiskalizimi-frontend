@@ -24,7 +24,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import { getClientId } from '../../../helpers/getClientId';
 
 const Dashboard = () => {
   const { initialState } = useModel('@@initialState');
@@ -37,25 +38,30 @@ const Dashboard = () => {
   useEffect(() => {
     getTotals();
     getTotalsCharts();
-  }, [initialState?.currentUser, dateRange]);
+  }, [dateRange]);
 
   const getTotals = async () => {
     const startDate = formatDate(dateRange[0]);
     const endDate = formatDate(dateRange[1]);
 
     try {
-      const response = await getDashboardReports(initialState?.currentUser?.clientId, {
+      const response = await getDashboardReports(getClientId(initialState?.currentUser), {
         startDate,
-        endDate
+        endDate,
       });
       const formatted = [];
 
       if (response.data.length > 0) {
-        Object.entries(response.data[0]).map(item => {
+        Object.entries(response.data[0]).map((item) => {
           formatted.push({
-            label: item[0] === 'totalAmount' ? 'Te ardhurat totale' : item[0] === 'totalVat' ? 'TVSH' : 'Numri i faturave',
-            value: item[1]
-          })
+            label:
+              item[0] === 'totalAmount'
+                ? 'Te ardhurat totale'
+                : item[0] === 'totalVat'
+                ? 'TVSH'
+                : 'Numri i faturave',
+            value: +item[1],
+          });
         });
       }
 
@@ -66,14 +72,22 @@ const Dashboard = () => {
   };
 
   const getTotalsCharts = async () => {
-
     let startDate = formatDate(dateRange[0]);
-    let endDate = dateRange[1] ? formatDate(dateRange[1])
-      : formatDate(new Date());
+    let endDate = dateRange[1] ? formatDate(dateRange[1]) : formatDate(new Date());
 
     try {
-      const response = await getChartsReports(initialState?.currentUser?.clientId, { startDate, endDate });
-      setTotalsCharts(response.data);
+      const response = await getChartsReports(getClientId(initialState?.currentUser), {
+        startDate,
+        endDate,
+      });
+      const tmp = response.data.map((element) => {
+        return {
+          ...element,
+          totalAmount: +element.totalAmount,
+        };
+      });
+
+      setTotalsCharts(tmp);
     } catch (error) {
       console.log(error);
     }
@@ -85,8 +99,8 @@ const Dashboard = () => {
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateRangePicker
-          startText={t("beginingDate")}
-          endText={t("endingngDate")}
+          startText={t('beginingDate')}
+          endText={t('endingngDate')}
           value={dateRange}
           onChange={setDateRange}
           renderInput={(startProps, endProps) => (
@@ -121,7 +135,7 @@ const Dashboard = () => {
       <br />
 
       <Grid container spacing={2}>
-        {totals?.map(item => (
+        {totals?.map((item) => (
           <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
             {/* minWidth: 275, */}
             <Card sx={{ textAlign: 'left' }}>
@@ -134,12 +148,16 @@ const Dashboard = () => {
                   minHeight: '80px',
                   maxHeight: '120px',
                   fontSize: '18px !important',
-
                 }}
               />
               <CardContent>
-                <Typography variant="h5" component="div" align='right' style={{ color: '#0D4D47', fontFamily: 'Poppins', fontWeight: 700 }}>
-                  {Number.isInteger(item?.value) ? item?.value : item?.value.toFixed(2)}
+                <Typography
+                  variant="h5"
+                  component="div"
+                  align="right"
+                  style={{ color: '#0D4D47', fontFamily: 'Poppins', fontWeight: 700 }}
+                >
+                  {Number.isInteger(item?.value) ? item?.value : Number(item?.value).toFixed(2)}
                 </Typography>
               </CardContent>
             </Card>
@@ -158,12 +176,8 @@ const Dashboard = () => {
             <ArgumentAxis />
             <ValueAxis max={7} />
 
-            <BarSeries
-              valueField="totalAmount"
-              argumentField="dateCreated"
-              color="#74A19E"
-            />
-            <Title text={t("totallBillValue")} />
+            <BarSeries valueField="totalAmount" argumentField="dateCreated" color="#74A19E" />
+            <Title text={t('totallBillValue')} />
             <Animation />
           </Chart>
         </Grid>
@@ -174,12 +188,8 @@ const Dashboard = () => {
             <ArgumentAxis />
             <ValueAxis max={7} />
 
-            <BarSeries
-              valueField="totalInvoices"
-              argumentField="dateCreated"
-              color="#ff7a00"
-            />
-            <Title text={t("totalNumberBill")} />
+            <BarSeries valueField="totalInvoices" argumentField="dateCreated" color="#ff7a00" />
+            <Title text={t('totalNumberBill')} />
             <Animation />
           </Chart>
         </Grid>

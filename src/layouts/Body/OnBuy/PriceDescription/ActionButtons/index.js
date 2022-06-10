@@ -15,6 +15,8 @@ import InvoiceCoupon from './../../InvoiceCoupon/InvoiceCoupon';
 import {validationSchema} from "./validationSchema";
 import { useReactToPrint } from "react-to-print";
 import InvoiceToPrint from '../../InvoiceCoupon/InvoiceToPrint';
+import LargePrint from '../../InvoiceCoupon/LargePrint';
+import Swal from 'sweetalert2';
 
 const ActionButtons = (props) => {
   const { t } = useTranslation();
@@ -28,6 +30,7 @@ const ActionButtons = (props) => {
   } = useInvoiceContext();
   
   let componentRef = useRef();
+  let printRef = useRef();
   const [isOpen, setisOpen] = useState(false);
   const [freeze, setFreeze] = useState(false);
   const [isOpenStep2, setIsOpenStep2] = useState(false);
@@ -35,8 +38,13 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current
+  });
+
+  const handleLargePrint = useReactToPrint({
+    content: () => printRef.current
   });
 
   useEffect(() => {
@@ -71,9 +79,34 @@ const ActionButtons = (props) => {
   const goToGeneratedInvoice = async (values) => {
     await returnInvoiceObject(true, values.description, values.message);
     setisOpen(false);
-    deleteInvoice();
-    handlePrint();
+    openPrintSwal();
   }
+
+  const openPrintSwal = () => {
+    Swal.fire({
+      title:
+        "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+        `Zgjidhni mënyrën e printimit` +
+        '</h5>',
+      text: '',
+      icon: 'info',
+      iconColor: '#98bbb8',
+      showDenyButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#0d4d47',
+      denyButtonColor: '#f87800',
+      denyButtonText: `Printo si kupon`,
+      confirmButtonText: `Printo si faturë A4`,
+    }).then((result) => {
+      if (result.isDenied) {
+        handlePrint()
+      } else if (result.isConfirmed) {
+        handleLargePrint()
+      }
+      deleteInvoice();
+    });
+};
+
 
   const calculateMoney = (value) => {
     switch (value) {
@@ -335,6 +368,7 @@ const ActionButtons = (props) => {
         </ModalComponent>
       </div>
       {Object.keys(couponObject).length > 0 && <InvoiceToPrint data={couponObject} ref={componentRef}/>}
+      {Object.keys(couponObject).length > 0 && <LargePrint data={couponObject} ref={printRef}/>}
     </div>
   );
 };

@@ -59,7 +59,7 @@ const TableComponent = (props) => {
   const access = useAccess();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [arkaId, setArkaId] = useState(0);
+  const [arkaId, setArkaId] = useState(1);
 
   useEffect(() => {
     if (props.arka) handleHistoryData();
@@ -68,9 +68,10 @@ const TableComponent = (props) => {
   const [tableHeader, setTableHeader] = useState([]);
 
   useEffect(() => {
-    const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id');
+    console.log("PROPS", props)
+    const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id' && el !== 'Id');
     setTableHeader(filteredTableHeader);
-  }, []);
+  }, [arkaHistoryData]);
 
   const handleSnackBarClose = () => {
     setOpenSnackBar({ status: false, severity: 'success' });
@@ -96,7 +97,10 @@ const TableComponent = (props) => {
 
   const handleHistoryData = async () => {
     const response = await props.history(arkaId, startDate, endDate);
-    if (response.statusCode === 200) setArkaHistoryData(response.data);
+    if (response.statusCode === 200){
+      console.log("RESP", response.data)
+      setArkaHistoryData(response.data);
+    }
   }
 
   const toggleModal = () => {
@@ -115,7 +119,7 @@ const TableComponent = (props) => {
     {
       field: 'actions',
       headerName: i18n.t('actions'),
-      width: 120,
+      width: 140,
       sortable: false,
       renderCell: (params) => {
         const onClick = (e) => {
@@ -181,7 +185,7 @@ const TableComponent = (props) => {
               <IconButtonComponent
                 style={{
                   backgroundColor: '#ffa500',
-                  marginRight: '20px',
+                  marginRight: '10px',
                 }}
                 icon={<EditIcon />}
                 iconColor={{ color: 'white' }}
