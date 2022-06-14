@@ -1,5 +1,5 @@
-@media (min-width: 1440px) and (max-width: 2560px) {
+@media (min-width: 800px) and (max-width: 2560px) {
     .InputProps{
-     width: 450px;
+       margin: 15px;
     }
 }
