@@ -9,7 +9,6 @@ const ItemLine = (props) => {
   const { initialState } = useModel('@@initialState');
 
   const {t} = useTranslation();
-  const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
 
@@ -17,10 +16,10 @@ const ItemLine = (props) => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
     
     (arrayProduct[0]?.stockCheck ? (
-      (arrayProduct[0].quantity >= Number(product.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
+      (arrayProduct[0].quantity >= Number(props.item.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
     ) : (
-      (product.stockCheck ? (
-            Number(product.stock).toFixed(0) == 0 ? (setStopAdding(true)) : (setStopAdding(false))
+      (props.item.stockCheck ? (
+            Number(props.item.stock).toFixed(0) == 0 ? (setStopAdding(true)) : (setStopAdding(false))
         ): setStopAdding(false) )
     ));
     // ((props.invoiceList?.filter(item => item.id === props.item.id)).length >= 1 ? null : setStopAdding(false));
@@ -41,28 +40,28 @@ const ItemLine = (props) => {
     if (!stopAdding) {
       const productFromArray = (props.invoiceList?.filter(item => item.id === props.item.id));
       const isExisting = (productFromArray.length >= 1 ? true : false);
-      if (product.stockCheck) {
+      if (props.item.stockCheck) {
         if (isExisting) {
           // if (productFromArray[0]?.quantity >= Number(product.stock).toFixed(0)) {
           //   setStopAdding(true);
           // } else {
             setProductQuantity(productFromArray[0].quantity + 1);
-            props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+            props.addToInvoiceList(props.item, productFromArray[0].quantity + 1);
           // }
         } else {
           setProductQuantity(1);
-          props.addToInvoiceList(product, 1);
-          (Number(product.stock) == 1 ? (setStopAdding(true)) : (setStopAdding(false)));
+          props.addToInvoiceList(props.item, 1);
+          (Number(props.item.stock) == 1 ? (setStopAdding(true)) : (setStopAdding(false)));
         }
       } else {
         if (isExisting) {
           setProductQuantity(productFromArray[0].quantity + 1);
-          props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+          props.addToInvoiceList(props.item, productFromArray[0].quantity + 1);
         } else {
 
           setProductQuantity(1);
           // (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
-          props.addToInvoiceList(product, 1);
+          props.addToInvoiceList(props.item, 1);
         }
       }
     }
