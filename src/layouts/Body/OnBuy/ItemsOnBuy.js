@@ -109,10 +109,13 @@ const ItemsOnBuy = () => {
   };
 
 
-  const handleAmount = (event,item) =>{
-    let addQuantity= Number(item.quantity = event.target.value);
-    addToInvoiceList(item, addQuantity);
+  const handleAmount = (e,item) =>{
+    e.preventDefault();
+    item.quantity = Number(e.target.value);
+    addToInvoiceList(item, Number(e.target.value));
   }
+
+
 
   const activateInvoice = (invoice) => {
     if (!localStorage.getItem('deposit')) {
@@ -256,34 +259,18 @@ const ItemsOnBuy = () => {
                         <TableCell className={styles.tableBodyCell}>{index + 1}</TableCell>
                         <TableCell className={styles.tableBodyCell}>{item.name}</TableCell>
                         <TableCell className={styles.tableBodyCell} style={{ padding: '2px' }}>
-                          {/* <button
-                            className={styles.valueButton}
-                            onClick={() => {
-                              decrementCount(item);
-                            }}
-                          >
-                            -
-                          </button>
-
-                          &nbsp; {item.quantity} &nbsp;
-                          <button
-                            className={styles.valueButton}
-                            onClick={() => {
-                              incrementCount(item);
-                            }}
-                          >
-                            +
-                          </button> */}
-
                           <TextField
-                            onChange={(event)=>{handleAmount(event,item)}}
+                            onChange={(e)=>{handleAmount(e,item)}}
                             type="number"
                             InputProps={{
                               inputProps: {
+                                //nqs kemi stock check max i produktit te jete sa stock i produktit aktual
+                                //minimumi nuk duhet te jet 0 asnjehere
                                 max: 100,
-                                min: item,
+                                min: 1,
                               },
                             }}
+                            value={item.quantity}
                             label={t("quantity")}
                           />
                         </TableCell>

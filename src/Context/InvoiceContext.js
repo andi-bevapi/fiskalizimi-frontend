@@ -50,12 +50,26 @@ const InvoiceProvider = (props) => {
                 (item.id === product.id ? productIndex = index : "")
             });
             setProductList((prevState) => {
+
+
                 let index = prevState.findIndex((el) => el.id == product.id);
-                if (listedInvoiceProducts[productIndex].quantity < productQuantity)
+
+               
+                // if (listedInvoiceProducts[productIndex].quantity < productQuantity)
+                //     prevState[index].stock = prevState[index].stock - 1;
+                // else prevState[index].stock = prevState[index].stock + 1;
+
+                
+                if(listedInvoiceProducts[productIndex].quantity == productQuantity){
+                    prevState[index].stock = Number(listedInvoiceProducts[productIndex].stock) - productQuantity
+                } else if (listedInvoiceProducts[productIndex].quantity < productQuantity){
                     prevState[index].stock = prevState[index].stock - 1;
-                else prevState[index].stock = prevState[index].stock + 1;
+                }
+
                 return [...prevState];
             });
+
+
             const newArrayUpdated = Object.assign(listedInvoiceProducts, {
                 ...listedInvoiceProducts,
                 [productIndex]: { ...listedInvoiceProducts[productIndex], quantity: productQuantity }
@@ -95,7 +109,7 @@ const InvoiceProvider = (props) => {
         // console.log(listedInvoiceProducts[productIndex]);
         setProductList((prevState) => {
             let index = prevState.findIndex((el) => el.id == product.id);
-            prevState[index].stock = prevState[index].stock + listedInvoiceProducts[productIndex].quantity;
+            prevState[index].stock = Number(prevState[index].stock) + Number(listedInvoiceProducts[productIndex].quantity);
             return [...prevState];
         });
         const newArrayWithoutSelectedProduct = listedInvoiceProducts?.filter(item => item.id !== product.id);
