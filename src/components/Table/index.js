@@ -59,10 +59,10 @@ const TableComponent = (props) => {
   const access = useAccess();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [arkaId, setArkaId] = useState(1);
+  //const [arkaId, setArkaId] = useState(1);
 
   useEffect(() => {
-    if (props.arka) handleHistoryData();
+    //if (props.arka) handleHistoryData();
   }, [startDate, endDate]);
 
   const [tableHeader, setTableHeader] = useState([]);
@@ -81,12 +81,13 @@ const TableComponent = (props) => {
     setOpenSideBar(true);
   };
 
-  const handleHistoryButton = async (id) => {
-    const response = await props.history(id, startDate, endDate);
+  const handleHistoryButton = async (params) => {
+    console.log("IDD", params)
+    const response = await props.history(params.id, startDate, endDate);
     if (response.statusCode === 200) {
       setArkaHistoryData(response.data);
       setOpenHistoryModal(true);
-      setArkaId(id);
+      //setArkaId(id);
     } else
       setOpenSnackBar({
         status: true,
@@ -95,17 +96,18 @@ const TableComponent = (props) => {
       });
   };
 
-  const handleHistoryData = async () => {
-    const response = await props.history(arkaId, startDate, endDate);
-    if (response.statusCode === 200){
-      console.log("RESP", response.data)
-      setArkaHistoryData(response.data);
-    }
-  }
+  // const handleHistoryData = async () => {
+  //   console.log("ARKAT", arkaId)
+  //   const response = await props.history(arkaId, startDate, endDate);
+  //   if (response.statusCode === 200){
+  //     console.log("RESP", response.data)
+  //     setArkaHistoryData(response.data);
+  //   }
+  // }
 
   const toggleModal = () => {
     setOpenHistoryModal(!openHistoryModal);
-    setArkaId(0);
+    //setArkaId(0);
   };
 
   const columns = [
@@ -179,7 +181,7 @@ const TableComponent = (props) => {
                 }}
                 icon={<HistoryIcon />}
                 iconColor={{ color: 'white' }}
-                onClick={ handleHistoryButton}
+                onClick={() => handleHistoryButton(params)}
               />
             )}
             <Access accessible={access[props.acceses['update']]}>
