@@ -48,7 +48,7 @@ const Filters = () => {
                 getProductsList(values);
             }}
         >
-            <Form style={{ display: 'flex', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
+            <Form style={{ display: 'flex', flexWrap: window.innerWidth < 800 ? 'wrap' : 'nowrap', flexDirection: window.innerWidth < 800 ? 'column' : 'row'}}>
                 <FormRender
                     formFields={[
                         {

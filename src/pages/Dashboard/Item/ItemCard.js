@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CardMedia, Divider } from '@mui/material';
+import { CardMedia, Divider, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -53,7 +53,6 @@ const ItemCard = (props) => {
   const { initialState } = useModel('@@initialState');
 
   const classes = useStyles();
-  const [product, setProduct] = useState(props.item);
   const [quantity, setProductQuantity] = useState();
   const [stopAdding, setStopAdding] = useState(false);
   const { t } = useTranslation();
@@ -65,8 +64,8 @@ const ItemCard = (props) => {
         ? arrayProduct[0].quantity >= Number(arrayProduct[0].stock).toFixed(0)
           ? setStopAdding(true)
           : setStopAdding(false)
-        : product.stockCheck
-        ? Number(product.stock).toFixed(0) == 0
+        : props.item.stockCheck
+        ? Number(props.item.stock).toFixed(0) == 0
           ? setStopAdding(true)
           : setStopAdding(false)
         : setStopAdding(false);
@@ -93,29 +92,27 @@ const ItemCard = (props) => {
       const productFromArray = props.invoiceList?.filter((item) => item.id === props.item.id);
       
       const isExisting = productFromArray.length >= 1 ? true : false;
-      if (product.stockCheck) {
+      if (props.item.stockCheck) {
         if (isExisting) {
-          //futet kur gjen produkte qe kan stock check tek lista e faturave
           if (productFromArray[0].quantity >= Number(productFromArray[0].stock).toFixed(0)) {
             setStopAdding(true);
           } else {
             setProductQuantity(productFromArray[0].quantity + 1);
-            props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+            props.addToInvoiceList(props.item, productFromArray[0].quantity + 1);
           }
         } else {
-          //futet kur nuk gjen produkte qe kan stock check tek lista e faturave
           setProductQuantity(1);
-          props.addToInvoiceList(product, 1);
-          Number(product.stock) == 0 ? setStopAdding(true) : setStopAdding(false);
+          props.addToInvoiceList(props.item, 1);
+          Number(props.item.stock) == 0 ? setStopAdding(true) : setStopAdding(false);
         }
       } else {
         if (isExisting) {
           setProductQuantity(productFromArray[0].quantity + 1);
-          props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+          props.addToInvoiceList(props.item, productFromArray[0].quantity + 1);
         } else {
           setProductQuantity(1);
           // (Number(product.stock) == 1 ? (setStopAdding(true)) : (props.addToInvoiceList(product, 1)));
-          props.addToInvoiceList(product, 1);
+          props.addToInvoiceList(props.item, 1);
         }
       }
     }
@@ -161,11 +158,22 @@ const ItemCard = (props) => {
           </Typography>
         </div>
         <Divider className={styles.divider} />
-        <Typography variant="body2" color="text.secondary" className={styles.stockText}>
-          {t('Barcode')}: {Number(props.item.barcode)}
+        <div>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          className={styles.stockText}
+          width="max-content"
+        >
+          {t("Barcode")}: {Number(props.item.barcode)}
         </Typography>
-        <Typography variant="body2" color="text.secondary" className={styles.stockText}>
-          {t('Stock')}: {Number(props.item.stock)}
+        </div>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          className={styles.stockText}
+        >
+          {t("Stock")}: {Number(props.item.stock)}
         </Typography>
 
         <Typography

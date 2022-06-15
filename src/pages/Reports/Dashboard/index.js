@@ -95,6 +95,8 @@ const Dashboard = () => {
 
   return (
     <>
+
+
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateRangePicker
           startText={t('beginingDate')}
@@ -103,13 +105,32 @@ const Dashboard = () => {
           onChange={setDateRange}
           renderInput={(startProps, endProps) => (
             <>
-              <TextField {...startProps} />
-              <Box sx={{ mx: 2 }}> {t('until')} </Box>
-              <TextField {...endProps} />
+              <Grid container
+                display={"flex"}
+                alignItems="center"
+                paddingTop={3}
+                spacing={1}
+                >
+
+                <Grid item xs={12} sm={5} md={5} lg={5}>
+                  <TextField {...startProps} style ={{width: '100%'}} />
+                </Grid>
+
+                <Grid item xs={12} sm={2} md={2} lg={2}>
+                  <Box sx={{ mx: 2 }}> {t("until")} </Box>
+                </Grid>
+
+                <Grid item xs={12} sm={5} md={5} lg={5}>
+                  <TextField {...endProps} style ={{width: '100%'}}/>
+                </Grid>
+
+              </Grid>
             </>
           )}
         />
+
       </LocalizationProvider>
+
 
       <br />
 
@@ -144,12 +165,14 @@ const Dashboard = () => {
         ))}
       </Grid>
 
-      <br />
-      <br />
+
+      <br /><br />
 
       <Grid container spacing={6}>
-        <Grid item md={6} xs={12}>
-          <Chart data={totalsCharts}>
+        <Grid item xs={12} md={6}>
+          <Chart
+            data={totalsCharts}
+          >
             <ArgumentAxis />
             <ValueAxis max={7} />
 
@@ -158,8 +181,10 @@ const Dashboard = () => {
             <Animation />
           </Chart>
         </Grid>
-        <Grid item md={6} xs={12}>
-          <Chart data={totalsCharts}>
+        <Grid item xs={12} md={6}>
+          <Chart
+            data={totalsCharts}
+          >
             <ArgumentAxis />
             <ValueAxis max={7} />
 
@@ -169,6 +194,7 @@ const Dashboard = () => {
           </Chart>
         </Grid>
       </Grid>
+
     </>
   );
 };

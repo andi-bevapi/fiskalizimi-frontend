@@ -113,7 +113,7 @@ const Analytics = () => {
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateRangePicker
                             startText={t("beginingDate")}
@@ -122,15 +122,32 @@ const Analytics = () => {
                             onChange={setDateRange}
                             renderInput={(startProps, endProps) => (
                                 <>
-                                    <TextField {...startProps} />
-                                    <Box sx={{ mx: 2 }}> {t("until")} </Box>
-                                    <TextField {...endProps} />
+
+                                    <Grid container
+                                        display={"flex"}
+                                        alignItems="center"
+                                        paddingTop={3}
+                                        spacing={1}
+                                    >
+                                        <Grid item xs={12} sm={5} md={5} lg={5}>
+                                            <TextField {...startProps} style ={{width: '100%'}} />
+                                        </Grid>
+                                        <Grid item xs={12} sm={2} md={2} lg={2}>
+                                            <Box sx={{ mx: 2 }}> {t("until")} </Box>
+                                        </Grid>
+                                        <Grid item xs={12} sm={5} md={5} lg={5}>
+                                            <TextField {...endProps} style ={{width: '100%'}}/>
+                                        </Grid>
+
+                                    </Grid>
                                 </>
                             )}
                         />
                     </LocalizationProvider>
                 </Grid>
-                <Grid item xs={4} textAlign="right">
+
+
+                <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
                     {data.length > 0 && <Export data={data} />}
                 </Grid>
             </Grid>
