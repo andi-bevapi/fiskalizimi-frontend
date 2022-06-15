@@ -116,8 +116,8 @@ const Configurations = () => {
           </Grid>
 
           <Grid container display='flex' justifyContent='space-between'>
-            <Grid xs={12} sm={6} md={5}>
-              <Grid item className={classes.fieldContainer}>
+            <Grid xs={12} sm={12} md={12}>
+              {/* <Grid item className={classes.fieldContainer}>
               <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
                   <Field name="printer">
@@ -155,7 +155,7 @@ const Configurations = () => {
                   </Field>
                 </Box>
                 </div>
-              </Grid>
+              </Grid> */}
               <Grid item>
               <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
@@ -184,7 +184,7 @@ const Configurations = () => {
                 </div>
               </Grid>
             </Grid>
-            <Grid xs={12} sm={6} md={5}>
+            <Grid xs={12} sm={12} md={12}>
               <Grid item className={classes.fieldContainer}>
               <div className={style.InputProps}>
                 <Box sx={{ minWidth: 120}}>
@@ -252,7 +252,7 @@ const Configurations = () => {
             </Grid>
           </Grid>
 
-          <Grid container paddingTop={5}>
+          <Grid container>
                 <Grid xs={12} sm={12} md={12}>
                     <Grid item className={classes.fieldContainer}>
                         <Box sx={{ minWidth: 120}}>
