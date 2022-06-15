@@ -16,7 +16,7 @@ const ItemLine = (props) => {
     const arrayProduct = (props.invoiceList?.filter(item => item.id === props.item.id));
     
     (arrayProduct[0]?.stockCheck ? (
-      (arrayProduct[0].quantity >= Number(props.item.stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
+      (arrayProduct[0].quantity >= Number(arrayProduct[0].stock).toFixed(0) ? (setStopAdding(true)) : (setStopAdding(false)))
     ) : (
       (props.item.stockCheck ? (
             Number(props.item.stock).toFixed(0) == 0 ? (setStopAdding(true)) : (setStopAdding(false))
@@ -45,9 +45,20 @@ const ItemLine = (props) => {
           // if (productFromArray[0]?.quantity >= Number(product.stock).toFixed(0)) {
           //   setStopAdding(true);
           // } else {
+
+
+            // setProductQuantity(productFromArray[0].quantity + 1);
+            // props.addToInvoiceList(product, productFromArray[0].quantity + 1);
+
+
+          // }
+
+          if (productFromArray[0].quantity >= Number(productFromArray[0].stock).toFixed(0)) {
+            setStopAdding(true);
+          } else {
             setProductQuantity(productFromArray[0].quantity + 1);
             props.addToInvoiceList(props.item, productFromArray[0].quantity + 1);
-          // }
+          }
         } else {
           setProductQuantity(1);
           props.addToInvoiceList(props.item, 1);

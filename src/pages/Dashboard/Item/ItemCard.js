@@ -60,9 +60,8 @@ const ItemCard = (props) => {
   useEffect(
     () => {
       const arrayProduct = props.invoiceList?.filter((item) => item.id === props.item.id);
-
       arrayProduct[0]?.stockCheck
-        ? arrayProduct[0].quantity >= Number(props.item.stock).toFixed(0)
+        ? arrayProduct[0].quantity >= Number(arrayProduct[0].stock).toFixed(0)
           ? setStopAdding(true)
           : setStopAdding(false)
         : props.item.stockCheck
@@ -88,12 +87,14 @@ const ItemCard = (props) => {
         () => {},
       );
     }
+
     if (!stopAdding) {
       const productFromArray = props.invoiceList?.filter((item) => item.id === props.item.id);
+      
       const isExisting = productFromArray.length >= 1 ? true : false;
       if (props.item.stockCheck) {
         if (isExisting) {
-          if (productFromArray[0].quantity >= Number(props.item.stock).toFixed(0)) {
+          if (productFromArray[0].quantity >= Number(productFromArray[0].stock).toFixed(0)) {
             setStopAdding(true);
           } else {
             setProductQuantity(productFromArray[0].quantity + 1);
@@ -102,7 +103,7 @@ const ItemCard = (props) => {
         } else {
           setProductQuantity(1);
           props.addToInvoiceList(props.item, 1);
-          Number(props.item.stock) == 1 ? setStopAdding(true) : setStopAdding(false);
+          Number(props.item.stock) == 0 ? setStopAdding(true) : setStopAdding(false);
         }
       } else {
         if (isExisting) {

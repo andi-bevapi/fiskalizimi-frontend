@@ -109,11 +109,12 @@ const TableComponent = (props) => {
   };
 
   const columns = [
+    
     tableHeader.map((el) => {
       return {
         field: el,
         headerName: i18n.t(el),
-        width: 200,
+        width: props.product ? 120 : 200,
       };
     }),
     {

@@ -237,6 +237,9 @@ const FormRender = ({ formFields, editProduct, disableField, vatDefault, setBran
                 ) : (
                   field.value && <img src={field.value} width="80px" height="80px" />
                 )}
+                {field.value ? <Button variant="contained" onFocus={() =>{
+                  setFieldValue(formField.name,null);
+                 }}> {t("removeImage")}</Button>  : null}
               </label>
             )}
           </Field>

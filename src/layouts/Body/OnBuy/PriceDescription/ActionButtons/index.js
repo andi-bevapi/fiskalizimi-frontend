@@ -341,6 +341,9 @@ const ActionButtons = (props) => {
                     <TextField
                       label={t("identifierCode")}
                       error={meta.touched && meta.error}
+                      FormHelperTextProps={{
+                        style: {width:"250px"}
+                      }}
                       helperText={meta.error}
                       InputProps={{
                         style: {

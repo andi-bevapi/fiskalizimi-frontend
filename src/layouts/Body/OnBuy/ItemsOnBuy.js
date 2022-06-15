@@ -21,11 +21,11 @@ import { SwalModal } from '../../../components/Modal/SwalModal';
 import { useContextProduct } from '../../../Context/ProductContext';
 import ReactPaginate from 'react-paginate';
 import ButtonComponent from '../../../components/Button/InvoiceButton';
-import { useTranslation } from "react-i18next";
+import TextField from '@mui/material/TextField';
+import { useTranslation } from 'react-i18next';
 import { useModel } from 'umi';
 
 const ItemsOnBuy = () => {
-
   const {
     listedInvoiceProducts,
     addToInvoiceList,
@@ -40,7 +40,7 @@ const ItemsOnBuy = () => {
     returnInvoiceObject,
     invoiceFinalObject,
     updateInvoiceToActive,
-    deletePendingInvoice
+    deletePendingInvoice,
   } = useInvoiceContext();
   const { productList } = useContextProduct();
   const { initialState } = useModel('@@initialState');
@@ -53,7 +53,7 @@ const ItemsOnBuy = () => {
   const [open, setOpen] = useState(false);
   const [filteredInvoice, setFilteredInvoice] = useState([]);
   const [filteredInAllPages, setFilteredInAllPages] = useState([]);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   //---------------------paginate
   const [pageNumber, setPageNumber] = useState(0);
@@ -61,7 +61,7 @@ const ItemsOnBuy = () => {
   const pagesVisited = pageNumber * invoicePerPage;
   const pageCount = Math.ceil(pendingInvoices.length / invoicePerPage);
 
-  const changePage = ({selected}) => {
+  const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
   //---------------------paginate
@@ -108,16 +108,25 @@ const ItemsOnBuy = () => {
     }
   };
 
+
+  const handleAmount = (e,item) =>{
+    e.preventDefault();
+    item.quantity = Number(e.target.value);
+    addToInvoiceList(item, Number(e.target.value));
+  }
+
+
+
   const activateInvoice = (invoice) => {
     if (!localStorage.getItem('deposit')) {
       return SwalModal(
-        t("noConnectedArka"),
-        "",
-        "warning",
-        t("close"),
-        "",
-        () => { },
-        () => { },
+        t('noConnectedArka'),
+        '',
+        'warning',
+        t('close'),
+        '',
+        () => {},
+        () => {},
       );
     }
     if (listedInvoiceProducts.length !== 0) setOpen(true);
@@ -135,41 +144,40 @@ const ItemsOnBuy = () => {
   };
 
   const handleChange = (e) => {
-   
     const temp = pendingInvoices.filter((el) => {
       return el.description.includes(e.target.value);
     });
-    
-     if(e.target.value.length >= 1){
-      setFilteredInAllPages(temp)
-      }else{
-        setFilteredInAllPages([]);
-      }
+
+    if (e.target.value.length >= 1) {
+      setFilteredInAllPages(temp);
+    } else {
+      setFilteredInAllPages([]);
+    }
     setFilteredInvoice(temp);
   };
 
   const handleDelete = async (id) => {
     return SwalModal(
-      "Deshironi ta fshini?",
-      "",
-      "warning",
-      "JO",
-      "PO",
-      () => { },
+      'Deshironi ta fshini?',
+      '',
+      'warning',
+      'JO',
+      'PO',
+      () => {},
       () => confirmDelete(id),
-      id
+      id,
     );
   };
 
   const confirmDelete = async (id) => {
     const response = await deletePendingInvoice(id);
-  }
+  };
 
   const deleteAllPendingInvoices = async () => {
     pendingInvoices.map(async (invoice) => {
       await confirmDelete(invoice.id);
-     });
-  }
+    });
+  };
 
   return (
     <div className={styles.mainHolder}>
@@ -186,7 +194,7 @@ const ItemsOnBuy = () => {
                 activeInvoice == 'active' ? styles.tabTitleActive : styles.tabTitleDeactive
               }
             >
-              {t("activeInvoice")}
+              {t('activeInvoice')}
             </span>
           </button>
         </Grid>
@@ -202,7 +210,7 @@ const ItemsOnBuy = () => {
                 activeInvoice == 'pending' ? styles.tabTitleActive : styles.tabTitleDeactive
               }
             >
-              {t("pendingInvoice")}
+              {t('pendingInvoice')}
             </span>
           </button>
         </Grid>
@@ -225,19 +233,19 @@ const ItemsOnBuy = () => {
                   <TableHead className={styles.tableMainHeader}>
                     <TableRow>
                       <TableCell className={styles.tableHead} id={styles['number']}>
-                        {t("no")}
+                        {t('no')}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['name']}>
-                        {t("product")}
+                        {t('product')}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['quantity']}>
-                        {t("quantity")}
+                        {t('quantity')}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['price']}>
-                        {t("price")}
+                        {t('price')}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['total']}>
-                        {t("total")}
+                        {t('total')}
                       </TableCell>
                       <TableCell className={styles.tableHead} id={styles['delete']}>
                         &nbsp;
@@ -250,30 +258,27 @@ const ItemsOnBuy = () => {
                       <TableRow key={item.id}>
                         <TableCell className={styles.tableBodyCell}>{index + 1}</TableCell>
                         <TableCell className={styles.tableBodyCell}>{item.name}</TableCell>
-                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
-                          <button
-                            className={styles.valueButton}
-                            onClick={() => {
-                              decrementCount(item);
+                        <TableCell className={styles.tableBodyCell} style={{ padding: '2px' }}>
+                          <TextField
+                            onChange={(e)=>{handleAmount(e,item)}}
+                            type="number"
+                            InputProps={{
+                              inputProps: {
+                                //nqs kemi stock check max i produktit te jete sa stock i produktit aktual
+                                //minimumi nuk duhet te jet 0 asnjehere
+                                max: 100,
+                                min: 1,
+                              },
                             }}
-                          >
-                            -
-                          </button>
-                          &nbsp; {item.quantity} &nbsp;
-                          <button
-                            className={styles.valueButton}
-                            onClick={() => {
-                              incrementCount(item);
-                            }}
-                          >
-                            +
-                          </button>
+                            value={item.quantity}
+                            label={t("quantity")}
+                          />
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           {Number(item.price).toFixed(2)}
                         </TableCell>
-                        <TableCell className={styles.tableBodyCell} style={{padding: '2px'}}>
-                          &nbsp;  {Number(item.price * item.quantity).toFixed(2)}
+                        <TableCell className={styles.tableBodyCell} style={{ padding: '2px' }}>
+                          &nbsp; {Number(item.price * item.quantity).toFixed(2)}
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
                           <IconButtonComponent
@@ -283,7 +288,7 @@ const ItemsOnBuy = () => {
                             onClick={() => {
                               removeProductFromInvoiceList(item);
                             }}
-                            text={t("delete")}
+                            text={t('delete')}
                           />
                         </TableCell>
                       </TableRow>
@@ -299,7 +304,7 @@ const ItemsOnBuy = () => {
       ) : (
         <>
           <BootstrapInputField
-            placeholder={t("search")}
+            placeholder={t('search')}
             style={{ marginTop: 20, marginBottom: 20 }}
             onChange={handleChange}
           />
@@ -307,12 +312,14 @@ const ItemsOnBuy = () => {
             <Table stickyHeader>
               <TableHead className={styles.tableMainHeader}>
                 <TableRow>
-                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>{t("code")}</TableCell>
+                  <TableCell className={styles.tableHead} id={styles['invoiceKode']}>
+                    {t('code')}
+                  </TableCell>
                   <TableCell className={styles.tableHead} id={styles['name']}>
-                    {t("product")}
+                    {t('product')}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['price']}>
-                    {t("totalPrice")}
+                    {t('totalPrice')}
                   </TableCell>
                   <TableCell className={styles.tableHead} id={styles['delete']}>
                     &nbsp;
@@ -324,82 +331,83 @@ const ItemsOnBuy = () => {
               </TableHead>
 
               <TableBody>
-                {
-                  filteredInAllPages?.length > 0 ? filteredInAllPages.map((el) => {
-                    return(
-                      <TableRow key={el.id}>
-                      <TableCell className={styles.tableBodyCell} id={styles['invoiceKode']}>{el.description}</TableCell>
-                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
-                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                        <IconButtonComponent
-                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
-                          icon={<ShoppingCartIcon />}
-                          iconColor={{ color: '#fff' }}
-                          onClick={() => {
-                            activateInvoice(el);
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                        <IconButtonComponent
-                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
-                          icon={<DeleteForeverIcon />}
-                          iconColor={{ color: '#fff' }}
-                          onClick={() => {
-                            handleDelete(el.id);
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                    )
-                  })
-                  
+                {filteredInAllPages?.length > 0
+                  ? filteredInAllPages.map((el) => {
+                      return (
+                        <TableRow key={el.id}>
+                          <TableCell className={styles.tableBodyCell} id={styles['invoiceKode']}>
+                            {el.description}
+                          </TableCell>
+                          <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                          <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                          <TableCell className={styles.tableBodyCell}>
+                            <IconButtonComponent
+                              style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                              icon={<ShoppingCartIcon />}
+                              iconColor={{ color: '#fff' }}
+                              onClick={() => {
+                                activateInvoice(el);
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell className={styles.tableBodyCell}>
+                            <IconButtonComponent
+                              style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                              icon={<DeleteForeverIcon />}
+                              iconColor={{ color: '#fff' }}
+                              onClick={() => {
+                                handleDelete(el.id);
+                              }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   : filteredInvoice.slice(pagesVisited, pagesVisited + invoicePerPage).map((el) => {
-                  return (
-                    <TableRow key={el.id}>
-                      <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
-                      <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
-                      <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                        <IconButtonComponent
-                          style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
-                          icon={<ShoppingCartIcon />}
-                          iconColor={{ color: '#fff' }}
-                          onClick={() => {
-                            activateInvoice(el);
-                          }}
-                          text={t("addCart")}
-                        />
-                      </TableCell>
-                      <TableCell className={styles.tableBodyCell}>
-                        <IconButtonComponent
-                          style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
-                          icon={<DeleteForeverIcon />}
-                          iconColor={{ color: '#fff' }}
-                          onClick={() => {
-                            handleDelete(el.id);
-                          }}
-                          text={t("delete")}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                      return (
+                        <TableRow key={el.id}>
+                          <TableCell className={styles.tableBodyCell}>{el.description}</TableCell>
+                          <TableCell className={styles.tableBodyCell}>{el.items.length}</TableCell>
+                          <TableCell className={styles.tableBodyCell}>{el.totalAmount} </TableCell>
+                          <TableCell className={styles.tableBodyCell}>
+                            <IconButtonComponent
+                              style={{ backgroundColor: '#12AC7A', height: 35, width: 35 }}
+                              icon={<ShoppingCartIcon />}
+                              iconColor={{ color: '#fff' }}
+                              onClick={() => {
+                                activateInvoice(el);
+                              }}
+                              text={t('addCart')}
+                            />
+                          </TableCell>
+                          <TableCell className={styles.tableBodyCell}>
+                            <IconButtonComponent
+                              style={{ backgroundColor: '#f05050', height: 35, width: 35 }}
+                              icon={<DeleteForeverIcon />}
+                              iconColor={{ color: '#fff' }}
+                              onClick={() => {
+                                handleDelete(el.id);
+                              }}
+                              text={t('delete')}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
               </TableBody>
             </Table>
           </TableContainer>
           <ReactPaginate
-                previousLabel={t('previous')}
-                nextLabel={t('next')}
-                pageCount={pageCount}
-                onPageChange={changePage}
-                containerClassName={styles.paginationButtons}
-                previousLinkClassName={styles.previousButtons}
-                nextLinkClassName={styles.nextButtons}
-                disabledClassName={styles.paginationDisabled}
-                activeClassName={styles.paginationActive}
-              />
+            previousLabel={t('previous')}
+            nextLabel={t('next')}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={styles.paginationButtons}
+            previousLinkClassName={styles.previousButtons}
+            nextLinkClassName={styles.nextButtons}
+            disabledClassName={styles.paginationDisabled}
+            activeClassName={styles.paginationActive}
+          />
           <Divider />
           <div className={styles.bottomButtonContainer}>
             <ButtonComponent
@@ -414,7 +422,8 @@ const ItemsOnBuy = () => {
       )}
       <ModalComponent open={open} handleClose={handleClose} title="Kujdes">
         <div className={styles.tabTitleDeactive}>
-         {t("activeInvoiceHasProuct")} <br></br>{t("ifYouWantYouCanDelete")}
+          {t('activeInvoiceHasProuct')} <br></br>
+          {t('ifYouWantYouCanDelete')}
         </div>
       </ModalComponent>
     </div>

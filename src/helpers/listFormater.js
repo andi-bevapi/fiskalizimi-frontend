@@ -2,7 +2,18 @@ import i18n from 'i18next';
 
 export const listFormat = (data, tableHeaders) => {
   tableHeaders = tableHeaders.map((h) => h.toLowerCase());
-  const newList = data.map((_arrayElement) => Object.assign({}, _arrayElement));
+  const newList = data.map((_arrayElement) => {
+
+    if(_arrayElement.TCRCODE){
+      Object.keys(_arrayElement).forEach((item) => {
+        if (typeof _arrayElement[item] === 'object'){
+          _arrayElement[item] = _arrayElement[item][0].totalAmount;
+        }
+      });
+    }
+    return Object.assign({}, _arrayElement);
+  });
+
   newList.forEach((el) => {
     Object.keys(el).forEach((item) => {
       if (!tableHeaders.includes(item.toLowerCase())) delete el[item];
