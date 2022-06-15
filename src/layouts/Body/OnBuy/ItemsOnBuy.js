@@ -57,7 +57,7 @@ const ItemsOnBuy = () => {
 
   //---------------------paginate
   const [pageNumber, setPageNumber] = useState(0);
-  const invoicePerPage = 4;
+  const invoicePerPage = 7;
   const pagesVisited = pageNumber * invoicePerPage;
   const pageCount = Math.ceil(pendingInvoices.length / invoicePerPage);
 
