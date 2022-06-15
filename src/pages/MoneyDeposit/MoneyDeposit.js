@@ -23,6 +23,7 @@ const MoneyDeposit = () => {
     const [depositEvent, setDepositEvent] = useState();
     const [amount, setAmount] = useState('');
     const [selectedDeposit, setSelectedDeposit] = useState();
+    const [firstOption,setFirstOption] = useState(true);
 
     const {
         updateAmount,
@@ -37,6 +38,15 @@ const MoneyDeposit = () => {
            setSelectedDeposit(JSON.parse(localStorage.getItem('deposit')))
         }
     }, [arkaList])
+
+
+    useEffect(()=>{
+        setTimeout(() =>{
+            if(firstOption === true){
+                setFirstOption(false);
+            }
+        },(1000 * 60 * 60) * 24);
+    },[firstOption])
 
     const toggleUpdateModal = () => {
         setIsUpdateModalOpen(!isUpdateModalOpen);
@@ -56,11 +66,19 @@ const MoneyDeposit = () => {
       setIsUpdateModalOpen(true);
     }
 
+    const disableSelectOption = (value) =>{
+        console.log("value----",value);
+        if(value.amount){
+            setFirstOption(false);
+        }
+    }
+
     const submitDepositForm = (values) => {
         if(values.amount != '' && values.amount){
             switch(depositEvent){
                 case "initial":
-                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    disableSelectOption(values);
+                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount);
                     break;
                 case "add":
                     addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
@@ -207,7 +225,7 @@ const MoneyDeposit = () => {
                                         }}
                                         onChange={(event) => { setDepositEvent(event.target.value) }}
                                         >
-                                            <MenuItem key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
+                                            <MenuItem disabled={firstOption} key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
                                             <MenuItem key="add" value="add"><span>Shtim</span></MenuItem>
                                             <MenuItem key="remove" value="remove"><span>Tërheqje</span></MenuItem>
                                     </TextField>

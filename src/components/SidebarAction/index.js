@@ -330,7 +330,8 @@ const SidebarAction = (props) => {
             handleSubmit(values);
           }}
         >
-          {({ errors, touched, isValid }) => {
+          {({ errors, touched, isValid , dirty }) => {
+           
             {
               errors.vat && props.product ? setVatValue(2) : setVatValue(0);
             }
@@ -364,7 +365,7 @@ const SidebarAction = (props) => {
                     })}
                   </>
                 )}
-                <Button variant="contained" type="submit" disabled={!isValid}>
+                <Button variant="contained" type="submit" disabled={ dirty == false ? isValid : !isValid }>
                   <SaveIcon style={{ marginRight: 10 }} /> {t('save')}
                 </Button>
               </Form>
