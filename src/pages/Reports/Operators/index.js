@@ -12,6 +12,7 @@ import { formatDate } from '../../../helpers/formatDate';
 import Filters from './components/Filters';
 import Grid from '@mui/material/Grid';
 import {getClientId} from "../../../helpers/getClientId";
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const columns = [
     { field: 'username', headerName: 'Username', width: 120 },
@@ -28,6 +29,7 @@ const Operators = () => {
     const [data, setData] = useState([]);
     const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
     const { t } = useTranslation();
+    // const matches = useMediaQuery('(min-width:900px)')
 
     useEffect(() => {
         getData();
@@ -59,8 +61,8 @@ const Operators = () => {
 
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
+            {/* <Grid container spacing={2} paddingTop={3}> */}
+                {/* <Grid item xs={12} sm={12} md={8} lg={9} xl={8}> */}
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateRangePicker
                             startText={t("beginingDate")}
@@ -69,18 +71,36 @@ const Operators = () => {
                             onChange={setDateRange}
                             renderInput={(startProps, endProps) => (
                                 <>
-                                    <TextField {...startProps} />
-                                    <Box sx={{ mx: 2 }}> {t("until")} </Box>
-                                    <TextField {...endProps} />
+                                    <Grid container
+                                        display={"flex"}
+                                        alignItems="center"
+                                        spacing={1}
+                                    >
+                                        <Grid item xs={12} sm={5} md={5} lg={5} xl={3}>
+                                            <TextField {...startProps} style ={{width: '100%', minWidth: '178px'}}/>
+                                        </Grid>
+                                        <Grid item xs={12} sm={2} md={2} lg={2} xl={3}>
+                                            <Box sx={{ mx: 2 }}> {t("until")} </Box>
+                                        </Grid>
+                                        <Grid item xs={12} sm={5} md={5} lg={5} xl={3}>
+                                            <TextField {...endProps} style ={{width: '100%', minWidth: '178px'}}/>
+                                        </Grid>
+
+                                    </Grid>
                                 </>
                             )}
                         />
                     </LocalizationProvider>
-                </Grid>
-                <Grid item xs={6}>
-                    <Filters getData={getData} />
-                </Grid>
-            </Grid>
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={12} md={5} lg={3} xl={3}>  */}
+                {/* paddingTop={(matches ? 24 : 0)} */}
+                    <Filters getData={getData} 
+                    // style={{ width: window.innerWidth < 800 ? '100%' : '10%'}}
+
+                    /> 
+                    {/* style={{minWidth: '178px !important'}} */}
+                {/* </Grid> */}
+             {/* </Grid>  */}
 
             <br />
 
