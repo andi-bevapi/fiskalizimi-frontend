@@ -23,7 +23,7 @@ const MoneyDeposit = () => {
     const [depositEvent, setDepositEvent] = useState();
     const [amount, setAmount] = useState('');
     const [selectedDeposit, setSelectedDeposit] = useState();
-    const [firstOption,setFirstOption] = useState(true);
+    // const [firstOption,setFirstOption] = useState(true);
 
     const {
         updateAmount,
@@ -40,13 +40,13 @@ const MoneyDeposit = () => {
     }, [arkaList])
 
 
-    useEffect(()=>{
-        setTimeout(() =>{
-            if(firstOption === true){
-                setFirstOption(false);
-            }
-        },(1000 * 60 * 60) * 24);
-    },[firstOption])
+    // useEffect(()=>{
+    //     setTimeout(() =>{
+    //         if(firstOption === true){
+    //             setFirstOption(false);
+    //         }
+    //     },(1000 * 60 * 60) * 24);
+    // },[firstOption])
 
     const toggleUpdateModal = () => {
         setIsUpdateModalOpen(!isUpdateModalOpen);
@@ -66,18 +66,17 @@ const MoneyDeposit = () => {
       setIsUpdateModalOpen(true);
     }
 
-    const disableSelectOption = (value) =>{
-        console.log("value----",value);
-        if(value.amount){
-            setFirstOption(false);
-        }
-    }
+    // const disableSelectOption = (value) =>{
+    //     if(value.amount){
+    //         setFirstOption(false);
+    //     }
+    // }
 
     const submitDepositForm = (values) => {
         if(values.amount != '' && values.amount){
             switch(depositEvent){
                 case "initial":
-                    disableSelectOption(values);
+                    // disableSelectOption(values);
                     updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount);
                     break;
                 case "add":
@@ -225,7 +224,8 @@ const MoneyDeposit = () => {
                                         }}
                                         onChange={(event) => { setDepositEvent(event.target.value) }}
                                         >
-                                            <MenuItem disabled={firstOption} key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
+                                            { /*disabled={firstOption}*/}
+                                            <MenuItem key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
                                             <MenuItem key="add" value="add"><span>Shtim</span></MenuItem>
                                             <MenuItem key="remove" value="remove"><span>Tërheqje</span></MenuItem>
                                     </TextField>

@@ -330,7 +330,7 @@ const SidebarAction = (props) => {
             handleSubmit(values);
           }}
         >
-          {({ errors, touched, isValid , dirty }) => {
+          {({ errors,touched,isValid,dirty }) => {
            
             {
               errors.vat && props.product ? setVatValue(2) : setVatValue(0);
