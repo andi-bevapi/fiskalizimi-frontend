@@ -3,6 +3,7 @@ import QRCode from 'react-qr-code';
 import { useConfigProvider } from '../../../../Context/ConfigurationsContext';
 import { useTranslation } from 'react-i18next';
 import styles from './coupon.css';
+import DocumentTitle from 'react-document-title';
 
 const InvoiceToPrint = React.forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -36,9 +37,16 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
     setValue(tmp);
   });
 
+  const pageTitle = () =>{
+    const date = new Date(props.data.dateTime).toISOString().split('.')[0].concat('+01:00');
+    const orderNumber = props.data.invoiceCode.split('/')[0];
+    return  orderNumber + "__" + date;
+  }
+
   return (
     <div style={{ display: 'none' }}>
-      <div id="couponToPrint" className={styles.couponBG} ref={ref}>
+      <DocumentTitle title={pageTitle()}>
+        <div id="couponToPrint" className={styles.couponBG} ref={ref}>
         <p className={styles.couponBigTitle}>FATURË TATIMORE</p>
         <span className={styles.couponBusinessName}>{props.data.clientName}</span>
         <br />
@@ -131,7 +139,8 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
           <b>posla.al</b>
         </span>
         </div>
-      </div>
+        </div>
+      </DocumentTitle>
     </div>
   );
 });
