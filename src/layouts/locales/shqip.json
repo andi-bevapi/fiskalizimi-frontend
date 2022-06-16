@@ -255,7 +255,7 @@
   "Vat": "TVSH",
   "stockProductValidation":"Stoku duhet të jetë numër pozitiv",
   "imageMessage":"Ju lutem ngarkoni një imazh me madhësi më të vogël",
-  "noConnectedArka": "Nuk u gjet asnjë arkë e perzgjedhur",
+  "noConnectedArka": "Nuk u gjet asnjë arkë e përzgjedhur",
   "endDateGreater" : "Data e mbarimit duhet të jetë më e madhe se data e fillimit",
   "arkaHistoryTable" : "Tabela e Historisë së Arkës",
   "invoices":"Faturat",
