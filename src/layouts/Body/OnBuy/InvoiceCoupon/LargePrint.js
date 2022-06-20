@@ -4,6 +4,7 @@ import { useConfigProvider } from '../../../../Context/ConfigurationsContext';
 import { useTranslation } from 'react-i18next';
 import styles from './coupon.css';
 import DocumentTitle from 'react-document-title';
+import pageTitle from "../../../../helpers/pageTitle";
 
 const LargePrint = React.forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -37,15 +38,9 @@ const LargePrint = React.forwardRef((props, ref) => {
     setValue(tmp);
   });
 
-  const pageTitle = () =>{
-    const date = new Date(props.data.dateTime).toISOString().split('.')[0].concat('+01:00');
-    const orderNumber = props.data.invoiceCode.split('/')[0];
-    return  orderNumber + "__" + date;
-  }
-
   return (
     <div style={{ display: 'none' }}>
-      <DocumentTitle title={pageTitle()}>
+      <DocumentTitle title={pageTitle(props)}>
         <div id="couponToPrint" className={styles.largeCouponBG} ref={ref}>
         <br/>
         <p className={styles.largecouponBigTitle}>FATURË TATIMORE</p>

@@ -99,6 +99,7 @@ const ArkaProvider = (props) => {
       const result = await checkAutoInsertDeclaration(data);
       return result;
     }catch(error){
+      throw new Error("un error happened");
     }
   }
   

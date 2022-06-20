@@ -23,6 +23,7 @@ const MoneyDeposit = () => {
     const [depositEvent, setDepositEvent] = useState();
     const [amount, setAmount] = useState('');
     const [selectedDeposit, setSelectedDeposit] = useState();
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {
         updateAmount,
@@ -53,19 +54,24 @@ const MoneyDeposit = () => {
     }
 
     const selectDeposit = (item) => {
+        
        autoInsertDeclaration({ deposit :JSON.parse(localStorage.getItem('deposit')) , defaultValue: 0 })
        .then((result)=>{
-            console.log("result-----",result);
-            if(result.data);
-            setDisableField(true);
+            if(!result.data && result?.status === 200){
+                setDisableField(false);
+            } else if(result?.status === 409){
+                setDisableField(true);
+            } else{
+                setDisableField(false);
+            }
+       })
+       .catch((error)=>{
+        setErrorMessage(error.message);
        })
        selectedADeposit(item);
        localStorage.setItem('deposit', JSON.stringify(item));
        setIsUpdateModalOpen(true);
     }
-
-    console.log("disableField----",disableField);
-
 
     const submitDepositForm = (values) => {
         if(values.amount != '' && values.amount){
@@ -139,10 +145,6 @@ const MoneyDeposit = () => {
 
     const classes = useStyles();
 
-   useEffect(()=>{
-    setDisableField(false);
-   },[]);
-
     return (
         <>
             <Grid container>
@@ -187,6 +189,7 @@ const MoneyDeposit = () => {
             </Grid>
 
             <ModalComponent open={isUpdateModalOpen} handleClose={toggleUpdateModal} title="">
+                {errorMessage ?  t('errorNeArke') : 
                 <Formik
                     initialValues={{ }}
                     onSubmit={(values) => {
@@ -223,7 +226,7 @@ const MoneyDeposit = () => {
                                         onChange={(event) => { setDepositEvent(event.target.value) }}
                                         >
                                             { /*disabled={disableField ? disableField : false}*/}
-                                            <MenuItem key="initial" disabled={disableField ? disableField : false} value="initial"><span>Deklarim fillestar</span></MenuItem>
+                                            <MenuItem key="initial" disabled={disableField} value="initial"><span>Deklarim fillestar</span></MenuItem>
                                             <MenuItem key="add" value="add"><span>Shtim</span></MenuItem>
                                             <MenuItem key="remove" value="remove"><span>Tërheqje</span></MenuItem>
                                     </TextField>
@@ -276,6 +279,7 @@ const MoneyDeposit = () => {
                      </Grid>
                     </Form>
                 </Formik>
+                }
             </ModalComponent>
         </>
     );

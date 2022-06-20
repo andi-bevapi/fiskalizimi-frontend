@@ -44,7 +44,7 @@ const MoneyDepositProvider = (props) => {
             setDepositAmount(newAmount);
             setDisableField(true);
         } catch (error) {
-            console.log(error);
+            console.log("error------",error);
         }
     }
 
