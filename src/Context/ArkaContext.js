@@ -6,7 +6,8 @@ import {
   deleteArka,
   updateArka,
   getArkaHistory,
-  getAllArkabyClientId
+  getAllArkabyClientId,
+  checkAutoInsertDeclaration
 } from '../services/arka';
 import { getClientId } from '../helpers/getClientId';
 const ArkaContext = createContext({});
@@ -93,6 +94,15 @@ const ArkaProvider = (props) => {
      setSelectedDeposit(deposit);
   }
 
+  const autoInsertDeclaration = async(data) =>{
+    try{
+      const result = await checkAutoInsertDeclaration(data);
+      return result;
+    }catch(error){
+      throw new Error("un error happened");
+    }
+  }
+  
   const values = {
     arkaList,
     setArkaList,
@@ -102,7 +112,8 @@ const ArkaProvider = (props) => {
     arkaToDelete,
     viewArkaHistory,
     selectedDeposit,
-    selectedADeposit
+    selectedADeposit,
+    autoInsertDeclaration
   };
 
   return <ArkaContext.Provider value={values}>{props.children}</ArkaContext.Provider>;

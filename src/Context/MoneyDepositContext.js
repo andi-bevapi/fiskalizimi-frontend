@@ -8,6 +8,7 @@ const MoneyDepositProvider = (props) => {
     const { initialState } = useModel('@@initialState');
     const [isLoading, setIsLoading] = useState(false);
     const [ depositAmount , setDepositAmount] = useState(0.00);
+    const [ disableField , setDisableField] = useState(false);
 
     useEffect(() => {
         getActualAmount();
@@ -19,6 +20,7 @@ const MoneyDepositProvider = (props) => {
             ///! get arkaId !!!
             const response = await getLastAmount();
             if (response.statusCode === 200) {
+                setDisableField(true);
                 setDepositAmount(response.data.totalAmount);
             }
         } catch (error) {
@@ -37,9 +39,12 @@ const MoneyDepositProvider = (props) => {
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
-            if (response.statusCode === 200) setDepositAmount(newAmount);
+            console.log("response-----",response);
+            if (response.statusCode === 200)
+            setDepositAmount(newAmount);
+            setDisableField(true);
         } catch (error) {
-            console.log(error);
+            console.log("error------",error);
         }
     }
 
@@ -75,7 +80,7 @@ const MoneyDepositProvider = (props) => {
         }
     }
 
-    const values = {depositAmount, updateAmount, addAmountToDeposit, reduceAmountFromDeposit}
+    const values = {depositAmount, updateAmount, addAmountToDeposit, reduceAmountFromDeposit , disableField , setDisableField}
 
     return (
         <MoneyDepositContext.Provider value={values}>

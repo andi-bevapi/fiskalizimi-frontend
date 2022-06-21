@@ -272,5 +272,6 @@
   "MaintainerCode":"MaintainerCode",
   "Address":"Address",
   "BusinessUnitCode":"BusinessUnitCode",
-  "removeImage":"Remove Image"
+  "removeImage":"Remove Image",
+  "errorNeArke":"Un Error occurred on this Money Deposit"
 }

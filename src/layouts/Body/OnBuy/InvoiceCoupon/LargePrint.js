@@ -3,6 +3,8 @@ import QRCode from 'react-qr-code';
 import { useConfigProvider } from '../../../../Context/ConfigurationsContext';
 import { useTranslation } from 'react-i18next';
 import styles from './coupon.css';
+import DocumentTitle from 'react-document-title';
+import pageTitle from "../../../../helpers/pageTitle";
 
 const LargePrint = React.forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -38,7 +40,8 @@ const LargePrint = React.forwardRef((props, ref) => {
 
   return (
     <div style={{ display: 'none' }}>
-      <div id="couponToPrint" className={styles.largeCouponBG} ref={ref}>
+      <DocumentTitle title={pageTitle(props)}>
+        <div id="couponToPrint" className={styles.largeCouponBG} ref={ref}>
         <br/>
         <p className={styles.largecouponBigTitle}>FATURË TATIMORE</p>
         <span className={styles.couponBusinessName}>{props.data.clientName}</span>
@@ -137,7 +140,8 @@ const LargePrint = React.forwardRef((props, ref) => {
           <img src="https://media-exp1.licdn.com/dms/image/C4E16AQF1zKrdt96GiQ/profile-displaybackgroundimage-shrink_200_800/0/1631803434696?e=1658966400&v=beta&t=QfONgdZunTZNQFze6u5wKFrv6elq2QXGRwJUF81VrTQ" width="100"></img>
         </p>
         </div>
-      </div>
+        </div>
+      </DocumentTitle>
     </div>
   );
 });

@@ -18,16 +18,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2'
 
 const MoneyDeposit = () => {
-    const { arkaList, selectedADeposit } = useContextArka();
+    const { arkaList, selectedADeposit, autoInsertDeclaration } = useContextArka();
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [depositEvent, setDepositEvent] = useState();
     const [amount, setAmount] = useState('');
     const [selectedDeposit, setSelectedDeposit] = useState();
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {
         updateAmount,
         addAmountToDeposit,
-        reduceAmountFromDeposit
+        reduceAmountFromDeposit,
+        disableField ,
+        setDisableField
     } = useMoneyDepositContext();
 
     const {t} = useTranslation();
@@ -51,16 +54,30 @@ const MoneyDeposit = () => {
     }
 
     const selectDeposit = (item) => {
-      selectedADeposit(item)
-      localStorage.setItem('deposit', JSON.stringify(item));
-      setIsUpdateModalOpen(true);
+        
+       autoInsertDeclaration({ deposit :JSON.parse(localStorage.getItem('deposit')) , defaultValue: 0 })
+       .then((result)=>{
+            if(!result.data && result?.status === 200){
+                setDisableField(false);
+            } else if(result?.status === 409){
+                setDisableField(true);
+            } else{
+                setDisableField(false);
+            }
+       })
+       .catch((error)=>{
+        setErrorMessage(error.message);
+       })
+       selectedADeposit(item);
+       localStorage.setItem('deposit', JSON.stringify(item));
+       setIsUpdateModalOpen(true);
     }
 
     const submitDepositForm = (values) => {
         if(values.amount != '' && values.amount){
             switch(depositEvent){
                 case "initial":
-                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount);
                     break;
                 case "add":
                     addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
@@ -172,6 +189,7 @@ const MoneyDeposit = () => {
             </Grid>
 
             <ModalComponent open={isUpdateModalOpen} handleClose={toggleUpdateModal} title="">
+                {errorMessage ?  t('errorNeArke') : 
                 <Formik
                     initialValues={{ }}
                     onSubmit={(values) => {
@@ -207,7 +225,8 @@ const MoneyDeposit = () => {
                                         }}
                                         onChange={(event) => { setDepositEvent(event.target.value) }}
                                         >
-                                            <MenuItem key="initial" value="initial"><span>Deklarim fillestar</span></MenuItem>
+                                            { /*disabled={disableField ? disableField : false}*/}
+                                            <MenuItem key="initial" disabled={disableField} value="initial"><span>Deklarim fillestar</span></MenuItem>
                                             <MenuItem key="add" value="add"><span>Shtim</span></MenuItem>
                                             <MenuItem key="remove" value="remove"><span>Tërheqje</span></MenuItem>
                                     </TextField>
@@ -260,6 +279,7 @@ const MoneyDeposit = () => {
                      </Grid>
                     </Form>
                 </Formik>
+                }
             </ModalComponent>
         </>
     );

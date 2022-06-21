@@ -77,7 +77,16 @@ const getArkaHistory = async (id, startDate, endDate) => {
       'Content-Type': 'application/json',
     },
   });
-
 }
 
-export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka, getArkaHistory, getAllArkabyClientId};
+const checkAutoInsertDeclaration = async (data) => {
+  return request('/arka-history/autoInsert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export { getAllArka, createNewArka, getLastAmount, updateSavedAmount, deleteArka, updateArka, getArkaHistory, getAllArkabyClientId , checkAutoInsertDeclaration};
