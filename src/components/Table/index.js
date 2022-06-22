@@ -60,12 +60,12 @@ const TableComponent = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [params, setParams] = useState();
+  const [hasChanges, setHasChanges] = useState(false);
+
+  useEffect(() => {}, [params]);
 
   useEffect(() => {
-  }, [params]);
-
-  useEffect(() => {
-    handleHistoryButton(params)
+    (hasChanges? handleHistoryButton(params) : null)
   }, [startDate, endDate]);
 
   const [tableHeader, setTableHeader] = useState([]);
@@ -83,11 +83,11 @@ const TableComponent = (props) => {
     setOpenSideBar(true);
   };
 
-  const handleHistoryButton = async (params, fromStart=true) => {
-    const response = await props.history(params.id, startDate, endDate);
+  const handleHistoryButton = async (params) => {
+    const response = await props.history(params?.id, startDate, endDate);
     if (response.statusCode === 200) {
       setArkaHistoryData(response.data);
-      (fromStart? (setOpenHistoryModal(true)) : null);
+      setOpenHistoryModal(true);
       //setArkaId(id);
     } else
       setOpenSnackBar({
@@ -108,7 +108,6 @@ const TableComponent = (props) => {
 
   const toggleModal = () => {
     setOpenHistoryModal(!openHistoryModal);
-    //setArkaId(0);
   };
 
   const columns = [
@@ -260,7 +259,7 @@ const TableComponent = (props) => {
               id={'startDate'}
               name={t('ValidFrom')}
               value={startDate}
-              onChange={(val) => setStartDate(val)}
+              onChange={(val) => {setHasChanges(true); setStartDate(val)}}
               renderInput={(params) => (
                 <TextField {...params} sx={{ marginRight: '20px', width: '150px' }} />
               )}
@@ -273,7 +272,7 @@ const TableComponent = (props) => {
               id={'endDate'}
               name={t('ValidTo')}
               value={endDate}
-              onChange={(val) => setEndDate(val)}
+              onChange={(val) => {setHasChanges(true); setEndDate(val)}}
               renderInput={(params) => (
                 <TextField {...params} sx={{ marginBottom: '20px', width: '150px' }} />
               )}

@@ -30,7 +30,8 @@ const MoneyDeposit = () => {
         addAmountToDeposit,
         reduceAmountFromDeposit,
         disableField ,
-        setDisableField
+        setDisableField,
+        validAction
     } = useMoneyDepositContext();
 
     const {t} = useTranslation();
@@ -41,6 +42,8 @@ const MoneyDeposit = () => {
         }
     }, [arkaList])
 
+    useEffect(() => {}, [amount], depositEvent)
+
     const toggleUpdateModal = () => {
         setIsUpdateModalOpen(!isUpdateModalOpen);
     }
@@ -50,7 +53,11 @@ const MoneyDeposit = () => {
     }
 
     const checkAmount = (val) => {
-        setAmount(val.value)
+        if(val.target.value < 1){
+            setAmount('');
+        }else{
+            setAmount(val.target.value);
+        }
     }
 
     const selectDeposit = (item) => {
@@ -73,17 +80,20 @@ const MoneyDeposit = () => {
        setIsUpdateModalOpen(true);
     }
 
-    const submitDepositForm = (values) => {
-        if(values.amount != '' && values.amount){
+    const submitDepositForm = () => {
+        if(depositEvent && amount){
             switch(depositEvent){
                 case "initial":
-                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, values.amount);
+                    updateAmount(JSON.parse(localStorage.getItem('deposit')).id, amount);
+                    console.log("VLLL", validAction);
                     break;
                 case "add":
-                    addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
+                    console.log("VLLLshtim", validAction);
                     break;
                 case "remove":
-                    reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, values.amount)
+                    reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
+                    console.log("VLLLterh", validAction);
                     break;
             }
 
@@ -238,8 +248,12 @@ const MoneyDeposit = () => {
                                             <TextField
                                                 type='number'
                                                 label="Shuma"
-                                                onChange={checkAmount(field)}
+                                                value={amount}
+                                                onChange={(e) => {checkAmount(e)}}
                                                 InputProps={{
+                                                    inputProps: {
+                                                        min: 5,
+                                                    },
                                                     style: {
                                                         fontFamily: "Poppins"
                                                     }
@@ -250,7 +264,6 @@ const MoneyDeposit = () => {
                                                     }
                                                 }}
                                                 className={styles.amountInput}
-                                                {...field}
                                             />
                                         )}
 

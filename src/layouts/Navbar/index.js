@@ -123,7 +123,7 @@ const Navbar = () => {
 
     return SwalModal(
       `${t('endShiftOnly')}`,
-      `Vlera Totale: ${summaryData.data[0]?.totalAmount}`,
+      `Vlera Totale: ${Number(summaryData.data[0]?.totalAmount).toLocaleString('en-US')}`,
       'question',
       `${t('no_')}`,
       `${t('yes')}`,
