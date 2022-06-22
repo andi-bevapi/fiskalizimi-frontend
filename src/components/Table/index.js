@@ -59,16 +59,18 @@ const TableComponent = (props) => {
   const access = useAccess();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  //const [arkaId, setArkaId] = useState(1);
+  const [params, setParams] = useState();
 
   useEffect(() => {
-    //if (props.arka) handleHistoryData();
+  }, [params]);
+
+  useEffect(() => {
+    handleHistoryButton(params)
   }, [startDate, endDate]);
 
   const [tableHeader, setTableHeader] = useState([]);
 
   useEffect(() => {
-    console.log("PROPS", props)
     const filteredTableHeader = props.tableHeaders.filter((el) => el !== 'id' && el !== 'Id');
     setTableHeader(filteredTableHeader);
   }, [arkaHistoryData]);
@@ -81,17 +83,16 @@ const TableComponent = (props) => {
     setOpenSideBar(true);
   };
 
-  const handleHistoryButton = async (params) => {
-    console.log("IDD", params)
+  const handleHistoryButton = async (params, fromStart=true) => {
     const response = await props.history(params.id, startDate, endDate);
     if (response.statusCode === 200) {
       setArkaHistoryData(response.data);
-      setOpenHistoryModal(true);
+      (fromStart? (setOpenHistoryModal(true)) : null);
       //setArkaId(id);
     } else
       setOpenSnackBar({
         status: true,
-        message: 'A problem occurred while trying to get arka history',
+        message: 'Pati një problem gjatë marrjes së të dhënave!',
         severity: 'error',
       });
   };
@@ -111,7 +112,6 @@ const TableComponent = (props) => {
   };
 
   const columns = [
-    
     tableHeader.map((el) => {
       return {
         field: el,
@@ -125,13 +125,16 @@ const TableComponent = (props) => {
       width: 140,
       sortable: false,
       renderCell: (params) => {
-        const onClick = (e) => {
+         const onClick = (e) => {
           e.stopPropagation();
           setViewInvoice(true);
           setSelectedRow(params.row);
+          setParams(params);
         };
 
         const handleEditButton = () => {
+          setParams(params);
+          setSelectedRow(params.row);
           setOpenSideBar(true);
           const foundItem = props.fullList.find((item) => item.id === params.id);
           setEditItem(foundItem);
@@ -181,7 +184,10 @@ const TableComponent = (props) => {
                 }}
                 icon={<HistoryIcon />}
                 iconColor={{ color: 'white' }}
-                onClick={() => handleHistoryButton(params)}
+                onClick={() => {  
+                  setParams(params);
+                  handleHistoryButton(params);
+                }}
               />
             )}
             <Access accessible={access[props.acceses['update']]}>
