@@ -9,10 +9,13 @@ const MoneyDepositProvider = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [ depositAmount , setDepositAmount] = useState(0.00);
     const [ disableField , setDisableField] = useState(false);
+    const [validAction, setValidAction] = useState(false);
 
     useEffect(() => {
         getActualAmount();
     }, []);
+
+    useEffect(() => {}, [validAction]);
 
     const getActualAmount = async () => {
         setIsLoading(true);
@@ -39,12 +42,14 @@ const MoneyDepositProvider = (props) => {
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
-            console.log("response-----",response);
-            if (response.statusCode === 200)
-            setDepositAmount(newAmount);
-            setDisableField(true);
+            if (response.statusCode === 200){
+                setDepositAmount(newAmount);
+                setDisableField(true);
+                setValidAction(true);
+            }
         } catch (error) {
-            console.log("error------",error);
+            setValidAction(false);
+            console.log("Error",error);
         }
     }
 
@@ -58,9 +63,13 @@ const MoneyDepositProvider = (props) => {
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
-            if (response.statusCode === 200) setDepositAmount(depositAmount + value );
+            if (response.statusCode === 200){
+                setDepositAmount(depositAmount + value );
+                setValidAction(true);
+            };
         } catch (error) {
-            console.log(error);
+            setValidAction(false);
+            console.log("Error",error);
         }
     }
 
@@ -70,17 +79,21 @@ const MoneyDepositProvider = (props) => {
                 totalAmount: value,
                 arkaId: id, // !!get arkaId  !!!
                 userId: initialState?.currentUser?.id,
-                action: 'Heqje',
+                action: 'Tërheqje',
                 actionTime: new Date()
             }
             const response = await updateSavedAmount(data);
-            if (response.statusCode === 200) setDepositAmount(depositAmount - value );
+            if (response.statusCode === 200){
+                setDepositAmount(depositAmount - value );
+                setValidAction(true);
+            };
         } catch (error) {
-            console.log(error);
+            setValidAction(false);
+            console.log("Error",error);
         }
     }
 
-    const values = {depositAmount, updateAmount, addAmountToDeposit, reduceAmountFromDeposit , disableField , setDisableField}
+    const values = {depositAmount, updateAmount, addAmountToDeposit, reduceAmountFromDeposit , disableField , setDisableField, validAction}
 
     return (
         <MoneyDepositContext.Provider value={values}>

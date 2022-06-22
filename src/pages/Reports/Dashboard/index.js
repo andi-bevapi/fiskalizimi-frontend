@@ -157,7 +157,7 @@ const Dashboard = () => {
                   align="right"
                   style={{ color: '#0D4D47', fontFamily: 'Poppins', fontWeight: 700 }}
                 >
-                  {Number.isInteger(item?.value) ? item?.value : Number(item?.value).toFixed(2)}
+                  {Number.isInteger(item?.value) ? item?.value.toLocaleString('en-US') : Number(item?.value).toFixed(2).toLocaleString('en-US')}
                 </Typography>
               </CardContent>
             </Card>

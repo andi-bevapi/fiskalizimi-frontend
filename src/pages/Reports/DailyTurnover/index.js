@@ -20,10 +20,10 @@ const columns = [
     { field: 'shiftEnd', headerName: 'Shift End', width: 200 },
     { field: 'username', headerName: 'Username', width: 120 },
     { field: 'totalAmountNoVAT', headerName: 'Total Amount No VAT', width: 150, renderCell: (params) => {
-        return params.row.totalAmountNoVAT.toFixed(2);
+        return params.row?.totalAmountNoVAT.toFixed(2);
     } },
     { field: 'totalAmount', headerName: 'Total Amount', width: 100, renderCell: (params) => {
-        return params.row.totalAmount.toFixed(2);
+        return params.row?.totalAmount.toFixed(2);
     } }
 ];
 
