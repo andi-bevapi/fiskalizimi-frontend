@@ -54,8 +54,7 @@ const MoneyDeposit = () => {
     }
 
     const selectDeposit = (item) => {
-        
-       autoInsertDeclaration({ deposit :JSON.parse(localStorage.getItem('deposit')) , defaultValue: 0 })
+       autoInsertDeclaration({item:item , defaultValue: 0 })
        .then((result)=>{
             if(!result.data && result?.status === 200){
                 setDisableField(false);
