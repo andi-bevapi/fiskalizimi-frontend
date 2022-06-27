@@ -29,7 +29,7 @@ const ClearValues = () => {
         formik.setValues({ searchText: '', categoryId: '', sellingUnitId: '', supplierId: '', branchId: '' });
         formik.submitForm(); 
     }
-    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: window.innerWidth < 800 ? 0 : 70, marginTop: 8, marginBottom: window.innerWidth < 800 ? 10 : 0}}>Fshi</Button>
+    return <Button variant="contained" onClick={clearValues} style={{height: 40, marginLeft: window.innerWidth < 800 ? 0 : 70, marginTop: 8, marginBottom: window.innerWidth < 800 ? 10 : 0}}>  Pastro  </Button>
 }
 
 const Filters = () => {

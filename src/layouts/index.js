@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { Suspense } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { MoneyDepositProvider } from '../Context/MoneyDepositContext';
 
 const theme = createTheme({
   palette: {
@@ -21,7 +22,9 @@ const BasicLayout = (props) => {
         <Suspense fallback="Loading...">
           <I18nextProvider i18n={i18n}>
             <Navbar />
+            <MoneyDepositProvider>
             <Body children={props.children} />
+            </MoneyDepositProvider>
           </I18nextProvider>
         </Suspense>
       </div>
