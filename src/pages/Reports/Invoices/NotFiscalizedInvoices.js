@@ -184,6 +184,22 @@ const getInvoices =  async() =>{
         finishSwal()
   }
 
+  const errorSwal = () => {
+    Swal.fire({
+      title:
+        "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+        `Pati një problem gjatë korrikigjimit të faturës! Ju lutemi të provoni përsëri` +
+        '</h5>',
+      text: '',
+      icon: 'error',
+      iconColor: '#c21000',
+      showDenyButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: '#f87800',
+      confirmButtonText: `Mbyll`,
+    })
+  }
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -251,7 +267,7 @@ const getInvoices =  async() =>{
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <CorrectiveInvoice data={selectedRow} onFinish={finishCorrection}/>
+          <CorrectiveInvoice data={selectedRow} onFinish={finishCorrection} onError={errorSwal}/>
         </Box>
       </Modal>
 

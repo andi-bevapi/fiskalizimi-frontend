@@ -15,9 +15,11 @@ import { SwalModal } from '../../../../components/Modal/SwalModal';
 import ButtonComponent from '../../../../components/Button/InvoiceButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useInvoiceContext } from '../../../../Context/InvoiceContext';
+import { useMoneyDepositContext } from '../../../../Context/MoneyDepositContext';
 
 const CorrectiveInvoice = (props) => {
     const {handleCorrectiveInvoice} = useInvoiceContext();
+    const { reduceAmountFromDeposit } = useMoneyDepositContext();
     const [hasChanges, setHasChanges] = useState(false);
     const [newInvoice, setNewInvoice] = useState(JSON.parse(JSON.stringify(props?.data)));
     const [totalVat, setTotalVat] = useState(props?.data.totalVat);
@@ -114,8 +116,16 @@ const CorrectiveInvoice = (props) => {
             invoiceItems: [...negativeItems],
             descripion: 'Fature e korrigjuar'
         }
-       await handleCorrectiveInvoice(invoiceObject);
-       props.onFinish();
+        try{
+            await handleCorrectiveInvoice(invoiceObject);
+            //Handle MoneyDeposit Update
+             const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
+             reduceAmountFromDeposit(moneyDepositId, Number(totalAmount));
+             props.onFinish();
+        }catch(error){
+            console.log('Error', error);
+            props.onError();
+        }
     }
 
     return (

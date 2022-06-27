@@ -84,15 +84,12 @@ const MoneyDeposit = () => {
             switch(depositEvent){
                 case "initial":
                     updateAmount(JSON.parse(localStorage.getItem('deposit')).id, amount);
-                    console.log("VLLL", validAction);
                     break;
                 case "add":
                     addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
-                    console.log("VLLLshtim", validAction);
                     break;
                 case "remove":
                     reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
-                    console.log("VLLLterh", validAction);
                     break;
             }
 
