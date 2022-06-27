@@ -17,6 +17,7 @@ import { useReactToPrint } from "react-to-print";
 import InvoiceToPrint from '../../InvoiceCoupon/InvoiceToPrint';
 import LargePrint from '../../InvoiceCoupon/LargePrint';
 import Swal from 'sweetalert2';
+import pageTitle from "../../../../../helpers/pageTitle";
 
 const ActionButtons = (props) => {
   const { t } = useTranslation();
@@ -38,12 +39,33 @@ const ActionButtons = (props) => {
   const [returnChange, setReturnChange] = useState(-Number(invoiceFinalObject?.totalAmount));
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
+  const [pageData,setPageData] = useState([]);
+
+  useEffect(()=>{
+
+    setPageData(couponObject)
+
+  },[couponObject]);
 
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current
+    onBeforePrint:() => {
+      setPageData((prevState) =>{
+        document.title = pageTitle(prevState)
+      })
+    },
+    onAfterPrint:() =>{ document.title = "Fiskalizimi"},
+    content: () =>{
+      return componentRef.current;
+    } 
   });
 
   const handleLargePrint = useReactToPrint({
+    onBeforePrint:() => {
+      setPageData((prevState) =>{
+        document.title = pageTitle(prevState)
+      })
+    },
+    onAfterPrint:() =>{ document.title = "Fiskalizimi"},
     content: () => printRef.current
   });
 
@@ -82,6 +104,10 @@ const ActionButtons = (props) => {
     openPrintSwal();
   }
 
+  const  checkclickOutside = () =>{
+    return true;
+  }
+
   const openPrintSwal = () => {
     Swal.fire({
       title:
@@ -93,6 +119,7 @@ const ActionButtons = (props) => {
       iconColor: '#98bbb8',
       showDenyButton: true,
       showConfirmButton: true,
+      allowOutsideClick: () => checkclickOutside(),
       confirmButtonColor: '#0d4d47',
       denyButtonColor: '#f87800',
       denyButtonText: `Printo si kupon`,
@@ -318,8 +345,6 @@ const ActionButtons = (props) => {
             </Formik>
           </ModalComponent>
         </Grid>
-
-
 
         <ModalComponent open={isOpenStep2} handleClose={toggleModalStep2} title="">
           <InvoiceCoupon data={couponObject} />

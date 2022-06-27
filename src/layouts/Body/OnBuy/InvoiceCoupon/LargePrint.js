@@ -40,7 +40,6 @@ const LargePrint = React.forwardRef((props, ref) => {
 
   return (
     <div style={{ display: 'none' }}>
-      <DocumentTitle title={pageTitle(props)}>
         <div id="couponToPrint" className={styles.largeCouponBG} ref={ref}>
         <br/>
         <p className={styles.largecouponBigTitle}>FATURË TATIMORE</p>
@@ -141,7 +140,6 @@ const LargePrint = React.forwardRef((props, ref) => {
         </p>
         </div>
         </div>
-      </DocumentTitle>
     </div>
   );
 });

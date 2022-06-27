@@ -1,7 +1,8 @@
-const pageTitle = (props) => {
-    const {dateTime,invoiceCode} = props.data
-    const date = new Date(dateTime).toISOString().split('.')[0].concat('+01:00');
+const pageTitle = (value) => {
+
+    const {dateTime,invoiceCode} = value
+    const date = new Date(dateTime).toISOString().slice(0, 10);
     const orderNumber = invoiceCode.split('/')[0];
-    return orderNumber + '__' + date;
+    return "Fat." + orderNumber + "Dt." + date;
 };
 export default pageTitle;
