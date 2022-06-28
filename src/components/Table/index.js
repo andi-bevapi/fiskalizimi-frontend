@@ -127,13 +127,13 @@ const TableComponent = (props) => {
          const onClick = (e) => {
           e.stopPropagation();
           setViewInvoice(true);
-          setSelectedRow(params.row);
+          //setSelectedRow(params.row);
           setParams(params);
         };
 
         const handleEditButton = () => {
           setParams(params);
-          setSelectedRow(params.row);
+          //setSelectedRow(params.row);
           setOpenSideBar(true);
           const foundItem = props.fullList.find((item) => item.id === params.id);
           setEditItem(foundItem);
