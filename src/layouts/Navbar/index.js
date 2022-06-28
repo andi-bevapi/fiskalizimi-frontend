@@ -242,6 +242,8 @@ const Navbar = () => {
                   trigger={(e) =>
                       <Button variant="contained" type="submit" className={styles.buttonStyle}> {t("printBill")} </Button>
                     }
+                  onBeforePrint={()=>{ document.title = "Xhiro Ditore" }}
+                  onAfterPrint={()=>{ document.title = "Fiskalizimi"}}
                   content={() => componentRef.current}
               />
               <div style={{ display: "none" }}>

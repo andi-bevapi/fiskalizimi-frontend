@@ -3,8 +3,6 @@ import QRCode from 'react-qr-code';
 import { useConfigProvider } from '../../../../Context/ConfigurationsContext';
 import { useTranslation } from 'react-i18next';
 import styles from './coupon.css';
-import DocumentTitle from 'react-document-title';
-import pageTitle from "../../../../helpers/pageTitle";
 
 const InvoiceToPrint = React.forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -13,6 +11,7 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
   const url = `https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify`;
   const tin = 'L91806031N';
   const { config } = useConfigProvider();
+
 
   useEffect(() => {
     const date = new Date(props.data.dateTime).toISOString().split('.')[0].concat('+01:00');
@@ -37,10 +36,10 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
     );
     setValue(tmp);
   });
+  
 
   return (
     <div style={{ display: 'none' }}>
-      <DocumentTitle title={pageTitle(props)}>
         <div id="couponToPrint" className={styles.couponBG} ref={ref}>
         <p className={styles.couponBigTitle}>FATURË TATIMORE</p>
         <span className={styles.couponBusinessName}>{props.data.clientName}</span>
@@ -135,7 +134,6 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
         </span>
         </div>
         </div>
-      </DocumentTitle>
     </div>
   );
 });
