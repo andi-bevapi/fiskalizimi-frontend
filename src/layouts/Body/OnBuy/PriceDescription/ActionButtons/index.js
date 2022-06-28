@@ -18,6 +18,7 @@ import InvoiceToPrint from '../../InvoiceCoupon/InvoiceToPrint';
 import LargePrint from '../../InvoiceCoupon/LargePrint';
 import Swal from 'sweetalert2';
 import pageTitle from "../../../../../helpers/pageTitle";
+import { useMoneyDepositContext } from '../../../../../Context/MoneyDepositContext';
 
 const ActionButtons = (props) => {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ const ActionButtons = (props) => {
     createPendingInvoice,
     couponObject
   } = useInvoiceContext();
-  
+  const {addAmountToDeposit} = useMoneyDepositContext();
   let componentRef = useRef();
   let printRef = useRef();
   const [isOpen, setisOpen] = useState(false);
@@ -100,6 +101,10 @@ const ActionButtons = (props) => {
 
   const goToGeneratedInvoice = async (values) => {
     await returnInvoiceObject(true, values.description, values.message);
+    //Handle MoneyDeposit Update
+    const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
+    const amountTotal = Number(invoiceFinalObject?.totalAmount).toFixed(2);
+    addAmountToDeposit(moneyDepositId, amountTotal);
     setisOpen(false);
     openPrintSwal();
   }
@@ -389,7 +394,7 @@ const ActionButtons = (props) => {
                 </Field>
                 <br></br>
                 <Button variant="contained" style={{ marginTop: 16}}  type="submit">
-                  {("save")}
+                  {t("save")}
                 </Button>
               </Form>
             </Formik>

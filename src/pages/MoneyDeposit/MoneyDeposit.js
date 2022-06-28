@@ -24,6 +24,7 @@ const MoneyDeposit = () => {
     const [amount, setAmount] = useState('');
     const [selectedDeposit, setSelectedDeposit] = useState();
     const [errorMessage, setErrorMessage] = useState("");
+    const { initialState } = useModel('@@initialState');
 
     const {
         updateAmount,
@@ -61,7 +62,7 @@ const MoneyDeposit = () => {
     }
 
     const selectDeposit = (item) => {
-       autoInsertDeclaration({item:item , defaultValue: 0 })
+       autoInsertDeclaration({item:item , defaultValue: 0 ,userId : initialState?.currentUser?.id})
        .then((result)=>{
             if(!result.data && result?.status === 200){
                 setDisableField(false);
@@ -84,15 +85,12 @@ const MoneyDeposit = () => {
             switch(depositEvent){
                 case "initial":
                     updateAmount(JSON.parse(localStorage.getItem('deposit')).id, amount);
-                    console.log("VLLL", validAction);
                     break;
                 case "add":
                     addAmountToDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
-                    console.log("VLLLshtim", validAction);
                     break;
                 case "remove":
                     reduceAmountFromDeposit(JSON.parse(localStorage.getItem('deposit')).id, amount)
-                    console.log("VLLLterh", validAction);
                     break;
             }
 

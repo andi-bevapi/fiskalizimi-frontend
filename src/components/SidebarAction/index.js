@@ -20,6 +20,11 @@ const useStyles = makeStyles(() => ({
     padding: 30,
     width: 260,
   },
+  title: {
+    fontFamily: 'Poppins',
+    fontSize: 15,
+    fontWeight: 600
+  }
 }));
 
 const SidebarAction = (props) => {
@@ -344,6 +349,8 @@ const SidebarAction = (props) => {
                   disableField={!props.editItem && props.arka ? false : true}
                   setBranchValue={setBranchValue}
                 />
+                <span className={classes.title}>Të drejtat</span>
+                <br/>
                 {props.user && (
                   <>
                     {Object.keys(props.permissions).map((key, idx) => {
