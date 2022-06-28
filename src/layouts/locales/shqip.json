@@ -171,6 +171,7 @@
   "productBarcode":"Ju lutem vendosni barkodin",
   "insertVat":"Ju lutem vendosni TVSH",
   "insertAmount":"Ju lutem vendosni sasine",
+  "stockNegativeMessage":"Stoku nuk duhet te kete vlere negative",
   "maxAmount":"Numri i sasise tejkalon limitin,",
   "insertBranch":"Ju lutem zgjidhni degen",
   "insertCategory":"Ju lutem zgjidhni kategorine",

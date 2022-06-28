@@ -169,6 +169,7 @@
   "productName":"Please insert the name",
   "insertVat":"Please insert the VAT",
   "insertAmount":"Please insert the quantity",
+  "stockNegativeMessage":"Stock must not have negative value",
   "maxAmount":"Amoun number is greater then allowed",
   "insertBranch":"Please select the Branch",
   "insertCategory":"Please select the Category",
