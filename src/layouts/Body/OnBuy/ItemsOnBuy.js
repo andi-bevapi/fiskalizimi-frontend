@@ -67,7 +67,7 @@ const ItemsOnBuy = () => {
   //---------------------paginate
 
   useEffect(() => {}, [listedInvoiceProducts, filteredBarcodeProduct]);
-
+  
   // useEffect(() => {
   //   if (activeInvoice == "pending") console.log("hereee");
   //   updateInvoiceToActive();
@@ -108,14 +108,20 @@ const ItemsOnBuy = () => {
     }
   };
 
-
   const handleAmount = (e,item) =>{
     e.preventDefault();
+
+    if(item.stockCheck){
+      if(Number(e.target.value) > Number(item.stock)){
+        return
+      } else{
+        item.quantity = Number(e.target.value);
+        addToInvoiceList(item, Number(e.target.value));
+      }
+    }
     item.quantity = Number(e.target.value);
     addToInvoiceList(item, Number(e.target.value));
   }
-
-
 
   const activateInvoice = (invoice) => {
     if (!localStorage.getItem('deposit')) {
@@ -260,13 +266,15 @@ const ItemsOnBuy = () => {
                         <TableCell className={styles.tableBodyCell}>{item.name}</TableCell>
                         <TableCell className={styles.tableBodyCell} style={{ padding: '2px' }}>
                           <TextField
-                            onChange={(e)=>{handleAmount(e,item)}}
+                            onChange={(e)=>{
+                              handleAmount(e,item)
+                            }}
                             type="number"
                             InputProps={{
                               inputProps: {
                                 //nqs kemi stock check max i produktit te jete sa stock i produktit aktual
                                 //minimumi nuk duhet te jet 0 asnjehere
-                                max: 100,
+                                max: Number(item.stock),
                                 min: 1,
                               },
                             }}
