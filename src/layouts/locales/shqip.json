@@ -281,5 +281,13 @@
   "Address":"Adresa",
   "BusinessUnitCode":"Kodi i njesise se biznesit",
   "removeImage":"Fshi imazhin",
-  "errorNeArke":"Nje gabim ndodhi ne kete Arke"
+  "errorNeArke":"Nje gabim ndodhi ne kete Arke",
+  "analytic_register":"Regjistri analitik",
+  "invoice_code":"Kodi i fatures",
+  "total_amount":"Shuma totale",
+  "total_amount_no_vat":"Shuma totale pa TVSH",
+  "total_vat":"Totali TVSH",
+  "register_description":"Pershkrimi",
+  "date":"Data",
+  "filters":"Filtrat"
 }

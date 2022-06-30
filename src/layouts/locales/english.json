@@ -278,5 +278,13 @@
   "Address":"Address",
   "BusinessUnitCode":"BusinessUnitCode",
   "removeImage":"Remove Image",
-  "errorNeArke":"Un Error occurred on this Money Deposit"
+  "errorNeArke":"Un Error occurred on this Money Deposit",
+  "analytic_register":"Analytic Register",
+  "invoice_code":"Invoice Code",
+  "total_amount":"Total Amount",
+  "total_amount_no_vat":"Total Amount No VAT",
+  "total_vat":"Total VAT",
+  "register_description":"Description",
+  "date":"Date",
+  "filters":"Filters"
 }
