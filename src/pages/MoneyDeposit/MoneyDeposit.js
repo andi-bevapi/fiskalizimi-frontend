@@ -62,7 +62,7 @@ const MoneyDeposit = () => {
     }
 
     const selectDeposit = (item) => {
-       autoInsertDeclaration({item:item , defaultValue: 0 ,userId : initialState?.currentUser?.id})
+       autoInsertDeclaration({item:item ,userId : initialState?.currentUser?.id})
        .then((result)=>{
             if(!result.data && result?.status === 200){
                 setDisableField(false);
