@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { history, useModel } from 'umi';
 import { useTranslation } from 'react-i18next';
 import { Divider, Button } from '@mui/material';
 import ButtonComponent from '../../../../../components/Button/InvoiceButton';
@@ -19,6 +20,8 @@ import LargePrint from '../../InvoiceCoupon/LargePrint';
 import Swal from 'sweetalert2';
 import pageTitle from "../../../../../helpers/pageTitle";
 import { useMoneyDepositContext } from '../../../../../Context/MoneyDepositContext';
+import { useContextArka } from '../../../../../Context/ArkaContext';
+import { getAllArka, checkAutoInsertDeclaration} from '../../../../../services/arka';
 
 const ActionButtons = (props) => {
   const { t } = useTranslation();
@@ -30,7 +33,8 @@ const ActionButtons = (props) => {
     createPendingInvoice,
     couponObject
   } = useInvoiceContext();
-  const {addAmountToDeposit} = useMoneyDepositContext();
+  const { addAmountToDeposit, updateAmount } = useMoneyDepositContext();
+  const { autoInsertDeclaration } = useContextArka();
   let componentRef = useRef();
   let printRef = useRef();
   const [isOpen, setisOpen] = useState(false);
@@ -41,11 +45,10 @@ const ActionButtons = (props) => {
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [amount, setAmount] = useState(0);
   const [pageData,setPageData] = useState([]);
+  const { initialState } = useModel('@@initialState');
 
   useEffect(()=>{
-
     setPageData(couponObject)
-
   },[couponObject]);
 
   const handlePrint = useReactToPrint({
@@ -104,11 +107,17 @@ const ActionButtons = (props) => {
     //Handle MoneyDeposit Update
     const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
     const amountTotal = Number(invoiceFinalObject?.totalAmount).toFixed(2);
+    const allDeposits = await getAllArka(initialState?.currentUser?.branchId);
+    const selectedDeposit =  allDeposits.data.filter((d) => d.id == moneyDepositId)[0];
+    const result = await checkAutoInsertDeclaration({item:selectedDeposit , userId : initialState?.currentUser?.id});
+    if(result?.status != 409){
+        updateAmount(moneyDepositId, 0);
+    }
     addAmountToDeposit(moneyDepositId, amountTotal);
     setisOpen(false);
     openPrintSwal();
   }
-
+  
   const  checkclickOutside = () =>{
     return true;
   }

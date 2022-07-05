@@ -28,7 +28,7 @@ import { getClientId } from "../../../helpers/getClientId";
 const Analytics = () => {
     const { initialState } = useModel('@@initialState');
     const [data, setData] = useState([]);
-    const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
+    const [dateRange, setDateRange] = useState([new Date(), new Date()]);
     const [open, setOpen] = useState(false);
     const [viewInvoice, setViewInvoice] = useState(null);
     const [rows, setRows] = useState(null);
@@ -73,8 +73,9 @@ const Analytics = () => {
     ];
 
     useEffect(() => {
+        console.log('', dateRange)
         getData();
-    }, [initialState?.currentUser, dateRange]);
+    }, [initialState?.currentUser], dateRange);
 
     const getData = async () => {
         const startDate = formatDate(dateRange[0]);
