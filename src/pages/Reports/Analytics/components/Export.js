@@ -8,8 +8,8 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const ExcelColumnGroup = ReactExport.ExcelFile.ExcelColumnGroup;
 
 const Export = ({ data, additionalFilters }) => {
-    const startDate = "Start Date: " + additionalFilters[0].getDate() + "/" + Number(additionalFilters[0].getMonth()+1) + "/" + additionalFilters[0].getFullYear();
-    const endDate = "End Date: " + additionalFilters[1].getDate() + "/" + Number(additionalFilters[1].getMonth()+1) + "/" + additionalFilters[1].getFullYear();
+    const startDate = "Start Date: " + additionalFilters[0]?.getDate() + "/" + Number(additionalFilters[0]?.getMonth()+1) + "/" + additionalFilters[0]?.getFullYear();
+    const endDate = "End Date: " + additionalFilters[1]?.getDate() + "/" + Number(additionalFilters[1]?.getMonth()+1) + "/" + additionalFilters[1]?.getFullYear();
 
     const currentDate = new Date().toLocaleString();
 
