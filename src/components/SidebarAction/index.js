@@ -349,10 +349,10 @@ const SidebarAction = (props) => {
                   disableField={!props.editItem && props.arka ? false : true}
                   setBranchValue={setBranchValue}
                 />
-                <span className={classes.title}>Të drejtat</span>
-                <br/>
                 {props.user && (
                   <>
+                  <span className={classes.title}>Të drejtat</span>
+                  <br/>
                     {Object.keys(props.permissions).map((key, idx) => {
                       return (
                         <>
