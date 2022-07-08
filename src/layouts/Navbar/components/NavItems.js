@@ -6,12 +6,8 @@ import { makeStyles } from '@mui/styles';
 import styles from '../components/navigationStyles.css'
 import HomeIcon from '@mui/icons-material/Home';//home
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; // users
-import StorefrontIcon from '@mui/icons-material/Storefront';; //furnitoret
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale'; //arkat
-import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
-import CategoryIcon from '@mui/icons-material/Category'; //category
 import SettingsIcon from '@mui/icons-material/Settings';//settings
-import SquareFootIcon from '@mui/icons-material/SquareFoot'; //njesite e shitjes
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';//produktet
 import ReceiptIcon from '@mui/icons-material/Receipt'; //invoices
 import BarChartIcon from '@mui/icons-material/BarChart'; //reports
@@ -45,6 +41,16 @@ const NavItems = ({open, handleClick2})=> {
   const handleClick = (path) => {
       history.push(path);
   };
+
+  const IconStyles = theme => ({
+    root: {
+      width: '100%',
+      maxWidth: 360
+    },
+    icon: {
+      color: 'white',
+    }
+  });
 
   const renderNavItems = (title) => {
     switch (title) {
@@ -97,21 +103,21 @@ const NavItems = ({open, handleClick2})=> {
           item.hasSubItems ? 
           <List>
           <ListItemButton>
-          <ListItemIcon>
+          <ListItemIcon className={styles.iconsStyle}>
           <ProductionQuantityLimitsIcon />
           </ListItemIcon>
-          <ListItemText primary={item.title} onClick={() => handleClick(item.path)} />
+          <ListItemText primary={item.title} primaryTypographyProps={{fontSize: '1.2em !important', fontFamily: 'Poppins'}} onClick={() => handleClick(item.path)} />
           {open ? <ExpandLess onClick={handleClick2} /> : <ExpandMore  onClick={handleClick2}/>}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit> 
           <List component="div" disablePadding>
-            {item.subItems.map((subItem) => {
+            {item.subItems.map((subItem, icon) => {
               return (
-                <ListItemButton sx={{ pl: 4 }} onClick={() => handleClick(subItem.path)} color="white">
-                  <ListItemIcon>
-                    <StarBorder />
+                <ListItemButton sx={{ pl: 4 }} onClick={() => handleClick(subItem.path)}>
+                  <ListItemIcon className={styles.submenuIconsStyle}>
+                  {subItem.icon}
                   </ListItemIcon>
-                  <ListItemText primary={subItem.title} className={styles.menuLink} color="inherit"/>
+                  <ListItemText primary={subItem.title} primaryTypographyProps={{fontSize: '1.2em', fontFamily: 'Poppins'}}/>
                 </ListItemButton>
               );
             }
@@ -119,7 +125,6 @@ const NavItems = ({open, handleClick2})=> {
           </List>
         </Collapse>
         </List>
-          
           : 
           <Access key={i} accessible={item.access ? access[item.access] : true}>
             <Button

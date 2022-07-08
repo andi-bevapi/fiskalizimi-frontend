@@ -16,6 +16,11 @@
     text-transform: capitalize !important;
 }
 
+.iconsStyle{
+    color: #fff !important;
+    padding-left: 12px !important;
+}
+
 .companyName{
     position: absolute;
     bottom: 15px;

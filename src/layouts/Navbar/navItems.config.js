@@ -1,3 +1,9 @@
+
+import CategoryIcon from '@mui/icons-material/Category'; //category
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'; //pikat e shitjes
+import StorefrontIcon from '@mui/icons-material/Storefront';; //furnitoret
+import SquareFootIcon from '@mui/icons-material/SquareFoot'; //njesite e shitjes
+
 export const navItems = [
   {
     title: "Faqja kryesore",
@@ -13,25 +19,25 @@ export const navItems = [
         title: "Kategorite",
         path: "/kategorite",
         access: 'canViewCategory',
-        icon: 'CategoryIcon'
+        icon: (<CategoryIcon/>)
       },
       {
         title: "Njesite matese",
         path: "/njesite-shitjes",
         access: 'canViewSellingUnit',
-        icon: 'SquareFootIcon'
+        icon: (<SquareFootIcon/>)
       },
       {
         title: "Furnitoret",
         path: "/furnitoret",
         access: 'canViewSupplier',
-        icon: 'StorefrontIcon'
+        icon: (<StorefrontIcon/>)
       },
       {
         title: "Pikat e shitjes",
         path: "/pikat-shitjes",
         access: 'canViewBranch',
-        icon: 'StoreMallDirectoryIcon'
+        icon: (<StoreMallDirectoryIcon/>)
       },
     ]
   }, 
