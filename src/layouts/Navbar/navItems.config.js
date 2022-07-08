@@ -6,28 +6,35 @@ export const navItems = [
   {
     title: "Produktet",
     path: "/produktet",
-    access: 'canViewProduct'
-  },
-  {
-    title: "Kategorite",
-    path: "/kategorite",
-    access: 'canViewCategory'
-  },
-  {
-    title: "Njesite matese",
-    path: "/njesite-shitjes",
-    access: 'canViewSellingUnit'
-  },
-  {
-    title: "Furnitoret",
-    path: "/furnitoret",
-    access: 'canViewSupplier'
-  },
-  {
-    title: "Pikat e shitjes",
-    path: "/pikat-shitjes",
-    access: 'canViewBranch'
-  },
+    access: 'canViewProduct',
+    hasSubItems: true,
+    subItems: [
+      {
+        title: "Kategorite",
+        path: "/kategorite",
+        access: 'canViewCategory',
+        icon: 'CategoryIcon'
+      },
+      {
+        title: "Njesite matese",
+        path: "/njesite-shitjes",
+        access: 'canViewSellingUnit',
+        icon: 'SquareFootIcon'
+      },
+      {
+        title: "Furnitoret",
+        path: "/furnitoret",
+        access: 'canViewSupplier',
+        icon: 'StorefrontIcon'
+      },
+      {
+        title: "Pikat e shitjes",
+        path: "/pikat-shitjes",
+        access: 'canViewBranch',
+        icon: 'StoreMallDirectoryIcon'
+      },
+    ]
+  }, 
   {
     title: "Arkat",
     path: "/arka-list",
