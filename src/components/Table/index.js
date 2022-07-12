@@ -110,6 +110,14 @@ const TableComponent = (props) => {
     setOpenHistoryModal(!openHistoryModal);
   };
 
+  const localizedTextsMap = {
+    columnMenuSortAsc :     t("sortByAsc"),
+    columnMenuSortDesc:     t("sortByDesc"),
+    columnMenuFilter:       t("filter"),
+    columnMenuHideColumn:   t("hide"),
+    columnMenuShowColumns: t("showColumn")
+  }
+
   const columns = [
     tableHeader.map((el) => {
       return {
@@ -124,12 +132,6 @@ const TableComponent = (props) => {
       width: 140,
       sortable: false,
       renderCell: (params) => {
-         const onClick = (e) => {
-          e.stopPropagation();
-          setViewInvoice(true);
-          //setSelectedRow(params.row);
-          setParams(params);
-        };
 
         const handleEditButton = () => {
           setParams(params);
@@ -419,13 +421,13 @@ const TableComponent = (props) => {
         //     </TableBody>
         //   </Table>
         // </TableContainer>
-
         <div style={{ height: '90%', width: '100%' }}>
           <DataGrid
             rows={props.data}
             columns={[...columns[0], columns[1]]}
             pageSize={15}
             rowsPerPageOptions={[15]}
+            localeText={localizedTextsMap}
           />
         </div>
       )}

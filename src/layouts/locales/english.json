@@ -291,5 +291,10 @@
   "total_vat":"Total VAT",
   "register_description":"Description",
   "date":"Date",
-  "filters":"Filters"
+  "filters":"Filters",
+  "sortByAsc":"Rendit sipas rritjes",
+  "sortByDesc":"Rendit sipas zbritjes",
+  "filter":"Filtro",
+  "hide": "Fshih",
+  "showColumn": "Trego kolonat"
 }
