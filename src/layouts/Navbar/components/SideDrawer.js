@@ -26,6 +26,13 @@ const SideDrawer = () => {
   const { initialState, refresh } = useModel('@@initialState');
   const {t} = useTranslation();
   const [state, setState] = useState({ right: false });
+  
+  // state for the drawer collapse
+  const [open, setOpen] = React.useState(false);
+  const handleClick2 = () => {
+    //history.push(path);
+    setOpen(!open);
+  };
 
   useEffect(() => {
   }, [selectedDeposit, initialState]);
@@ -42,10 +49,9 @@ const SideDrawer = () => {
   const sideDrawerList = (anchor) => (
     <div
       className={styles.sideMenu}
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <NavItems />
+      <NavItems open={open} handleClick2={handleClick2} closeDrawer={toggleDrawer()}/>
     </div>
   );
 

@@ -16,6 +16,11 @@
     text-transform: capitalize !important;
 }
 
+.iconsStyle{
+    color: #fff !important;
+    padding-left: 12px !important;
+}
+
 .companyName{
     position: absolute;
     bottom: 15px;
@@ -52,4 +57,9 @@
     font-weight: 600 !important;
     color: #ff7a00 !important;
     padding: 0 !important;
+}
+
+.submenuIconsStyle{
+    color: #fff !important;
+    padding-left: 12px !important;
 }
