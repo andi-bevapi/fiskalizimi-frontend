@@ -19,25 +19,25 @@ export const navItems = [
         title: "Kategorite",
         path: "/kategorite",
         access: 'canViewCategory',
-        icon: (<CategoryIcon/>)
+        icon: (<CategoryIcon style={{color: 'white'}}/>)
       },
       {
         title: "Njesite matese",
         path: "/njesite-shitjes",
         access: 'canViewSellingUnit',
-        icon: (<SquareFootIcon/>)
+        icon: (<SquareFootIcon style={{color: 'white'}}/>)
       },
       {
         title: "Furnitoret",
         path: "/furnitoret",
         access: 'canViewSupplier',
-        icon: (<StorefrontIcon/>)
+        icon: (<StorefrontIcon style={{color: 'white'}}/>)
       },
       {
         title: "Pikat e shitjes",
         path: "/pikat-shitjes",
         access: 'canViewBranch',
-        icon: (<StoreMallDirectoryIcon/>)
+        icon: (<StoreMallDirectoryIcon style={{color: 'white'}}/>)
       },
     ]
   }, 

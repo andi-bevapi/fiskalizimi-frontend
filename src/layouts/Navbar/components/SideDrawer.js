@@ -28,12 +28,10 @@ const SideDrawer = () => {
   const [state, setState] = useState({ right: false });
   
   // state for the drawer collapse
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleClick2 = () => {
     //history.push(path);
     setOpen(!open);
-    console.log("Products Clicked!!")
-    console.log("isOpen", open) 
   };
 
   useEffect(() => {
@@ -51,10 +49,9 @@ const SideDrawer = () => {
   const sideDrawerList = (anchor) => (
     <div
       className={styles.sideMenu}
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <NavItems open={open} handleClick2={handleClick2}/>
+      <NavItems open={open} handleClick2={handleClick2} closeDrawer={toggleDrawer()}/>
     </div>
   );
 

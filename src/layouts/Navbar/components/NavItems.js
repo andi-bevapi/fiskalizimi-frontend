@@ -33,12 +33,13 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const NavItems = ({open, handleClick2})=> {
+const NavItems = ({open, handleClick2, closeDrawer})=> {
   const {t} = useTranslation();
   const classes = useStyles();
   const access = useAccess();
 
   const handleClick = (path) => {
+      closeDrawer('left', false);
       history.push(path);
   };
 
