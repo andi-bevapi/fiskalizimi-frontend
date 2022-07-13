@@ -294,5 +294,10 @@
   "total_vat":"Totali TVSH",
   "register_description":"Pershkrimi",
   "date":"Data",
-  "filters":"Filtrat"
+  "filters":"Filtrat",
+  "sortByAsc":"Order by Ascending",
+  "sortByDesc":"Order by Descending",
+  "filter":"Filter",
+  "hide": "Hide",
+  "showColumn": "Show Column"
 }
