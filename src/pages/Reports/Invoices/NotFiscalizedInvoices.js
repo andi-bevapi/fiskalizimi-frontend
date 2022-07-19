@@ -179,7 +179,9 @@ const getInvoices =  async() =>{
     })
   }
 
-  const finishCorrection = () => {
+  const finishCorrection = (invoicePreviewData, invoiceItems) => {    
+        invoicePreviewData.items = [...invoiceItems];
+        setSelectedRow(invoicePreviewData)
         setCorrectInvoice(false)
         finishSwal()
   }

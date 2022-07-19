@@ -16,7 +16,7 @@ const CorrectiveInvoicePreview = React.forwardRef((props, ref) => {
         const tmp = url.concat("?iic=", props.data.NSLF, "&tin=", tin, "&crtd=", date, "&ord=", orderNumber, "&bu=",
             props.data.branch.businessUnitCode, "&cr=", props.data.client.TCRCode, "&sw=", props.data.client.softCode, "&prc=", props.data.totalAmount);
         setValue(tmp);
-    });
+    }, [props]);
 
     return (
         <Grid container xs={8} md={8}>
@@ -52,11 +52,11 @@ const CorrectiveInvoicePreview = React.forwardRef((props, ref) => {
                             <th className={styles.couponTitleText} style={{ textAlign: 'end' }}>Vl paTvsh</th>
                             <th className={styles.couponTitleText}></th>
                         </tr>
-                        {props.data?.items?.map((item) => {
+                        {props.data?.items?.map((item, index) => {
                             return (
                                 <>
                                     <tr style={{ textAlign: "left" }}>
-                                        <td className={styles.productDataRow} style={{ textTransform: 'uppercase' }}>{item.product.name}</td>
+                                        <td className={styles.productDataRow} style={{ textTransform: 'uppercase' }}>{item.productName}</td>
                                         <td className={styles.productDataRow}></td>
                                         <td className={styles.productDataRow}></td>
                                         <td className={styles.productDataRownoVAT}></td>
@@ -85,7 +85,7 @@ const CorrectiveInvoicePreview = React.forwardRef((props, ref) => {
                         <QRCode value={value} size={120} />
                     </div>
                     <span className={styles.nslfText}>NIVF: {props.data.FIC}</span> <br />
-                    <span className={styles.nslfText}>NSLF: {props.data.NSLF}</span>
+                    {props.data.NSLF.length > 0 ? (<span className={styles.nslfText}>NSLF: {props.data.NSLF}</span>) : null}
                     <br /><br />
                     <span className={styles.couponTitleText}>{config?.billMessage}</span> <br />
                     <span className={styles.couponTitleText}>Gjeneruar nga Ovla Systems</span> <br />
