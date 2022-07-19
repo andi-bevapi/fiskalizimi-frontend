@@ -117,11 +117,11 @@ const CorrectiveInvoice = (props) => {
             descripion: 'Fature e korrigjuar'
         }
         try{
-            await handleCorrectiveInvoice(invoiceObject);
+            const result = await handleCorrectiveInvoice(invoiceObject);
             //Handle MoneyDeposit Update
              const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
              reduceAmountFromDeposit(moneyDepositId, Number(totalAmount));
-             props.onFinish();
+             props.onFinish(result.data, invoiceObject.invoiceItems);
         }catch(error){
             console.log('Error', error);
             props.onError();

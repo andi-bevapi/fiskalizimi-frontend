@@ -194,9 +194,10 @@ const errorSwal = () => {
   })
 }
 
-const finishCorrection = () => {
-      setCorrectInvoice(false)
-      finishSwal()
+const finishCorrection = (invoicePreviewData) => {
+      setSelectedRow(invoicePreviewData);
+      setCorrectInvoice(false);
+      finishSwal();
 }
 
 const style = {

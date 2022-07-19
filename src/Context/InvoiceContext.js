@@ -345,6 +345,7 @@ const InvoiceProvider = (props) => {
     const handleCorrectiveInvoice = async (invoice) =>{
        try{
             const response = await createInvoice(invoice, initialState?.currentUser?.id);
+            return response;
        }catch(error){
             console.log("ERROR", error)
        }
