@@ -51,6 +51,10 @@ const ActionButtons = (props) => {
     setPageData(couponObject)
   },[couponObject]);
 
+  useEffect(() => {
+    setAmount(0);
+  }, [isOpen])
+
   const handlePrint = useReactToPrint({
     onBeforePrint:() => {
       setPageData((prevState) =>{
