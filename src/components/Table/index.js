@@ -424,6 +424,7 @@ const TableComponent = (props) => {
             pageSize={15}
             rowsPerPageOptions={[15]}
             localeText={localizedTextsMap}
+            disableSelectionOnClick
           />
         </div>
       )}

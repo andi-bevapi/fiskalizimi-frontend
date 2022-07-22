@@ -11,19 +11,19 @@ export const formFields = [
   {
     name: 'serialNumber',
     component: 'Text',
-    label: 'Serial Number',
+    label: i18n.t('serialNumber'),
     disabled: true
   },
   {
     name: 'validFrom',
     component: 'Date',
-    label: 'Valid From',
+    label: i18n.t('validFrom'),
     disabled: true,
   },
   {
     name: 'validTo',
     component: 'Date',
-    label: 'Valid To',
+    label: i18n.t('validTo'),
     disabled: true,
   },
   {
