@@ -292,9 +292,9 @@
   "register_description":"Description",
   "date":"Date",
   "filters":"Filters",
-  "sortByAsc":"Rendit sipas rritjes",
-  "sortByDesc":"Rendit sipas zbritjes",
-  "filter":"Filtro",
-  "hide": "Fshih",
-  "showColumn": "Trego kolonat"
+  "sortByAsc":"Order by Ascending",
+  "sortByDesc":"Order by Descending",
+  "filter":"Filter",
+  "hide": "Hide",
+  "showColumn": "Show Column"
 }

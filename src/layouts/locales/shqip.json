@@ -295,9 +295,9 @@
   "register_description":"Pershkrimi",
   "date":"Data",
   "filters":"Filtrat",
-  "sortByAsc":"Order by Ascending",
-  "sortByDesc":"Order by Descending",
-  "filter":"Filter",
-  "hide": "Hide",
-  "showColumn": "Show Column"
+  "sortByAsc":"Rendit në rend rritës",
+  "sortByDesc":"Rendit në rend zbritës",
+  "filter":"Filtro",
+  "hide": "Fshih",
+  "showColumn": "Shiko kolonën"
 }
