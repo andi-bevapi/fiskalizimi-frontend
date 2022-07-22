@@ -18,6 +18,7 @@ export const listFormat = (data, tableHeaders) => {
     Object.keys(el).forEach((item) => {
       if (!tableHeaders.includes(item.toLowerCase())) delete el[item];
       if (typeof el[item] === 'object') el[item] = el[item].name;
+
       if (item === 'vat') {
         switch (el[item]) {
           case 0:
@@ -35,6 +36,8 @@ export const listFormat = (data, tableHeaders) => {
           default:
             el[item] = 'default';
         }
+      } else if(item === "validFrom" || item === "validTo"){
+        el[item] = new Date(el[item]).toISOString().slice(0, 10);
       }
     });
   });
