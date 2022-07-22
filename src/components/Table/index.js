@@ -23,6 +23,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import { useModel } from 'umi';
+import pageWidth from "../../helpers/gridWidth";
 
 const useStyles = makeStyles(() => ({
   headerContainer: {
@@ -115,16 +116,12 @@ const TableComponent = (props) => {
     columnMenuSortDesc:     t("sortByDesc"),
     columnMenuFilter:       t("filter"),
     columnMenuHideColumn:   t("hide"),
-    columnMenuShowColumns: t("showColumn")
+    columnMenuShowColumns:  t("showColumn")
   }
-
+  
   const columns = [
     tableHeader.map((el) => {
-      return {
-        field: el,
-        headerName: i18n.t(el),
-        width: props.product ? 120 : 200,
-      };
+      return pageWidth(el,props)
     }),
     {
       field: 'actions',
@@ -132,7 +129,6 @@ const TableComponent = (props) => {
       width: 140,
       sortable: false,
       renderCell: (params) => {
-
         const handleEditButton = () => {
           setParams(params);
           //setSelectedRow(params.row);
