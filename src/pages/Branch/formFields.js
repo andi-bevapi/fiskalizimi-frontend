@@ -40,5 +40,5 @@ export const validationSchema = yup.object({
     businessUnitCode: yup.string().min(2, i18n.t("branchUnitCodeMinLength")).max(20,i18n.t("branchUnitCodeMaxLength")).required(i18n.t("branchUnitCode")),
     city: yup.string().min(2, i18n.t("branchCityLength")).required(i18n.t("branchCity")),
     code: yup.string().min(5, i18n.t("branchCodeLength")).required(i18n.t("branchCode")),
-    maintainerCode: yup.string().min(5, i18n.t("branchMaintainerMinLength")).max(i18n.t("branchMaintainerMaxLength")).required(i18n.t("branchMaintainer")),
+    maintainerCode: yup.string().min(5, i18n.t("branchMaintainerMinLength")).max(10, i18n.t("branchMaintainerMaxLength")).required(i18n.t("branchMaintainer")),
 });
