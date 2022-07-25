@@ -280,6 +280,7 @@ const ItemsOnBuy = () => {
                             }}
                             value={item.quantity}
                             label={t("quantity")}
+                            style={{ width: 80}}
                           />
                         </TableCell>
                         <TableCell className={styles.tableBodyCell}>
