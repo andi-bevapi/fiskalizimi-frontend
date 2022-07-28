@@ -17,7 +17,8 @@ import { getAnalyticsData } from '../../../services/reports'
 import { formatDate } from '../../../helpers/formatDate'
 import CorrectiveInvoicePreview from '../../../components/InvoicePreview/correctiveInvoice'
 import { useReactToPrint } from "react-to-print";
-import { getClientId } from '../../../helpers/getClientId'
+import { getClientId } from '../../../helpers/getClientId';
+import pageTitle from "../../../helpers/pageTitle";
 
 const NotFiskalizedInvoices = () => {
   const { initialState } = useModel('@@initialState')
@@ -29,9 +30,16 @@ const NotFiskalizedInvoices = () => {
   const [dateRange, setDateRange] = useState([new Date().toString(), new Date().toString()]);
   const [invoices, setInvoices] = useState();
   const [readyToPrint, setReadyToPrint] = useState(false);
-  
+  const [pageData,setPageData] = useState([]);
+
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
+    onBeforePrint:() => {
+      setPageData((prevState) =>{
+        document.title = pageTitle(selectedRow);
+      })
+    },
+    onAfterPrint:() =>{ document.title = "Fiskalizimi"},
     content: () => componentRef.current
   });
 
