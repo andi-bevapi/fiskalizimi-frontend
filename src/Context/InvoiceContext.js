@@ -8,7 +8,7 @@ import { useContextProduct } from './ProductContext';
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
-    const { productToUpdate, productToDelete, setProductList, productList } = useContextProduct();
+    const { productToUpdate, productToDelete, setProductList, productList,productListCopy,setProductListCopy } = useContextProduct();
 
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
@@ -120,13 +120,7 @@ const InvoiceProvider = (props) => {
 
     //Method to remove all products from the invoice list
     const deleteInvoice = () => {
-        listedInvoiceProducts.map(product => {
-            setProductList((prevState) => {
-                let index = prevState.findIndex((el) => el.id == product.id);
-                prevState[index].stock = prevState[index].stock + product.quantity;
-                return [...prevState];
-            });
-        })
+        setProductList(productListCopy);
         setIsLoading(true);
         setListedInvoiceProducts([]);
         setTotalPriceVAT(0);
