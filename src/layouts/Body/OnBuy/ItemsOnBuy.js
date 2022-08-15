@@ -108,6 +108,10 @@ const ItemsOnBuy = () => {
     }
   };
 
+  useEffect(()=>{
+    localStorage.setItem("item",JSON.stringify(listedInvoiceProducts));
+  },[listedInvoiceProducts]);
+
   const handleAmount = (e,item) =>{
     e.preventDefault();
 

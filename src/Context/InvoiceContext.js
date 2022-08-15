@@ -122,7 +122,12 @@ const InvoiceProvider = (props) => {
     const deleteInvoice = () => {
         listedInvoiceProducts.map(product => {
             setProductList((prevState) => {
+
                 let index = prevState.findIndex((el) => el.id == product.id);
+                if(index === -1){
+                    return [...prevState]
+                }
+
                 prevState[index].stock = prevState[index].stock + product.quantity;
                 return [...prevState];
             });

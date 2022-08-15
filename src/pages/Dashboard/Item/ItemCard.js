@@ -90,7 +90,6 @@ const ItemCard = (props) => {
 
     if (!stopAdding) {
       const productFromArray = props.invoiceList?.filter((item) => item.id === props.item.id);
-      
       const isExisting = productFromArray.length >= 1 ? true : false;
       if (props.item.stockCheck) {
         if (isExisting) {

@@ -19,11 +19,26 @@ const ProductProvider = (props) => {
         setIsLoading(true);
         try {
             let products = [];
-            if (initialState?.currentUser?.branchId !== 0)
+            if (initialState?.currentUser?.branchId !== 0){
                 products = await getProducts(initialState?.currentUser?.branchId, query);
-            else products = await getProductsByClientId(getClientId(initialState?.currentUser), query);
-            if (products.statusCode === 200) {
-                setProductList(products.data);
+            }else{ 
+                products = await getProductsByClientId(getClientId(initialState?.currentUser), query);
+            }if(products.statusCode === 200) {
+                const dataFromLocalStorage = JSON.parse(localStorage.getItem("item"));
+                if(dataFromLocalStorage.length){
+                    const tmp = [];
+                    dataFromLocalStorage.map((el,index)=>{
+                        products.data.filter((pr,prIndex)=>{
+                            if(el.id === pr.id){
+                                pr.stock = Number(pr.stock)- el.quantity;
+                                tmp.push(pr);
+                            }
+                        });
+                    });
+                    setProductList(products.data);
+                } else{
+                    setProductList(products.data);
+                }
             }
         } catch (error) {
             console.log(error)
