@@ -25,7 +25,6 @@ import TextField from '@mui/material/TextField';
 import { useTranslation } from 'react-i18next';
 import { useModel } from 'umi';
 
-let itemsToAdd = [];
 const ItemsOnBuy = () => {
   const {
     listedInvoiceProducts,
@@ -110,7 +109,6 @@ const ItemsOnBuy = () => {
   };
 
   useEffect(()=>{
-    console.log("data-------",listedInvoiceProducts);
     localStorage.setItem("item",JSON.stringify(listedInvoiceProducts));
   },[listedInvoiceProducts]);
 
