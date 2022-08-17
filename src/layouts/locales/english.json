@@ -191,6 +191,7 @@
   "uploadImage":"Upload Image",
   "checkQuantity":"Check Quantity",
   "ark":"Money Deposit",
+  "arks":"Money Deposits",
   "cashCondition":"Cash balance",
   "insertCashStatus":"Set the new cash status",
   "writeCashToAddAmount":"Enter the amount you want to add to the checkout",
