@@ -75,7 +75,7 @@ const NavItems = ({open, handleClick2, closeDrawer})=> {
       //     <> <Box m={1} pt={1}> <StorefrontIcon /> </Box> </> <span>{t("suppliers")}</span> </>;
       case "Arkat":
         return <>
-          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>{t("arks")}</span> </>;
       case "Perdoruesit":
         return <>
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("users")}</span> </>;
@@ -84,7 +84,7 @@ const NavItems = ({open, handleClick2, closeDrawer})=> {
           <> <Box m={1} pt={1}> <PeopleAltIcon /> </Box> </> <span>{t("reports")}</span> </>;
       case "Arkat":
         return <>
-          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>Arkat</span> </>;
+          <> <Box m={1} pt={1}> <PointOfSaleIcon /> </Box> </> <span>{t("arks")}</span> </>;
        case 'Faturat':
         return <>
           <> <Box m={1} pt={1}> <ReceiptIcon /> </Box> </> <span>{t("invoices")}</span> </>;

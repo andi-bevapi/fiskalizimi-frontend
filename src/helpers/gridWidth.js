@@ -1,14 +1,5 @@
+import i18n from 'i18next';
 const pageWidth = (elements, property) => {
-  //console.log("elements-----",elements);
-  //console.log("property-------",property);
-
-  // return {
-  //     field: elements,
-  //     headerName: elements,
-  //     //width : el === "price" ? 20 : 140
-  //     //width: props.product ? 120 : 200,
-  //     width: 120
-  //   }
   let customWidth = 0;
   switch (elements) {
     case 'name':
@@ -32,7 +23,7 @@ const pageWidth = (elements, property) => {
     default:
       customWidth = 120;
   }
-  return Object.assign({}, { field: elements, headerName: elements, width: customWidth });
+  return Object.assign({}, { field: elements, headerName: i18n.t(elements), width: customWidth });
 };
 
 export default pageWidth;

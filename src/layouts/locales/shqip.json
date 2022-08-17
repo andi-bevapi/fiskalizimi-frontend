@@ -193,6 +193,7 @@
   "uploadImage":"Ngarko Imazh",
   "checkQuantity":"Kontrollo Sasine",
   "ark":"Arka",
+  "arks": "Arkat",
   "cashCondition":"Gjendja e Arkës",
   "insertCashStatus":"Vendosni gjendjen e re të arkës",
   "writeCashToAddAmount":"Shkruani sasinë që doni të shtoni në arkë",
