@@ -78,7 +78,7 @@
   "savePending": "SAVE",
   "pay": "PAY",
   "payInvoice": "Pay Invoice",
-  "chooseWayOfPayment": "Choose the way of payment:",
+  "chooseWayOfPayment": "Way of payment:",
   "creditCard": "Credit card",
   "totalToPay": "Total to pay: ",
   "theRest": "The rest: ",

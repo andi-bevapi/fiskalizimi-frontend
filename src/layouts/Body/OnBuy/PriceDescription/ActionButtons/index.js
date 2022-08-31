@@ -269,11 +269,11 @@ const ActionButtons = (props) => {
                               </Button><br />
                             </Grid>
 
-                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                            {/* <Grid item xs={12} sm={12} md={12} lg={12}>
                               <Button className={styles.bankPayment} disabled={true}>
                                 {t("creditCard")}
                               </Button>
-                            </Grid>
+                            </Grid> */}
                           </Grid>
                         </div>
                       </div>
