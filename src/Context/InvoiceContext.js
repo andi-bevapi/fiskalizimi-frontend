@@ -1,14 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
 import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
+import {dateFormatInvoiceFiscalized} from "../helpers/formatDate";
 
 import { useModel } from 'umi';
 import { useContextProduct } from './ProductContext';
+import {useClientContext} from "./ClientContext";
 
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
     const { productToUpdate, productToDelete, setProductList, productList } = useContextProduct();
+    const { clientToGet } = useClientContext();
 
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
@@ -106,7 +109,6 @@ const InvoiceProvider = (props) => {
     //Method to remove a product in the invoice list
     const removeProductFromInvoiceList = (product) => {
         const productIndex = listedInvoiceProducts?.findIndex(item => item.id === product.id);
-        // console.log(listedInvoiceProducts[productIndex]);
         setProductList((prevState) => {
             let index = prevState.findIndex((el) => el.id == product.id);
             prevState[index].stock = Number(prevState[index].stock) + Number(listedInvoiceProducts[productIndex].quantity);
@@ -248,14 +250,19 @@ const InvoiceProvider = (props) => {
     const returnInvoiceObject = async (shouldPost = true, invoiceDescription = "", invoiceMessage = "") => {
         const invoiceItemsArray = [];
         listedInvoiceProducts?.map((item) => {
+
             invoiceItemsArray.push({
                 productId: item.id,
                 productName: item.name,
                 quantity: item.quantity,
                 finalPrice: item.price,
                 originalPrice: item.originalPrice,
+                barcode: item.barcode,
+                sellingUnitId: item.sellingUnitId
             })
         });
+
+        const client = await clientToGet(initialState?.currentUser.clientId);
         const invoiceObject = {
             clientId: initialState?.currentUser.clientId,
             branchId: initialState?.currentUser.branchId,
@@ -270,7 +277,12 @@ const InvoiceProvider = (props) => {
             message: invoiceMessage,
             invoiceItems: [...invoiceItemsArray],
             NSLF: "", //will be generated
+            date: dateFormatInvoiceFiscalized(),
+            operatorCode:initialState?.currentUser.operatorCode,
+            nuis:client.data.NUIS
         }
+        console.log("invoiceObject-----",invoiceObject);
+
         setInvoiceFinalObject(invoiceObject);
         if (shouldPost) await postInvoice(invoiceObject);
     }
@@ -317,6 +329,7 @@ const InvoiceProvider = (props) => {
             nslf: "DE0495ASDF562VCS94F36565942S9I456", //will be returned from post response
             message: invoiceObject.message,
         }
+        // console.log("couponGenerateObject-----",couponGenerateObject);
         setCouponObject(couponGenerateObject);
         updateProductsStock(couponGenerateObject.productList);
     }
