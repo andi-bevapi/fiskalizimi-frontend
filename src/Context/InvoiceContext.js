@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
 import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
 import {dateFormatInvoiceFiscalized} from "../helpers/formatDate";
+import {moment} from "moment";
 
 import { useModel } from 'umi';
 import { useContextProduct } from './ProductContext';
@@ -235,6 +236,7 @@ const InvoiceProvider = (props) => {
             console.log(error);
         }
     }
+
     const getListOfInvoices = async (status) => {
         try {
             const response = await getInvoices(initialState?.currentUser?.branchId, status);
@@ -250,7 +252,6 @@ const InvoiceProvider = (props) => {
     const returnInvoiceObject = async (shouldPost = true, invoiceDescription = "", invoiceMessage = "") => {
         const invoiceItemsArray = [];
         listedInvoiceProducts?.map((item) => {
-
             invoiceItemsArray.push({
                 productId: item.id,
                 productName: item.name,
@@ -258,7 +259,8 @@ const InvoiceProvider = (props) => {
                 finalPrice: item.price,
                 originalPrice: item.originalPrice,
                 barcode: item.barcode,
-                sellingUnitId: item.sellingUnitId
+                sellingUnitId: item.sellingUnitId,
+                vat: (item.vat === 0) ? 0 : (item.vat === 1) ? 6.00 : (item.vat === 2) ? 20.00 : 0
             })
         });
 
@@ -281,10 +283,16 @@ const InvoiceProvider = (props) => {
             operatorCode:initialState?.currentUser.operatorCode,
             nuis:client.data.NUIS
         }
-        console.log("invoiceObject-----",invoiceObject);
 
         setInvoiceFinalObject(invoiceObject);
-        if (shouldPost) await postInvoice(invoiceObject);
+        if (shouldPost){
+            try{
+                await postInvoice(invoiceObject);
+              } catch(err){
+                throw new Error("Kjo fature nuk u fiskalizua", 409);
+              }
+        } 
+        //await postInvoice(invoiceObject);
     }
 
     //POST method to register Invoice DB
@@ -292,6 +300,8 @@ const InvoiceProvider = (props) => {
         //Add post method for invoice
         const response = await createInvoice(invoiceObject, initialState?.currentUser?.id);
         const invoiceData = response?.data;
+
+        //console.log("invoiceData-----",invoiceData);
 
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
         let paymentMethodType = "";
@@ -329,7 +339,6 @@ const InvoiceProvider = (props) => {
             nslf: "DE0495ASDF562VCS94F36565942S9I456", //will be returned from post response
             message: invoiceObject.message,
         }
-        // console.log("couponGenerateObject-----",couponGenerateObject);
         setCouponObject(couponGenerateObject);
         updateProductsStock(couponGenerateObject.productList);
     }

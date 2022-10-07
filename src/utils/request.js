@@ -17,7 +17,7 @@ const codeMessage = {
     503: 'The service is unavailable, and the server is temporarily overloaded or maintained. ',
     504: 'The gateway has timed out. ',
 };
-
+ 
 const errorHandler = (error) => {
     const { response } = error;
     if (response && response.status == 401) {
@@ -27,7 +27,7 @@ const errorHandler = (error) => {
 };
 
 const request = extend({
-    prefix: 'http://localhost:5000/api',
+    prefix: 'https://fiskalizimi-dev-api.herokuapp.com/api',
     errorHandler
 });
 

@@ -107,23 +107,67 @@ const ActionButtons = (props) => {
   }
 
   const goToGeneratedInvoice = async (values) => {
-    await returnInvoiceObject(true, values.description, values.message);
-    //Handle MoneyDeposit Update
-    const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
-    const amountTotal = Number(invoiceFinalObject?.totalAmount).toFixed(2);
-    const allDeposits = await getAllArka(initialState?.currentUser?.branchId);
-    const selectedDeposit =  allDeposits.data.filter((d) => d.id == moneyDepositId)[0];
-    const result = await checkAutoInsertDeclaration({item:selectedDeposit , userId : initialState?.currentUser?.id});
-    if(result?.status != 409){
-        updateAmount(moneyDepositId, 0);
-    }
-    addAmountToDeposit(moneyDepositId, amountTotal);
-    setisOpen(false);
-    openPrintSwal();
+
+      try{
+        await returnInvoiceObject(true, values.description, values.message);
+        const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
+        const amountTotal = Number(invoiceFinalObject?.totalAmount).toFixed(2);
+        const allDeposits = await getAllArka(initialState?.currentUser?.branchId);
+        const selectedDeposit =  allDeposits.data.filter((d) => d.id == moneyDepositId)[0];
+        const result = await checkAutoInsertDeclaration({item:selectedDeposit , userId : initialState?.currentUser?.id});
+        if(result?.status != 409){
+            updateAmount(moneyDepositId, 0);
+        }
+        addAmountToDeposit(moneyDepositId, amountTotal);
+        setisOpen(false);
+        openPrintSwal();
+      } catch(err){
+
+        console.log("error--in action buttons--",err);
+
+        setisOpen(false);
+        openNotFiscalizeModal();
+       
+      }
+
+      // await returnInvoiceObject(true, values.description, values.message);
+      // //Handle MoneyDeposit Update
+      // const moneyDepositId = JSON.parse(localStorage.getItem('deposit')).id;
+      // const amountTotal = Number(invoiceFinalObject?.totalAmount).toFixed(2);
+      // const allDeposits = await getAllArka(initialState?.currentUser?.branchId);
+      // const selectedDeposit =  allDeposits.data.filter((d) => d.id == moneyDepositId)[0];
+      // const result = await checkAutoInsertDeclaration({item:selectedDeposit , userId : initialState?.currentUser?.id});
+      // if(result?.status != 409){
+      //     updateAmount(moneyDepositId, 0);
+      // }
+      // addAmountToDeposit(moneyDepositId, amountTotal);
+      // setisOpen(false);
+      // openPrintSwal();
+
   }
   
   const  checkclickOutside = () =>{
     return true;
+  }
+
+  const openNotFiscalizeModal = () => {
+    Swal.fire({
+      title:
+        "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
+        `Kjo fature nuk mund te fiskalizohet` +
+        '</h5>',
+      text: '',
+      icon: 'info',
+      iconColor: '#98bbb8',
+      showDenyButton: true,
+      showConfirmButton: false,
+      allowOutsideClick: () => checkclickOutside(),
+      confirmButtonColor: '#0d4d47',
+      denyButtonColor: '#f87800',
+      denyButtonText: `Mbyll modalin`,
+    }).then((result) => {
+      checkclickOutside()
+    })
   }
 
   const openPrintSwal = () => {
