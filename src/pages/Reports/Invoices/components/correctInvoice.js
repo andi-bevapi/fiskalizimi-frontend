@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
+import { useModel } from 'umi';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,6 +17,7 @@ import ButtonComponent from '../../../../components/Button/InvoiceButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useInvoiceContext } from '../../../../Context/InvoiceContext';
 import { useMoneyDepositContext } from '../../../../Context/MoneyDepositContext';
+import {dateFormatInvoiceFiscalized} from "../../../../helpers/formatDate"
 
 const CorrectiveInvoice = (props) => {
     const {handleCorrectiveInvoice} = useInvoiceContext();
@@ -27,6 +29,7 @@ const CorrectiveInvoice = (props) => {
     const [totalVat20, setTotalVat20] = useState(props?.data.totalVat20);
     const [totalAmountNoVat, setTotalAmountNoVat] = useState(props?.data.totalAmountNoVAT);
     const [totalAmount, setTotalAmount] = useState(props?.data.totalAmount);
+    const { initialState } = useModel('@@initialState');
 
     const { t } = useTranslation();
 
@@ -98,6 +101,9 @@ const CorrectiveInvoice = (props) => {
                 quantity: item.quantity * -1,
                 finalPrice: item.finalPrice,
                 originalPrice: item.originalPrice,
+                barcode: item.product?.barcode,
+                sellingUnitId:item.proudct?.sellingUnitId,
+                vat:(item.vat === 0) ? 0 : (item.vat === 1) ? 6.00 : (item.vat === 2) ? 20.00 : 0
             })
         });
         const invoiceObject = {
@@ -114,7 +120,9 @@ const CorrectiveInvoice = (props) => {
             //NSLF: newInvoice.NSLF,
             NSLF: '',
             invoiceItems: [...negativeItems],
-            descripion: 'Fature e korrigjuar'
+            date: dateFormatInvoiceFiscalized(),
+            operatorCode:initialState?.currentUser.operatorCode,
+            description: 'Fature e korrigjuar'
         }
         try{
             const result = await handleCorrectiveInvoice(invoiceObject);
