@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useModel } from 'umi';
 import { getLastAmount, updateSavedAmount, checkAutoInsertDeclaration } from '../services/arka';
+import {dateFormatInvoiceFiscalized} from "../helpers/formatDate";
+
 const MoneyDepositContext = createContext({});
 const MoneyDepositProvider = (props) => {
   const { initialState } = useModel('@@initialState');
@@ -32,8 +34,8 @@ const MoneyDepositProvider = (props) => {
         totalAmount: newAmount,
         arkaId: id, // !!get arkaId  !!!
         userId: initialState?.currentUser?.id,
-        action: 'Gjendje Fillestare',
-        actionTime: new Date(),
+        action: 'INITIAL',
+        actionTime: dateFormatInvoiceFiscalized(),
       };
       const response = await updateSavedAmount(data);
       if (response.statusCode === 200) {
@@ -48,13 +50,14 @@ const MoneyDepositProvider = (props) => {
   };
   
   const addAmountToDeposit = async (id, value) => {
+
     try {
       const data = {
         totalAmount: value,
         arkaId: id, // !!get arkaId  !!!
         userId: initialState?.currentUser?.id,
-        action: 'Shtim',
-        actionTime: new Date(),
+        action: 'DEPOSIT',
+        actionTime: dateFormatInvoiceFiscalized(),
         serialNumber: JSON.parse(localStorage.getItem('deposit')).serialNumber
       };
       const result = await checkAutoInsertDeclaration({id :initialState?.currentUser?.id, item : id});
@@ -78,8 +81,8 @@ const MoneyDepositProvider = (props) => {
         totalAmount: value,
         arkaId: id, // !!get arkaId  !!!
         userId: initialState?.currentUser?.id,
-        action: 'Tërheqje',
-        actionTime: new Date(),
+        action: 'WITHDRAW',
+        actionTime: dateFormatInvoiceFiscalized(),
       };
        const result = await checkAutoInsertDeclaration({id :initialState?.currentUser?.id, item : id});
       if (result?.status != 409) {

@@ -1,14 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProductByBarcode, updateProduct } from '../services/product';
 import { createInvoice, getInvoices, deleteInvoiceById } from "../services/invoice";
+import {dateFormatInvoiceFiscalized} from "../helpers/formatDate";
+import {moment} from "moment";
 
 import { useModel } from 'umi';
 import { useContextProduct } from './ProductContext';
+import {useClientContext} from "./ClientContext";
 
 const InvoiceContext = createContext({});
 
 const InvoiceProvider = (props) => {
     const { productToUpdate, productToDelete, setProductList, productList } = useContextProduct();
+    const { clientToGet } = useClientContext();
 
     const [isLoading, setIsLoading] = useState(false);
     const [listedInvoiceProducts, setListedInvoiceProducts] = useState([]);
@@ -106,7 +110,6 @@ const InvoiceProvider = (props) => {
     //Method to remove a product in the invoice list
     const removeProductFromInvoiceList = (product) => {
         const productIndex = listedInvoiceProducts?.findIndex(item => item.id === product.id);
-        // console.log(listedInvoiceProducts[productIndex]);
         setProductList((prevState) => {
             let index = prevState.findIndex((el) => el.id == product.id);
             prevState[index].stock = Number(prevState[index].stock) + Number(listedInvoiceProducts[productIndex].quantity);
@@ -233,6 +236,7 @@ const InvoiceProvider = (props) => {
             console.log(error);
         }
     }
+
     const getListOfInvoices = async (status) => {
         try {
             const response = await getInvoices(initialState?.currentUser?.branchId, status);
@@ -254,8 +258,13 @@ const InvoiceProvider = (props) => {
                 quantity: item.quantity,
                 finalPrice: item.price,
                 originalPrice: item.originalPrice,
+                barcode: item.barcode,
+                sellingUnitId: item.sellingUnitId,
+                vat: (item.vat === 0) ? 0 : (item.vat === 1) ? 6.00 : (item.vat === 2) ? 20.00 : 0
             })
         });
+
+        const client = await clientToGet(initialState?.currentUser.clientId);
         const invoiceObject = {
             clientId: initialState?.currentUser.clientId,
             branchId: initialState?.currentUser.branchId,
@@ -270,9 +279,20 @@ const InvoiceProvider = (props) => {
             message: invoiceMessage,
             invoiceItems: [...invoiceItemsArray],
             NSLF: "", //will be generated
+            date: dateFormatInvoiceFiscalized(),
+            operatorCode:initialState?.currentUser.operatorCode,
+            nuis:client.data.NUIS
         }
+
         setInvoiceFinalObject(invoiceObject);
-        if (shouldPost) await postInvoice(invoiceObject);
+        if (shouldPost){
+            try{
+                await postInvoice(invoiceObject);
+              } catch(err){
+                throw new Error("Kjo fature nuk u fiskalizua", 409);
+              }
+        } 
+        //await postInvoice(invoiceObject);
     }
 
     //POST method to register Invoice DB
@@ -280,6 +300,8 @@ const InvoiceProvider = (props) => {
         //Add post method for invoice
         const response = await createInvoice(invoiceObject, initialState?.currentUser?.id);
         const invoiceData = response?.data;
+
+        //console.log("invoiceData-----",invoiceData);
 
         let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
         let paymentMethodType = "";

@@ -38,4 +38,13 @@ const updateClient = async (data) => {
   });
 };
 
-export { getAllClients, createClient, updateClient, deleteClient };
+const getClient = async (id) => {
+  return request(`/client/get/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export { getAllClients, createClient, updateClient, deleteClient ,getClient};

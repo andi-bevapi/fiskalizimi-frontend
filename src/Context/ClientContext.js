@@ -1,6 +1,6 @@
 import { useContext, useEffect, createContext, useState } from 'react';
 import { useModel } from 'umi';
-import { getAllClients, createClient, updateClient, deleteClient } from '../services/client';
+import { getAllClients, createClient, updateClient, deleteClient, getClient } from '../services/client';
 
 const ClientContext = createContext({});
 
@@ -64,6 +64,19 @@ const ClientProvider = (props) => {
     }
   };
 
+  const clientToGet = async (data) => {
+    try {
+      const response = await getClient(data);
+      if (response.statusCode === 200)
+        setClients((prev) => {
+          return [...prev, response.data];
+        });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const values = {
     clients,
     setClients,
@@ -71,6 +84,7 @@ const ClientProvider = (props) => {
     clientToCreate,
     clientToUpdate,
     clientToDelete,
+    clientToGet
   };
 
   return <ClientContext.Provider value={values}>{props.children}</ClientContext.Provider>;
