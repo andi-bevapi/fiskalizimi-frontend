@@ -58,3 +58,10 @@ export const deleteUser = async (id) => {
         headers: { "Content-Type": "application/json" },
     })
 }
+
+export const checkFirstTimeLogin = async (id) => {
+    return request(`/user/checkFirstTimeLogin/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+    })
+}
