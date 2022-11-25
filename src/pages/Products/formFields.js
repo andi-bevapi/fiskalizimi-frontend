@@ -92,10 +92,10 @@ export const formFields = [
 ];
 
 export const validationSchema = yup.object({
-    name: yup.string().min(2, i18n.t("productNameMinLength")).max(50,i18n.t("productNameMaxLength")).required(i18n.t("productName")),
-    description:  yup.string().max(100,i18n.t("productDescription")),
-    price: yup.number().required(i18n.t("productPrice")),
-    barcode:yup.string().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
+    name: yup.string().trim().min(2, i18n.t("productNameMinLength")).max(50,i18n.t("productNameMaxLength")).required(i18n.t("productName")),
+    description: yup.string().trim().max(100,i18n.t("productDescription")),
+    price: yup.number().min(0, i18n.t("productPriceNoNegative")).required(i18n.t("productPrice")),
+    barcode:yup.string().trim().min(8, i18n.t("productBarcodeLength")).max(13,i18n.t("productBarcodeMax")).required(i18n.t("productBarcode"))
     .required(i18n.t("productBarcode")),
     vat: yup.number().required(i18n.t("insertVat")),
     stock: yup.number().min(0 , i18n.t("stockNegativeMessage")).max(999999999,i18n.t("maxAmount")).required(i18n.t("insertAmount")),

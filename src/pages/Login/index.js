@@ -6,7 +6,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { Form, Formik, Field } from "formik";
-import { login } from '../../services/user';
+import { login,getCurrentUser,updateUser } from '../../services/user';
 import { loginSchema } from './validationSchema';
 import User from '../../models/User';
 import SnackbarComponent from '../../components/Snackbar';
@@ -40,8 +40,17 @@ const Login = () => {
             if (response.statusCode === 200) {
                 localStorage.setItem('poslaToken', response.data);
                 await fetchUserInfo();
-                history.push('/arka');
+
+                const result = await getCurrentUser();
+                console.log("result--before if---",result.data);
+                if(!result.data.isFirstTimeLogin){
+                    history.push('/arka');
+                    return;
+                } else{
+                    console.log("else-----",result.data);
+                history.push('/');
                 return;
+            }
             }
 
             const resJson = await response.json();

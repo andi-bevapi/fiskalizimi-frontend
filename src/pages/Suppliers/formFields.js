@@ -17,5 +17,5 @@ export const formFields = [
 ]
 
 export const validationSchema = yup.object({
-  name: yup.string().min(2, i18n.t("supplierNameLength")).required(i18n.t("supplierName")),
+  name: yup.string().trim().min(2, i18n.t("supplierNameLength")).required(i18n.t("supplierName")),
 });

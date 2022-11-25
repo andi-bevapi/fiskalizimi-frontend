@@ -112,6 +112,7 @@ const TableComponent = (props) => {
   };
 
   const localizedTextsMap = {
+    columnMenuUnsort:       t("unsort"),
     columnMenuSortAsc :     t("sortByAsc"),
     columnMenuSortDesc:     t("sortByDesc"),
     columnMenuFilter:       t("filter"),
@@ -128,6 +129,7 @@ const TableComponent = (props) => {
       headerName: i18n.t('actions'),
       width: 140,
       sortable: false,
+      disableColumnMenu:true,
       renderCell: (params) => {
         const handleEditButton = () => {
           setParams(params);

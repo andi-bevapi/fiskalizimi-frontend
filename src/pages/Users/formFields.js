@@ -57,9 +57,9 @@ export const validationSchema = yup.object({
   username: yup.string().min(2, i18n.t("usernameLength")).required(i18n.t("insertUsername")),
   firstName: yup.string().min(2, i18n.t("usernameLength")).required(i18n.t("insertUsername")),
   lastName: yup.string().min(2, t("lastnameLength")).required(t("lastname")),
-  operatorCode: yup.string().required(t("insertOperatorCode")),
-  position: yup.string(),
-  phone: yup.string(),
-  email: yup.string(),
+  operatorCode: yup.string().min(10,i18n.t("userOperatorCodeLength")).max(10,i18n.t("userOperatorCodeLength")).required(t("insertOperatorCode")),
+  position: yup.string().min(7,i18n.t("userPositionMin")).max(20,i18n.t("userPositionMax")).required(i18n.t("userPosition")),
+  phone: yup.string().min(9,i18n.t("userPhoneMin")).max(12,i18n.t("userPhoneMax")).required(i18n.t("userPhone")),
+  email: yup.string().email(i18n.t("userEmail")).required(i18n.t("userEmail")),
   password: yup.string().min(6, i18n.t("editProfilePass")).required(i18n.t("insertPass"))
 });

@@ -20,6 +20,9 @@ const pageWidth = (elements, property) => {
       case 'supplier':
         customWidth = 150;
         break;
+      case 'serialNumber':
+        customWidth = 220;
+        break;
     default:
       customWidth = 120;
   }

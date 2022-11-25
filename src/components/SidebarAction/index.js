@@ -223,11 +223,24 @@ const SidebarAction = (props) => {
       return;
     }
 
+    const convertedObj = [];
+    Object.keys(props.permissions).map((key, idx) => {   
+      props.permissions[key].permissions.map((permission) =>{
+           
+            convertedObj.push(permission.checked);
+            return;
+      })
+    });
+    const isValid = convertedObj.some((el)=>el);
+    if(!isValid){
+      setOpenSnackBar({ status: true, message: t("chooseUserPrivileges"), success: false });
+      return
+    }
     postData(values);
   };
 
   const postData = async (values) => {
-    console.log(values);
+    // console.log(values);
     const permissions = [];
     if (props.user) {
       Object.keys(props.permissions).map((key, idx) => {
@@ -261,10 +274,12 @@ const SidebarAction = (props) => {
           user: {
             ...values,
             clientId: getClientId(initialState?.currentUser),
-            isFirstTimeLogin: !props.editItem,
+            isFirstTimeLogin: false,//by default on create user is false, sic ishte ne fillim [isFirstTimeLogin: !props.editItem,]
           },
           permissions: permissions,
         });
+
+        // console.log("response--create on create new user",response);
         refresh();
       }
     } else {
@@ -325,7 +340,6 @@ const SidebarAction = (props) => {
         handleSnackBarClose={handleSnackBarClose}
         severity={openSnackBar.success ? 'success' : 'error'}
       />
-
       <Drawer anchor="left" open={props.open} onClose={toggleDrawer('left', !props.open)}>
         <Formik
           initialValues={generateInitialValues()}
@@ -336,7 +350,6 @@ const SidebarAction = (props) => {
           }}
         >
           {({ errors,touched,isValid,dirty }) => {
-           
             {
               errors.vat && props.product ? setVatValue(2) : setVatValue(0);
             }
@@ -352,6 +365,7 @@ const SidebarAction = (props) => {
                 {props.user && (
                   <>
                   <span className={classes.title}>Të drejtat</span>
+                  
                   <br/>
                     {Object.keys(props.permissions).map((key, idx) => {
                       return (
