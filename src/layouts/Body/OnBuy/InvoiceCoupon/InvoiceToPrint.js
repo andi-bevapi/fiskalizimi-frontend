@@ -47,38 +47,38 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
         <p className={styles.couponText}>{props.data.clientAddress}</p>
         <div className={styles.leftText}>
           <p className={styles.couponText}>
-            Nr. Fature: <b>{props.data.invoiceCode}</b>
+          {t("billNumber")} <b>{props.data.invoiceCode}</b>
           </p>
           <p className={styles.couponText} style={{marginTop: "-15px"}}>
-            Data dhe ora: <b>{props.data.dateTime}</b>
+            {t("dateTime")} <b>{props.data.dateTime}</b>
           </p>
           <p className={styles.couponText} style={{marginTop: "-15px"}}>
-            NUIS: <b>{props.data.clientNUIS}</b>
+           {t("nuis")} <b>{props.data.clientNUIS}</b>
           </p>
           <p className={styles.couponText} style={{marginTop: "-15px"}}>
-            Kodi i Biznesit: <b style={{textTransform: 'lowercase'}}>{props.data.branchCode}</b>
+            {t("businessCode")} <b style={{textTransform: 'lowercase'}}>{props.data.branchCode}</b>
           </p>
           <p className={styles.couponText} style={{marginTop: "-15px"}}>
-            Kodi i Operatorit: <b style={{textTransform: 'lowercase'}}>{props.data.operatorCode}</b>
+            {t("operatorCode")} <b style={{textTransform: 'lowercase'}}>{props.data.operatorCode}</b>
           </p>
           <p className={styles.couponText} style={{marginTop: "-15px"}}>
-            Mënyra e pagesës: <b>{props.data.paymentMethod}</b>
+            {t("chooseWayOfPayment")} <b>{props.data.paymentMethod}</b>
           </p>
         </div>
-        <span className={styles.couponTitleCapital}>ARTIKUJT</span> <br />
+        <span className={styles.couponTitleCapital}>{t("arcticles")}</span> <br />
         <table>
           <tr>
-            <th className={styles.couponText}>Artikulli</th>
+            <th className={styles.couponText}>{t("arcticle")}</th>
             <th className={styles.productPriceRow}></th>
             <th className={styles.productPriceRow}></th>
             <th className={styles.productPriceRow}></th>
-            <th className={styles.productPriceRow}>Vl meTVSH</th>
+            <th className={styles.productPriceRow}>{t("priceWithVat")}</th>
           </tr>
           <tr style={{borderBottom: '1px solid #dbdbdb' }}>
-            <th className={styles.couponTitleText}>Sasia</th>
-            <th className={styles.couponTitleText}>Çmimi</th>
+            <th className={styles.couponTitleText}>{t("quantity")}</th>
+            <th className={styles.couponTitleText}>{t("Price")}</th>
             <th className={styles.couponTitleText}></th>
-            <th className={styles.couponTitleText} style={{textAlign: 'end'}}>Vl paTvsh</th>
+            <th className={styles.couponTitleText} style={{textAlign: 'end'}}>{t("priceWithoutVat")}</th>
             <th className={styles.couponTitleText}></th>
          </tr>
           {props.data.productList?.map((item, index) => {
@@ -105,16 +105,16 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
         <hr />
         <hr />
         <div className={styles.couponAmounts} style={{marginTop: "-10px"}}>
-          <span className={styles.couponText}>Total paTVSH</span> <span className={styles.rightText}>{props.data.totalAmountNoVAT}</span>
+          <span className={styles.couponText}>{t("total_amount_no_vat")}</span> <span className={styles.rightText}>{props.data.totalAmountNoVAT}</span>
           <br />
-          <span className={styles.couponText}>Total TVSH 6%</span>{' '}
+          <span className={styles.couponText}>{t("totalVat6")}</span>{' '}
           <span className={styles.rightText}>{props.data.totalVat6}</span>
           <br />
-          <span className={styles.couponText}>Total TVSH 20%</span>{' '}
+          <span className={styles.couponText}>{t("totalVat20")}</span>{' '}
           <span className={styles.rightText}>{props.data.totalVat20}</span>
           <br />
           <span>
-            <b>Total meTVSH</b>
+            <b>{t("totalVat")}</b>
           </span>{' '}
           <span className={styles.rightText}>
             <b>{props.data.totalAmount}</b>
@@ -128,7 +128,7 @@ const InvoiceToPrint = React.forwardRef((props, ref) => {
         <p className={styles.nslfText} style={{marginTop: "-10px"}}>NSLF: {props.data.nslf}</p>
         <p className={styles.couponText}>{config?.billMessage}</p>
         <div className={styles.leftText}>
-        <span className={styles.couponText}>Gjeneruar nga Ovla Systems</span>
+        <span className={styles.couponText}>{t("generatedByOvla")}</span>
         <span className={styles.couponText} style={{ float: 'right'}}>
           <b>posla.al</b>
         </span>

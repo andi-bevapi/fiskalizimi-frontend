@@ -154,7 +154,7 @@ const ActionButtons = (props) => {
     Swal.fire({
       title:
         "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
-        `Kjo fature nuk mund te fiskalizohet` +
+        t("canNotFiscalized") +
         '</h5>',
       text: '',
       icon: 'info',
@@ -164,7 +164,7 @@ const ActionButtons = (props) => {
       allowOutsideClick: () => checkclickOutside(),
       confirmButtonColor: '#0d4d47',
       denyButtonColor: '#f87800',
-      denyButtonText: `Mbyll modalin`,
+      denyButtonText: t("closeModal"),
     }).then((result) => {
       checkclickOutside()
     })
@@ -174,7 +174,7 @@ const ActionButtons = (props) => {
     Swal.fire({
       title:
         "<h5 style='font-family: Poppins; font-size: 20px; color: #082e2b; font-weight: 600'>" +
-        `Zgjidhni mënyrën e printimit` +
+        t("choosePrint") +
         '</h5>',
       text: '',
       icon: 'info',
@@ -184,8 +184,8 @@ const ActionButtons = (props) => {
       allowOutsideClick: () => checkclickOutside(),
       confirmButtonColor: '#0d4d47',
       denyButtonColor: '#f87800',
-      denyButtonText: `Printo si kupon`,
-      confirmButtonText: `Printo si faturë A4`,
+      denyButtonText: t("printCoupon"),
+      confirmButtonText: t("printAfour"),
     }).then((result) => {
       if (result.isDenied) {
         handlePrint()

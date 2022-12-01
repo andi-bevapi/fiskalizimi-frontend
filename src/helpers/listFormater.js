@@ -7,7 +7,18 @@ export const listFormat = (data, tableHeaders) => {
     if(_arrayElement.TCRCODE){
       Object.keys(_arrayElement).forEach((item) => {
         if (typeof _arrayElement[item] === 'object'){
-          _arrayElement[item] = _arrayElement[item][0].totalAmount;
+         let initialState = _arrayElement[item].find((el,index)=>{
+            return el.action === "INITIAL";
+         });
+         let currentSume = 0;
+         _arrayElement[item].forEach((el) =>{
+          if(el.action === "WITHDRAW"){
+            currentSume = initialState.totalAmount - el.totalAmount;
+            } else if(el.action === "DEPOSIT"){
+              currentSume = initialState.totalAmount - el.totalAmount;
+            }
+        });
+          _arrayElement[item] = currentSume;
         }
       });
     }

@@ -48,32 +48,32 @@ const LargePrint = React.forwardRef((props, ref) => {
         <p className={styles.largecouponText}>{props.data.clientAddress}</p>
         <div className={styles.leftText}>
           <p className={styles.largecouponText}>
-            Nr. Fature: <b>{props.data.invoiceCode}</b>
+           {t("billNumber")} <b>{props.data.invoiceCode}</b>
           </p>
           <p className={styles.largecouponText} style={{marginTop: "-15px"}}>
-            Data dhe ora: <b>{props.data.dateTime}</b>
+              {t("dateTime")} <b>{props.data.dateTime}</b>
           </p>
           <p className={styles.largecouponText} style={{marginTop: "-15px"}}>
-            NUIS: <b>{props.data.clientNUIS}</b>
+          {t("billNumber")}  <b>{props.data.clientNUIS}</b>
           </p>
           <p className={styles.largecouponText} style={{marginTop: "-15px"}}>
-            Kodi i Biznesit: <b style={{textTransform: 'lowercase'}}>{props.data.branchCode}</b>
+            {t("businessCode")} <b style={{textTransform: 'lowercase'}}>{props.data.branchCode}</b>
           </p>
           <p className={styles.largecouponText} style={{marginTop: "-15px"}}>
-            Kodi i Operatorit: <b style={{textTransform: 'lowercase'}}>{props.data.operatorCode}</b>
+            {t("operatorCode")} <b style={{textTransform: 'lowercase'}}>{props.data.operatorCode}</b>
           </p>
           <p className={styles.largecouponText} style={{marginTop: "-15px"}}>
-            Mënyra e pagesës: <b>{props.data.paymentMethod}</b>
+              {t("chooseWayOfPayment")} <b>{props.data.paymentMethod}</b>
           </p>
         </div>
-        <span className={styles.couponTitleCapital}>ARTIKUJT</span> <br />
+        <span className={styles.couponTitleCapital}>{t("arcticles")}</span> <br />
         <table>
           <tr style={{borderBottom: '1px solid #dbdbdb' }}>
-            <th className={styles.largecouponText}>Artikulli</th>
-            <th className={styles.largeproductPriceRow}>Sasia</th>
-            <th className={styles.largeproductPriceRow}>Çmimi</th>
-            <th className={styles.productPriceRow}>Vl paTvsh</th>
-            <th className={styles.productPriceRow}>Vl meTVSH</th>
+            <th className={styles.largecouponText}>{t("arcticle")}</th>
+            <th className={styles.largeproductPriceRow}>{t("quantity")}</th>
+            <th className={styles.largeproductPriceRow}>{t("Price")}</th>
+            <th className={styles.productPriceRow}>{t("priceWithoutVat")}</th>
+            <th className={styles.productPriceRow}>{t("priceWithVat")}</th>
           </tr>
           {/* <tr style={{borderBottom: '1px solid #dbdbdb' }}>
             <th className={styles.couponTitleText}></th>
@@ -107,16 +107,16 @@ const LargePrint = React.forwardRef((props, ref) => {
         <hr />
         <br/>
         <div className={styles.couponAmounts} style={{marginTop: "-10px"}}>
-          <span className={styles.largecouponText}>Total paTVSH</span> <span className={styles.largerightText}>{props.data.totalAmountNoVAT}</span>
+          <span className={styles.largecouponText}>{t("total_amount_no_vat")}</span> <span className={styles.largerightText}>{props.data.totalAmountNoVAT}</span>
           <br />
-          <span className={styles.largecouponText}>Total TVSH 6%</span>
+          <span className={styles.largecouponText}>{t("totalVat6")}</span>
           <span className={styles.largerightText}>{props.data.totalVat6}</span>
           <br />
-          <span className={styles.largecouponText}>Total TVSH 20%</span>
+          <span className={styles.largecouponText}>{t("totalVat20")}</span>
           <span className={styles.largerightText}>{props.data.totalVat20}</span>
           <br />
           <span className={styles.largecouponText}>
-            <b>Total meTVSH</b>
+            <b>{t("totalVat")}</b>
           </span>
           <span className={styles.largerightText}>
             <b>{props.data.totalAmount}</b>
@@ -132,7 +132,7 @@ const LargePrint = React.forwardRef((props, ref) => {
         <p className={styles.largecouponText}>{config?.billMessage}</p>
         <div className={styles.leftText}>
         <p className={styles.centerTextOvla}>
-          <span className={styles.largecouponText}>Gjeneruar nga Ovla Systems</span> <br/>
+          <span className={styles.largecouponText}>{t("generatedByOvla")}</span> <br/>
           <span className={styles.largecouponText}>
             <b>posla.al</b>
           </span><br/><br/>

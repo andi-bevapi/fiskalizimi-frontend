@@ -17,7 +17,7 @@
   "Phone": "Numri i Telefonit",
   "Email": "Email",
   "username":"Emri i Përdoruesit",
-  "operatorCode":"kodi operatorit",
+  "operatorCode":"Kodi operatorit",
   "position":"Pozicioni",
   "phone":"Telefoni",
   "firstName":"Emri",
@@ -314,5 +314,17 @@
   "filter":"Filtro",
   "hide": "Fshih",
   "showColumn": "Shiko kolonën",
-  "chooseUserPrivileges":"Zgjidhni te pakten njerin nga privilegjete"
+  "chooseUserPrivileges":"Zgjidhni te pakten njerin nga privilegjete",
+  "userRights":"Te drejtat",
+  "printCoupon":"Printo si kupon",
+  "printAfour":"Printo si faturë A4",
+  "choosePrint":"Zgjidhni mënyrën e printimit",
+  "closeModal":"Mbyll modalin",
+  "canNotFiscalized":"Kjo fature nuk mund te fiskalizohet",
+  "billNumber":"Nr. Fature:",
+  "nuis":"NUIS:",
+  "totalVat6":"Total TVSH 6%",
+  "totalVat20":"Total TVSH 20%",
+  "totalVat":"Total me TVSH",
+  "generatedByOvla":"Gjeneruar nga Ovla Systems"
 }

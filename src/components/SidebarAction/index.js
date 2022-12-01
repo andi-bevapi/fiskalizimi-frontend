@@ -364,7 +364,7 @@ const SidebarAction = (props) => {
                 />
                 {props.user && (
                   <>
-                  <span className={classes.title}>Të drejtat</span>
+                  <span className={classes.title}> {t("userRights")}</span>
                   
                   <br/>
                     {Object.keys(props.permissions).map((key, idx) => {
