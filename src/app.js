@@ -21,5 +21,5 @@ export async function getInitialState() {
   return {
     fetchUserInfo,
     currentUser
-  };
+  }
 }
